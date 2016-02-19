@@ -22,9 +22,7 @@ class AtoZTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        for word in model.wordsDictionary {
-            wordList.append(word.0)
-        }
+        wordList = model.wordsArray
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,8 +38,8 @@ class AtoZTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return model.wordsDictionary.count
+        
+        return wordList.count
     }
 
     

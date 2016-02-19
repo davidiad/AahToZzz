@@ -15,7 +15,6 @@ class WordListCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        word.text = "DCF"
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
