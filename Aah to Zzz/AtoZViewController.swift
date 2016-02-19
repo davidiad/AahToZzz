@@ -6,4 +6,23 @@
 //  Copyright © 2016 David Fierstein. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class AtoZViewController: UIViewController {
+    
+    var wordList: [String]!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // for now, create an array to test populate the word list table
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+}

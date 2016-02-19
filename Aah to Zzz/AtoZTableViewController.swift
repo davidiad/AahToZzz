@@ -9,7 +9,10 @@
 import UIKit
 
 class AtoZTableViewController: UITableViewController {
-
+    
+    var model = AtoZModel.sharedInstance
+    var wordList = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,6 +21,10 @@ class AtoZTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        for word in model.wordsDictionary {
+            wordList.append(word.0)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,23 +36,23 @@ class AtoZTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return model.wordsDictionary.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! WordListCell
 
         // Configure the cell...
-
+        cell.word.text = wordList[indexPath.row]
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
