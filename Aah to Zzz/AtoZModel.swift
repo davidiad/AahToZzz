@@ -12,13 +12,16 @@ class AtoZModel {
     
     static let sharedInstance = AtoZModel() // defines as singleton
     
+    // 3 different data structures to hold the 3 letter word list info, each with its own purpose
     var wordsArray: [String]
     var wordsDictionary: [String: String]
+    var wordsSet: Set<String> // may not need to use this outside of this class, consider relocating the declaration
     
     //This prevents others from using the default '()' initializer for this class.
     private init() {
         wordsArray = [String]()
         wordsDictionary = [:] // init empty dictionary
+        wordsSet = Set<String>()
         
         var rawWordsArray = [String]()
         rawWordsArray = arrayFromContentsOfFileWithName("3letterwordlist")!
@@ -31,9 +34,10 @@ class AtoZModel {
             
             wordsArray.append(key)
             wordsDictionary[key] = value
+            wordsSet.insert(key)
         }
         // temp. to check it's working
-        generateWordList()
+        //generateWordlist()
     }
     
     // read in the 3 letter word list with word definitions
@@ -55,9 +59,9 @@ class AtoZModel {
     
     
     // wrapper function that calls other functions
-    func generateWordList () {
+    func generateWordlist () -> [String] {
         let letters = generateLetters()
-        getLetterPermutations(letters)
+        return getWordlist(letters)
     }
     
     
@@ -95,17 +99,16 @@ class AtoZModel {
     
     
     
-    // find all 210 possible permutations of 7 letters into 3 letter sequences, and add to a set
-    // (call them 'sequences' as we don't know yet if they are words until they are checked against the 3 letter word list)
-    func getLetterPermutations(letters: [String]) -> Set<String> {
-        // consider turning dictionaryArray into a set in order to quickly intersect with this set
-        // then, would probably want to convert the result back to an array so it can be ordered and used as data source in the table.
+    func getWordlist(letters: [String]) -> [String] {
+        
         var allLetterPermutationsSet = Set<String>()
         var sequence: String = ""
         var sequenceCounter: Int = 0
         
         print("letters: \(letters)")
         
+        // find all 210 possible permutations of 7 letters into 3 letter sequences, and add to a set
+        // (call them 'sequences' as we don't know yet if they are words until they are checked against the 3 letter word list)
         for var i=0; i<letters.count; i++ {
             
             // reset sequence so we start a new word on each loop of i
@@ -125,43 +128,12 @@ class AtoZModel {
                 }
             }
         }
-        print(sequenceCounter)
-        /* //Objective-C version
-        for (int i = 0; i < 7; i++) {
-            //add first letter
-            word = [[NSMutableString alloc] initWithFormat:@""];
-            [word appendString: [startingArray objectAtIndex:i]];
-            for (int j = 0; j< 7; j++)
-            {
-                if (j!=i)
-                {
-                    //add second letter
-                    if (word.length > 2) {
-                        NSRange range;
-                        range.location = 1;
-                        range.length = 2;
-                        [word deleteCharactersInRange:range];
-                    }
-                    [word appendString:[startingArray objectAtIndex:j]];
-                    //NSLog(@"  %ith 2nd letter added in loop", j);
-                }
-                for (int k = 0; k < 7; k++)
-                {
-                    if (j!=i && k!=j && k!=i) 
-                    {
-                        //add third letter
-                        if (word.length > 2) {
-                            NSRange range;
-                            range.location = 2;
-                            range.length = 1;
-                            [word deleteCharactersInRange:range];
-                        }
-*/
         
-        
-        print("set: \(allLetterPermutationsSet)")
-        print("set count: \(allLetterPermutationsSet.count)")
-        return allLetterPermutationsSet
+        // Find permutations which are also valid words, and sort them alphabetically
+        let validWordsSet = allLetterPermutationsSet.intersect(wordsSet)
+        let validWordsArray = Array(validWordsSet)
+
+        return validWordsArray.sort()
     }
 
 }

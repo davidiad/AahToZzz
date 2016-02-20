@@ -11,7 +11,7 @@ import UIKit
 class AtoZTableViewController: UITableViewController {
     
     var model = AtoZModel.sharedInstance
-    var wordList = [String]()
+    var wordlist = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class AtoZTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        wordList = model.wordsArray
+        wordlist = model.generateWordlist()
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +39,7 @@ class AtoZTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return wordList.count
+        return wordlist.count
     }
 
     
@@ -47,7 +47,7 @@ class AtoZTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! WordListCell
 
         // Configure the cell...
-        cell.word.text = wordList[indexPath.row]
+        cell.word.text = wordlist[indexPath.row]
         return cell
     }
     
