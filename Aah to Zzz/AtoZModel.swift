@@ -64,18 +64,20 @@ class AtoZModel {
         return getWordlist(letters)
     }
     
+    // getting a wordlist from letters that can be called from another class
+    func generateWordlist (letters: [String]) -> [String] {
+        return getWordlist(letters)
+    }
+    
     
     func generateLetters () -> [String] {
         
-        // create an array of 7 Strings
-        // pick 2 random words from wordsArray
-        // add each letter to letterSet
-        // add another random letter to make 7 letters in set (actually an array)
-        
+        // create an array that will be filled with 7 Strings
         var letters: [String]
         // Add the first letter to to letterset -- 1st letter is a random letter
         letters = [getRandomLetter()]
         
+        // pick 2 random words from wordsArray
         let firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
         let secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
         

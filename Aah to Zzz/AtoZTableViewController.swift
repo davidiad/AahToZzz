@@ -21,8 +21,7 @@ class AtoZTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        wordlist = model.generateWordlist()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,7 +37,7 @@ class AtoZTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        print(wordlist.count)
         return wordlist.count
     }
 
