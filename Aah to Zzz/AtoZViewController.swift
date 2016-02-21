@@ -13,12 +13,20 @@ class AtoZViewController: UIViewController {
     var model = AtoZModel.sharedInstance
     var letters: [String]!
     var wordlist = [String]()
+    
+    var wordTable: AtoZTableViewController?
 
     @IBOutlet var lettertiles: [UIButton]!
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
         generateWordList()
-        // need to put the word list into the table of words
+        // need to put the word list into the table of words (reload the table data)
+        if wordTable != nil {
+            wordTable!.wordlist = wordlist
+            wordTable!.tableView.reloadData()
+        } else {
+            print("wordTable was nil")
+        }
     }
 
     
@@ -36,6 +44,8 @@ class AtoZViewController: UIViewController {
         generateWordList()
         if let wordTableController = segue.destinationViewController as? AtoZTableViewController {
             wordTableController.wordlist = wordlist
+            // set the instance variable for the embedded table view controller for later use
+            wordTable = wordTableController
         } else {
             print("segue to AtoZTableViewController fail")
         }
