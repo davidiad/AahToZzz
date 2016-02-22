@@ -46,7 +46,8 @@ class AtoZTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! WordListCell
 
         // Configure the cell...
-        cell.word.text = wordlist[indexPath.row]
+        cell.word.text = "***"
+        //cell.word.text = wordlist[indexPath.row]
         return cell
     }
     

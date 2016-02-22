@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--AtoZ View Controller-->
@@ -37,6 +38,18 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhl-0D-amH">
+                                <rect key="frame" x="20" y="376" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="DnI-ZF-Vdw"/>
+                                    <constraint firstAttribute="height" constant="30" id="Puc-GK-OKp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="A"/>
+                                <connections>
+                                    <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bsy-LC-lkr"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bi6-wL-Loo">
                                 <rect key="frame" x="63" y="376" width="30" height="30"/>
                                 <constraints>
@@ -45,6 +58,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="B"/>
+                                <connections>
+                                    <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="grx-Zr-Mry"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rTz-zX-Iht">
                                 <rect key="frame" x="107" y="376" width="30" height="30"/>
@@ -54,33 +70,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="C"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69O-Su-GUK">
-                                <rect key="frame" x="152" y="376" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="yG1-Iv-XZv"/>
-                                    <constraint firstAttribute="width" constant="30" id="zSC-a6-MQi"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="C"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KR2-xq-ILu">
-                                <rect key="frame" x="34" y="442" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="H9T-V1-zYq"/>
-                                    <constraint firstAttribute="height" constant="30" id="Rxf-qB-7VP"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="C"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLz-is-Kr7">
-                                <rect key="frame" x="78" y="442" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="ZOA-68-2nx"/>
-                                    <constraint firstAttribute="height" constant="30" id="oat-NP-MAh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="C"/>
+                                <connections>
+                                    <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aMX-sh-A6D"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9k-kf-X6I">
                                 <rect key="frame" x="126" y="442" width="30" height="30"/>
@@ -90,15 +82,55 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="C"/>
+                                <connections>
+                                    <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Kv-wn-gLL"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhl-0D-amH">
-                                <rect key="frame" x="20" y="376" width="30" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WWW" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ojv-Vd-35V">
+                                <rect key="frame" x="40" y="70" width="118" height="65"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="DnI-ZF-Vdw"/>
-                                    <constraint firstAttribute="height" constant="30" id="Puc-GK-OKp"/>
+                                    <constraint firstAttribute="width" constant="118" id="Lm1-rb-cJZ"/>
+                                    <constraint firstAttribute="height" constant="65" id="ti9-lt-HIj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69O-Su-GUK">
+                                <rect key="frame" x="152" y="376" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="yG1-Iv-XZv"/>
+                                    <constraint firstAttribute="width" constant="30" id="zSC-a6-MQi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="A"/>
+                                <state key="normal" title="C"/>
+                                <connections>
+                                    <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hlz-kQ-T1W"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KR2-xq-ILu">
+                                <rect key="frame" x="34" y="442" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="H9T-V1-zYq"/>
+                                    <constraint firstAttribute="height" constant="30" id="Rxf-qB-7VP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="C"/>
+                                <connections>
+                                    <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cAb-Wg-cVu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLz-is-Kr7">
+                                <rect key="frame" x="78" y="442" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="ZOA-68-2nx"/>
+                                    <constraint firstAttribute="height" constant="30" id="oat-NP-MAh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="C"/>
+                                <connections>
+                                    <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2ab-Nu-WkA"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -108,11 +140,13 @@
                             <constraint firstItem="lFx-dj-k0F" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="8yq-7T-FwQ"/>
                             <constraint firstItem="LLz-is-Kr7" firstAttribute="leading" secondItem="KR2-xq-ILu" secondAttribute="trailing" constant="14" id="9ZE-WQ-P9P"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="rTz-zX-Iht" secondAttribute="bottom" constant="150" id="9l4-R6-bTP"/>
+                            <constraint firstItem="ojv-Vd-35V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="ASV-uS-dsz"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CKT-X1-GIn"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="LLz-is-Kr7" secondAttribute="bottom" constant="84" id="CXK-YP-7bw"/>
                             <constraint firstItem="Fhl-0D-amH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="EkW-9J-iox"/>
                             <constraint firstItem="Bi6-wL-Loo" firstAttribute="leading" secondItem="Fhl-0D-amH" secondAttribute="trailing" constant="13" id="HOC-Nd-MGc"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="rTz-zX-Iht" secondAttribute="bottom" constant="150" id="Irl-gd-AQZ"/>
+                            <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="M3V-Ow-Iyb"/>
                             <constraint firstItem="Bi6-wL-Loo" firstAttribute="bottom" secondItem="jOe-Nl-wN2" secondAttribute="top" constant="-150" id="MHp-oB-DHy"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="69O-Su-GUK" secondAttribute="bottom" constant="150" id="Sm9-o3-nDv"/>
                             <constraint firstItem="N9k-kf-X6I" firstAttribute="leading" secondItem="LLz-is-Kr7" secondAttribute="trailing" constant="18" id="cuR-BB-467"/>
@@ -127,6 +161,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="wordInProgress" destination="ojv-Vd-35V" id="G6t-Rf-rXA"/>
                         <outletCollection property="lettertiles" destination="Fhl-0D-amH" collectionClass="NSMutableArray" id="Zw0-AQ-Pg1"/>
                         <outletCollection property="lettertiles" destination="Bi6-wL-Loo" collectionClass="NSMutableArray" id="jgB-bk-CY0"/>
                         <outletCollection property="lettertiles" destination="rTz-zX-Iht" collectionClass="NSMutableArray" id="k5N-c5-Wvl"/>
@@ -138,6 +173,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="553" y="259"/>
         </scene>
         <!--AtoZ Table View Controller-->
         <scene sceneID="Wjo-rf-Fbo">

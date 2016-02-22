@@ -17,18 +17,64 @@ class AtoZViewController: UIViewController {
     var wordTable: AtoZTableViewController?
 
     @IBOutlet var lettertiles: [UIButton]!
+    @IBOutlet weak var wordInProgress: UILabel!
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
         generateWordList()
-        // need to put the word list into the table of words (reload the table data)
+        // put the word list into the table of words and set all words to blank
         if wordTable != nil {
             wordTable!.wordlist = wordlist
-            wordTable!.tableView.reloadData()
+            wordTable!.tableView.reloadData() // needed?
+            for var i=0; i<wordlist.count; i++ {
+                updateCellForWord("---", index: i, color: UIColor.blackColor())
+            }
+           
+            
         } else {
             print("wordTable was nil")
         }
     }
 
+    @IBAction func addLetterToWordInProgress(sender: UIButton) {
+        // add the new letter to the word in progress
+        wordInProgress.text = wordInProgress.text! + (sender.titleLabel?.text)!
+        sender.enabled = false
+        
+        if wordInProgress.text?.characters.count > 2 {
+            print("The word is...... \(wordInProgress.text!)")
+            let foundValidWord = checkForValidWord(wordInProgress.text!)
+            print("Was that a valid word??? \(foundValidWord)")
+            wordInProgress.text = ""
+            
+            for tile in lettertiles {
+                tile.enabled = true
+            }
+        }
+    }
+    
+    func checkForValidWord(wordToCheck: String) -> Bool {
+        for var i=0; i<wordlist.count; i++ {
+            if wordToCheck == wordlist[i] {
+                updateCellForWord(wordlist[i], index: i, color: UIColor.blueColor())
+                return true
+            }
+        }
+        return false
+    }
+    
+    func updateCellForWord (word: String, index: Int, color: UIColor) {
+        let indexPath = NSIndexPath(forRow: index, inSection: 0)
+        print("The index i found was: \(index)")
+        let cell = wordTable!.tableView.cellForRowAtIndexPath(indexPath)
+        cell?.textLabel!.text = word
+        wordTable!.tableView.cellForRowAtIndexPath(indexPath)?.textLabel?.textColor = color
+        
+        /* reloading of cell seems to happen without calling reloadRows...
+        // Make an array of NSIndexPaths with just the currently targeted cell's indexpath
+        //let indexPaths: [NSIndexPath] = [indexPath]
+        //wordTable!.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Fade)
+        */
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
