@@ -10,8 +10,12 @@ import UIKit
 
 class AtoZViewController: UIViewController {
     
+    lazy var sharedContext = {
+        CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
+    
     var model = AtoZModel.sharedInstance
-    var letters: [String]!
+    var letters: [Letter]!
     var wordlist = [String]()
     
     var wordTable: AtoZTableViewController?
@@ -102,7 +106,7 @@ class AtoZViewController: UIViewController {
         
         // Set the letters in the buttons being used as letter tiles
         for var i=0; i<letters.count; i++ {
-            lettertiles[i].setTitle(letters[i], forState: UIControlState.Normal)
+            lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
         }
         
         wordlist = model.generateWordlist(letters)

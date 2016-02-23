@@ -45,7 +45,7 @@ class CoreDataStackManager {
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application.
-        let modelURL = NSBundle.mainBundle().URLForResource("VirtualTourist", withExtension: "momd")!
+        let modelURL = NSBundle.mainBundle().URLForResource("AtoZ", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
     

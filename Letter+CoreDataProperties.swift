@@ -14,7 +14,7 @@ import CoreData
 
 extension Letter {
 
-    @NSManaged var letter: String?
-    @NSManaged var letterset: LetterSet?
+//    @NSManaged var letter: String?
+//    @NSManaged var letterset: LetterSet?
 
 }

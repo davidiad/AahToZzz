@@ -9,9 +9,36 @@
 import Foundation
 import CoreData
 
-
 class Letter: NSManagedObject {
+    
+    @NSManaged var letter: String?
+    @NSManaged var letterset: LetterSet?
 
-// Insert code here to add functionality to your managed object subclass
+    // standard Core Data init method.
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
+        
+        let entity = NSEntityDescription.entityForName("Letter", inManagedObjectContext: context)!
+        
+        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        
+        //searchString = dictionary[searchString!] as? String
+        //lon = dictionary[Keys.Lon] as? NSNumber
+    }
+    
+    init(someLetter: String, context: NSManagedObjectContext) {
+        
+        let entity = NSEntityDescription.entityForName("Letter", inManagedObjectContext: context)!
+        
+        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        
+        letter = someLetter
+        //searchString = dictionary[searchString!] as? String
+        //lon = dictionary[Keys.Lon] as? NSNumber
+    }
+
 
 }

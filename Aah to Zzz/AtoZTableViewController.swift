@@ -9,6 +9,7 @@
 import UIKit
 
 class AtoZTableViewController: UITableViewController {
+    //TODO: Sometimes the cell does not show the correct word. Suspect that dequeued cells are not updating correctly. If cell is scrolled into view, it seems to work correctly. Check whether this happens only with cells not currently in view.
     
     var model = AtoZModel.sharedInstance
     var wordlist = [String]()
