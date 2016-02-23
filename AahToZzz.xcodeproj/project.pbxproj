@@ -18,11 +18,8 @@
 		63A3A12C1C765C4100F440B5 /* AtoZTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A12B1C765C4100F440B5 /* AtoZTableViewController.swift */; };
 		63A3A12E1C76603300F440B5 /* WordListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A12D1C76603300F440B5 /* WordListCell.swift */; };
 		63A9FEE81C7AB4B500AE54F1 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */; };
-		63A9FEEF1C7AC29C00AE54F1 /* LetterSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEE91C7AC29C00AE54F1 /* LetterSet+CoreDataProperties.swift */; };
 		63A9FEF01C7AC29C00AE54F1 /* LetterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEA1C7AC29C00AE54F1 /* LetterSet.swift */; };
-		63A9FEF11C7AC29C00AE54F1 /* Letter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEB1C7AC29C00AE54F1 /* Letter+CoreDataProperties.swift */; };
 		63A9FEF21C7AC29C00AE54F1 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEC1C7AC29C00AE54F1 /* Letter.swift */; };
-		63A9FEF31C7AC29C00AE54F1 /* GameData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEED1C7AC29C00AE54F1 /* GameData+CoreDataProperties.swift */; };
 		63A9FEF41C7AC29C00AE54F1 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEE1C7AC29C00AE54F1 /* GameData.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,11 +37,8 @@
 		63A3A12B1C765C4100F440B5 /* AtoZTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtoZTableViewController.swift; sourceTree = "<group>"; };
 		63A3A12D1C76603300F440B5 /* WordListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordListCell.swift; sourceTree = "<group>"; };
 		63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
-		63A9FEE91C7AC29C00AE54F1 /* LetterSet+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LetterSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		63A9FEEA1C7AC29C00AE54F1 /* LetterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LetterSet.swift; sourceTree = "<group>"; };
-		63A9FEEB1C7AC29C00AE54F1 /* Letter+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Letter+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		63A9FEEC1C7AC29C00AE54F1 /* Letter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
-		63A9FEED1C7AC29C00AE54F1 /* GameData+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		63A9FEEE1C7AC29C00AE54F1 /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,11 +91,8 @@
 		63A9FEF51C7AC2AC00AE54F1 /* Core Data Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
-				63A9FEE91C7AC29C00AE54F1 /* LetterSet+CoreDataProperties.swift */,
 				63A9FEEA1C7AC29C00AE54F1 /* LetterSet.swift */,
-				63A9FEEB1C7AC29C00AE54F1 /* Letter+CoreDataProperties.swift */,
 				63A9FEEC1C7AC29C00AE54F1 /* Letter.swift */,
-				63A9FEED1C7AC29C00AE54F1 /* GameData+CoreDataProperties.swift */,
 				63A9FEEE1C7AC29C00AE54F1 /* GameData.swift */,
 			);
 			name = "Core Data Managed Objects";
@@ -194,11 +185,8 @@
 				63A3A1261C764E3E00F440B5 /* AtoZViewController.swift in Sources */,
 				63A3A12A1C7652C300F440B5 /* AtoZModel.swift in Sources */,
 				63A3A12C1C765C4100F440B5 /* AtoZTableViewController.swift in Sources */,
-				63A9FEF11C7AC29C00AE54F1 /* Letter+CoreDataProperties.swift in Sources */,
 				63A9FEF41C7AC29C00AE54F1 /* GameData.swift in Sources */,
 				63A9FEE81C7AB4B500AE54F1 /* CoreDataStackManager.swift in Sources */,
-				63A9FEF31C7AC29C00AE54F1 /* GameData+CoreDataProperties.swift in Sources */,
-				63A9FEEF1C7AC29C00AE54F1 /* LetterSet+CoreDataProperties.swift in Sources */,
 				63A3A12E1C76603300F440B5 /* WordListCell.swift in Sources */,
 				63A3A1191C763F6C00F440B5 /* AtoZ.xcdatamodeld in Sources */,
 				63A9FEF21C7AC29C00AE54F1 /* Letter.swift in Sources */,

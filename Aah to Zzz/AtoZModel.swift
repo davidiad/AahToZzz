@@ -46,6 +46,7 @@ class AtoZModel {
             wordsDictionary[key] = value
             wordsSet.insert(key)
         }
+        saveGame() // create a GameData object, the root object for data persistence
     }
     
     // read in the 3 letter word list with word definitions
@@ -81,6 +82,7 @@ class AtoZModel {
     func generateLetters () -> [Letter] {
         
         // create an array that will be filled with 7 Strings
+        // TODO: can this array be replaced by the LetterSet?
         var letters: [Letter]
         // Add the first letter to to letterset -- 1st letter is a random letter
         letters = [createLetter(nil)]
@@ -95,22 +97,23 @@ class AtoZModel {
             letters.append(createLetter(String(char)))
         }
         
+        // create a LetterSet managed object
+        let letterset = NSEntityDescription.insertNewObjectForEntityForName("LetterSet", inManagedObjectContext: sharedContext) as! LetterSet
+        // TODO:-add the LetterSet to the GameData object
+        // make the LetterSet the letterset property for each Letter
+        for letter in letters {
+            letter.letterset = letterset
+        }
+        // TODO:Make a struct for LetterPositions. Add as a property to Letter.
+
+
+        
         // save the managed object context
         saveContext()
         
         return letters
     }
     
-//    //TODO: change to returning a Letter object
-//    func getRandomLetter() -> Letter {
-////        let alphabetSoup = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ" // adding extra vowels as they are more freqent in english words
-////        var alphabetArray: [String] = []
-////        for char in alphabetSoup.characters {
-////            alphabetArray.append(String(char))
-////        }
-//        let alphabetArray = generateAlphabetArray()
-//        return alphabetArray[Int(arc4random_uniform(UInt32(alphabetArray.count)))]
-//    }
     
     // creates a Letter object from a passed-in String, or generates a random 1 letter string if nil is passed in
     func createLetter(var letterString: String?) -> Letter {
@@ -178,6 +181,50 @@ class AtoZModel {
             _ = try? self.sharedContext.save()
         }
     }
+    
+    //MARK:- GameData funcs
+    
+    func saveGame() {
+       // _ = makeMapDictionary()
+        deleteGames() // delete all games (for now) so there is only one at a time
+        _ = NSFetchRequest(entityName: "MapViewInfo")
+        
+        
+        let game = NSEntityDescription.insertNewObjectForEntityForName("GameData", inManagedObjectContext: sharedContext) as! GameData
+        
+        game.name = "David's first game"
+//        mapInfo.lat = NSNumber(double: map.centerCoordinate.latitude)
+//        mapInfo.lon = NSNumber(double: map.centerCoordinate.longitude)
+//        mapInfo.latDelta = NSNumber(double: map.region.span.latitudeDelta)
+//        mapInfo.lonDelta = NSNumber(double: map.region.span.longitudeDelta)
+        
+        saveContext()
+    }
+    
+    func deleteGames() {
+        let fetchRequest = NSFetchRequest(entityName: "GameData")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try sharedContext.executeRequest(deleteRequest)
+        } catch let error as NSError {
+            print("Error in deleteMapInfo: \(error)")
+        }
+    }
+    
+//    // make dict for Game Data values
+//    func makeGameDataDictionary() -> [String : AnyObject] {
+//        
+//        let mapDictionary = [
+//            "lat": NSNumber(double: map.centerCoordinate.latitude),
+//            "lon": NSNumber(double: map.centerCoordinate.longitude),
+//            "latDelta": NSNumber(double: map.region.span.latitudeDelta),
+//            "lonDelta": NSNumber(double: map.region.span.longitudeDelta),
+//            "zoom": NSNumber(double: 1.0)
+//        ]
+//        
+//        return mapDictionary
+//    }
 
 }
 

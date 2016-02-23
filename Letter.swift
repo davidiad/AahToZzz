@@ -36,8 +36,6 @@ class Letter: NSManagedObject {
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
         letter = someLetter
-        //searchString = dictionary[searchString!] as? String
-        //lon = dictionary[Keys.Lon] as? NSNumber
     }
 
 

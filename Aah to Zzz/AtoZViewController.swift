@@ -19,6 +19,8 @@ class AtoZViewController: UIViewController {
     var wordlist = [String]()
     
     var wordTable: AtoZTableViewController?
+    
+    var currentLetterSet: LetterSet?
 
     @IBOutlet var lettertiles: [UIButton]!
     @IBOutlet weak var wordInProgress: UILabel!
@@ -102,7 +104,15 @@ class AtoZViewController: UIViewController {
     }
     
     func generateWordList() {
-        letters = model.generateLetters()
+        //TODO: if there is a saved letterset, then use that instead of a new one
+        if currentLetterSet != nil {
+            print("LETTERSS!")
+        } else {
+            letters = model.generateLetters()
+            // TODO: need to change generateLetters() so that it returns a LetterSet
+            // And that letterset has to be used when generating word list
+            //currentLetterSet = letters
+        }
         
         // Set the letters in the buttons being used as letter tiles
         for var i=0; i<letters.count; i++ {
