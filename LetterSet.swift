@@ -12,7 +12,7 @@ import CoreData
 
 class LetterSet: NSManagedObject {
     
-    @NSManaged var letterSetID: NSNumber?
+    @NSManaged var letterSetID: String? // ID using URI representation
     @NSManaged var name: String? //TODO: do we need a name for each LetterSet?
     @NSManaged var letters: NSSet?
     @NSManaged var game: NSManagedObject?

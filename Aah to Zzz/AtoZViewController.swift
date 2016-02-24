@@ -15,11 +15,12 @@ class AtoZViewController: UIViewController {
     }()
     
     var model = AtoZModel.sharedInstance
-    var letters: [Letter]!
+    var letters: [Letter]! //TODO: why not ? instead of !
     var wordlist = [String]()
     
     var wordTable: AtoZTableViewController?
     
+    var game: GameData?
     var currentLetterSet: LetterSet?
 
     @IBOutlet var lettertiles: [UIButton]!
@@ -88,6 +89,8 @@ class AtoZViewController: UIViewController {
         // http://stackoverflow.com/questions/34075326/swift-2-iboutlet-collection-uibutton-leaks-memory
         //TODO: check for memory leak here
         // create an array to populate the buttons that hold the letters
+        
+        //TODO: get the current letter and word list from the model, if there is one
 
     }
     
@@ -104,14 +107,21 @@ class AtoZViewController: UIViewController {
     }
     
     func generateWordList() {
-        //TODO: if there is a saved letterset, then use that instead of a new one
-        if currentLetterSet != nil {
-            print("LETTERSS!")
-        } else {
+        // if there is a saved letterset, then use that instead of a new one
+        game = model.fetchGameData()
+        if game?.currentLetterSetID == nil {
             letters = model.generateLetters()
-            // TODO: need to change generateLetters() so that it returns a LetterSet
-            // And that letterset has to be used when generating word list
-            //currentLetterSet = letters
+        } else {
+            // there is a currentLetterSet, so let's find it
+            let lettersetURI = NSURL(string: (game?.currentLetterSetID)!)
+            let id = sharedContext.persistentStoreCoordinator?.managedObjectIDForURIRepresentation(lettersetURI!)
+            do {
+                currentLetterSet = try sharedContext.existingObjectWithID(id!) as? LetterSet
+                // the Letter's are saved in Core Data as an NSSet, so convert to array
+                letters = currentLetterSet?.letters?.allObjects as! [Letter]
+            } catch {
+                print("Error in getting current Letterset: \(error)")
+            }
         }
         
         // Set the letters in the buttons being used as letter tiles

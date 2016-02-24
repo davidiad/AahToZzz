@@ -26,6 +26,8 @@ class AtoZModel {
     var wordsDictionary: [String: String]
     var wordsSet: Set<String> // may not need to use this outside of this class, consider relocating the declaration
     
+    var game: GameData? // The managed object that is at the root of the object graph
+    
     //This prevents others from using the default '()' initializer for this class.
     private init() {
         
@@ -46,7 +48,8 @@ class AtoZModel {
             wordsDictionary[key] = value
             wordsSet.insert(key)
         }
-        saveGame() // create a GameData object, the root object for data persistence
+        game = fetchGameData()
+        //saveGame() // create a GameData object, the root object for data persistence
     }
     
     // read in the 3 letter word list with word definitions
@@ -78,7 +81,7 @@ class AtoZModel {
         return getWordlist(letters)
     }
     
-    //TODO: change to an array of managed object Letter's
+    
     func generateLetters () -> [Letter] {
         
         // create an array that will be filled with 7 Strings
@@ -99,7 +102,14 @@ class AtoZModel {
         
         // create a LetterSet managed object
         let letterset = NSEntityDescription.insertNewObjectForEntityForName("LetterSet", inManagedObjectContext: sharedContext) as! LetterSet
-        // TODO:-add the LetterSet to the GameData object
+        // add the LetterSet to the GameData object
+        letterset.game = game
+        saveContext()
+        print("Temp or not? \(letterset.objectID.temporaryID)")
+        letterset.letterSetID = String(letterset.objectID.URIRepresentation())
+        
+        game?.currentLetterSetID = letterset.letterSetID
+        
         // make the LetterSet the letterset property for each Letter
         for letter in letters {
             letter.letterset = letterset
@@ -110,7 +120,7 @@ class AtoZModel {
         
         // save the managed object context
         saveContext()
-        
+        print("Here we are in my, do we have saved clsID?: \(game?.currentLetterSetID)")
         return letters
     }
     
@@ -144,8 +154,6 @@ class AtoZModel {
         var sequence: String = ""
         var sequenceCounter: Int = 0
         
-        print("letters: \(letters)")
-        
         // find all 210 possible permutations of 7 letters into 3 letter sequences, and add to a set
         // (call them 'sequences' as we don't know yet if they are words until they are checked against the 3 letter word list)
         for var i=0; i<letters.count; i++ {
@@ -160,8 +168,8 @@ class AtoZModel {
                             // add the sequence to the set
                             allLetterPermutationsSet.insert(sequence)
                             
+                            // temp. var for testing the count
                             sequenceCounter++
-                            print(sequence)
                         }
                     }
                 }
@@ -175,28 +183,42 @@ class AtoZModel {
         return validWordsArray.sort()
     }
     
-    //MARK:- Save Managed Object Context helper
-    func saveContext() {
-        dispatch_async(dispatch_get_main_queue()) {
-            _ = try? self.sharedContext.save()
-        }
-    }
     
     //MARK:- GameData funcs
     
+    // Fetch the existing game from the store, or create one if there is none
+    func fetchGameData() -> GameData {
+        let fetchRequest = NSFetchRequest(entityName: "GameData")
+        do {
+            let gameArray = try sharedContext.executeFetchRequest(fetchRequest) as! [GameData]
+            if gameArray.count > 0 {
+                return gameArray[0]
+            } else {
+                //NSEntityDescription.insertNewObjectForEntityForName("GameData", inManagedObjectContext: sharedContext) as! GameData
+                let gameData = makeGameDataDictionary()
+                return GameData(dictionary: gameData, context: sharedContext)
+            }
+        // in the case there is a fetch error, also create a new game object
+        } catch let error as NSError {
+            print("Error in fetchGameData(): \(error)")
+            //TODO: can the catch itself generate and error?
+            //do we need to return GameDatare?
+            let defaultInfo = makeGameDataDictionary()
+            return GameData(dictionary: defaultInfo, context: sharedContext)
+        }
+    }
+    
+    
+    //TODO: not sure this func is needed
     func saveGame() {
        // _ = makeMapDictionary()
         deleteGames() // delete all games (for now) so there is only one at a time
-        _ = NSFetchRequest(entityName: "MapViewInfo")
+        _ = NSFetchRequest(entityName: "GameData")
         
         
         let game = NSEntityDescription.insertNewObjectForEntityForName("GameData", inManagedObjectContext: sharedContext) as! GameData
         
         game.name = "David's first game"
-//        mapInfo.lat = NSNumber(double: map.centerCoordinate.latitude)
-//        mapInfo.lon = NSNumber(double: map.centerCoordinate.longitude)
-//        mapInfo.latDelta = NSNumber(double: map.region.span.latitudeDelta)
-//        mapInfo.lonDelta = NSNumber(double: map.region.span.longitudeDelta)
         
         saveContext()
     }
@@ -212,19 +234,42 @@ class AtoZModel {
         }
     }
     
-//    // make dict for Game Data values
-//    func makeGameDataDictionary() -> [String : AnyObject] {
-//        
-//        let mapDictionary = [
-//            "lat": NSNumber(double: map.centerCoordinate.latitude),
-//            "lon": NSNumber(double: map.centerCoordinate.longitude),
-//            "latDelta": NSNumber(double: map.region.span.latitudeDelta),
-//            "lonDelta": NSNumber(double: map.region.span.longitudeDelta),
-//            "zoom": NSNumber(double: 1.0)
-//        ]
-//        
-//        return mapDictionary
-//    }
+    // make dict for Game Data values
+    func makeGameDataDictionary() -> [String : AnyObject] {
+        
+        let gameDataDictionary = [
+            "name": "David Game 1"
+        ]
+        
+        return gameDataDictionary
+    }
+    
+    //MARK:- Save Managed Object Context helper
+    func saveContext() {
+        if sharedContext.hasChanges {
+            do {
+                try sharedContext.save()
+            } catch {
+                let nserror = error as NSError
+                print("Could not save the Managed Object Context")
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+//        dispatch_async(dispatch_get_main_queue()) {
+//            _ = try? self.sharedContext.save()
+//        }
+//        dispatch_async(dispatch_get_main_queue()) {
+//            if self.sharedContext.hasChanges {
+//                do {
+//                    try self.sharedContext.save()
+//                } catch {
+//                    let nserror = error as NSError
+//                    print("Could not save the Managed Object Context")
+//                    NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+//                }
+//            }
+//        }
+    }
 
 }
 

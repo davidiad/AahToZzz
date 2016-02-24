@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F27" minimumToolsVersion="Automatic">
     <entity name="GameData" representedClassName=".GameData" syncable="YES">
-        <attribute name="currentLetterSetID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="gameID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="currentLetterSetID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="lettersets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="game" inverseEntity="LetterSet" syncable="YES"/>
     </entity>
@@ -11,14 +11,14 @@
         <relationship name="letterset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="letters" inverseEntity="LetterSet" syncable="YES"/>
     </entity>
     <entity name="LetterSet" representedClassName=".LetterSet" syncable="YES">
-        <attribute name="letterSetID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="letterSetID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameData" inverseName="lettersets" inverseEntity="GameData" syncable="YES"/>
         <relationship name="letters" optional="YES" toMany="YES" maxCount="7" deletionRule="Nullify" destinationEntity="Letter" inverseName="letterset" inverseEntity="Letter" syncable="YES"/>
     </entity>
     <elements>
         <element name="GameData" positionX="-81" positionY="-207" width="128" height="103"/>
-        <element name="LetterSet" positionX="126" positionY="-105" width="128" height="103"/>
         <element name="Letter" positionX="151" positionY="36" width="128" height="73"/>
+        <element name="LetterSet" positionX="126" positionY="-105" width="128" height="103"/>
     </elements>
 </model>

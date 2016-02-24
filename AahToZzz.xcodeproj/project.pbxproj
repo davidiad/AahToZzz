@@ -82,7 +82,6 @@
 				63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */,
 				63A3A12B1C765C4100F440B5 /* AtoZTableViewController.swift */,
 				63A3A12D1C76603300F440B5 /* WordListCell.swift */,
-				63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */,
 			);
 			name = AahToZzz;
 			path = "Aah to Zzz";
@@ -102,6 +101,7 @@
 		63A9FEF61C7AC2D200AE54F1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */,
 				63A9FEF51C7AC2AC00AE54F1 /* Core Data Managed Objects */,
 				63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */,
 				63A3A1291C7652C300F440B5 /* AtoZModel.swift */,

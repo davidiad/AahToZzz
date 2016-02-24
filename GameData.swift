@@ -12,8 +12,8 @@ import CoreData
 
 class GameData: NSManagedObject {
 
-    @NSManaged var currentLetterSetID: NSNumber?
-    @NSManaged var gameID: NSNumber?
+    @NSManaged var currentLetterSetID: String?
+    @NSManaged var gameID: String?
     @NSManaged var name: String?
     @NSManaged var lettersets: NSSet?
     
@@ -28,8 +28,9 @@ class GameData: NSManagedObject {
         
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
-        //searchString = dictionary[searchString!] as? String
-        //lon = dictionary[Keys.Lon] as? NSNumber
+        if let gameName = dictionary["name"] as? String {
+            name = gameName
+        }
     }
 
 }
