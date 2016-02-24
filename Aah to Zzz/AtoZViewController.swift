@@ -27,6 +27,8 @@ class AtoZViewController: UIViewController {
     @IBOutlet weak var wordInProgress: UILabel!
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
+        letters = model.generateLetters() // new set of letters created and saved to context
+        updateTiles()
         generateWordList()
         // put the word list into the table of words and set all words to blank
         if wordTable != nil {
@@ -96,6 +98,8 @@ class AtoZViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // prepareForSegue is called before viewDidLoad, therefore, creating and then passing on the letters & words here
+        checkForExistingLetters()
+        updateTiles()
         generateWordList()
         if let wordTableController = segue.destinationViewController as? AtoZTableViewController {
             wordTableController.wordlist = wordlist
@@ -106,7 +110,7 @@ class AtoZViewController: UIViewController {
         }
     }
     
-    func generateWordList() {
+    func checkForExistingLetters () {
         // if there is a saved letterset, then use that instead of a new one
         game = model.fetchGameData()
         if game?.currentLetterSetID == nil {
@@ -123,13 +127,19 @@ class AtoZViewController: UIViewController {
                 print("Error in getting current Letterset: \(error)")
             }
         }
-        
+
+    }
+    
+    func generateWordList() {
+
+        wordlist = model.generateWordlist(letters)
+    }
+    
+    func updateTiles () {
         // Set the letters in the buttons being used as letter tiles
         for var i=0; i<letters.count; i++ {
             lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
         }
-        
-        wordlist = model.generateWordlist(letters)
     }
     
     override func didReceiveMemoryWarning() {
