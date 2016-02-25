@@ -7,12 +7,32 @@
 //
 
 import UIKit
+import CoreData
 
-class AtoZTableViewController: UITableViewController {
+class AtoZTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     //TODO: Sometimes the cell does not show the correct word. Suspect that dequeued cells are not updating correctly. If cell is scrolled into view, it seems to work correctly. Check whether this happens only with cells not currently in view.
     
     var model = AtoZModel.sharedInstance
     var wordlist = [String]()
+    
+    // MARK: - NSFetchedResultsController
+    lazy var sharedContext = {
+        CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Word")
+        fetchRequest.predicate = NSPredicate(format: "inCurrentList == %@", true)
+        // Add Sort Descriptors
+        let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+
+        return fetchedResultsController
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +42,13 @@ class AtoZTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-
+        
+        // Start the fetched results controller
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("Error performing initial fetch")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,17 +64,28 @@ class AtoZTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(wordlist.count)
         return wordlist.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! WordListCell
-
+        
+        
         // Configure the cell...
         cell.word.text = "***"
-        //cell.word.text = wordlist[indexPath.row]
+
+        
+        // Fetch Word
+        if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+            if word.found == true {
+                cell.textLabel?.text = word.word
+            } else {
+                cell.word.text = "? ? ?"
+            }
+        }
+
+        
         return cell
     }
     
