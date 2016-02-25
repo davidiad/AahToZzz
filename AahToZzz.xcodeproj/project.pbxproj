@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		633727601C7EAEA4003E8447 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337275E1C7EAEA4003E8447 /* Word.swift */; };
 		63A3A1111C763F6C00F440B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1101C763F6C00F440B5 /* AppDelegate.swift */; };
 		63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A1141C763F6C00F440B5 /* Main.storyboard */; };
 		63A3A1191C763F6C00F440B5 /* AtoZ.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6337275E1C7EAEA4003E8447 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		63A3A10D1C763F6C00F440B5 /* AahToZzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AahToZzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A3A1101C763F6C00F440B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63A3A1151C763F6C00F440B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 		63A9FEF51C7AC2AC00AE54F1 /* Core Data Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
+				6337275E1C7EAEA4003E8447 /* Word.swift */,
 				63A9FEEA1C7AC29C00AE54F1 /* LetterSet.swift */,
 				63A9FEEC1C7AC29C00AE54F1 /* Letter.swift */,
 				63A9FEEE1C7AC29C00AE54F1 /* GameData.swift */,
@@ -186,6 +189,7 @@
 				63A3A12A1C7652C300F440B5 /* AtoZModel.swift in Sources */,
 				63A3A12C1C765C4100F440B5 /* AtoZTableViewController.swift in Sources */,
 				63A9FEF41C7AC29C00AE54F1 /* GameData.swift in Sources */,
+				633727601C7EAEA4003E8447 /* Word.swift in Sources */,
 				63A9FEE81C7AB4B500AE54F1 /* CoreDataStackManager.swift in Sources */,
 				63A3A12E1C76603300F440B5 /* WordListCell.swift in Sources */,
 				63A3A1191C763F6C00F440B5 /* AtoZ.xcdatamodeld in Sources */,

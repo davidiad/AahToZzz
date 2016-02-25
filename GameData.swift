@@ -16,6 +16,7 @@ class GameData: NSManagedObject {
     @NSManaged var gameID: String?
     @NSManaged var name: String?
     @NSManaged var lettersets: NSSet?
+    @NSManaged var words: NSSet?
     
     // standard Core Data init method.
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
