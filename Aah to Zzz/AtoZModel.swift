@@ -72,6 +72,11 @@ class AtoZModel {
     
     //MARK:- Letter and Word functions
     
+//    // Instead of returning an array of strings, return an array of Word objects
+//    func generateWords () -> [Word] {
+//        
+//    }
+    
     
     // wrapper function that calls other functions
     func generateWordlist () -> [String] {
@@ -79,11 +84,11 @@ class AtoZModel {
         return getWordlist(letters)
     }
     
+    //TODO: should this be named uniquely from above?
     // getting a wordlist from letters that can be called from another class
     func generateWordlist (letters: [Letter]) -> [String] {
         return getWordlist(letters)
     }
-    
     
     func generateLetters () -> [Letter] {
         
@@ -118,13 +123,54 @@ class AtoZModel {
             letter.letterset = letterset
         }
         // TODO:Make a struct for LetterPositions. Add as a property to Letter.
-
-
-        
         // save the managed object context
         saveContext()
-        print("Here we are in my, do we have saved clsID?: \(game?.currentLetterSetID)")
+        
         return letters
+    }
+    
+    // a variation of generateLetters, this one returns the actual LetterSet managed object that can be stored
+    // Can this replace generateLetters?//TODO: find out
+    func generateLetterSet () -> LetterSet {
+        
+        // create an array that will be filled with 7 Strings
+        // TODO: can this array be replaced by the LetterSet?
+        var letters: [Letter]
+        // Add the first letter to to letterset -- 1st letter is a random letter
+        letters = [createLetter(nil)]
+        
+        // pick 2 random words from wordsArray
+        let firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+        let secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+        
+        // Add the 6 letters from 2 random words to the letterset, for a total of 7 letters
+        let sixLettersFromWords = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
+        for char in sixLettersFromWords.characters {
+            letters.append(createLetter(String(char)))
+        }
+        
+        // create a LetterSet managed object
+        let letterset = NSEntityDescription.insertNewObjectForEntityForName("LetterSet", inManagedObjectContext: sharedContext) as! LetterSet
+        // add the LetterSet to the GameData object
+        letterset.game = game
+        saveContext()
+        print("Temp or not? \(letterset.objectID.temporaryID)") //to verify that it has a permanent ID
+        letterset.letterSetID = String(letterset.objectID.URIRepresentation())
+        
+        game?.currentLetterSetID = letterset.letterSetID
+        // this should do the same as above, and much simpler
+        // TODO: consider replacing the ID way of finding letterset
+        game?.currentLetterSet = letterset
+        
+        // make the LetterSet the letterset property for each Letter
+        for letter in letters {
+            letter.letterset = letterset
+        }
+        // TODO:Make a struct for LetterPositions. Add as a property to Letter.
+        // save the managed object context
+        saveContext()
+
+        return letterset
     }
     
     
@@ -152,6 +198,7 @@ class AtoZModel {
     
     //MARK:- Word functions
     
+    //TODO: rename all the word funcs  so less confusing and more clear
     func getWordlist(letters: [Letter]) -> [String] {
         
         var allLetterPermutationsSet = Set<String>()
@@ -184,14 +231,17 @@ class AtoZModel {
     }
     
     // either fetch or create Word managed objects for the current list, and update values to reflect their status
-    func createOrUpdateWords(wordlist: [String]) {
+    func createOrUpdateWords(wordlist: [String]) -> [Word] {
+        var currentWords = [Word]()
         // can I assume that a GameData has been created, and etc?
         // starting a new fetch request, in case none has been made, or it needs updating
         var newWord: Word
-        for wordString in wordlist {
+        //TODO:- keep the words sorted
+        for var i=0; i<wordlist.count; i++ {
+       // for wordString in wordlist {
             let fetchRequest = NSFetchRequest(entityName: "Word")
             // Create Predicate
-            let predicate = NSPredicate(format: "%K == %@", "word", wordString)
+            let predicate = NSPredicate(format: "%K == %@", "word", wordlist[i])
             fetchRequest.predicate = predicate
             
             do {
@@ -202,7 +252,7 @@ class AtoZModel {
                     print("and the word is: \(wordsArray[0].word)")
                     newWord = wordsArray[0]
                 } else {
-                    newWord = Word(wordString: wordString, context: sharedContext)
+                    newWord = Word(wordString: wordlist[i], context: sharedContext)
                 }
                 
                 // Whether newly created, or fetched from existing, do the following:
@@ -211,12 +261,13 @@ class AtoZModel {
                 // set found to false
                 // add 1 to numTimesPlayed
                 // set the game property
-                newWord.game = game
+                newWord.game = game // make sure that game is not nil
                 // need to find the current letterset
-  //TODO:              newWord.letterlist = game?.currentLetterSetID //TODO: how to set the letterset?
+                newWord.letterlist = game?.currentLetterSet as? LetterSet //TODO: need to use ID to locate letterset?
                 newWord.inCurrentList = true
                 newWord.found = false
                 newWord.numTimesPlayed += 1
+                currentWords.append(newWord)
                 
             } catch {
                 let fetchError = error as NSError
@@ -225,6 +276,7 @@ class AtoZModel {
         }
         
         saveContext()
+        return currentWords
             //let wordsArray = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
             // for each String in wordlist, check whether that Word has been created yet
             // if not, create it
@@ -232,6 +284,7 @@ class AtoZModel {
             //let fetchRequest = NSFetchRequest(entityName: "Word")
             
 
+        
             
             // Execute Fetch Request
             //do {

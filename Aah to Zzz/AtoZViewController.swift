@@ -22,12 +22,14 @@ class AtoZViewController: UIViewController {
     
     var game: GameData?
     var currentLetterSet: LetterSet?
+    var currentWords: [Word]?
 
     @IBOutlet var lettertiles: [UIButton]!
     @IBOutlet weak var wordInProgress: UILabel!
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
         letters = model.generateLetters() // new set of letters created and saved to context
+        checkForExistingLetters()
         updateTiles()
         generateWordList()
         // put the word list into the table of words and set all words to blank
@@ -38,7 +40,6 @@ class AtoZViewController: UIViewController {
                 updateCellForWord("---", index: i, color: UIColor.blackColor())
             }
            
-            
         } else {
             print("wordTable was nil")
         }
@@ -114,7 +115,8 @@ class AtoZViewController: UIViewController {
         // if there is a saved letterset, then use that instead of a new one
         game = model.fetchGameData()
         if game?.currentLetterSetID == nil {
-            letters = model.generateLetters()
+            //letters = model.generateLetters()
+            currentLetterSet = model.generateLetterSet()
         } else {
             // there is a currentLetterSet, so let's find it
             let lettersetURI = NSURL(string: (game?.currentLetterSetID)!)
@@ -122,7 +124,7 @@ class AtoZViewController: UIViewController {
             do {
                 currentLetterSet = try sharedContext.existingObjectWithID(id!) as? LetterSet
                 // the Letter's are saved in Core Data as an NSSet, so convert to array
-                letters = currentLetterSet?.letters?.allObjects as! [Letter]
+                //letters = currentLetterSet?.letters?.allObjects as! [Letter]
             } catch {
                 print("Error in getting current Letterset: \(error)")
             }
@@ -131,13 +133,25 @@ class AtoZViewController: UIViewController {
     }
     
     func generateWordList() {
-
-        wordlist = model.generateWordlist(letters)
+        wordlist = model.generateWordlist(currentLetterSet?.letters?.allObjects as! [Letter])
+        currentWords = model.createOrUpdateWords(wordlist)
     }
     
     func updateTiles () {
         // Set the letters in the buttons being used as letter tiles
-        for var i=0; i<letters.count; i++ {
+//        for var i=0; i<currentLetterSet?.letters?.count; i++ {
+//            lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal
+//        }
+        //TODO: make optional-safe
+//        for letter in (currentLetterSet?.letters)! {
+//            lettertiles[i].setTitle(letter.letter, forState: UIControlState.Normal)
+//        }
+         //Set the letters in the buttons being used as letter tiles
+        
+        // convert the LetterSet into an array
+        letters = currentLetterSet?.letters?.allObjects as! [Letter]
+        
+        for var i=0; i<lettertiles.count; i++ {
             lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
         }
     }

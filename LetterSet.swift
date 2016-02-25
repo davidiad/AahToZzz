@@ -15,8 +15,9 @@ class LetterSet: NSManagedObject {
     @NSManaged var letterSetID: String? // ID using URI representation
     @NSManaged var name: String? //TODO: do we need a name for each LetterSet?
     @NSManaged var letters: NSSet?
-    @NSManaged var game: NSManagedObject?
-
+    @NSManaged var game: NSManagedObject? //TODO: should this be NSManagedObject? or GameData?
+    @NSManaged var currentGame: NSManagedObject?
+    
     // standard Core Data init method.
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)

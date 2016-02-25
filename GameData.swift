@@ -17,6 +17,7 @@ class GameData: NSManagedObject {
     @NSManaged var name: String?
     @NSManaged var lettersets: NSSet?
     @NSManaged var words: NSSet?
+    @NSManaged var currentLetterSet: NSManagedObject? // alternate way of finding the current letter set, besides using the ID
     
     // standard Core Data init method.
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {

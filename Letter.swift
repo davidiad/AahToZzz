@@ -12,7 +12,7 @@ import CoreData
 class Letter: NSManagedObject {
     
     @NSManaged var letter: String?
-    @NSManaged var letterset: LetterSet?
+    @NSManaged var letterset: LetterSet? //TODO: should this be NSManagedObject?
 
     // standard Core Data init method.
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {

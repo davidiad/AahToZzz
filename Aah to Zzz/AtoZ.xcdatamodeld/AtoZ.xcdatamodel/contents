@@ -4,6 +4,7 @@
         <attribute name="currentLetterSetID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gameID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="currentLetterSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="currentGame" inverseEntity="LetterSet" syncable="YES"/>
         <relationship name="lettersets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="game" inverseEntity="LetterSet" syncable="YES"/>
         <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="game" inverseEntity="Word" syncable="YES"/>
     </entity>
@@ -14,6 +15,7 @@
     <entity name="LetterSet" representedClassName=".LetterSet" syncable="YES">
         <attribute name="letterSetID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="currentGame" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameData" inverseName="currentLetterSet" inverseEntity="GameData" syncable="YES"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameData" inverseName="lettersets" inverseEntity="GameData" syncable="YES"/>
         <relationship name="letters" optional="YES" toMany="YES" maxCount="7" deletionRule="Nullify" destinationEntity="Letter" inverseName="letterset" inverseEntity="Letter" syncable="YES"/>
         <relationship name="wordlist" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="letterlist" inverseEntity="Word" syncable="YES"/>
@@ -28,9 +30,9 @@
         <relationship name="letterlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="wordlist" inverseEntity="LetterSet" syncable="YES"/>
     </entity>
     <elements>
-        <element name="GameData" positionX="-99" positionY="-378" width="128" height="118"/>
+        <element name="GameData" positionX="-99" positionY="-378" width="128" height="133"/>
         <element name="Letter" positionX="126" positionY="-711" width="128" height="73"/>
-        <element name="LetterSet" positionX="-144" positionY="-720" width="128" height="118"/>
+        <element name="LetterSet" positionX="-351" positionY="-756" width="128" height="133"/>
         <element name="Word" positionX="180" positionY="-576" width="128" height="148"/>
     </elements>
 </model>
