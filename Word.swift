@@ -17,7 +17,7 @@ class Word: NSManagedObject {
     @NSManaged var found: Bool
     @NSManaged var numTimesPlayed: Int16
     @NSManaged var numTimesFound: Int16
-    @NSManaged var letterlist: LetterSet?
+    @NSManaged var letterlist: LetterSet? // should really (in the future) allow many letterlist's to each word
     @NSManaged var game: GameData?
     
     // standard Core Data init method.

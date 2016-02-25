@@ -48,8 +48,11 @@ class AtoZModel {
             wordsDictionary[key] = value
             wordsSet.insert(key)
         }
-        game = fetchGameData()
+        game = fetchGameData() // fetches the exisiting game if there is one, or else creates a new game
         //saveGame() // create a GameData object, the root object for data persistence
+        
+        // Create Word objects for each word in the list, and save to the shared context
+        // here? or create them as needed when making word lists
     }
     
     // read in the 3 letter word list with word definitions
@@ -147,12 +150,12 @@ class AtoZModel {
         return alphabetArray
     }
     
+    //MARK:- Word functions
     
     func getWordlist(letters: [Letter]) -> [String] {
         
         var allLetterPermutationsSet = Set<String>()
         var sequence: String = ""
-        var sequenceCounter: Int = 0
         
         // find all 210 possible permutations of 7 letters into 3 letter sequences, and add to a set
         // (call them 'sequences' as we don't know yet if they are words until they are checked against the 3 letter word list)
@@ -167,9 +170,6 @@ class AtoZModel {
                             sequence = letters[i].letter! + letters[j].letter! + letters[k].letter!
                             // add the sequence to the set
                             allLetterPermutationsSet.insert(sequence)
-                            
-                            // temp. var for testing the count
-                            sequenceCounter++
                         }
                     }
                 }
@@ -183,6 +183,91 @@ class AtoZModel {
         return validWordsArray.sort()
     }
     
+    // either fetch or create Word managed objects for the current list, and update values to reflect their status
+    func createOrUpdateWords(wordlist: [String]) {
+        // can I assume that a GameData has been created, and etc?
+        // starting a new fetch request, in case none has been made, or it needs updating
+        var newWord: Word
+        for wordString in wordlist {
+            let fetchRequest = NSFetchRequest(entityName: "Word")
+            // Create Predicate
+            let predicate = NSPredicate(format: "%K == %@", "word", wordString)
+            fetchRequest.predicate = predicate
+            
+            do {
+                let wordsArray = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+                // check to see if anything was returned
+                if wordsArray.count > 0 {
+                    // a Word was returned for that String. Do not create another with the same string!
+                    print("and the word is: \(wordsArray[0].word)")
+                    newWord = wordsArray[0]
+                } else {
+                    newWord = Word(wordString: wordString, context: sharedContext)
+                }
+                
+                // Whether newly created, or fetched from existing, do the following:
+                // assign letterset to the string
+                // set inCurrentList to true
+                // set found to false
+                // add 1 to numTimesPlayed
+                // set the game property
+                newWord.game = game
+                // need to find the current letterset
+  //TODO:              newWord.letterlist = game?.currentLetterSetID //TODO: how to set the letterset?
+                newWord.inCurrentList = true
+                newWord.found = false
+                newWord.numTimesPlayed += 1
+                
+            } catch {
+                let fetchError = error as NSError
+                print(fetchError)
+            }
+        }
+        
+        saveContext()
+            //let wordsArray = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+            // for each String in wordlist, check whether that Word has been created yet
+            // if not, create it
+            // Fetching
+            //let fetchRequest = NSFetchRequest(entityName: "Word")
+            
+
+            
+            // Execute Fetch Request
+            //do {
+                /* // One way of doing it. This might work
+                let result = try sharedContext.executeFetchRequest(fetchRequest)
+                for managedObject in result {
+                    if let theString = managedObject.valueForKey("word") {
+                        print("Found a word: \(theString))")
+                    } else {
+                        //
+                    }
+                }
+                
+            } catch {
+                let fetchError = error as NSError
+                print(fetchError)
+            }
+            */
+                
+                
+            //////////////////////////
+            
+//            if gameArray.count > 0 {
+//                return gameArray[0]
+//            } else {
+//                //NSEntityDescription.insertNewObjectForEntityForName("GameData", inManagedObjectContext: sharedContext) as! GameData
+//                let gameData = makeGameDataDictionary()
+//                return GameData(dictionary: gameData, context: sharedContext)
+//            }
+//            // in the case there is a fetch error, also create a new game object
+//        } catch let error as NSError {
+//            print("Error in createOrUpdateWords(): \(error)")
+//        }
+
+    }
+    //TODO: use fetchedResultsController to manage the words
     
     //MARK:- GameData funcs
     
@@ -210,7 +295,7 @@ class AtoZModel {
     
     
     //TODO: not sure this func is needed
-    func saveGame() {
+    func createGame() {
        // _ = makeMapDictionary()
         deleteGames() // delete all games (for now) so there is only one at a time
         _ = NSFetchRequest(entityName: "GameData")
