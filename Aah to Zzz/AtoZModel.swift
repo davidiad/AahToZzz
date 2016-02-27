@@ -254,7 +254,7 @@ class AtoZModel {
                 // check to see if anything was returned
                 if wordsArray.count > 0 {
                     // a Word was returned for that String. Do not create another with the same string!
-                    print("and the word is: \(wordsArray[0].word)")
+                    print("in CORUW: and the word is: \(wordsArray[0].word)")
                     newWord = wordsArray[0]
                 } else {
                     newWord = Word(wordString: wordlist[i], context: sharedContext)
@@ -273,9 +273,9 @@ class AtoZModel {
                 newWord.found = false
                 newWord.numTimesPlayed += 1
                 currentWords.append(newWord)
-                print("newWord.word: \(newWord.word)")
-                print("newWord.found: \(newWord.found)")
-                print("newWord.inCurrentList: \(newWord.inCurrentList)")
+//                print("newWord.word: \(newWord.word)")
+//                print("newWord.found: \(newWord.found)")
+//                print("newWord.inCurrentList: \(newWord.inCurrentList)")
                 
             } catch {
                 let fetchError = error as NSError

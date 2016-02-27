@@ -55,7 +55,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             try fetchedResultsController.performFetch()
         } catch {
             let fetchError = error as NSError
-            print("Unable to Save whatev")
             print("\(fetchError), \(fetchError.localizedDescription)")
         }
         
@@ -68,7 +67,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         checkForExistingLetters()
         updateTiles()
         generateWordList()
-        
     }
     
 
@@ -95,7 +93,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             break;
         case .Update:
-            print("Updating Fetched Word")
             if let indexPath = indexPath, let cell = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
                 configureCell(cell, atIndexPath: indexPath)
             }
@@ -136,23 +133,23 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! WordListCell
-        
-        
+        cell.word.text = "x x x"
         configureCell(cell, atIndexPath: indexPath)
-        
         
         return cell
     }
     
     func configureCell(cell: WordListCell, atIndexPath indexPath: NSIndexPath) {
+
+        cell.word.text = "? ? ?"
         
         // Fetch Word
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
-            if word.found == true {
-                cell.textLabel?.text = word.word
-            } else {
-                cell.word.text = "? ? ?"
-            }
+            if word.found == true && word.inCurrentList == true {
+                cell.word.text = word.word
+            } //else {
+                //cell.word.text = "? ? ?"
+            //}
         }
 }
     
@@ -178,6 +175,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         currentWords = model.generateWords(letters)
         // save the current # of words for use later in checkForValidWord
         currentNumberOfWords = currentWords?.count
+        
+        // attempting to fix problem where old words show up in cells
+        tableView.reloadData()
+        
+        
+        
 //        // put the word list into the table of words and set all words to blank
 //        if wordTable != nil {
 //            wordTable!.wordlist = wordlist

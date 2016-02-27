@@ -79,9 +79,9 @@ class AtoZTableViewController: UITableViewController, NSFetchedResultsController
         // Fetch Word
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
             if word.found == true {
-                cell.textLabel?.text = word.word
+                cell.word.text = word.word
             } else {
-                cell.word.text = "? ? ?"
+                cell.word.text = "a a a"
             }
         }
 

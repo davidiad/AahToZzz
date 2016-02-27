@@ -22,5 +22,12 @@ class WordListCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
+    
+//    //MARK:- Cell delegate
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        word.text = "*  *  *"
+//        word.backgroundColor = UIColor.yellowColor()
+//    }
 
 }
