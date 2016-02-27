@@ -10,6 +10,8 @@ import UIKit
 
 class DefinitionPopoverVC: UIViewController {
     
+    let wordnik = WordnikClient.sharedInstance
+    
     var sometext: String?
     var definition: String?
     
@@ -26,6 +28,13 @@ class DefinitionPopoverVC: UIViewController {
 
         if definition != nil {
             definitionTextView.text = definition
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if sometext != nil {
+            print(wordnik.getDefinitionForWord(sometext!))
         }
     }
 
