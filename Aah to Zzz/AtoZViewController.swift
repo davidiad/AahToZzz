@@ -162,6 +162,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             vc.modalPresentationStyle = UIModalPresentationStyle.Popover
             if let wordObject = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
                 vc.sometext = wordObject.word
+                vc.definition = model.getDefinition(wordObject.word!)
 //                if let vc.sometext = wordObject.word {
 //                    print("some success")
 //                } else {

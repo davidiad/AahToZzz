@@ -219,22 +219,41 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEf-an-5VJ">
-                                <rect key="frame" x="43" y="106" width="68" height="128"/>
-                                <color key="backgroundColor" red="0.33116582049999999" green="0.70857920070000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="43" y="148" width="514" height="411"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xsS-Rq-guZ">
+                                        <rect key="frame" x="8" y="8" width="498" height="395"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.95370905988320698" blue="0.70081192228658373" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="68" id="1gj-pi-n6v"/>
+                                    <constraint firstAttribute="bottom" secondItem="xsS-Rq-guZ" secondAttribute="bottom" constant="8" id="OtK-6M-hyc"/>
+                                    <constraint firstAttribute="trailing" secondItem="xsS-Rq-guZ" secondAttribute="trailing" constant="8" id="Sef-5T-fDy"/>
+                                    <constraint firstItem="xsS-Rq-guZ" firstAttribute="top" secondItem="LEf-an-5VJ" secondAttribute="top" constant="8" id="lS5-EJ-vaA"/>
+                                    <constraint firstItem="xsS-Rq-guZ" firstAttribute="leading" secondItem="LEf-an-5VJ" secondAttribute="leading" constant="8" id="sho-nl-9P4"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="1gj-pi-n6v"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="LEf-an-5VJ" firstAttribute="trailing" secondItem="lIp-LI-BpY" secondAttribute="trailing" constant="-43" id="05C-nw-q8N"/>
                             <constraint firstItem="4ef-t4-ZnZ" firstAttribute="top" secondItem="peu-sT-8FG" secondAttribute="bottom" constant="8" id="1h2-zg-sLg"/>
-                            <constraint firstItem="LEf-an-5VJ" firstAttribute="top" secondItem="peu-sT-8FG" secondAttribute="bottom" constant="86" id="28p-4v-CTL"/>
                             <constraint firstItem="4ef-t4-ZnZ" firstAttribute="centerX" secondItem="lIp-LI-BpY" secondAttribute="centerX" id="63W-1j-wG9"/>
                             <constraint firstItem="LEf-an-5VJ" firstAttribute="top" secondItem="4ef-t4-ZnZ" secondAttribute="bottom" constant="7.5" id="7eo-zA-03s"/>
-                            <constraint firstItem="ijA-NS-79m" firstAttribute="top" secondItem="LEf-an-5VJ" secondAttribute="bottom" constant="366" id="8py-oc-Amg"/>
-                            <constraint firstItem="LEf-an-5VJ" firstAttribute="leading" secondItem="lIp-LI-BpY" secondAttribute="leadingMargin" constant="23" id="IPi-N5-iAu"/>
+                            <constraint firstItem="ijA-NS-79m" firstAttribute="top" secondItem="LEf-an-5VJ" secondAttribute="bottom" constant="41" id="8py-oc-Amg"/>
+                            <constraint firstItem="LEf-an-5VJ" firstAttribute="leading" secondItem="lIp-LI-BpY" secondAttribute="leading" constant="43" id="IPi-N5-iAu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="LEf-an-5VJ" secondAttribute="trailing" constant="297" id="J6l-aG-Jjv"/>
+                            <constraint firstItem="LEf-an-5VJ" firstAttribute="top" secondItem="4ef-t4-ZnZ" secondAttribute="bottom" constant="49.5" id="eG6-CA-4Ow"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -245,6 +264,7 @@
                     </view>
                     <connections>
                         <outlet property="currentWord" destination="4ef-t4-ZnZ" id="zO2-a0-5BX"/>
+                        <outlet property="definitionTextView" destination="xsS-Rq-guZ" id="Xqf-ct-VqW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJ7-wC-TPu" userLabel="First Responder" sceneMemberID="firstResponder"/>

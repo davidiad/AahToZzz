@@ -328,6 +328,15 @@ class AtoZModel {
 //        }
 
     }
+    
+    func getDefinition(word: String) -> String {
+        if let definition = wordsDictionary[word] {
+            return definition
+        }
+        
+        return ("No definition was found for \(word)")
+    }
+    
     //TODO: use fetchedResultsController to manage the words
     
     //MARK:- GameData funcs

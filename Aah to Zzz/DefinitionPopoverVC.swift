@@ -11,6 +11,9 @@ import UIKit
 class DefinitionPopoverVC: UIViewController {
     
     var sometext: String?
+    var definition: String?
+    
+    @IBOutlet weak var definitionTextView: UITextView!
     
     @IBOutlet weak var currentWord: UILabel!
     
@@ -21,7 +24,9 @@ class DefinitionPopoverVC: UIViewController {
             currentWord.text = sometext
         }
 
-        // Do any additional setup after loading the view.
+        if definition != nil {
+            definitionTextView.text = definition
+        }
     }
 
     override func didReceiveMemoryWarning() {
