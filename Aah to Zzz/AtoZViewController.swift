@@ -133,7 +133,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! WordListCell
-        cell.word.text = "x x x"
+//        cell.word.text = "x x x"
         configureCell(cell, atIndexPath: indexPath)
         
         return cell
@@ -141,15 +141,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func configureCell(cell: WordListCell, atIndexPath indexPath: NSIndexPath) {
         
-        cell.word.text = "? ? ?"
-        
         // Fetch Word
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
             if word.found == true && word.inCurrentList == true {
                 cell.word.text = word.word
-            } //else {
-            //cell.word.text = "? ? ?"
-            //}
+                print("FOund word: \(word.word)")
+            } else {
+            cell.word.text = "? ? ?"
+            }
         }
     }
     
@@ -205,14 +204,18 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
         // Generating a new list, so first, set all the previous Words 'found' property to false
+        // and, if the found property is true, first add 1 to the numTimesFound property
         for var i=0; i<fetchedResultsController.fetchedObjects?.count; i++ {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+                if word.found == true {
+                    word.numTimesFound += 1
+                }
                 word.found = false
                 word.inCurrentList = false
             }
-            
         }
+        saveContext()
 //        let newWord = Word(wordString: "AAA", context: sharedContext)
         currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
 
@@ -225,7 +228,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         currentNumberOfWords = currentWords?.count
         
         // attempting to fix problem where old words show up in cells
-        tableView.reloadData()
+        //´tableView.reloadData()
         
         
         
@@ -270,8 +273,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
                 currentWord.found = true
+                saveContext()
+                tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
                 return true
             }
+            
         }
         return false
     }
@@ -369,6 +375,20 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Core Data Saving support
+    
+    func saveContext () {
+        if sharedContext.hasChanges {
+            do {
+                try sharedContext.save()
+            } catch {
+                let nserror = error as NSError
+                print("Could not save the Managed Object Context")
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
     }
     
     

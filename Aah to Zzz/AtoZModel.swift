@@ -258,6 +258,7 @@ class AtoZModel {
                     newWord = wordsArray[0]
                 } else {
                     newWord = Word(wordString: wordlist[i], context: sharedContext)
+                    newWord.found = false
                 }
                 
                 // Whether newly created, or fetched from existing, do the following:
@@ -270,7 +271,7 @@ class AtoZModel {
                 // need to find the current letterset
                 newWord.letterlist = game?.currentLetterSet as? LetterSet //TODO: need to use ID to locate letterset?
                 newWord.inCurrentList = true
-                newWord.found = false
+                
                 newWord.numTimesPlayed += 1
                 currentWords.append(newWord)
 //                print("newWord.word: \(newWord.word)")
