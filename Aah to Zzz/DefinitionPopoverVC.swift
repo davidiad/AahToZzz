@@ -9,9 +9,17 @@
 import UIKit
 
 class DefinitionPopoverVC: UIViewController {
-
+    
+    var sometext: String?
+    
+    @IBOutlet weak var currentWord: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        currentWord.text = "DFault"
+        if sometext != nil {
+            currentWord.text = sometext
+        }
 
         // Do any additional setup after loading the view.
     }

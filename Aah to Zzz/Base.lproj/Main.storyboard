@@ -211,8 +211,41 @@
                     <view key="view" contentMode="scaleToFill" id="lIp-LI-BpY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="333" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ef-t4-ZnZ">
+                                <rect key="frame" x="248" y="28" width="105.5" height="70.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="59"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEf-an-5VJ">
+                                <rect key="frame" x="43" y="106" width="68" height="128"/>
+                                <color key="backgroundColor" red="0.33116582049999999" green="0.70857920070000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="68" id="1gj-pi-n6v"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4ef-t4-ZnZ" firstAttribute="top" secondItem="peu-sT-8FG" secondAttribute="bottom" constant="8" id="1h2-zg-sLg"/>
+                            <constraint firstItem="LEf-an-5VJ" firstAttribute="top" secondItem="peu-sT-8FG" secondAttribute="bottom" constant="86" id="28p-4v-CTL"/>
+                            <constraint firstItem="4ef-t4-ZnZ" firstAttribute="centerX" secondItem="lIp-LI-BpY" secondAttribute="centerX" id="63W-1j-wG9"/>
+                            <constraint firstItem="LEf-an-5VJ" firstAttribute="top" secondItem="4ef-t4-ZnZ" secondAttribute="bottom" constant="7.5" id="7eo-zA-03s"/>
+                            <constraint firstItem="ijA-NS-79m" firstAttribute="top" secondItem="LEf-an-5VJ" secondAttribute="bottom" constant="366" id="8py-oc-Amg"/>
+                            <constraint firstItem="LEf-an-5VJ" firstAttribute="leading" secondItem="lIp-LI-BpY" secondAttribute="leadingMargin" constant="23" id="IPi-N5-iAu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LEf-an-5VJ" secondAttribute="trailing" constant="297" id="J6l-aG-Jjv"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7eo-zA-03s"/>
+                                <exclude reference="J6l-aG-Jjv"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="currentWord" destination="4ef-t4-ZnZ" id="zO2-a0-5BX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJ7-wC-TPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

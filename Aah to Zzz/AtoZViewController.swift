@@ -155,40 +155,31 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         if let wordCell = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
-            print("tapped a cell. The cell's word is : \(wordCell.word.text)")
-            print("indexPath: \(indexPath)")
-            print("___________")
+            
+            
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewControllerWithIdentifier("definition") as! DefinitionPopoverVC
+            vc.modalPresentationStyle = UIModalPresentationStyle.Popover
+            if let wordObject = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+                vc.sometext = wordObject.word
+//                if let vc.sometext = wordObject.word {
+//                    print("some success")
+//                } else {
+//                    print("not accessing vc")
+//                    print(vc)
+//                }
+            }
+            let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+            //popover.barButtonItem = sender
+            popover.delegate = self
+            popover.permittedArrowDirections = UIPopoverArrowDirection.Right
+            // tell the popover that it should point from the cell that was tapped
+            popover.sourceView = tableView.cellForRowAtIndexPath(indexPath)
+            
+            presentViewController(vc, animated: true, completion:nil)
         }
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("definition") as! DefinitionPopoverVC
-        vc.modalPresentationStyle = UIModalPresentationStyle.Popover
-        let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-        //popover.barButtonItem = sender
-        popover.delegate = self
-        popover.permittedArrowDirections = UIPopoverArrowDirection.Right
-        // tell the popover that it should point from the cell that was tapped
-        popover.sourceView = tableView.cellForRowAtIndexPath(indexPath)
-        presentViewController(vc, animated: true, completion:nil)
         return indexPath
     }
-    
-//    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-//        if let wordCell = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
-//            print("tapped a cell. The cell's word is : \(wordCell.word.text)")
-//            print("indexPath: \(indexPath)")
-//            print("___________")
-//        }
-//        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewControllerWithIdentifier("definition") as! DefinitionPopoverVC
-//        vc.modalPresentationStyle = UIModalPresentationStyle.Popover
-//        let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-//        //popover.barButtonItem = sender
-//        popover.delegate = self
-//        popover.permittedArrowDirections = UIPopoverArrowDirection.Right
-//        // tell the popover that it should point from the cell that was tapped
-//        popover.sourceView = tableView.cellForRowAtIndexPath(indexPath)
-//        presentViewController(vc, animated: true, completion:nil)
-//    }
     
     //MARK:- Popover Delegate functions
     
