@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate {
     
     var model = AtoZModel.sharedInstance
     var letters: [Letter]! //TODO: why not ? instead of !
@@ -140,7 +140,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func configureCell(cell: WordListCell, atIndexPath indexPath: NSIndexPath) {
-
+        
         cell.word.text = "? ? ?"
         
         // Fetch Word
@@ -148,10 +148,66 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if word.found == true && word.inCurrentList == true {
                 cell.word.text = word.word
             } //else {
-                //cell.word.text = "? ? ?"
+            //cell.word.text = "? ? ?"
             //}
         }
-}
+    }
+    
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        if let wordCell = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
+            print("tapped a cell. The cell's word is : \(wordCell.word.text)")
+            print("indexPath: \(indexPath)")
+            print("___________")
+        }
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("definition") as! DefinitionPopoverVC
+        vc.modalPresentationStyle = UIModalPresentationStyle.Popover
+        let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+        //popover.barButtonItem = sender
+        popover.delegate = self
+        popover.permittedArrowDirections = UIPopoverArrowDirection.Right
+        // tell the popover that it should point from the cell that was tapped
+        popover.sourceView = tableView.cellForRowAtIndexPath(indexPath)
+        presentViewController(vc, animated: true, completion:nil)
+        return indexPath
+    }
+    
+//    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+//        if let wordCell = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
+//            print("tapped a cell. The cell's word is : \(wordCell.word.text)")
+//            print("indexPath: \(indexPath)")
+//            print("___________")
+//        }
+//        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("definition") as! DefinitionPopoverVC
+//        vc.modalPresentationStyle = UIModalPresentationStyle.Popover
+//        let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+//        //popover.barButtonItem = sender
+//        popover.delegate = self
+//        popover.permittedArrowDirections = UIPopoverArrowDirection.Right
+//        // tell the popover that it should point from the cell that was tapped
+//        popover.sourceView = tableView.cellForRowAtIndexPath(indexPath)
+//        presentViewController(vc, animated: true, completion:nil)
+//    }
+    
+    //MARK:- Popover Delegate functions
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        //return UIModalPresentationStyle.FullScreen
+        // allows popever style on iPhone as opposed to Full Screen
+        return UIModalPresentationStyle.None
+    }
+    
+    func presentationController(controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+        let navigationController = UINavigationController(rootViewController: controller.presentedViewController)
+        let btnDone = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "dismiss")
+        navigationController.topViewController!.navigationItem.rightBarButtonItem = btnDone
+        return navigationController
+    }
+    
+    func dismiss() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     //MARK:- Actions
     

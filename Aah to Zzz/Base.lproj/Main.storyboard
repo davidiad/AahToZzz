@@ -200,5 +200,23 @@
             </objects>
             <point key="canvasLocation" x="553" y="259"/>
         </scene>
+        <!--Definition PopoverVC-->
+        <scene sceneID="cZU-Q6-T7H">
+            <objects>
+                <viewController storyboardIdentifier="definition" id="m7Y-sK-ZfP" customClass="DefinitionPopoverVC" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="peu-sT-8FG"/>
+                        <viewControllerLayoutGuide type="bottom" id="ijA-NS-79m"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lIp-LI-BpY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oJ7-wC-TPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1215" y="205"/>
+        </scene>
     </scenes>
 </document>
