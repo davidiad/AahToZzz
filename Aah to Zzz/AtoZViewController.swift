@@ -20,6 +20,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var game: GameData?
     var currentLetterSet: LetterSet?
     var currentWords: [Word]?
+    
+    var currentNumberOfWords: Int?
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var lettertiles: [UIButton]!
@@ -115,8 +117,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if let _ = fetchedResultsController.sections {
-            //let sectionInfo = sections[section]
-            //return sectionInfo.numberOfObjects
             return 1
         }
         
@@ -124,7 +124,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return wordlist.count
+        if let sections = fetchedResultsController.sections {
+            let sectionInfo = sections[section]
+            currentNumberOfWords = sectionInfo.numberOfObjects
+            return currentNumberOfWords!
+        }
+        
+        return 0
     }
     
     
@@ -153,13 +159,25 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK:- Actions
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
+        // Generating a new list, so first, set all the previous Words 'found' property to false
+        for var i=0; i<fetchedResultsController.fetchedObjects?.count; i++ {
+            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+            if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+                word.found = false
+                word.inCurrentList = false
+            }
+            
+        }
+//        let newWord = Word(wordString: "AAA", context: sharedContext)
         currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
 
         // converting the new LetterSet to an array, for use in this class
         // TODO: make use of set, rather than a parrallel array that has to be maintained
         letters = currentLetterSet?.letters?.allObjects as! [Letter]
         updateTiles()
-        model.generateWordlist(letters)
+        currentWords = model.generateWords(letters)
+        // save the current # of words for use later in checkForValidWord
+        currentNumberOfWords = currentWords?.count
 //        // put the word list into the table of words and set all words to blank
 //        if wordTable != nil {
 //            wordTable!.wordlist = wordlist
@@ -191,6 +209,24 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func checkForValidWord(wordToCheck: String) -> Bool {
+        //TODO: unwrap currentNumOfWords safely?
+        for var i=0; i<currentNumberOfWords; i++ {
+            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+            let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
+            if wordToCheck == aValidWord.word {
+                //updateCellForWord(wordlist[i], index: i, color: UIColor.blueColor())
+                // set the found property of the Word to true
+                
+                let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
+                currentWord.found = true
+                return true
+            }
+        }
+        return false
+    }
+    
+    /* rewrite this, but with core data object instead of wordlist
+    func checkForValidWord(wordToCheck: String) -> Bool {
         for var i=0; i<wordlist.count; i++ {
             if wordToCheck == wordlist[i] {
                 //updateCellForWord(wordlist[i], index: i, color: UIColor.blueColor())
@@ -203,6 +239,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         return false
     }
+    */
  /*
     func updateCellForWord (word: String, index: Int, color: UIColor) {
         let indexPath = NSIndexPath(forRow: index, inSection: 0)

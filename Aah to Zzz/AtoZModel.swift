@@ -71,11 +71,16 @@ class AtoZModel {
     
     
     //MARK:- Letter and Word functions
-    
-//    // Instead of returning an array of strings, return an array of Word objects
-//    func generateWords () -> [Word] {
-//        
-//    }
+    // TODO:- rename Word functions in a way to reduce confusion!
+    // Instead of returning an array of strings, return an array of Word objects
+    // Called from the IBAction New List button as sender
+    func generateWords (letters: [Letter]) -> [Word] {
+        let wordlist = generateWordlist(letters)
+        let wordManagedObjectsArray = createOrUpdateWords(wordlist)
+        return wordManagedObjectsArray
+        // once Words are in the context, the fetchedResultsController retrieves them
+        // so might not need to return anything from this func, really.
+    }
     
     
     // wrapper function that calls other functions
@@ -268,6 +273,9 @@ class AtoZModel {
                 newWord.found = false
                 newWord.numTimesPlayed += 1
                 currentWords.append(newWord)
+                print("newWord.word: \(newWord.word)")
+                print("newWord.found: \(newWord.found)")
+                print("newWord.inCurrentList: \(newWord.inCurrentList)")
                 
             } catch {
                 let fetchError = error as NSError
