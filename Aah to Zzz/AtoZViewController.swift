@@ -7,12 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class AtoZViewController: UIViewController {
-    
-    lazy var sharedContext = {
-        CoreDataStackManager.sharedInstance().managedObjectContext
-    }()
+class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
     var model = AtoZModel.sharedInstance
     var letters: [Letter]! //TODO: why not ? instead of !
@@ -24,25 +21,156 @@ class AtoZViewController: UIViewController {
     var currentLetterSet: LetterSet?
     var currentWords: [Word]?
 
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet var lettertiles: [UIButton]!
     @IBOutlet weak var wordInProgress: UILabel!
     
-    @IBAction func generateNewWordlist(sender: AnyObject) {
-        letters = model.generateLetters() // new set of letters created and saved to context
+    // MARK: - NSFetchedResultsController
+    lazy var sharedContext = {
+        CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Word")
+        fetchRequest.predicate = NSPredicate(format: "inCurrentList == %@", true)
+        // Add Sort Descriptors
+        let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
+    
+    //Mark:- View Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            let fetchError = error as NSError
+            print("Unable to Save whatev")
+            print("\(fetchError), \(fetchError.localizedDescription)")
+        }
+        
+        // reference for memory leak bug, and fix:
+        // http://stackoverflow.com/questions/34075326/swift-2-iboutlet-collection-uibutton-leaks-memory
+        //TODO: check for memory leak here
+        // create an array to populate the buttons that hold the letters
+        
+        //TODO: get the current letter and word list from the model, if there is one
         checkForExistingLetters()
         updateTiles()
         generateWordList()
-        // put the word list into the table of words and set all words to blank
-        if wordTable != nil {
-            wordTable!.wordlist = wordlist
-            wordTable!.tableView.reloadData() // needed?
-            for var i=0; i<wordlist.count; i++ {
-                updateCellForWord("---", index: i, color: UIColor.blackColor())
+        
+    }
+    
+
+    // MARK:- FetchedResultsController delegate protocol
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        tableView.endUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        switch (type) {
+        case .Insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
-           
-        } else {
-            print("wordTable was nil")
+            break;
+        case .Delete:
+            if let indexPath = indexPath {
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
+            break;
+        case .Update:
+            print("Updating Fetched Word")
+            if let indexPath = indexPath, let cell = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
+                configureCell(cell, atIndexPath: indexPath)
+            }
+            break;
+        case .Move:
+            if let indexPath = indexPath {
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
+            
+            if let newIndexPath = newIndexPath {
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+            }
+            break;
         }
+    }
+
+    
+    //MARK:- Table View Data Source Methods
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if let _ = fetchedResultsController.sections {
+            //let sectionInfo = sections[section]
+            //return sectionInfo.numberOfObjects
+            return 1
+        }
+        
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return wordlist.count
+    }
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! WordListCell
+        
+        
+        configureCell(cell, atIndexPath: indexPath)
+        
+        
+        return cell
+    }
+    
+    func configureCell(cell: WordListCell, atIndexPath indexPath: NSIndexPath) {
+        
+        // Fetch Word
+        if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+            if word.found == true {
+                cell.textLabel?.text = word.word
+            } else {
+                cell.word.text = "? ? ?"
+            }
+        }
+}
+    
+    //MARK:- Actions
+    
+    @IBAction func generateNewWordlist(sender: AnyObject) {
+        currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
+
+        // converting the new LetterSet to an array, for use in this class
+        // TODO: make use of set, rather than a parrallel array that has to be maintained
+        letters = currentLetterSet?.letters?.allObjects as! [Letter]
+        updateTiles()
+        model.generateWordlist(letters)
+//        // put the word list into the table of words and set all words to blank
+//        if wordTable != nil {
+//            wordTable!.wordlist = wordlist
+//            wordTable!.tableView.reloadData() // needed?
+//            for var i=0; i<wordlist.count; i++ {
+//                //updateCellForWord("---", index: i, color: UIColor.blackColor())
+//            }
+//           
+//        } else {
+//            print("wordTable was nil")
+//        }
     }
 
     @IBAction func addLetterToWordInProgress(sender: UIButton) {
@@ -65,13 +193,17 @@ class AtoZViewController: UIViewController {
     func checkForValidWord(wordToCheck: String) -> Bool {
         for var i=0; i<wordlist.count; i++ {
             if wordToCheck == wordlist[i] {
-                updateCellForWord(wordlist[i], index: i, color: UIColor.blueColor())
+                //updateCellForWord(wordlist[i], index: i, color: UIColor.blueColor())
+                // set the found property of the Word to true
+                let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
+                currentWord.found = true
                 return true
             }
         }
         return false
     }
-    
+ /*
     func updateCellForWord (word: String, index: Int, color: UIColor) {
         let indexPath = NSIndexPath(forRow: index, inSection: 0)
         print("The index i found was: \(index)")
@@ -85,30 +217,20 @@ class AtoZViewController: UIViewController {
         //wordTable!.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Fade)
         */
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // reference for memory leak bug, and fix:
-        // http://stackoverflow.com/questions/34075326/swift-2-iboutlet-collection-uibutton-leaks-memory
-        //TODO: check for memory leak here
-        // create an array to populate the buttons that hold the letters
-        
-        //TODO: get the current letter and word list from the model, if there is one
-
-    }
+*/
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // prepareForSegue is called before viewDidLoad, therefore, creating and then passing on the letters & words here
-        checkForExistingLetters()
-        updateTiles()
-        generateWordList()
-        if let wordTableController = segue.destinationViewController as? AtoZTableViewController {
-            wordTableController.wordlist = wordlist
-            // set the instance variable for the embedded table view controller for later use
-            wordTable = wordTableController
-        } else {
-            print("segue to AtoZTableViewController fail")
-        }
+//        checkForExistingLetters()
+//        updateTiles()
+//        generateWordList()
+//        if let wordTableController = segue.destinationViewController as? AtoZTableViewController {
+//            wordTableController.wordlist = wordlist
+//            // set the instance variable for the embedded table view controller for later use
+//            wordTable = wordTableController
+//        } else {
+//            print("segue to AtoZTableViewController fail")
+//        }
     }
     
     func checkForExistingLetters () {
