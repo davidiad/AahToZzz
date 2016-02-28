@@ -179,7 +179,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             // make the popover arrow point from the sourceRect, further to the right than default
             let sourceRect = CGRectMake(10, 10, 170, 25)
             popover.sourceRect = sourceRect
-            popover.pop
             presentViewController(vc, animated: true, completion:nil)
         }
         return indexPath
@@ -397,3 +396,4 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
 }
+
