@@ -159,6 +159,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewControllerWithIdentifier("definition") as! DefinitionPopoverVC
             vc.modalPresentationStyle = UIModalPresentationStyle.Popover
+//            vc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
             if let wordObject = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
                 vc.sometext = wordObject.word
                 vc.definition = model.getDefinition(wordObject.word!)
@@ -175,7 +176,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             popover.permittedArrowDirections = UIPopoverArrowDirection.Right
             // tell the popover that it should point from the cell that was tapped
             popover.sourceView = tableView.cellForRowAtIndexPath(indexPath)
-            
+            // make the popover arrow point from the sourceRect, further to the right than default
+            let sourceRect = CGRectMake(10, 10, 170, 25)
+            popover.sourceRect = sourceRect
+            popover.pop
             presentViewController(vc, animated: true, completion:nil)
         }
         return indexPath

@@ -12,10 +12,12 @@ class DefinitionPopoverVC: UIViewController {
     
     let wordnik = WordnikClient.sharedInstance
     
-    var sometext: String?
-    var definition: String?
+    var sometext: String? //TODO: give 'sometext' a better variable name!
+    var definition: String? // Holds the definition from the OSPD4 dictionary in the original word list
+    //var networkDefinitions: String? // Hold the definitions retrieved from the net
     
     @IBOutlet weak var definitionTextView: UITextView!
+    @IBOutlet weak var networkDefinitionsTV: UITextView!
     
     @IBOutlet weak var currentWord: UILabel!
     
@@ -36,18 +38,22 @@ class DefinitionPopoverVC: UIViewController {
         if sometext != nil {
             
             wordnik.getDefinitionForWord(sometext!) { definitions, success, errorString in
+                //TODO: activity indicator while waiting for net defs, and possibly user messages if errors
+                // eg, no network: more defs if you get online etc
                 if success {
                     dispatch_async(dispatch_get_main_queue()) {
-                        print("SUCCESS!")
-                        print("IN POPOVER and defs: \(definitions)")
-                        //self.showActivityView(false)
-                        //self.performSegueWithIdentifier("loginSegue", sender: sender)
+                        var networkDefinitions: String = "More definitions from the net powered by Wordnik\n\n"
+                        for def in definitions {
+                            networkDefinitions += def
+                            networkDefinitions += "\n\n"
+                        }
+                        self.networkDefinitionsTV.text = networkDefinitions
                     }
                 }
-            //print(wordnik.getDefinitionForWord(sometext!))
             }
         }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
