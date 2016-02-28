@@ -14,8 +14,8 @@ import CoreData
 let BASE_URL = "http://api.wordnik.com:80/v4/word.json/"
 
 let METHOD_NAME = "definitions"
-let LIMIT = "200"
-let INCLUDE_RELATED = "true"
+let LIMIT = "25"
+let INCLUDE_RELATED = "false"
 let SOURCE_DICTIONARIES = "all"
 let USE_CANONICAL = "true"
 let INCLUDE_TAGS = "false"
@@ -23,15 +23,17 @@ let API_KEY = "c6c759673ee70a17150040157a20fb5c0cc0963c68720e422" // David's wor
 
 class WordnikClient: NSObject {
     
-    // Example requests
+    // Wordnik example requests
     /* // Example GET request for a definition (of "hit")
     http://api.wordnik.com:80/v4/word.json/hit/definitions?limit=200&includeRelated=true&sourceDictionaries=all&useCanonical=true&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5
     */
-    /* // Example GET request for top example (of "cat")
-    http://api.wordnik.com:80/v4/word.json/cat/topExample?useCanonical=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5
-    */
+
     /* // Example GET request for examples (of "cat")
     http://api.wordnik.com:80/v4/word.json/cat/examples?includeDuplicates=false&useCanonical=true&skip=0&limit=5&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5
+    */
+    
+    /* // Example GET request for top example (of "cat")
+    http://api.wordnik.com:80/v4/word.json/cat/topExample?useCanonical=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5
     */
     
     //MARK:- Vars
@@ -64,7 +66,6 @@ class WordnikClient: NSObject {
         let request = NSURLRequest(URL: url)
         
         // Initialize task for getting data
-        print(urlString)
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
             // Check for a successful response
@@ -96,7 +97,28 @@ class WordnikClient: NSObject {
             let parsedResult: AnyObject!
             do {
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-                print(parsedResult)
+               // print("Parse Result: \(parsedResult)")
+//                let parsedResultString = String(parsedResult)
+//                //let firstChar = parsedResultString.characters.first
+//                let removedFirst = String(parsedResultString.characters.dropFirst())
+//                let removedLast = String(removedFirst.characters.dropLast())
+//                let parsedResultStringModified = "{ \"json\": [ " + removedLast + " ] }"
+//                let parsedObject = parsedResultStringModified as AnyObject
+                
+                guard let definitionsJSON = parsedResult as? [[String: AnyObject]]
+                    else {
+                        print("Cannot parse \(parsedResult)")
+                        return
+                }
+                //print("definitionsJSON: \(definitionsJSON)")
+                for def in definitionsJSON {
+                    if let definition = def["text"] {
+                        print(definition)
+                    }
+//                    print("AN ENTRY")
+//                    print(def)
+//                    print("______________")
+                }
             } catch {
                 parsedResult = nil
                 print("Could not parse the data as JSON: '\(data)'")
