@@ -47,7 +47,7 @@ class WordnikClient: NSObject {
 //    var noPhotosCanBeFound: Bool = false
 
     
-    func getDefinitionForWord(word: String) -> String {
+    func getDefinitionForWord(word: String, completionHandler: (definitions: [String], success: Bool, errorString: String?) -> Void) {
     
     //  API method arguments
     let methodArguments = [
@@ -110,15 +110,18 @@ class WordnikClient: NSObject {
                         print("Cannot parse \(parsedResult)")
                         return
                 }
-                //print("definitionsJSON: \(definitionsJSON)")
+                
+                var definitions = [String]()
                 for def in definitionsJSON {
-                    if let definition = def["text"] {
+                    if let definition = def["text"] as? String {
                         print(definition)
+                        definitions.append(definition)
                     }
 //                    print("AN ENTRY")
 //                    print(def)
 //                    print("______________")
                 }
+                completionHandler(definitions: definitions, success: true, errorString: nil)
             } catch {
                 parsedResult = nil
                 print("Could not parse the data as JSON: '\(data)'")
@@ -126,7 +129,7 @@ class WordnikClient: NSObject {
             }
         }
         task.resume()
-        return word // TODO: to be replaced by definition
+        //return word // TODO: to be replaced by definition
     }
     
     

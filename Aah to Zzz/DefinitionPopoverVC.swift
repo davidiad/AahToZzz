@@ -34,7 +34,18 @@ class DefinitionPopoverVC: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if sometext != nil {
-            print(wordnik.getDefinitionForWord(sometext!))
+            
+            wordnik.getDefinitionForWord(sometext!) { definitions, success, errorString in
+                if success {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        print("SUCCESS!")
+                        print("IN POPOVER and defs: \(definitions)")
+                        //self.showActivityView(false)
+                        //self.performSegueWithIdentifier("loginSegue", sender: sender)
+                    }
+                }
+            //print(wordnik.getDefinitionForWord(sometext!))
+            }
         }
     }
 
