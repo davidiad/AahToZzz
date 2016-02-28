@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class AtoZModel {
     
@@ -27,6 +28,13 @@ class AtoZModel {
     var wordsSet: Set<String> // may not need to use this outside of this class, consider relocating the declaration
     
     var game: GameData? // The managed object that is at the root of the object graph
+    
+    //MARK:- vars for background gradient
+    var location1: CGFloat?
+    var location2: CGFloat?
+    var location3: CGFloat?
+    var location4: CGFloat?
+    //MARK:-
     
     //This prevents others from using the default '()' initializer for this class.
     private init() {
@@ -411,6 +419,8 @@ class AtoZModel {
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+        
+        
 //        dispatch_async(dispatch_get_main_queue()) {
 //            _ = try? self.sharedContext.save()
 //        }
@@ -425,6 +435,24 @@ class AtoZModel {
 //                }
 //            }
 //        }
+    }
+    
+    //MARK:- Gradient background funcs
+    func yellowPinkBlueGreenGradient() -> CAGradientLayer {
+        
+        let colorOne = UIColor(hue: 0.25, saturation: 0.70, brightness: 0.75, alpha: 1).CGColor as CGColorRef // green
+        let colorTwo = UIColor(hue: 0.597, saturation: 0.75, brightness: 1.00, alpha: 1).CGColor as CGColorRef // blue
+        let colorThree = UIColor(hue: 0.833, saturation: 0.70, brightness: 0.75, alpha: 1).CGColor as CGColorRef //magenta
+        let colorFour = UIColor(hue: 0.164, saturation: 1.0, brightness: 1.0, alpha: 1).CGColor as CGColorRef //dark blue
+        
+        let gradientColors: Array <AnyObject> = [colorOne, colorTwo, colorThree, colorFour]
+        
+        
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.colors = gradientColors
+        gradientLayer.locations = [0.0, 0.2, 0.58, 0.97]
+        
+        return gradientLayer
     }
 
 }

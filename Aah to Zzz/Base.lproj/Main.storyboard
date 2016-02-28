@@ -214,7 +214,7 @@
         <!--Options View Controller-->
         <scene sceneID="BjG-S7-4U2">
             <objects>
-                <viewController modalPresentationStyle="overCurrentContext" id="St5-v4-e4w" customClass="OptionsViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="St5-v4-e4w" customClass="OptionsViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vv1-kJ-wcp"/>
                         <viewControllerLayoutGuide type="bottom" id="tgh-Ez-Zpt"/>
@@ -234,19 +234,76 @@
                                     <action selector="done:" destination="St5-v4-e4w" eventType="touchUpInside" id="cx4-Uh-KxD"/>
                                 </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Le-g0-SaW">
-                                <rect key="frame" x="276" y="124" width="51" height="31"/>
-                            </switch>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="LxL-0v-x1O">
-                                <rect key="frame" x="241" y="193" width="118" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="LxL-0v-x1O">
+                                <rect key="frame" x="20" y="50" width="560" height="31"/>
+                                <connections>
+                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="h7F-ea-ebc"/>
+                                </connections>
                             </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jNv-O3-9SC">
+                                <rect key="frame" x="20" y="110" width="560" height="31"/>
+                                <connections>
+                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="lBk-lG-Tkw"/>
+                                </connections>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oAi-Ex-swS">
+                                <rect key="frame" x="20" y="170" width="560" height="31"/>
+                                <connections>
+                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="LZa-Zf-1OK"/>
+                                </connections>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="KhP-M0-pdf">
+                                <rect key="frame" x="20" y="230" width="560" height="31"/>
+                                <connections>
+                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="Dbb-bd-WzI"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adjust the gradient by changing the sliders" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNT-uX-BIX">
+                                <rect key="frame" x="145" y="289" width="310.5" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="0.84240257011657693" green="0.8800804793284519" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BgF-RE-nTk">
+                                <rect key="frame" x="22" y="550" width="118" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="118" id="kTG-Jh-6a8"/>
+                                    <constraint firstAttribute="height" constant="30" id="sWT-Un-SNG"/>
+                                </constraints>
+                                <state key="normal" title="Reset to Defaults"/>
+                                <connections>
+                                    <action selector="resetToDefaults:" destination="St5-v4-e4w" eventType="touchUpInside" id="eRG-4w-XaL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="jNv-O3-9SC" secondAttribute="trailing" constant="22" id="1pF-Ue-RMA"/>
+                            <constraint firstItem="LxL-0v-x1O" firstAttribute="top" secondItem="vv1-kJ-wcp" secondAttribute="bottom" constant="30" id="2DQ-n5-GO6"/>
+                            <constraint firstItem="BgF-RE-nTk" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="BGB-fS-Vf1"/>
+                            <constraint firstItem="oAi-Ex-swS" firstAttribute="top" secondItem="jNv-O3-9SC" secondAttribute="bottom" constant="30" id="CwW-pb-WDu"/>
+                            <constraint firstItem="tgh-Ez-Zpt" firstAttribute="top" secondItem="BgF-RE-nTk" secondAttribute="bottom" constant="20" id="HZO-bJ-qTr"/>
+                            <constraint firstItem="jNv-O3-9SC" firstAttribute="top" secondItem="LxL-0v-x1O" secondAttribute="bottom" constant="30" id="JcB-nn-VFy"/>
+                            <constraint firstAttribute="trailing" secondItem="KhP-M0-pdf" secondAttribute="trailing" constant="22" id="Lhg-0c-2SU"/>
+                            <constraint firstAttribute="trailing" secondItem="LxL-0v-x1O" secondAttribute="trailing" constant="22" id="M5j-ad-fHr"/>
+                            <constraint firstItem="LxL-0v-x1O" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="MQT-CU-Wgf"/>
+                            <constraint firstItem="oAi-Ex-swS" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="OMX-wQ-Lnf"/>
                             <constraint firstAttribute="trailing" secondItem="1zh-vU-7R8" secondAttribute="trailing" constant="24" id="dF9-Ye-wXT"/>
+                            <constraint firstItem="KhP-M0-pdf" firstAttribute="top" secondItem="oAi-Ex-swS" secondAttribute="bottom" constant="30" id="dJj-8m-Jf9"/>
+                            <constraint firstAttribute="trailing" secondItem="oAi-Ex-swS" secondAttribute="trailing" constant="22" id="dWB-Lg-dTA"/>
+                            <constraint firstItem="NNT-uX-BIX" firstAttribute="top" secondItem="KhP-M0-pdf" secondAttribute="bottom" constant="29" id="hti-4c-wpb"/>
+                            <constraint firstItem="KhP-M0-pdf" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="hv5-0o-3kk"/>
+                            <constraint firstItem="jNv-O3-9SC" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="ich-O1-8Eq"/>
                             <constraint firstItem="tgh-Ez-Zpt" firstAttribute="top" secondItem="1zh-vU-7R8" secondAttribute="bottom" constant="20" id="l9X-yX-hqi"/>
+                            <constraint firstItem="NNT-uX-BIX" firstAttribute="centerX" secondItem="g6R-wV-ljM" secondAttribute="centerX" id="wTI-gj-qzS"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="slider1" destination="LxL-0v-x1O" id="fik-Vy-LyB"/>
+                        <outlet property="slider2" destination="jNv-O3-9SC" id="Tw5-i1-c4I"/>
+                        <outlet property="slider3" destination="oAi-Ex-swS" id="VPb-51-raC"/>
+                        <outlet property="slider4" destination="KhP-M0-pdf" id="2rp-aD-pFU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dpO-Oq-c7n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

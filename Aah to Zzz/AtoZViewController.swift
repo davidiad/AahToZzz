@@ -67,6 +67,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         checkForExistingLetters()
         updateTiles()
         generateWordList()
+        let mainGradient = model.yellowPinkBlueGreenGradient()
+        
+        mainGradient.frame = view.bounds
+        mainGradient.zPosition = -1
+        mainGradient.name = "mainGradientLayer"
+        view.layer.addSublayer(mainGradient)
     }
     
 
