@@ -42,11 +42,8 @@ class WordnikClient: NSObject {
     lazy var sharedContext = {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
-//    var totalPhotos: Int?
-//    var currentAccuracy: Int = ACCURACY_DEFAULT
-//    var noPhotosCanBeFound: Bool = false
 
-    
+    // used in the DefinitionPopover to get info from the net to add to the list of definitions
     func getDefinitionForWord(word: String, completionHandler: (definitions: [String], success: Bool, errorString: String?) -> Void) {
     
     //  API method arguments
