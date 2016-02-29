@@ -236,33 +236,12 @@
                                     <action selector="done:" destination="St5-v4-e4w" eventType="touchUpInside" id="cx4-Uh-KxD"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="LxL-0v-x1O">
-                                <rect key="frame" x="20" y="50" width="560" height="31"/>
-                                <color key="thumbTintColor" red="0.94823232319999995" green="0.45879165379999998" blue="0.00105125567" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="h7F-ea-ebc"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jNv-O3-9SC">
-                                <rect key="frame" x="20" y="110" width="560" height="31"/>
-                                <connections>
-                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="lBk-lG-Tkw"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oAi-Ex-swS">
-                                <rect key="frame" x="20" y="170" width="560" height="31"/>
-                                <connections>
-                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="LZa-Zf-1OK"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="KhP-M0-pdf">
-                                <rect key="frame" x="20" y="230" width="560" height="31"/>
-                                <connections>
-                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="Dbb-bd-WzI"/>
-                                </connections>
-                            </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adjust the gradient by changing the sliders" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNT-uX-BIX">
-                                <rect key="frame" x="145" y="289" width="310.5" height="19.5"/>
+                                <rect key="frame" x="144.5" y="32" width="311" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="311" id="Fk7-Xr-PtO"/>
+                                    <constraint firstAttribute="height" constant="20" id="kcs-Rs-7c9"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.84240257011657693" green="0.8800804793284519" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -278,9 +257,75 @@
                                     <action selector="resetToDefaults:" destination="St5-v4-e4w" eventType="touchUpInside" id="eRG-4w-XaL"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pfF-yj-rHA" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
-                                <rect key="frame" x="70" y="322" width="240" height="128"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CEY-fr-yc9" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
+                                <rect key="frame" x="22" y="160" width="556" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="dcV-lL-uep"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="thickness">
+                                        <real key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="minColor">
+                                        <color key="value" red="0.33444117046899846" green="0.52740943145760655" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="maxColor">
+                                        <color key="value" red="0.85963898282667262" green="0.1475193199349828" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="Qfs-vb-I8p"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gcJ-tW-9xK" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
+                                <rect key="frame" x="22" y="320" width="556" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="EIk-Mk-gOY"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="thickness">
+                                        <real key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="minColor">
+                                        <color key="value" red="1" green="0.92742772241600546" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="maxColor">
+                                        <color key="value" red="0.63636579300260376" green="0.7752525252525253" blue="0.22030560633895716" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="BO7-Qh-rdT"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2w1-mN-5bj" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
+                                <rect key="frame" x="22" y="240" width="556" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="fTF-ME-rs4"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="thickness">
+                                        <real key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="minColor">
+                                        <color key="value" red="0.85963898282667262" green="0.1475193199349828" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="maxColor">
+                                        <color key="value" red="1" green="0.92742772241600546" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="fZO-LO-PPh"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pfF-yj-rHA" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
+                                <rect key="frame" x="22" y="80" width="556" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="iNW-dZ-1u5"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="minColor">
                                         <color key="value" red="0.55061695224332874" green="0.78269018308080807" blue="0.052573072979149225" alpha="1" colorSpace="calibratedRGB"/>
@@ -289,7 +334,7 @@
                                         <color key="value" red="0.28760578195329245" green="0.62394235873576975" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="thickness">
-                                        <real key="value" value="17"/>
+                                        <real key="value" value="12"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="hasRainbow" value="NO"/>
                                 </userDefinedRuntimeAttributes>
@@ -300,32 +345,37 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="jNv-O3-9SC" secondAttribute="trailing" constant="22" id="1pF-Ue-RMA"/>
-                            <constraint firstItem="LxL-0v-x1O" firstAttribute="top" secondItem="vv1-kJ-wcp" secondAttribute="bottom" constant="30" id="2DQ-n5-GO6"/>
+                            <constraint firstItem="2w1-mN-5bj" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="24" id="7P1-xl-gEW"/>
                             <constraint firstItem="BgF-RE-nTk" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="BGB-fS-Vf1"/>
-                            <constraint firstItem="oAi-Ex-swS" firstAttribute="top" secondItem="jNv-O3-9SC" secondAttribute="bottom" constant="30" id="CwW-pb-WDu"/>
+                            <constraint firstAttribute="trailing" secondItem="CEY-fr-yc9" secondAttribute="trailing" constant="24" id="BMK-7H-wYX"/>
+                            <constraint firstItem="CEY-fr-yc9" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="24" id="EQV-7w-zy1"/>
+                            <constraint firstItem="CEY-fr-yc9" firstAttribute="top" secondItem="pfF-yj-rHA" secondAttribute="bottom" constant="38" id="Fty-Z0-EYf"/>
+                            <constraint firstItem="pfF-yj-rHA" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="24" id="GOJ-QX-tsB"/>
+                            <constraint firstItem="pfF-yj-rHA" firstAttribute="top" secondItem="NNT-uX-BIX" secondAttribute="bottom" constant="32" id="HIG-fH-tSL"/>
                             <constraint firstItem="tgh-Ez-Zpt" firstAttribute="top" secondItem="BgF-RE-nTk" secondAttribute="bottom" constant="20" id="HZO-bJ-qTr"/>
-                            <constraint firstItem="jNv-O3-9SC" firstAttribute="top" secondItem="LxL-0v-x1O" secondAttribute="bottom" constant="30" id="JcB-nn-VFy"/>
-                            <constraint firstAttribute="trailing" secondItem="KhP-M0-pdf" secondAttribute="trailing" constant="22" id="Lhg-0c-2SU"/>
-                            <constraint firstAttribute="trailing" secondItem="LxL-0v-x1O" secondAttribute="trailing" constant="22" id="M5j-ad-fHr"/>
-                            <constraint firstItem="LxL-0v-x1O" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="MQT-CU-Wgf"/>
-                            <constraint firstItem="oAi-Ex-swS" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="OMX-wQ-Lnf"/>
+                            <constraint firstItem="gcJ-tW-9xK" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="24" id="HjR-hu-Dig"/>
                             <constraint firstAttribute="trailing" secondItem="1zh-vU-7R8" secondAttribute="trailing" constant="24" id="dF9-Ye-wXT"/>
-                            <constraint firstItem="KhP-M0-pdf" firstAttribute="top" secondItem="oAi-Ex-swS" secondAttribute="bottom" constant="30" id="dJj-8m-Jf9"/>
-                            <constraint firstAttribute="trailing" secondItem="oAi-Ex-swS" secondAttribute="trailing" constant="22" id="dWB-Lg-dTA"/>
-                            <constraint firstItem="NNT-uX-BIX" firstAttribute="top" secondItem="KhP-M0-pdf" secondAttribute="bottom" constant="29" id="hti-4c-wpb"/>
-                            <constraint firstItem="KhP-M0-pdf" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="hv5-0o-3kk"/>
-                            <constraint firstItem="jNv-O3-9SC" firstAttribute="leading" secondItem="g6R-wV-ljM" secondAttribute="leading" constant="22" id="ich-O1-8Eq"/>
+                            <constraint firstItem="2w1-mN-5bj" firstAttribute="top" secondItem="CEY-fr-yc9" secondAttribute="bottom" constant="38" id="dI8-fy-tcp"/>
+                            <constraint firstItem="NNT-uX-BIX" firstAttribute="top" secondItem="vv1-kJ-wcp" secondAttribute="bottom" constant="12" id="jiY-ws-cSM"/>
                             <constraint firstItem="tgh-Ez-Zpt" firstAttribute="top" secondItem="1zh-vU-7R8" secondAttribute="bottom" constant="20" id="l9X-yX-hqi"/>
+                            <constraint firstItem="gcJ-tW-9xK" firstAttribute="top" secondItem="2w1-mN-5bj" secondAttribute="bottom" constant="38" id="m2g-hW-TUW"/>
+                            <constraint firstItem="pfF-yj-rHA" firstAttribute="top" secondItem="NNT-uX-BIX" secondAttribute="bottom" constant="32" id="meN-uU-ISA"/>
+                            <constraint firstAttribute="trailing" secondItem="gcJ-tW-9xK" secondAttribute="trailing" constant="24" id="pB6-LP-vSb"/>
+                            <constraint firstAttribute="trailing" secondItem="pfF-yj-rHA" secondAttribute="trailing" constant="24" id="vfd-4J-4mF"/>
                             <constraint firstItem="NNT-uX-BIX" firstAttribute="centerX" secondItem="g6R-wV-ljM" secondAttribute="centerX" id="wTI-gj-qzS"/>
+                            <constraint firstAttribute="trailing" secondItem="2w1-mN-5bj" secondAttribute="trailing" constant="24" id="zEb-IR-7bb"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="HIG-fH-tSL"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
-                        <outlet property="gradSlider1" destination="pfF-yj-rHA" id="ZTG-B3-OEw"/>
-                        <outlet property="slider1" destination="LxL-0v-x1O" id="fik-Vy-LyB"/>
-                        <outlet property="slider2" destination="jNv-O3-9SC" id="Tw5-i1-c4I"/>
-                        <outlet property="slider3" destination="oAi-Ex-swS" id="VPb-51-raC"/>
-                        <outlet property="slider4" destination="KhP-M0-pdf" id="2rp-aD-pFU"/>
+                        <outlet property="slider1" destination="pfF-yj-rHA" id="HEQ-PS-fCn"/>
+                        <outlet property="slider2" destination="CEY-fr-yc9" id="95k-Cu-3b1"/>
+                        <outlet property="slider3" destination="2w1-mN-5bj" id="MGe-gj-EWR"/>
+                        <outlet property="slider4" destination="gcJ-tW-9xK" id="4BI-hr-ql8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dpO-Oq-c7n" userLabel="First Responder" sceneMemberID="firstResponder"/>
