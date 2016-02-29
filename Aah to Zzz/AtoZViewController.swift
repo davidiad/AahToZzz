@@ -15,7 +15,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var letters: [Letter]! //TODO: why not ? instead of !
     var wordlist = [String]()
     
-    var wordTable: AtoZTableViewController?
     
     var game: GameData?
     var currentLetterSet: LetterSet?

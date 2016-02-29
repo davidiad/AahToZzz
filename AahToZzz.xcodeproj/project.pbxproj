@@ -11,12 +11,14 @@
 		637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */; };
 		637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06A1C8236C8005A36BA /* WordnikClient.swift */; };
 		637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06C1C83512F005A36BA /* OptionsViewController.swift */; };
-		637AF06F1C835B34005A36BA /* extension-Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06E1C835B34005A36BA /* extension-Gradient.swift */; };
 		637AF0741C83EF1F005A36BA /* wordnik-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 637AF0711C83EF1F005A36BA /* wordnik-logo.png */; };
 		637AF0751C83EF1F005A36BA /* wordnik-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637AF0721C83EF1F005A36BA /* wordnik-logo@2x.png */; };
 		637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637AF0731C83EF1F005A36BA /* wordnik-logo@3x.png */; };
 		637AF0781C84297C005A36BA /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF0771C84297C005A36BA /* FlickrClient.swift */; };
 		637AF07A1C84560D005A36BA /* GradientSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF0791C84560D005A36BA /* GradientSlider.swift */; };
+		637AF07E1C846E15005A36BA /* tile_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 637AF07B1C846E15005A36BA /* tile_yellow.png */; };
+		637AF07F1C846E15005A36BA /* tile_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637AF07C1C846E15005A36BA /* tile_yellow@2x.png */; };
+		637AF0801C846E15005A36BA /* tile_yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637AF07D1C846E15005A36BA /* tile_yellow@3x.png */; };
 		63A3A1111C763F6C00F440B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1101C763F6C00F440B5 /* AppDelegate.swift */; };
 		63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A1141C763F6C00F440B5 /* Main.storyboard */; };
 		63A3A1191C763F6C00F440B5 /* AtoZ.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */; };
@@ -25,7 +27,6 @@
 		63A3A1261C764E3E00F440B5 /* AtoZViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */; };
 		63A3A1281C76520500F440B5 /* 3letterwordlist.txt in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A1271C76520500F440B5 /* 3letterwordlist.txt */; };
 		63A3A12A1C7652C300F440B5 /* AtoZModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1291C7652C300F440B5 /* AtoZModel.swift */; };
-		63A3A12C1C765C4100F440B5 /* AtoZTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A12B1C765C4100F440B5 /* AtoZTableViewController.swift */; };
 		63A3A12E1C76603300F440B5 /* WordListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A12D1C76603300F440B5 /* WordListCell.swift */; };
 		63A9FEE81C7AB4B500AE54F1 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */; };
 		63A9FEF01C7AC29C00AE54F1 /* LetterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEA1C7AC29C00AE54F1 /* LetterSet.swift */; };
@@ -38,12 +39,14 @@
 		637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefinitionPopoverVC.swift; sourceTree = "<group>"; };
 		637AF06A1C8236C8005A36BA /* WordnikClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordnikClient.swift; sourceTree = "<group>"; };
 		637AF06C1C83512F005A36BA /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
-		637AF06E1C835B34005A36BA /* extension-Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "extension-Gradient.swift"; sourceTree = "<group>"; };
 		637AF0711C83EF1F005A36BA /* wordnik-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wordnik-logo.png"; sourceTree = "<group>"; };
 		637AF0721C83EF1F005A36BA /* wordnik-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wordnik-logo@2x.png"; sourceTree = "<group>"; };
 		637AF0731C83EF1F005A36BA /* wordnik-logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wordnik-logo@3x.png"; sourceTree = "<group>"; };
 		637AF0771C84297C005A36BA /* FlickrClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
 		637AF0791C84560D005A36BA /* GradientSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientSlider.swift; sourceTree = "<group>"; };
+		637AF07B1C846E15005A36BA /* tile_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_yellow.png; sourceTree = "<group>"; };
+		637AF07C1C846E15005A36BA /* tile_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile_yellow@2x.png"; sourceTree = "<group>"; };
+		637AF07D1C846E15005A36BA /* tile_yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile_yellow@3x.png"; sourceTree = "<group>"; };
 		63A3A10D1C763F6C00F440B5 /* AahToZzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AahToZzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A3A1101C763F6C00F440B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63A3A1151C763F6C00F440B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -54,7 +57,6 @@
 		63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtoZViewController.swift; sourceTree = "<group>"; };
 		63A3A1271C76520500F440B5 /* 3letterwordlist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3letterwordlist.txt; sourceTree = "<group>"; };
 		63A3A1291C7652C300F440B5 /* AtoZModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtoZModel.swift; sourceTree = "<group>"; };
-		63A3A12B1C765C4100F440B5 /* AtoZTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtoZTableViewController.swift; sourceTree = "<group>"; };
 		63A3A12D1C76603300F440B5 /* WordListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordListCell.swift; sourceTree = "<group>"; };
 		63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		63A9FEEA1C7AC29C00AE54F1 /* LetterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LetterSet.swift; sourceTree = "<group>"; };
@@ -76,6 +78,9 @@
 		637AF0701C83EEE9005A36BA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				637AF07B1C846E15005A36BA /* tile_yellow.png */,
+				637AF07C1C846E15005A36BA /* tile_yellow@2x.png */,
+				637AF07D1C846E15005A36BA /* tile_yellow@3x.png */,
 				637AF0711C83EF1F005A36BA /* wordnik-logo.png */,
 				637AF0721C83EF1F005A36BA /* wordnik-logo@2x.png */,
 				637AF0731C83EF1F005A36BA /* wordnik-logo@3x.png */,
@@ -112,12 +117,9 @@
 				63A3A11F1C763F6C00F440B5 /* Info.plist */,
 				63A9FEF61C7AC2D200AE54F1 /* Model */,
 				63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */,
-				63A3A12B1C765C4100F440B5 /* AtoZTableViewController.swift */,
 				63A3A12D1C76603300F440B5 /* WordListCell.swift */,
 				637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */,
 				637AF06C1C83512F005A36BA /* OptionsViewController.swift */,
-				637AF06E1C835B34005A36BA /* extension-Gradient.swift */,
-				637AF0771C84297C005A36BA /* FlickrClient.swift */,
 			);
 			name = AahToZzz;
 			path = "Aah to Zzz";
@@ -138,6 +140,7 @@
 		63A9FEF61C7AC2D200AE54F1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				637AF0771C84297C005A36BA /* FlickrClient.swift */,
 				63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */,
 				63A9FEF51C7AC2AC00AE54F1 /* Core Data Managed Objects */,
 				63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */,
@@ -207,8 +210,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				63A3A1281C76520500F440B5 /* 3letterwordlist.txt in Resources */,
+				637AF0801C846E15005A36BA /* tile_yellow@3x.png in Resources */,
 				637AF0741C83EF1F005A36BA /* wordnik-logo.png in Resources */,
 				637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */,
+				637AF07F1C846E15005A36BA /* tile_yellow@2x.png in Resources */,
+				637AF07E1C846E15005A36BA /* tile_yellow.png in Resources */,
 				637AF0751C83EF1F005A36BA /* wordnik-logo@2x.png in Resources */,
 				63A3A11E1C763F6C00F440B5 /* LaunchScreen.storyboard in Resources */,
 				63A3A11B1C763F6C00F440B5 /* Assets.xcassets in Resources */,
@@ -225,12 +231,10 @@
 			files = (
 				63A3A1261C764E3E00F440B5 /* AtoZViewController.swift in Sources */,
 				63A3A12A1C7652C300F440B5 /* AtoZModel.swift in Sources */,
-				63A3A12C1C765C4100F440B5 /* AtoZTableViewController.swift in Sources */,
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
 				63A9FEF41C7AC29C00AE54F1 /* GameData.swift in Sources */,
 				637AF07A1C84560D005A36BA /* GradientSlider.swift in Sources */,
 				637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */,
-				637AF06F1C835B34005A36BA /* extension-Gradient.swift in Sources */,
 				637AF0781C84297C005A36BA /* FlickrClient.swift in Sources */,
 				633727601C7EAEA4003E8447 /* Word.swift in Sources */,
 				637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */,

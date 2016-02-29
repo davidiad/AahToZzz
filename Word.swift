@@ -18,7 +18,7 @@ class Word: NSManagedObject {
     @NSManaged var numTimesPlayed: Int16
     @NSManaged var numTimesFound: Int16
     @NSManaged var letterlist: LetterSet? // should really (in the future) allow many letterlist's to each word
-    @NSManaged var game: GameData? // NSManagedObject?
+    @NSManaged var game: GameData? 
     
     // standard Core Data init method.
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -31,11 +31,8 @@ class Word: NSManagedObject {
         
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
-//        if let gameName = dictionary["name"] as? String {
-//            name = gameName
-//        }
         word = wordString
-        //TODO: should inCurrentList be true by default?
+
         inCurrentList = false // by default, not in the current list
         found = false // when a word is first created, it has no yet been found
         numTimesPlayed = 0

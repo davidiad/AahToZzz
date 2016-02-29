@@ -37,22 +37,11 @@ class FlickrClient: NSObject {
     
     
     //MARK:- Flickr image fetch functions
-    // When getTotal is true, only fetching the total # of photos
-    // When getTotal is false, actually fetching the photos
+    
     func getFlickrImagesForWord(searchtext: String, completion: (ius: String?, success: Bool, error: NSError?) -> Void) {
         
-//        var text: String = ""
-//        text = searchtext
         let page = "1"
-//        if searchtext != nil {
-//            text = "\(searchtext!)"
-//        }
         photoArray = [String]()
-        
-//        let min_date_upload = {
-//            // As accuracy is decreased, makeDate() increases the date range as well
-//            makeDate()
-//        }()
         
         
         //  API method arguments
@@ -116,16 +105,9 @@ class FlickrClient: NSObject {
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
             } catch {
                 parsedResult = nil
-                //print("Could not parse the data as JSON: '\(data)'")
                 completion(ius: nil, success: false, error: nil)
                 return
             }
-            
-//            // GUARD: Did Flickr return an error (stat != ok)?
-//            guard let stat = parsedResult["stat"] as? String where stat == "ok" else {
-//                print("Flickr API returned an error. See error code and message in \(parsedResult)")
-//                return
-//            }
             
             // GUARD: Are the "photos" and "photo" keys in our result?
             guard let photosDictionary = parsedResult["photos"] as? NSDictionary,
@@ -138,7 +120,6 @@ class FlickrClient: NSObject {
                 let examplePhoto = photoArray.first
                 guard let imageUrlString = examplePhoto!["url_m"] as? String else {
                     // handle error
-//                    print("Cannot find key 'url_m' in \(examplePhoto)")
                     completion(ius: nil, success: false, error: error)
                     return
                 }

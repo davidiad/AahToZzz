@@ -24,9 +24,7 @@ class Letter: NSManagedObject {
         let entity = NSEntityDescription.entityForName("Letter", inManagedObjectContext: context)!
         
         super.init(entity: entity,insertIntoManagedObjectContext: context)
-        
-        //searchString = dictionary[searchString!] as? String
-        //lon = dictionary[Keys.Lon] as? NSNumber
+
     }
     
     init(someLetter: String, context: NSManagedObjectContext) {

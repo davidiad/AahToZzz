@@ -13,9 +13,9 @@ import CoreData
 class LetterSet: NSManagedObject {
     
     @NSManaged var letterSetID: String? // ID using URI representation
-    @NSManaged var name: String? //TODO: do we need a name for each LetterSet?
+    @NSManaged var name: String? 
     @NSManaged var letters: NSSet?
-    @NSManaged var game: NSManagedObject? //TODO: should this be NSManagedObject? or GameData?
+    @NSManaged var game: NSManagedObject?
     @NSManaged var currentGame: NSManagedObject?
     
     // standard Core Data init method.
@@ -28,8 +28,6 @@ class LetterSet: NSManagedObject {
         let entity = NSEntityDescription.entityForName("LetterSet", inManagedObjectContext: context)!
         
         super.init(entity: entity,insertIntoManagedObjectContext: context)
-        
-        //searchString = dictionary[searchString!] as? String
-        //lon = dictionary[Keys.Lon] as? NSNumber
+
     }
 }

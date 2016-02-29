@@ -51,13 +51,6 @@ class OptionsViewController: UIViewController {
     }
 
     @IBAction func done(sender: AnyObject) {
-        //TODO: - unwrap optional safely?
-//        var mainGradient = CAGradientLayer()
-//        mainGradient = CAGradientLayer.yellowPinkBlueGreenGradient(mainGradient)()
-//        mainGradient.frame = view.bounds
-//        mainGradient.zPosition = -1
-//        mainGradient.name = "mainGradientLayer"
-//        presentingViewController?.view.layer.addSublayer(mainGradient)
         
         let mainGradient = updateGradient(model.location1!, loc2: model.location2!, loc3: model.location3!, loc4: model.location4!)
 

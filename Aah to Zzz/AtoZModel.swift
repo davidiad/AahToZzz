@@ -57,10 +57,7 @@ class AtoZModel {
             wordsSet.insert(key)
         }
         game = fetchGameData() // fetches the exisiting game if there is one, or else creates a new game
-        //saveGame() // create a GameData object, the root object for data persistence
-        
-        // Create Word objects for each word in the list, and save to the shared context
-        // here? or create them as needed when making word lists
+
     }
     
     // read in the 3 letter word list with word definitions
@@ -79,7 +76,7 @@ class AtoZModel {
     
     
     //MARK:- Letter and Word functions
-    // TODO:- rename Word functions in a way to reduce confusion!
+    
     // Instead of returning an array of strings, return an array of Word objects
     // Called from the IBAction New List button as sender
     func generateWords (letters: [Letter]) -> [Word] {
@@ -97,7 +94,6 @@ class AtoZModel {
         return getWordlist(letters)
     }
     
-    //TODO: should this be named uniquely from above?
     // getting a wordlist from letters that can be called from another class
     func generateWordlist (letters: [Letter]) -> [String] {
         return getWordlist(letters)
@@ -106,7 +102,6 @@ class AtoZModel {
     func generateLetters () -> [Letter] {
         
         // create an array that will be filled with 7 Strings
-        // TODO: can this array be replaced by the LetterSet?
         var letters: [Letter]
         // Add the first letter to to letterset -- 1st letter is a random letter
         letters = [createLetter(nil)]
@@ -134,7 +129,7 @@ class AtoZModel {
         for letter in letters {
             letter.letterset = letterset
         }
-        // TODO:Make a struct for LetterPositions. Add as a property to Letter.
+
         // save the managed object context
         saveContext()
         
@@ -291,48 +286,7 @@ class AtoZModel {
         
         saveContext()
         return currentWords
-            //let wordsArray = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
-            // for each String in wordlist, check whether that Word has been created yet
-            // if not, create it
-            // Fetching
-            //let fetchRequest = NSFetchRequest(entityName: "Word")
-            
-
-        
-            
-            // Execute Fetch Request
-            //do {
-                /* // One way of doing it. This might work
-                let result = try sharedContext.executeFetchRequest(fetchRequest)
-                for managedObject in result {
-                    if let theString = managedObject.valueForKey("word") {
-                        print("Found a word: \(theString))")
-                    } else {
-                        //
-                    }
-                }
-                
-            } catch {
-                let fetchError = error as NSError
-                print(fetchError)
-            }
-            */
-                
-                
-            //////////////////////////
-            
-//            if gameArray.count > 0 {
-//                return gameArray[0]
-//            } else {
-//                //NSEntityDescription.insertNewObjectForEntityForName("GameData", inManagedObjectContext: sharedContext) as! GameData
-//                let gameData = makeGameDataDictionary()
-//                return GameData(dictionary: gameData, context: sharedContext)
-//            }
-//            // in the case there is a fetch error, also create a new game object
-//        } catch let error as NSError {
-//            print("Error in createOrUpdateWords(): \(error)")
-//        }
-
+ 
     }
     
     func getDefinition(word: String) -> String {
@@ -342,8 +296,6 @@ class AtoZModel {
         
         return ("No definition was found for \(word)")
     }
-    
-    //TODO: use fetchedResultsController to manage the words
     
     //MARK:- GameData funcs
     
@@ -355,7 +307,6 @@ class AtoZModel {
             if gameArray.count > 0 {
                 return gameArray[0]
             } else {
-                //NSEntityDescription.insertNewObjectForEntityForName("GameData", inManagedObjectContext: sharedContext) as! GameData
                 let gameData = makeGameDataDictionary()
                 return GameData(dictionary: gameData, context: sharedContext)
             }
@@ -369,10 +320,7 @@ class AtoZModel {
         }
     }
     
-    
-    //TODO: not sure this func is needed
     func createGame() {
-       // _ = makeMapDictionary()
         deleteGames() // delete all games (for now) so there is only one at a time
         _ = NSFetchRequest(entityName: "GameData")
         
@@ -416,22 +364,6 @@ class AtoZModel {
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
-        
-        
-//        dispatch_async(dispatch_get_main_queue()) {
-//            _ = try? self.sharedContext.save()
-//        }
-//        dispatch_async(dispatch_get_main_queue()) {
-//            if self.sharedContext.hasChanges {
-//                do {
-//                    try self.sharedContext.save()
-//                } catch {
-//                    let nserror = error as NSError
-//                    print("Could not save the Managed Object Context")
-//                    NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-//                }
-//            }
-//        }
     }
     
     //MARK:- Gradient background funcs
