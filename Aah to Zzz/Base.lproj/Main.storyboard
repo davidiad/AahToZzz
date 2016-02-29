@@ -326,15 +326,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEf-an-5VJ">
                                 <rect key="frame" x="0.0" y="1" width="600" height="608"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsS-Rq-guZ">
-                                        <rect key="frame" x="8" y="76" width="584" height="47"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="47" id="i83-pO-6ED"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" text="Looking for more definitions on the net. " textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1S-U0-wNa">
                                         <rect key="frame" x="8" y="183" width="584" height="411"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -358,29 +349,19 @@
                                         </variation>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wordnik" translatesAutoresizingMaskIntoConstraints="NO" id="zzk-1H-mhr">
-                                        <rect key="frame" x="154" y="146" width="100" height="29"/>
+                                        <rect key="frame" x="154" y="152" width="100" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="Unv-zC-JrN"/>
                                             <constraint firstAttribute="height" constant="29" id="cq4-0q-aqq"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More definitions, powered by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="RrJ-GL-ea8">
-                                        <rect key="frame" x="10" y="154" width="149" height="21"/>
+                                        <rect key="frame" x="10" y="160" width="149" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="149" id="9Q2-Oj-aC7"/>
                                             <constraint firstAttribute="height" constant="21" id="mWS-Tn-6cO"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="from the Official Scrabble Players Dictionary 4th edition" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UI4-zR-8Gm">
-                                        <rect key="frame" x="10" y="61.5" width="212" height="10.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="10.5" id="HYv-Ih-7uX"/>
-                                            <constraint firstAttribute="width" constant="212" id="Pea-Jc-miH"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="8"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -392,28 +373,47 @@
                                         </constraints>
                                         <color key="color" red="0.9482323232323232" green="0.45879165379651787" blue="0.0010512556704678406" alpha="1" colorSpace="calibratedRGB"/>
                                     </activityIndicatorView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsS-Rq-guZ">
+                                        <rect key="frame" x="8" y="96.5" width="584" height="45.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45.5" id="i83-pO-6ED"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="from the Official Scrabble Players Dictionary 4th edition" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UI4-zR-8Gm">
+                                        <rect key="frame" x="10" y="83" width="212" height="10.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="10.5" id="HYv-Ih-7uX"/>
+                                            <constraint firstAttribute="width" constant="212" id="Pea-Jc-miH"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="8"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.95370905988320698" blue="0.70081192228658373" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="zzk-1H-mhr" firstAttribute="leading" secondItem="LEf-an-5VJ" secondAttribute="leading" constant="154" id="0RW-Qu-s9R"/>
                                     <constraint firstItem="xsS-Rq-guZ" firstAttribute="trailing" secondItem="LEf-an-5VJ" secondAttribute="trailingMargin" id="HY7-B2-skk"/>
-                                    <constraint firstItem="Y1S-U0-wNa" firstAttribute="top" secondItem="xsS-Rq-guZ" secondAttribute="bottom" constant="60" id="PHQ-Sf-WQY"/>
+                                    <constraint firstItem="Y1S-U0-wNa" firstAttribute="top" secondItem="xsS-Rq-guZ" secondAttribute="bottom" constant="41" id="PHQ-Sf-WQY"/>
                                     <constraint firstItem="Epf-sh-TIb" firstAttribute="centerX" secondItem="LEf-an-5VJ" secondAttribute="centerX" id="RE3-OT-PVM"/>
                                     <constraint firstItem="xsS-Rq-guZ" firstAttribute="leading" secondItem="LEf-an-5VJ" secondAttribute="leadingMargin" id="RNM-8g-LE0"/>
-                                    <constraint firstItem="Epf-sh-TIb" firstAttribute="top" secondItem="xsS-Rq-guZ" secondAttribute="bottom" constant="100" id="Sld-k9-dQn"/>
-                                    <constraint firstItem="UI4-zR-8Gm" firstAttribute="bottom" secondItem="xsS-Rq-guZ" secondAttribute="top" constant="-4" id="Tir-yN-2rD"/>
+                                    <constraint firstItem="Epf-sh-TIb" firstAttribute="top" secondItem="xsS-Rq-guZ" secondAttribute="bottom" constant="81" id="Sld-k9-dQn"/>
+                                    <constraint firstItem="UI4-zR-8Gm" firstAttribute="bottom" secondItem="xsS-Rq-guZ" secondAttribute="top" constant="-3.5" id="Tir-yN-2rD"/>
                                     <constraint firstItem="Epf-sh-TIb" firstAttribute="bottom" secondItem="LEf-an-5VJ" secondAttribute="bottom" constant="-568" id="TvD-9l-uU9"/>
                                     <constraint firstItem="RrJ-GL-ea8" firstAttribute="leading" secondItem="LEf-an-5VJ" secondAttribute="leading" constant="10" id="VHj-vW-yMZ"/>
                                     <constraint firstItem="xsS-Rq-guZ" firstAttribute="trailing" secondItem="Y1S-U0-wNa" secondAttribute="trailing" id="cB9-Xl-h4s"/>
-                                    <constraint firstItem="Y1S-U0-wNa" firstAttribute="top" secondItem="RrJ-GL-ea8" secondAttribute="bottom" constant="8" id="db9-RJ-Ufj"/>
-                                    <constraint firstItem="xsS-Rq-guZ" firstAttribute="top" secondItem="4ef-t4-ZnZ" secondAttribute="bottom" constant="8" symbolic="YES" id="hEF-9m-Y5q"/>
-                                    <constraint firstItem="Y1S-U0-wNa" firstAttribute="top" secondItem="zzk-1H-mhr" secondAttribute="bottom" constant="8" id="i3Y-UX-U5F"/>
+                                    <constraint firstItem="Y1S-U0-wNa" firstAttribute="top" secondItem="RrJ-GL-ea8" secondAttribute="bottom" constant="2" id="db9-RJ-Ufj"/>
+                                    <constraint firstItem="xsS-Rq-guZ" firstAttribute="top" secondItem="4ef-t4-ZnZ" secondAttribute="bottom" constant="28.5" id="hEF-9m-Y5q"/>
+                                    <constraint firstItem="Y1S-U0-wNa" firstAttribute="top" secondItem="zzk-1H-mhr" secondAttribute="bottom" constant="2" id="i3Y-UX-U5F"/>
                                     <constraint firstItem="Epf-sh-TIb" firstAttribute="top" secondItem="LEf-an-5VJ" secondAttribute="top" constant="210" id="kzl-CK-BJ4"/>
                                     <constraint firstItem="xsS-Rq-guZ" firstAttribute="leading" secondItem="Y1S-U0-wNa" secondAttribute="leading" id="mdE-OS-5xZ"/>
                                     <constraint firstItem="4ef-t4-ZnZ" firstAttribute="centerX" secondItem="LEf-an-5VJ" secondAttribute="centerX" id="mgd-Nc-Fcn"/>
                                     <constraint firstItem="UI4-zR-8Gm" firstAttribute="leading" secondItem="LEf-an-5VJ" secondAttribute="leading" constant="10" id="mnb-at-bNi"/>
                                     <constraint firstAttribute="bottom" secondItem="Y1S-U0-wNa" secondAttribute="bottom" constant="14" id="qia-Yb-1jU"/>
-                                    <constraint firstItem="xsS-Rq-guZ" firstAttribute="top" secondItem="LEf-an-5VJ" secondAttribute="top" constant="76" id="rWL-no-41y"/>
+                                    <constraint firstItem="xsS-Rq-guZ" firstAttribute="top" secondItem="LEf-an-5VJ" secondAttribute="top" constant="96.5" id="rWL-no-41y"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">

@@ -1,0 +1,20 @@
+Aah to Zzz is a word game that is intended to make it fun to learn 3 letter words. (3 letter words are especially useful in word games such as Scrabble or Words with Friends). From a set of 7 tiles, the user tries to make all the possible 3 letter words.
+Aah to Zzz was created in XCode 7.2 and Swift 2 for iOS 9 on iPhone.
+
+(Aah is the first word in the dictionary, and Zzz is the last, hence the title of the game.)
+
+Launching the app opens to 7 large letters on the left; a table of possible words indicated by 3 question marks ("???") on the right, and a blank rectangle on the upper left. 
+
+Tap a letter to add it to the rectangle. Add a 2nd and a 3rd. Each letter is grayed out and disabled after using it, so that a letter can be played only once for each attempted word. After adding the 3rd letter, the app automatically checks whether the word is valid, using the Official Scrabble Players Dictionary 4th edition (OSPD4), and displays the word in its place in the table if it is a valid word. If the cell containing the word was not visible (since the table scrolls, and some cells may be off the view), the table scrolls up automatically to put the newly found word into view.
+Whether or not the word was valid, the rectangle goes blank again, and all the letters are enabled again, so that the game is now ready for a new word attempt. There is a New List button at lower right, for when the user wants to generate a new list of words to guess. You do not need to complete a list in order to go on to a new one.
+
+The table orders the words alphabetically. The size of the table adjusts to the length of the list of words. It may be shorter than the height of the phone, or it may be longer, in which case it can be scrolled up or down to get to all the words.
+
+Tapping on a table view cell containing a word pops up a popover view with definitions. The top text field will show the definition from the OSPD4. This is loaded from a dictionary built into the app, and will always be there whether or not there is a network connection. Underneath that, there is a text field that is filled from definitions of the word through the Wordnik API. This text field is populated automatically, but needs an internet connection. An activity indicator is shown while waiting for the net to respond. If there is a problem with the connection, or if no definitions are found, an appropriate message is diplayed to the user. Note that an alert view is purposely *not* used, as that would unduly interupt the user experience. It doesn't make sense to use an alert view when the definitions from the network are entirely optional, only for interest and additional information. Tap anywhere outside the popover to dismiss it.
+
+If you want to see what the words are without guessing them, simply tap on a cell. You can see the word at the top of the definition popover.
+
+An Options button at lower left of the main view opens a modal view controller that demonstrates the use of a UISlider 
+(The grading rubric asks for more than one type of control. The other type being the UIButtons used throughout the app). The 4 sliders allow the user to control the location of the colors in the background gradient of the view. At lower left, there is a Reset to Defaults button that sets the gradient back to the original. Whatever the state of the gradient, when the Done button is tapped to return to the main view, that same gradient is kept. The gradient, however, is not persisted if the app is quit. While it can be fun, it's only there for aesthetic reasons, and is not essential to the game.
+
+The list of words, and which of them have been found, are persisted using Core Data. Quit the app and open it again, and the same word list as before comes up, and any words that have been found are displayed in the table view.
