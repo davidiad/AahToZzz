@@ -157,32 +157,27 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        if let _ = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
-            
-            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewControllerWithIdentifier("definition") as! DefinitionPopoverVC
-            vc.modalPresentationStyle = UIModalPresentationStyle.Popover
-//            vc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-            if let wordObject = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
-                vc.sometext = wordObject.word
-                vc.definition = model.getDefinition(wordObject.word!)
-//                if let vc.sometext = wordObject.word {
-//                    print("some success")
-//                } else {
-//                    print("not accessing vc")
-//                    print(vc)
-//                }
+        if let wordCell = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
+            // only if false to prevent the same Popover being called again while it's already up for that word
+            if wordCell.selected == false {
+                let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewControllerWithIdentifier("definition") as! DefinitionPopoverVC
+                vc.modalPresentationStyle = UIModalPresentationStyle.Popover
+                if let wordObject = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+                    vc.sometext = wordObject.word
+                    vc.definition = model.getDefinition(wordObject.word!)
+                }
+                let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+                //popover.barButtonItem = sender
+                popover.delegate = self
+                popover.permittedArrowDirections = UIPopoverArrowDirection.Right
+                // tell the popover that it should point from the cell that was tapped
+                popover.sourceView = tableView.cellForRowAtIndexPath(indexPath)
+                // make the popover arrow point from the sourceRect, further to the right than default
+                let sourceRect = CGRectMake(10, 10, 170, 25)
+                popover.sourceRect = sourceRect
+                presentViewController(vc, animated: true, completion:nil)
             }
-            let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-            //popover.barButtonItem = sender
-            popover.delegate = self
-            popover.permittedArrowDirections = UIPopoverArrowDirection.Right
-            // tell the popover that it should point from the cell that was tapped
-            popover.sourceView = tableView.cellForRowAtIndexPath(indexPath)
-            // make the popover arrow point from the sourceRect, further to the right than default
-            let sourceRect = CGRectMake(10, 10, 170, 25)
-            popover.sourceRect = sourceRect
-            presentViewController(vc, animated: true, completion:nil)
         }
         return indexPath
     }
@@ -230,29 +225,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
 
         // converting the new LetterSet to an array, for use in this class
-        // TODO: make use of set, rather than a parrallel array that has to be maintained
         letters = currentLetterSet?.letters?.allObjects as! [Letter]
         updateTiles()
         currentWords = model.generateWords(letters)
         // save the current # of words for use later in checkForValidWord
         currentNumberOfWords = currentWords?.count
         
-        // attempting to fix problem where old words show up in cells
-        //´tableView.reloadData()
-        
-        
-        
-//        // put the word list into the table of words and set all words to blank
-//        if wordTable != nil {
-//            wordTable!.wordlist = wordlist
-//            wordTable!.tableView.reloadData() // needed?
-//            for var i=0; i<wordlist.count; i++ {
-//                //updateCellForWord("---", index: i, color: UIColor.blackColor())
-//            }
-//           
-//        } else {
-//            print("wordTable was nil")
-//        }
     }
 
     @IBAction func addLetterToWordInProgress(sender: UIButton) {
@@ -290,49 +268,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return false
     }
     
-    /* rewrite this, but with core data object instead of wordlist
-    func checkForValidWord(wordToCheck: String) -> Bool {
-        for var i=0; i<wordlist.count; i++ {
-            if wordToCheck == wordlist[i] {
-                //updateCellForWord(wordlist[i], index: i, color: UIColor.blueColor())
-                // set the found property of the Word to true
-                let indexPath = NSIndexPath(forRow: i, inSection: 0)
-                let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
-                currentWord.found = true
-                return true
-            }
-        }
-        return false
-    }
-    */
- /*
-    func updateCellForWord (word: String, index: Int, color: UIColor) {
-        let indexPath = NSIndexPath(forRow: index, inSection: 0)
-        print("The index i found was: \(index)")
-        let cell = wordTable!.tableView.cellForRowAtIndexPath(indexPath)
-        cell?.textLabel!.text = word
-        wordTable!.tableView.cellForRowAtIndexPath(indexPath)?.textLabel?.textColor = color
-        
-        /* reloading of cell seems to happen without calling reloadRows...
-        // Make an array of NSIndexPaths with just the currently targeted cell's indexpath
-        //let indexPaths: [NSIndexPath] = [indexPath]
-        //wordTable!.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Fade)
-        */
-    }
-*/
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // prepareForSegue is called before viewDidLoad, therefore, creating and then passing on the letters & words here
-//        checkForExistingLetters()
-//        updateTiles()
-//        generateWordList()
-//        if let wordTableController = segue.destinationViewController as? AtoZTableViewController {
-//            wordTableController.wordlist = wordlist
-//            // set the instance variable for the embedded table view controller for later use
-//            wordTable = wordTableController
-//        } else {
-//            print("segue to AtoZTableViewController fail")
-//        }
+
     }
     
     func checkForExistingLetters () {
@@ -362,15 +300,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func updateTiles () {
-        // Set the letters in the buttons being used as letter tiles
-//        for var i=0; i<currentLetterSet?.letters?.count; i++ {
-//            lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal
-//        }
-        //TODO: make optional-safe
-//        for letter in (currentLetterSet?.letters)! {
-//            lettertiles[i].setTitle(letter.letter, forState: UIControlState.Normal)
-//        }
-         //Set the letters in the buttons being used as letter tiles
         
         // convert the LetterSet into an array
         letters = currentLetterSet?.letters?.allObjects as! [Letter]
@@ -398,7 +327,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
-    
     
 }
 
