@@ -188,6 +188,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return indexPath
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // TODO: prevent popover from attempting to present twice in a row
+    }
+    
     //MARK:- Popover Delegate functions
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {

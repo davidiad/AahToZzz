@@ -11,17 +11,22 @@ import UIKit
 class DefinitionPopoverVC: UIViewController {
     
     let wordnik = WordnikClient.sharedInstance
+    let flickr = FlickrClient.sharedInstance
     
     var sometext: String? //TODO: give 'sometext' a better variable name!
     var definition: String? // Holds the definition from the OSPD4 dictionary in the original word list
-    //var networkDefinitions: String? // Hold the definitions retrieved from the net
     
+    @IBOutlet weak var exampleImage: UIImageView!
     @IBOutlet weak var definitionTextView: UITextView!
     @IBOutlet weak var networkDefinitionsTV: UITextView!
     
     @IBOutlet weak var currentWord: UILabel!
     
     @IBOutlet weak var activityView: UIActivityIndicatorView!
+    
+    @IBOutlet weak var flickrActivityView: UIActivityIndicatorView!
+    
+    @IBOutlet weak var flickrMessage: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +76,30 @@ class DefinitionPopoverVC: UIViewController {
                     }
                 }
             }
-            
+            flickr.getFlickrImagesForWord(sometext!) {ius, success, error in
+                if success {
+                    _ = self.flickr.taskForImage(ius!) { data, error in
+                        if let error = error {
+                            self.flickrActivityView.stopAnimating()
+                            self.flickrMessage.text = "Photo download error: \(error.localizedDescription)"
+                        }
+                        if let data = data {
+                            // Create the image
+                            let image = UIImage(data: data)
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.flickrMessage.text = ""
+                                self.flickrActivityView.stopAnimating()
+                                self.exampleImage.image = image
+                            }
+                        }
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.flickrActivityView.stopAnimating()
+                        self.flickrMessage.text = "Not successful in finding an example image"
+                    }
+                }
+            }
         }
     }
 
