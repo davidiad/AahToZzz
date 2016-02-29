@@ -151,7 +151,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
             if word.found == true && word.inCurrentList == true {
                 cell.word.text = word.word
-                print("FOund word: \(word.word)")
             } else {
             cell.word.text = "? ? ?"
             }
@@ -159,8 +158,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        if let wordCell = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
-            
+        if let _ = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
             
             let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewControllerWithIdentifier("definition") as! DefinitionPopoverVC
@@ -260,9 +258,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         sender.enabled = false
         
         if wordInProgress.text?.characters.count > 2 {
-            print("The word is...... \(wordInProgress.text!)")
-            let foundValidWord = checkForValidWord(wordInProgress.text!)
-            print("Was that a valid word??? \(foundValidWord)")
+            _ = checkForValidWord(wordInProgress.text!)
             wordInProgress.text = ""
             
             for tile in lettertiles {

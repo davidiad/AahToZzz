@@ -126,7 +126,6 @@ class AtoZModel {
         // add the LetterSet to the GameData object
         letterset.game = game
         saveContext()
-        print("Temp or not? \(letterset.objectID.temporaryID)")
         letterset.letterSetID = String(letterset.objectID.URIRepresentation())
         
         game?.currentLetterSetID = letterset.letterSetID
@@ -167,7 +166,6 @@ class AtoZModel {
         // add the LetterSet to the GameData object
         letterset.game = game
         saveContext()
-        print("Temp or not? \(letterset.objectID.temporaryID)") //to verify that it has a permanent ID
         letterset.letterSetID = String(letterset.objectID.URIRepresentation())
         
         game?.currentLetterSetID = letterset.letterSetID
@@ -262,7 +260,6 @@ class AtoZModel {
                 // check to see if anything was returned
                 if wordsArray.count > 0 {
                     // a Word was returned for that String. Do not create another with the same string!
-                    print("in CORUW: and the word is: \(wordsArray[0].word)")
                     newWord = wordsArray[0]
                 } else {
                     newWord = Word(wordString: wordlist[i], context: sharedContext)

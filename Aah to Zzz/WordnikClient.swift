@@ -16,8 +16,8 @@ let BASE_URL = "http://api.wordnik.com:80/v4/word.json/"
 let METHOD_NAME = "definitions"
 let LIMIT = "25"
 let INCLUDE_RELATED = "false"
-let SOURCE_DICTIONARIES = "all"
-let USE_CANONICAL = "true"
+let SOURCE_DICTIONARIES = "all" //"ahd"//(american heritage dictionary)
+let USE_CANONICAL = "true" // tells Wordnik look at the root of the word, for instance, if the word is "AAS", it would look at it as the plural of "AA"
 let INCLUDE_TAGS = "false"
 let API_KEY = "c6c759673ee70a17150040157a20fb5c0cc0963c68720e422" // David's wordnik API key
 
@@ -44,7 +44,7 @@ class WordnikClient: NSObject {
     }()
 
     // used in the DefinitionPopover to get info from the net to add to the list of definitions
-    func getDefinitionForWord(word: String, completionHandler: (definitions: [String], success: Bool, errorString: String?) -> Void) {
+    func getDefinitionForWord(word: String, completionHandler: (response: NSURLResponse?, definitions: [String]?, success: Bool, errorString: String?) -> Void) {
     
     //  API method arguments
     let methodArguments = [
@@ -64,29 +64,32 @@ class WordnikClient: NSObject {
         
         // Initialize task for getting data
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            
+            guard (response != nil) else {
+                completionHandler(response: response, definitions: nil, success: false, errorString: String(error))
+                return
+            }
             // Check for a successful response
             // GUARD: Was there an error?
             guard (error == nil) else {
-                print("There was an error with your request: \(error)")
+                completionHandler(response: response, definitions: nil, success: false, errorString: String(error))
                 return
             }
             
             // GUARD: Did we get a successful 2XX response?
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 if let response = response as? NSHTTPURLResponse {
-                    print("Your request returned an invalid response! Status code: \(response.statusCode)!")
+                    completionHandler(response: response, definitions: nil, success: false, errorString: "Tried to get definitions but there was an error: Status code \(response.statusCode)")
                 } else if let response = response {
-                    print("Your request returned an invalid response! Response: \(response)!")
+                    completionHandler(response: response, definitions: nil, success: false, errorString: "Tried to get definitions but there was an error: \(response)")
                 } else {
-                    print("Your request returned an invalid response!")
+                    completionHandler(response: response, definitions: nil, success: false, errorString: "Tried to get definitions but there was an invalid response.")
                 }
                 return
             }
             
             // GUARD: Was there any data returned?
             guard let data = data else {
-                print("No data was returned by the request!")
+                completionHandler(response: response, definitions: nil, success: false, errorString: "No data was found.")
                 return
             }
             
@@ -104,29 +107,24 @@ class WordnikClient: NSObject {
                 
                 guard let definitionsJSON = parsedResult as? [[String: AnyObject]]
                     else {
-                        print("Cannot parse \(parsedResult)")
+                        //print("Cannot parse \(parsedResult)")
                         return
                 }
                 
                 var definitions = [String]()
                 for def in definitionsJSON {
                     if let definition = def["text"] as? String {
-                        print(definition)
                         definitions.append(definition)
                     }
-//                    print("AN ENTRY")
-//                    print(def)
-//                    print("______________")
                 }
-                completionHandler(definitions: definitions, success: true, errorString: nil)
+                completionHandler(response: response, definitions: definitions, success: true, errorString: nil)
             } catch {
                 parsedResult = nil
-                print("Could not parse the data as JSON: '\(data)'")
+                completionHandler(response: response, definitions: nil, success: false, errorString: "Could not parse a result")
                 return
             }
         }
         task.resume()
-        //return word // TODO: to be replaced by definition
     }
     
     

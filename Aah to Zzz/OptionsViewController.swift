@@ -87,10 +87,8 @@ class OptionsViewController: UIViewController {
         view.backgroundColor = UIColor.clearColor()
         // if 1 is nil, they should all be nil, and vice-versa. But, be safe, check all
         if model.location1 == nil || model.location2 == nil || model.location3 == nil || model.location4 == nil{
-            print("NILLED")
             setDefaultGradient()
         } else {
-            print("That's not nil")
             slider1.value = Float(model.location1!)
             slider2.value = Float(model.location2!)
             slider3.value = Float(model.location3!)
@@ -109,10 +107,8 @@ class OptionsViewController: UIViewController {
         
         //gradient = CAGradientLayer.yellowPinkBlueGreenGradient(gradient)()
         if model.location1 != nil {
-            print("grad nil")
             gradient = updateGradient(model.location1!, loc2: model.location2!, loc3: model.location3!, loc4: model.location4!)
         } else {
-            print("grad not nil")
             gradient = model.yellowPinkBlueGreenGradient()
         }
         gradient.frame = view.bounds

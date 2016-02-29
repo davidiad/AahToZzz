@@ -21,6 +21,8 @@ class DefinitionPopoverVC: UIViewController {
     
     @IBOutlet weak var currentWord: UILabel!
     
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         currentWord.text = "DFault"
@@ -37,23 +39,41 @@ class DefinitionPopoverVC: UIViewController {
         super.viewDidAppear(animated)
         if sometext != nil {
             
-            wordnik.getDefinitionForWord(sometext!) { definitions, success, errorString in
-                //TODO: activity indicator while waiting for net defs, and possibly user messages if errors
-                // eg, no network: more defs if you get online etc
-                if success {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        var networkDefinitions: String = "More definitions from the net powered by Wordnik\n\n"
-                        for def in definitions {
-                            networkDefinitions += def
-                            networkDefinitions += "\n\n"
+            wordnik.getDefinitionForWord(sometext!) { response, definitions, success, errorString in
+                if response != nil {
+                    
+                    if success {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.activityView.stopAnimating()
+                            var networkDefinitions: String = ""
+                            if definitions != nil {
+                                for def in definitions! {
+                                    networkDefinitions += def
+                                    networkDefinitions += "\n\n"
+                                }
+                                // the case where definitions exist, but holds no values
+                                if definitions!.count == 0 {
+                                    networkDefinitions += "There are no more definitions for '\(self.sometext!)' found on Wordnik."
+                                }
+                            }
+                            self.networkDefinitionsTV.text = networkDefinitions
                         }
-                        self.networkDefinitionsTV.text = networkDefinitions
+                    } else {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.activityView.stopAnimating()
+                            self.networkDefinitionsTV.text = errorString
+                        }
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.activityView.stopAnimating()
+                        self.networkDefinitionsTV.text = "More definitions may be available on the net, but the internet connection appears to be offline"
                     }
                 }
             }
+            
         }
     }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -12,6 +12,9 @@
 		637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06A1C8236C8005A36BA /* WordnikClient.swift */; };
 		637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06C1C83512F005A36BA /* OptionsViewController.swift */; };
 		637AF06F1C835B34005A36BA /* extension-Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06E1C835B34005A36BA /* extension-Gradient.swift */; };
+		637AF0741C83EF1F005A36BA /* wordnik-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 637AF0711C83EF1F005A36BA /* wordnik-logo.png */; };
+		637AF0751C83EF1F005A36BA /* wordnik-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637AF0721C83EF1F005A36BA /* wordnik-logo@2x.png */; };
+		637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637AF0731C83EF1F005A36BA /* wordnik-logo@3x.png */; };
 		63A3A1111C763F6C00F440B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1101C763F6C00F440B5 /* AppDelegate.swift */; };
 		63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A1141C763F6C00F440B5 /* Main.storyboard */; };
 		63A3A1191C763F6C00F440B5 /* AtoZ.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */; };
@@ -34,6 +37,9 @@
 		637AF06A1C8236C8005A36BA /* WordnikClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordnikClient.swift; sourceTree = "<group>"; };
 		637AF06C1C83512F005A36BA /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		637AF06E1C835B34005A36BA /* extension-Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "extension-Gradient.swift"; sourceTree = "<group>"; };
+		637AF0711C83EF1F005A36BA /* wordnik-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wordnik-logo.png"; sourceTree = "<group>"; };
+		637AF0721C83EF1F005A36BA /* wordnik-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wordnik-logo@2x.png"; sourceTree = "<group>"; };
+		637AF0731C83EF1F005A36BA /* wordnik-logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wordnik-logo@3x.png"; sourceTree = "<group>"; };
 		63A3A10D1C763F6C00F440B5 /* AahToZzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AahToZzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A3A1101C763F6C00F440B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63A3A1151C763F6C00F440B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,6 +69,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		637AF0701C83EEE9005A36BA /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				637AF0711C83EF1F005A36BA /* wordnik-logo.png */,
+				637AF0721C83EF1F005A36BA /* wordnik-logo@2x.png */,
+				637AF0731C83EF1F005A36BA /* wordnik-logo@3x.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		63A3A1041C763F6C00F440B5 = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +98,7 @@
 		63A3A10F1C763F6C00F440B5 /* AahToZzz */ = {
 			isa = PBXGroup;
 			children = (
+				637AF0701C83EEE9005A36BA /* Assets */,
 				63A3A1271C76520500F440B5 /* 3letterwordlist.txt */,
 				63A3A1101C763F6C00F440B5 /* AppDelegate.swift */,
 				63A3A1141C763F6C00F440B5 /* Main.storyboard */,
@@ -184,6 +201,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				63A3A1281C76520500F440B5 /* 3letterwordlist.txt in Resources */,
+				637AF0741C83EF1F005A36BA /* wordnik-logo.png in Resources */,
+				637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */,
+				637AF0751C83EF1F005A36BA /* wordnik-logo@2x.png in Resources */,
 				63A3A11E1C763F6C00F440B5 /* LaunchScreen.storyboard in Resources */,
 				63A3A11B1C763F6C00F440B5 /* Assets.xcassets in Resources */,
 				63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */,
