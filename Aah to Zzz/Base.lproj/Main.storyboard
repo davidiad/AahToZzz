@@ -34,7 +34,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhl-0D-amH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhl-0D-amH" customClass="Tile" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="79" y="256" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="DnI-ZF-Vdw"/>
@@ -46,7 +46,7 @@
                                     <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bsy-LC-lkr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bi6-wL-Loo">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bi6-wL-Loo" customClass="Tile" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="114" y="319" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="XB2-qG-DaI"/>
@@ -58,7 +58,7 @@
                                     <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="grx-Zr-Mry"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rTz-zX-Iht">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rTz-zX-Iht" customClass="Tile" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="40" y="319" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Ron-MB-L7Z"/>
@@ -68,18 +68,6 @@
                                 <state key="normal" title="C" backgroundImage="tile"/>
                                 <connections>
                                     <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aMX-sh-A6D"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9k-kf-X6I">
-                                <rect key="frame" x="50" y="435" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="UvJ-dF-xi2"/>
-                                    <constraint firstAttribute="height" constant="50" id="hKX-RQ-TCj"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="48"/>
-                                <state key="normal" title="C" backgroundImage="tile"/>
-                                <connections>
-                                    <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Kv-wn-gLL"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ojv-Vd-35V">
@@ -93,7 +81,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KR2-xq-ILu">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KR2-xq-ILu" customClass="Tile" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="15" y="377" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="H9T-V1-zYq"/>
@@ -105,7 +93,7 @@
                                     <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cAb-Wg-cVu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69O-Su-GUK">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69O-Su-GUK" customClass="Tile" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="114" y="435" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="yG1-Iv-XZv"/>
@@ -157,7 +145,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="gow-b2-VNt"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLz-is-Kr7">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLz-is-Kr7" customClass="Tile" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="141" y="377" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="ZOA-68-2nx"/>
@@ -167,6 +155,18 @@
                                 <state key="normal" title="C" backgroundImage="tile"/>
                                 <connections>
                                     <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2ab-Nu-WkA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9k-kf-X6I" customClass="Tile" customModule="AahToZzz" customModuleProvider="target">
+                                <rect key="frame" x="50" y="435" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="UvJ-dF-xi2"/>
+                                    <constraint firstAttribute="height" constant="50" id="hKX-RQ-TCj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="48"/>
+                                <state key="normal" title="C" backgroundImage="tile"/>
+                                <connections>
+                                    <action selector="addLetterToWordInProgress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Kv-wn-gLL"/>
                                 </connections>
                             </button>
                         </subviews>

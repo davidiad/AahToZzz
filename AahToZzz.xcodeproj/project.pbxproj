@@ -32,6 +32,7 @@
 		63A9FEF01C7AC29C00AE54F1 /* LetterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEA1C7AC29C00AE54F1 /* LetterSet.swift */; };
 		63A9FEF21C7AC29C00AE54F1 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEC1C7AC29C00AE54F1 /* Letter.swift */; };
 		63A9FEF41C7AC29C00AE54F1 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEE1C7AC29C00AE54F1 /* GameData.swift */; };
+		63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D57BA91C8A48AB0046E349 /* Tile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		63A9FEEA1C7AC29C00AE54F1 /* LetterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LetterSet.swift; sourceTree = "<group>"; };
 		63A9FEEC1C7AC29C00AE54F1 /* Letter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
 		63A9FEEE1C7AC29C00AE54F1 /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
+		63D57BA91C8A48AB0046E349 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +109,7 @@
 		63A3A10F1C763F6C00F440B5 /* AahToZzz */ = {
 			isa = PBXGroup;
 			children = (
-				637AF0791C84560D005A36BA /* GradientSlider.swift */,
+				63D57BA81C891C950046E349 /* Contoller */,
 				637AF0701C83EEE9005A36BA /* Assets */,
 				63A3A1271C76520500F440B5 /* 3letterwordlist.txt */,
 				63A3A1101C763F6C00F440B5 /* AppDelegate.swift */,
@@ -116,10 +118,7 @@
 				63A3A11C1C763F6C00F440B5 /* LaunchScreen.storyboard */,
 				63A3A11F1C763F6C00F440B5 /* Info.plist */,
 				63A9FEF61C7AC2D200AE54F1 /* Model */,
-				63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */,
-				63A3A12D1C76603300F440B5 /* WordListCell.swift */,
-				637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */,
-				637AF06C1C83512F005A36BA /* OptionsViewController.swift */,
+				63D57BA91C8A48AB0046E349 /* Tile.swift */,
 			);
 			name = AahToZzz;
 			path = "Aah to Zzz";
@@ -148,6 +147,18 @@
 				637AF06A1C8236C8005A36BA /* WordnikClient.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		63D57BA81C891C950046E349 /* Contoller */ = {
+			isa = PBXGroup;
+			children = (
+				63A3A12D1C76603300F440B5 /* WordListCell.swift */,
+				637AF0791C84560D005A36BA /* GradientSlider.swift */,
+				63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */,
+				637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */,
+				637AF06C1C83512F005A36BA /* OptionsViewController.swift */,
+			);
+			name = Contoller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +243,7 @@
 				63A3A1261C764E3E00F440B5 /* AtoZViewController.swift in Sources */,
 				63A3A12A1C7652C300F440B5 /* AtoZModel.swift in Sources */,
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
+				63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */,
 				63A9FEF41C7AC29C00AE54F1 /* GameData.swift in Sources */,
 				637AF07A1C84560D005A36BA /* GradientSlider.swift in Sources */,
 				637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */,

@@ -19,7 +19,7 @@ let MEDIA = "photos"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
 let ACCURACY_DEFAULT = 9
-let PER_PAGE_DEFAULT = 200
+let PER_PAGE_DEFAULT = 10
 let RADIUS_DEFAULT = "32" // 32 is max allowed, in km
 let SORT = "relevance"
 
@@ -118,11 +118,12 @@ class FlickrClient: NSObject {
             
             if photoArray.count > 0 {
                 let examplePhoto = photoArray.first
-                guard let imageUrlString = examplePhoto!["url_m"] as? String else {
+                guard let imageUrlString = examplePhoto![EXTRAS] as? String else {
                     // handle error
                     completion(ius: nil, success: false, error: error)
                     return
                 }
+                
                 completion(ius: imageUrlString, success: true, error: error)
             } else {
                 completion(ius: nil, success: false, error: nil)

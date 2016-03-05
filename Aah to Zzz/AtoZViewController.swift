@@ -11,6 +11,13 @@ import CoreData
 
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate {
     
+    let position1 = CGPointMake(45, 260)
+    let position2 = CGPointMake(100, 260)
+    let position3 = CGPointMake(155, 260)
+    var occupied1: Bool = false
+    var occupied2: Bool = false
+    var occupied3: Bool = false
+    
     var model = AtoZModel.sharedInstance
     var letters: [Letter]! //TODO: why not ? instead of !
     var wordlist = [String]()
@@ -23,8 +30,34 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var currentNumberOfWords: Int?
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var lettertiles: [UIButton]!
+    @IBOutlet var lettertiles: [Tile]!
     @IBOutlet weak var wordInProgress: UILabel!
+    
+    //MARK:- vars for UIDynamics
+    
+    lazy var center: CGPoint = {
+        return CGPoint(x: self.view.frame.midX, y: self.view.frame.midY)
+    }()
+
+    lazy var radialGravity: UIFieldBehavior = {
+        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.center)
+        radialGravity.region = UIRegion(radius: 200.0)
+        radialGravity.strength = 100.0
+        radialGravity.falloff = 1.0
+        radialGravity.minimumRadius = 50.0
+        return radialGravity
+    }()
+    
+    private var animator: UIDynamicAnimator!
+    private var attachmentBehavior: UIAttachmentBehavior!
+    private var pushBehavior: UIPushBehavior!
+    private var itemBehavior: UIDynamicItemBehavior!
+    private var gravityBehavior = UIGravityBehavior()
+    private var collisionBehavior = UICollisionBehavior()
+    private var blackhole = UIFieldBehavior!()
+//    private var snap0 = UISnapBehavior!()
+//    private var snap1 = UISnapBehavior!()
+//    private var snap2 = UISnapBehavior!()
     
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
@@ -47,6 +80,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }()
     
     //Mark:- View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,7 +96,36 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //TODO: check for memory leak here
         // create an array to populate the buttons that hold the letters
         
-        //TODO: get the current letter and word list from the model, if there is one
+        animator = UIDynamicAnimator(referenceView: view)
+        for var i=0; i<lettertiles.count; i++ {
+//            var xpos: CGFloat
+//            var ypos: CGFloat
+//            
+//            switch i {
+//                
+//            case 4, 5, 6:
+//                xpos = CGFloat(i - 3) * 65.0
+//                ypos = 600.0
+//            case 1, 2, 3:
+//                xpos = (CGFloat(i) * 85.0) - 40.0
+//                ypos = 500.0
+//                
+//            case 0:
+//                xpos = 130.0
+//                ypos = 400.0
+//                
+//            default:
+//                xpos = 100
+//                ypos = 300
+//            }
+            
+            //let tileLocation: CGPoint = CGPointMake(xpos, ypos)
+
+            lettertiles[i].location = generateLetterPosition(i)
+            lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].location!)
+            lettertiles[i].snapBehavior?.damping = 0.9
+            animator.addBehavior(lettertiles[i].snapBehavior!)
+        }
         checkForExistingLetters()
         updateTiles()
         generateWordList()
@@ -72,8 +135,85 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         mainGradient.zPosition = -1
         mainGradient.name = "mainGradientLayer"
         view.layer.addSublayer(mainGradient)
+        
+        pushBehavior = UIPushBehavior(items: lettertiles, mode: .Instantaneous)
+        pushBehavior.pushDirection = CGVector(dx: 3.0, dy: 3.0)
+        pushBehavior.magnitude = 0.1//magnitude / ThrowingVelocityPadding
+        
+        gravityBehavior = UIGravityBehavior(items: lettertiles)
+        collisionBehavior = UICollisionBehavior(items: lettertiles)
+        collisionBehavior.translatesReferenceBoundsIntoBoundary = true
+        
+        blackhole = UIFieldBehavior.radialGravityFieldWithPosition(CGPointMake(65, 150))
+        blackhole.falloff = 0.01
+        blackhole.strength = 1234.9
+        
+//        snap0 = UISnapBehavior(item: lettertiles[0], snapToPoint: CGPointMake(40, 300))
+//        snap1 = UISnapBehavior(item: lettertiles[1], snapToPoint: CGPointMake(140, 300))
+//        snap2 = UISnapBehavior(item: lettertiles[2], snapToPoint: CGPointMake(240, 300))
+        
+        //animator.addBehavior(gravityBehavior)
+        //animator.addBehavior(pushBehavior)
+        //animator.addBehavior(collisionBehavior)
+        //animator.addBehavior(blackhole)
+//        animator.addBehavior(snap0)
+//        animator.addBehavior(snap1)
+//        animator.addBehavior(snap2)
     }
     
+    func generateLetterPosition(tileNum: Int) -> CGPoint{
+        var xpos: CGFloat
+        var ypos: CGFloat
+            switch tileNum {
+                
+            case 4, 5, 6:
+                xpos = CGFloat(tileNum - 3) * 65.0
+                ypos = 600.0
+            case 1, 2, 3:
+                xpos = (CGFloat(tileNum) * 85.0) - 40.0
+                ypos = 500.0
+                
+            case 0:
+                xpos = 130.0
+                ypos = 400.0
+                
+            default:
+                xpos = 100
+                ypos = 300
+            }
+
+        return CGPointMake(xpos, ypos)
+    }
+    
+    func snapTileToPosition (tile: Tile) {
+        if !occupied1 {
+            tile.snapBehavior?.snapPoint = position1
+            occupied1 = true
+        } else if !occupied2 {
+            tile.snapBehavior?.snapPoint = position2
+            occupied2 = true
+        } else if !occupied3 {
+            tile.snapBehavior?.snapPoint = position3
+            occupied3 = true
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        // Thank you to Aaron Douglas for showing an easy way to turn on the cool field of lines that visualize UIFieldBehaviors!
+        // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
+        animator.setValue(true, forKey: "debugEnabled")
+        
+        let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
+        itemBehavior.density = 0.5 // 12
+        animator.addBehavior(itemBehavior) // 13
+        
+        //vortex.addItem(orbitingView) // 14
+        radialGravity.addItem(lettertiles[0]) // 15
+        
+        //animator.addBehavior(radialGravity) // 16
+        //animator.addBehavior(vortex) // 17
+    }
 
     // MARK:- FetchedResultsController delegate protocol
     
@@ -233,9 +373,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
 
-    @IBAction func addLetterToWordInProgress(sender: UIButton) {
+    @IBAction func addLetterToWordInProgress(sender: Tile) {
         // add the new letter to the word in progress
         wordInProgress.text = wordInProgress.text! + (sender.titleLabel?.text)!
+        snapTileToPosition(sender)
         sender.enabled = false
         
         if wordInProgress.text?.characters.count > 2 {
@@ -246,6 +387,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 tile.enabled = true
             }
         }
+        
     }
     
     func checkForValidWord(wordToCheck: String) -> Bool {
