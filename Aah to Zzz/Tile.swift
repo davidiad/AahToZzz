@@ -11,4 +11,23 @@ import UIKit
 class Tile: UIButton {
     var snapBehavior: UISnapBehavior?
     var location: CGPoint?
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    func setup() {
+        
+    }
+    
+    
+    
+    
 }

@@ -30,7 +30,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var currentNumberOfWords: Int?
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var lettertiles: [Tile]!
+    //@IBOutlet var lettertiles: [Tile]!
+    var lettertiles: [Tile]!
     @IBOutlet weak var wordInProgress: UILabel!
     
     //MARK:- vars for UIDynamics
@@ -79,10 +80,25 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return fetchedResultsController
     }()
     
-    //Mark:- View Lifecycle
+    //MARK:- View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        lettertiles = [Tile]()
+        let image = UIImage(named: "tile") as UIImage?
+        for var i=0; i<7; i++ {
+            
+            //let button   = UIButton(type: UIButtonType.Custom) as UIButton
+            let tile = Tile(frame: CGRectMake(120.0, 170.0 + 50 * CGFloat(i), 50, 50))
+            tile.setBackgroundImage(image, forState: .Normal)
+            tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
+           
+            tile.setTitle("Q", forState: .Normal)
+            tile.addTarget(self, action: "addLetterToWordInProgress:", forControlEvents:.TouchUpInside)
+            lettertiles.append(tile)
+            view.addSubview(tile)
+        }
+        
         
         do {
             try fetchedResultsController.performFetch()
@@ -98,29 +114,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         animator = UIDynamicAnimator(referenceView: view)
         for var i=0; i<lettertiles.count; i++ {
-//            var xpos: CGFloat
-//            var ypos: CGFloat
-//            
-//            switch i {
-//                
-//            case 4, 5, 6:
-//                xpos = CGFloat(i - 3) * 65.0
-//                ypos = 600.0
-//            case 1, 2, 3:
-//                xpos = (CGFloat(i) * 85.0) - 40.0
-//                ypos = 500.0
-//                
-//            case 0:
-//                xpos = 130.0
-//                ypos = 400.0
-//                
-//            default:
-//                xpos = 100
-//                ypos = 300
-//            }
-            
-            //let tileLocation: CGPoint = CGPointMake(xpos, ypos)
-
             lettertiles[i].location = generateLetterPosition(i)
             lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].location!)
             lettertiles[i].snapBehavior?.damping = 0.9
@@ -161,6 +154,23 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        animator.addBehavior(snap2)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        // Thank you to Aaron Douglas for showing an easy way to turn on the cool fields of lines that visualize UIFieldBehaviors!
+        // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
+        //animator.setValue(true, forKey: "debugEnabled")
+        
+        let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
+        itemBehavior.density = 0.5 // 12
+        animator.addBehavior(itemBehavior) // 13
+        
+        //vortex.addItem(orbitingView) // 14
+        radialGravity.addItem(lettertiles[0]) // 15
+        
+        //animator.addBehavior(radialGravity) // 16
+        //animator.addBehavior(vortex) // 17
+    }
+    
     func generateLetterPosition(tileNum: Int) -> CGPoint{
         var xpos: CGFloat
         var ypos: CGFloat
@@ -198,22 +208,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        // Thank you to Aaron Douglas for showing an easy way to turn on the cool field of lines that visualize UIFieldBehaviors!
-        // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
-        animator.setValue(true, forKey: "debugEnabled")
-        
-        let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
-        itemBehavior.density = 0.5 // 12
-        animator.addBehavior(itemBehavior) // 13
-        
-        //vortex.addItem(orbitingView) // 14
-        radialGravity.addItem(lettertiles[0]) // 15
-        
-        //animator.addBehavior(radialGravity) // 16
-        //animator.addBehavior(vortex) // 17
-    }
 
     // MARK:- FetchedResultsController delegate protocol
     
@@ -361,7 +355,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         saveContext()
-//        let newWord = Word(wordString: "AAA", context: sharedContext)
+
         currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
 
         // converting the new LetterSet to an array, for use in this class
@@ -383,11 +377,26 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             _ = checkForValidWord(wordInProgress.text!)
             wordInProgress.text = ""
             
-            for tile in lettertiles {
-                tile.enabled = true
+            //TODO: would be better to do just the 3 that are not in original place
+            // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
+            let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.7 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
+            dispatch_after(time, dispatch_get_main_queue()) {
+                //put your code which should be executed with a delay here
+                
+                for var i=0; i<self.lettertiles.count; i++ {
+                    self.lettertiles[i].enabled = true
+                    self.lettertiles[i].snapBehavior?.snapPoint = self.lettertiles[i].location! // reset to default locations
+                }
+                self.resetOccupied()
             }
         }
         
+    }
+    
+    func resetOccupied() {
+        occupied1 = false
+        occupied2 = false
+        occupied3 = false
     }
     
     func checkForValidWord(wordToCheck: String) -> Bool {
@@ -396,8 +405,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
             if wordToCheck == aValidWord.word {
-                //updateCellForWord(wordlist[i], index: i, color: UIColor.blueColor())
-                // set the found property of the Word to true
                 
                 let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
                 currentWord.found = true
