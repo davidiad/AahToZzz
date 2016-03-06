@@ -114,9 +114,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         animator = UIDynamicAnimator(referenceView: view)
         for var i=0; i<lettertiles.count; i++ {
-            lettertiles[i].location = generateLetterPosition(i)
-            lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].location!)
-            lettertiles[i].snapBehavior?.damping = 0.9
+            lettertiles[i].position = generateLetterPosition(i)
+            lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].position!)
+            lettertiles[i].snapBehavior?.damping = 0.75
             animator.addBehavior(lettertiles[i].snapBehavior!)
         }
         checkForExistingLetters()
@@ -147,7 +147,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         //animator.addBehavior(gravityBehavior)
         //animator.addBehavior(pushBehavior)
-        //animator.addBehavior(collisionBehavior)
+        animator.addBehavior(collisionBehavior)
         //animator.addBehavior(blackhole)
 //        animator.addBehavior(snap0)
 //        animator.addBehavior(snap1)
@@ -371,7 +371,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // add the new letter to the word in progress
         wordInProgress.text = wordInProgress.text! + (sender.titleLabel?.text)!
         snapTileToPosition(sender)
-        sender.enabled = false
+        //sender.enabled = false
         
         if wordInProgress.text?.characters.count > 2 {
             _ = checkForValidWord(wordInProgress.text!)
@@ -379,13 +379,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             //TODO: would be better to do just the 3 that are not in original place
             // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
-            let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.7 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
+            let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.55 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
             dispatch_after(time, dispatch_get_main_queue()) {
                 //put your code which should be executed with a delay here
                 
                 for var i=0; i<self.lettertiles.count; i++ {
                     self.lettertiles[i].enabled = true
-                    self.lettertiles[i].snapBehavior?.snapPoint = self.lettertiles[i].location! // reset to default locations
+                    self.lettertiles[i].snapBehavior?.snapPoint = self.lettertiles[i].position! // reset to default locations
                 }
                 self.resetOccupied()
             }

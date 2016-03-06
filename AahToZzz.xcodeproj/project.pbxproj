@@ -33,6 +33,8 @@
 		63A9FEF21C7AC29C00AE54F1 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEC1C7AC29C00AE54F1 /* Letter.swift */; };
 		63A9FEF41C7AC29C00AE54F1 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9FEEE1C7AC29C00AE54F1 /* GameData.swift */; };
 		63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D57BA91C8A48AB0046E349 /* Tile.swift */; };
+		63D57BB51C8C00C80046E349 /* Position+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D57BB31C8C00C80046E349 /* Position+CoreDataProperties.swift */; };
+		63D57BB61C8C00C80046E349 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D57BB41C8C00C80046E349 /* Position.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,8 @@
 		63A9FEEC1C7AC29C00AE54F1 /* Letter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
 		63A9FEEE1C7AC29C00AE54F1 /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		63D57BA91C8A48AB0046E349 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		63D57BB31C8C00C80046E349 /* Position+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Position+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		63D57BB41C8C00C80046E349 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,7 @@
 		63A3A1041C763F6C00F440B5 = {
 			isa = PBXGroup;
 			children = (
+				63D57BB31C8C00C80046E349 /* Position+CoreDataProperties.swift */,
 				63A3A10F1C763F6C00F440B5 /* AahToZzz */,
 				63A3A10E1C763F6C00F440B5 /* Products */,
 			);
@@ -118,7 +123,6 @@
 				63A3A11C1C763F6C00F440B5 /* LaunchScreen.storyboard */,
 				63A3A11F1C763F6C00F440B5 /* Info.plist */,
 				63A9FEF61C7AC2D200AE54F1 /* Model */,
-				63D57BA91C8A48AB0046E349 /* Tile.swift */,
 			);
 			name = AahToZzz;
 			path = "Aah to Zzz";
@@ -127,6 +131,7 @@
 		63A9FEF51C7AC2AC00AE54F1 /* Core Data Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
+				63D57BB41C8C00C80046E349 /* Position.swift */,
 				6337275E1C7EAEA4003E8447 /* Word.swift */,
 				63A9FEEA1C7AC29C00AE54F1 /* LetterSet.swift */,
 				63A9FEEC1C7AC29C00AE54F1 /* Letter.swift */,
@@ -139,6 +144,7 @@
 		63A9FEF61C7AC2D200AE54F1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				63D57BA91C8A48AB0046E349 /* Tile.swift */,
 				637AF0771C84297C005A36BA /* FlickrClient.swift */,
 				63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */,
 				63A9FEF51C7AC2AC00AE54F1 /* Core Data Managed Objects */,
@@ -248,8 +254,10 @@
 				637AF07A1C84560D005A36BA /* GradientSlider.swift in Sources */,
 				637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */,
 				637AF0781C84297C005A36BA /* FlickrClient.swift in Sources */,
+				63D57BB61C8C00C80046E349 /* Position.swift in Sources */,
 				633727601C7EAEA4003E8447 /* Word.swift in Sources */,
 				637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */,
+				63D57BB51C8C00C80046E349 /* Position+CoreDataProperties.swift in Sources */,
 				63A9FEE81C7AB4B500AE54F1 /* CoreDataStackManager.swift in Sources */,
 				63A3A12E1C76603300F440B5 /* WordListCell.swift in Sources */,
 				63A3A1191C763F6C00F440B5 /* AtoZ.xcdatamodeld in Sources */,

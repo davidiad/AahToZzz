@@ -6,11 +6,13 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="currentLetterSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="currentGame" inverseEntity="LetterSet" syncable="YES"/>
         <relationship name="lettersets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="game" inverseEntity="LetterSet" syncable="YES"/>
+        <relationship name="positions" optional="YES" toMany="YES" maxCount="10" deletionRule="Nullify" destinationEntity="Position" inverseName="game" inverseEntity="Position" syncable="YES"/>
         <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="game" inverseEntity="Word" syncable="YES"/>
     </entity>
     <entity name="Letter" representedClassName=".Letter" syncable="YES">
         <attribute name="letter" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="letterset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="letters" inverseEntity="LetterSet" syncable="YES"/>
+        <relationship name="position" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Position" inverseName="letter" inverseEntity="Position" syncable="YES"/>
     </entity>
     <entity name="LetterSet" representedClassName=".LetterSet" syncable="YES">
         <attribute name="letterSetID" optional="YES" attributeType="String" syncable="YES"/>
@@ -19,6 +21,14 @@
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameData" inverseName="lettersets" inverseEntity="GameData" syncable="YES"/>
         <relationship name="letters" optional="YES" toMany="YES" maxCount="7" deletionRule="Nullify" destinationEntity="Letter" inverseName="letterset" inverseEntity="Letter" syncable="YES"/>
         <relationship name="wordlist" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="letterlist" inverseEntity="Word" syncable="YES"/>
+    </entity>
+    <entity name="Position" representedClassName=".Position" syncable="YES">
+        <attribute name="index" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="9" syncable="YES"/>
+        <attribute name="occupied" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="xPos" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="yPos" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameData" inverseName="positions" inverseEntity="GameData" syncable="YES"/>
+        <relationship name="letter" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Letter" inverseName="position" inverseEntity="Letter" syncable="YES"/>
     </entity>
     <entity name="Word" representedClassName=".Word" syncable="YES">
         <attribute name="found" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -30,9 +40,10 @@
         <relationship name="letterlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="wordlist" inverseEntity="LetterSet" syncable="YES"/>
     </entity>
     <elements>
-        <element name="GameData" positionX="-153" positionY="-936" width="128" height="133"/>
-        <element name="Letter" positionX="126" positionY="-711" width="128" height="73"/>
+        <element name="GameData" positionX="-191" positionY="-1062" width="128" height="148"/>
+        <element name="Letter" positionX="171" positionY="-711" width="128" height="88"/>
         <element name="LetterSet" positionX="-351" positionY="-756" width="128" height="133"/>
         <element name="Word" positionX="180" positionY="-576" width="128" height="148"/>
+        <element name="Position" positionX="169" positionY="-981" width="128" height="133"/>
     </elements>
 </model>

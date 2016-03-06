@@ -8,9 +8,11 @@
 
 import UIKit
 
+//TODO: add to model: LetterPositions (10); TileInfo - 7 (?) -- or add to Letter? or, add location(or position) or LetterPosition to Letter, and from there, add to tile
+
 class Tile: UIButton {
     var snapBehavior: UISnapBehavior?
-    var location: CGPoint?
+    var position: CGPoint?
     
     
     override init(frame: CGRect) {
@@ -26,8 +28,5 @@ class Tile: UIButton {
     func setup() {
         
     }
-    
-    
-    
     
 }

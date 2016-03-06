@@ -15,6 +15,7 @@ class GameData: NSManagedObject {
     @NSManaged var currentLetterSetID: String?
     @NSManaged var gameID: String?
     @NSManaged var name: String?
+    @NSManaged var positions: NSSet?
     @NSManaged var lettersets: NSSet?
     @NSManaged var words: NSSet?
     @NSManaged var currentLetterSet: NSManagedObject? // alternate way of finding the current letter set, besides using the ID
