@@ -18,5 +18,25 @@ class Position: NSManagedObject {
     @NSManaged var occupied: Bool
     @NSManaged var letter: Letter?
     @NSManaged var game: GameData?
+    
+    // standard Core Data init method.
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        occupied = false // not occupied by default
+    }
+    
+    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
+        
+        let entity = NSEntityDescription.entityForName("Position", inManagedObjectContext: context)!
+        
+        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        
+        occupied = false // not occupied by default
+        
+        //to add values from dictionary
+//        if let gameName = dictionary["game"] as? String {
+//            name = gameName
+//        }
+    }
 
 }

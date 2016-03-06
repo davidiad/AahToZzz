@@ -11,6 +11,7 @@ import CoreData
 
 class Letter: NSManagedObject {
     
+    @NSManaged var index: Int16
     @NSManaged var letter: String?
     @NSManaged var letterset: LetterSet? //TODO: should this be NSManagedObject?
     @NSManaged var position: Position?

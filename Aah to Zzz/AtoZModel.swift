@@ -28,6 +28,7 @@ class AtoZModel {
     var wordsSet: Set<String> // may not need to use this outside of this class, consider relocating the declaration
     
     var game: GameData? // The managed object that is at the root of the object graph
+    var positions: [Position]? // array to hold the letter Positions. Needed??
     
     //MARK:- vars for background gradient
     var location1: CGFloat?
@@ -39,6 +40,7 @@ class AtoZModel {
     //This prevents others from using the default '()' initializer for this class.
     private init() {
         
+        positions = [Position]()
         wordsArray = [String]()
         wordsDictionary = [:] // init empty dictionary
         wordsSet = Set<String>()
@@ -169,10 +171,15 @@ class AtoZModel {
         game?.currentLetterSet = letterset
         
         // make the LetterSet the letterset property for each Letter
-        for letter in letters {
-            letter.letterset = letterset
+        // and set the index for each letter for id'ing it later
+        for var i=0; i<letters.count; i++ {
+            letters[i].letterset = letterset
+            letters[i].index = Int16(i)
+            // After the positions have been created...
+            letters[i].position = positions![i]
+            positions![i].occupied = true
         }
-        // TODO:Make a struct for LetterPositions. Add as a property to Letter.
+        
         // save the managed object context
         saveContext()
 
@@ -308,16 +315,33 @@ class AtoZModel {
                 return gameArray[0]
             } else {
                 let gameData = makeGameDataDictionary()
-                return GameData(dictionary: gameData, context: sharedContext)
+                let newGame = GameData(dictionary: gameData, context: sharedContext)
+//                // create the Positions and add to game
+                for var i=0; i<10; i++ {
+                    // TODO: use init instead
+                    let position = NSEntityDescription.insertNewObjectForEntityForName("Position", inManagedObjectContext: sharedContext) as! Position
+                    position.index = Int16(i)
+                    position.game = newGame
+                   //
+                    positions?.append(position)
+                    
+                    //TODO: set the xpos and ypos (here? or maybe in view controller)
+                }
+                saveContext()
+                return newGame
             }
         // in the case there is a fetch error, also create a new game object
         } catch let error as NSError {
             print("Error in fetchGameData(): \(error)")
-            //TODO: can the catch itself generate and error?
+            //TODO: can the catch itself generate an error?
             //do we need to return GameDatare?
             let defaultInfo = makeGameDataDictionary()
             return GameData(dictionary: defaultInfo, context: sharedContext)
         }
+    }
+    
+    func createPositions(game: GameData) {
+        
     }
     
     func createGame() {
