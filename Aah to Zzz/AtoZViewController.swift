@@ -17,10 +17,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var occupied1: Bool = false
     var occupied2: Bool = false
     var occupied3: Bool = false
+
     
     var model = AtoZModel.sharedInstance
     var letters: [Letter]! //TODO: why not ? instead of !
     var wordlist = [String]()
+    var positions: [Position]?
     
     
     var game: GameData?
@@ -84,11 +86,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        positions = model.positions
         lettertiles = [Tile]()
         let image = UIImage(named: "tile") as UIImage?
         for var i=0; i<7; i++ {
             
             //let button   = UIButton(type: UIButtonType.Custom) as UIButton
+            //TODO: move some of this stuff to init for Tile
             let tile = Tile(frame: CGRectMake(120.0, 170.0 + 50 * CGFloat(i), 50, 50))
             tile.setBackgroundImage(image, forState: .Normal)
             tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
@@ -113,8 +117,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // create an array to populate the buttons that hold the letters
         
         animator = UIDynamicAnimator(referenceView: view)
-        for var i=0; i<lettertiles.count; i++ {
-            lettertiles[i].position = generateLetterPosition(i)
+        for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
+            //lettertiles[i].position = generateLetterPosition(i)
+            lettertiles[i].position = positions![i].position
             lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].position!)
             lettertiles[i].snapBehavior?.damping = 0.75
             animator.addBehavior(lettertiles[i].snapBehavior!)
@@ -171,25 +176,26 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //animator.addBehavior(vortex) // 17
     }
     
-    func generateLetterPosition(tileNum: Int) -> CGPoint{
+    func generateLetterPosition(tileNum: Int) -> CGPoint {
         var xpos: CGFloat
         var ypos: CGFloat
             switch tileNum {
                 
+            case 7, 8, 9:
+                xpos = 45.0 + CGFloat(tileNum - 7) * 55.0
+                ypos = 260.0
             case 4, 5, 6:
                 xpos = CGFloat(tileNum - 3) * 65.0
                 ypos = 600.0
             case 1, 2, 3:
                 xpos = (CGFloat(tileNum) * 85.0) - 40.0
                 ypos = 500.0
-                
             case 0:
                 xpos = 130.0
                 ypos = 400.0
-                
             default:
-                xpos = 100
-                ypos = 300
+                xpos = 130.0
+                ypos = 400.0
             }
 
         return CGPointMake(xpos, ypos)

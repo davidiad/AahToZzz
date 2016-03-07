@@ -186,6 +186,31 @@ class AtoZModel {
         return letterset
     }
     
+    func generateLetterPosition(tileNum: Int) -> CGPoint {
+        var xpos: CGFloat
+        var ypos: CGFloat
+        switch tileNum {
+            
+        case 7, 8, 9:
+            xpos = 45.0 + CGFloat(tileNum - 7) * 55.0
+            ypos = 260.0
+        case 4, 5, 6:
+            xpos = CGFloat(tileNum - 3) * 65.0
+            ypos = 600.0
+        case 1, 2, 3:
+            xpos = (CGFloat(tileNum) * 85.0) - 40.0
+            ypos = 500.0
+        case 0:
+            xpos = 130.0
+            ypos = 400.0
+        default:
+            xpos = 130.0
+            ypos = 400.0
+        }
+        
+        return CGPointMake(xpos, ypos)
+    }
+    
     
     // creates a Letter object from a passed-in String, or generates a random 1 letter string if nil is passed in
     func createLetter(var letterString: String?) -> Letter {
@@ -316,16 +341,18 @@ class AtoZModel {
             } else {
                 let gameData = makeGameDataDictionary()
                 let newGame = GameData(dictionary: gameData, context: sharedContext)
-//                // create the Positions and add to game
+                // create the Positions and add to game
                 for var i=0; i<10; i++ {
+                    // create the Positions for the tiles. There are 10 per game.
                     // TODO: use init instead
                     let position = NSEntityDescription.insertNewObjectForEntityForName("Position", inManagedObjectContext: sharedContext) as! Position
                     position.index = Int16(i)
                     position.game = newGame
-                   //
+                    let pos = generateLetterPosition(i)
+                    position.xPos = Float(pos.x)
+                    position.yPos = Float(pos.y)
                     positions?.append(position)
                     
-                    //TODO: set the xpos and ypos (here? or maybe in view controller)
                 }
                 saveContext()
                 return newGame

@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import UIKit // needed to use CGPoint
 
 class Position: NSManagedObject {
 
@@ -18,6 +18,11 @@ class Position: NSManagedObject {
     @NSManaged var occupied: Bool
     @NSManaged var letter: Letter?
     @NSManaged var game: GameData?
+    
+    // only change xPos and yPos, which then will update position. Not vice-versa.
+    lazy var position: CGPoint = {
+        CGPointMake(CGFloat(self.xPos), CGFloat(self.yPos)) // need ref to self in lazy var
+    }()
     
     // standard Core Data init method.
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -33,7 +38,7 @@ class Position: NSManagedObject {
         
         occupied = false // not occupied by default
         
-        //to add values from dictionary
+        //to add values from a dictionary
 //        if let gameName = dictionary["game"] as? String {
 //            name = gameName
 //        }
