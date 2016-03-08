@@ -25,7 +25,6 @@
     </entity>
     <entity name="Position" representedClassName=".Position" syncable="YES">
         <attribute name="index" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="9" syncable="YES"/>
-        <attribute name="occupied" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="xPos" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="yPos" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameData" inverseName="positions" inverseEntity="GameData" syncable="YES"/>
@@ -45,6 +44,6 @@
         <element name="Letter" positionX="171" positionY="-711" width="128" height="103"/>
         <element name="LetterSet" positionX="-351" positionY="-756" width="128" height="133"/>
         <element name="Word" positionX="180" positionY="-576" width="128" height="148"/>
-        <element name="Position" positionX="169" positionY="-981" width="128" height="133"/>
+        <element name="Position" positionX="169" positionY="-981" width="128" height="118"/>
     </elements>
 </model>

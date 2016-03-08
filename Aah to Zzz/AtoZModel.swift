@@ -176,9 +176,8 @@ class AtoZModel {
             letters[i].letterset = letterset
             letters[i].index = Int16(i)
             // After the positions have been created...
-            //TODO:-getting crash here
             letters[i].position = positions![i]
-            positions![i].occupied = true
+            positions![i].letter = letters[i]
         }
         
         // save the managed object context

@@ -12,8 +12,9 @@ import UIKit
 
 class Tile: UIButton {
     var snapBehavior: UISnapBehavior?
-    var position: CGPoint? // when this is update, need to also update the letter position
-    
+    var position: CGPoint? // when this is updated, need to also update the letter position
+    var letter: Letter? // letter.position.position would remove the need for the CGPoint position
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()

@@ -198,7 +198,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func snapTileToPosition (tile: Tile) {
-        if !occupied1 {
+        if !positions![7].occupied {
             tile.snapBehavior?.snapPoint = positions![7].position //position1
             positions![7].occupied = true // need to also set the from position to false
             //TODO: have to get the 'from' Position somehow. How to get the Tile's Letter? add a Letter property to Tile?
@@ -214,6 +214,42 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             positions![9].occupied = true // need to also set the from position to false
 
         }
+        // update the status of the 'from' tile
+        tile.letter?.position?.occupied = false
+        saveContext()
+    }
+    
+    func snapTileToUpperPosition(tile: Tile) {
+        if tile.letter?.position?.index < 7 { // for now, only moving tile if it is in a lower position
+            let newPosition = findVacancy()
+            if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
+                tile.snapBehavior?.snapPoint = (newPosition?.position)!
+                // update the Positions
+                tile.letter?.position?.letter = nil // the previous position is now vacant
+                tile.letter?.position = newPosition
+                newPosition?.letter = tile.letter
+                //tile.position = newPosition?.position // is this line needed?
+                saveContext()
+            }
+        }
+    }
+    
+    // Find the lowest unoccupied position in the upper tiles which form the word
+    func findVacancy() -> Position? {
+        for var i=7; i<10; i++ {
+            if !positions![i].occupied {
+                return positions![i]
+            }
+        }
+        return nil
+    }
+    
+    //TODO:
+    func snapTile (tile: Tile) {
+        // Get the Letter of the Tile and update Position
+        // tile.letter?.position
+        // set the old position to unoccupied and the new one to occupied
+        //update the positions
     }
     
 
@@ -377,7 +413,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func addLetterToWordInProgress(sender: Tile) {
         // add the new letter to the word in progress
         wordInProgress.text = wordInProgress.text! + (sender.titleLabel?.text)!
-        snapTileToPosition(sender)
+        snapTileToUpperPosition(sender)
         //sender.enabled = false
         
         if wordInProgress.text?.characters.count > 2 {
@@ -394,7 +430,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self.lettertiles[i].enabled = true
                     self.lettertiles[i].snapBehavior?.snapPoint = self.lettertiles[i].position! // reset to default locations
                 }
-                self.resetOccupied()
+                self.resetOccupied() // this should no longer be needed
             }
         }
         
@@ -447,7 +483,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print("Error in getting current Letterset: \(error)")
             }
         }
-
     }
     
     func generateWordList() {
@@ -462,7 +497,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         for var i=0; i<lettertiles.count; i++ {
             lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
+            lettertiles[i].letter = letters[i]
+            lettertiles[i].position = letters[i].position?.position
         }
+        //saveContext()
     }
     
     override func didReceiveMemoryWarning() {
