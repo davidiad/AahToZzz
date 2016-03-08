@@ -86,7 +86,27 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            let fetchError = error as NSError
+            print("\(fetchError), \(fetchError.localizedDescription)")
+        }
+        
+        game = model.game
+        // Set positions here, to the sorted array position from the model
+        //(Confusing because model.game.positions is a Set
         positions = model.positions
+        
+        /* May not be needed, as 'positions' is sorted in the model
+        positions = game?.positions?.allObjects as? [Position]
+        positions!.sortInPlace {
+            ($0.index as Int16?) < ($1.index as Int16?)
+        }
+        */
+        
         lettertiles = [Tile]()
         let image = UIImage(named: "tile") as UIImage?
         for var i=0; i<7; i++ {
@@ -103,14 +123,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             view.addSubview(tile)
         }
         
-        
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            let fetchError = error as NSError
-            print("\(fetchError), \(fetchError.localizedDescription)")
-        }
-        
         // reference for memory leak bug, and fix:
         // http://stackoverflow.com/questions/34075326/swift-2-iboutlet-collection-uibutton-leaks-memory
         //TODO: check for memory leak here
@@ -119,6 +131,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         animator = UIDynamicAnimator(referenceView: view)
         for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
             //lettertiles[i].position = generateLetterPosition(i)
+            print(positions?.count)
+            // Optional(0)
+            // TODO:-fatal error: Array index out of range
+            // happens not 1st time app is launched, but 2nd time
             lettertiles[i].position = positions![i].position
             lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].position!)
             lettertiles[i].snapBehavior?.damping = 0.75
@@ -159,6 +175,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        animator.addBehavior(snap2)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         // Thank you to Aaron Douglas for showing an easy way to turn on the cool fields of lines that visualize UIFieldBehaviors!
@@ -176,41 +197,22 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //animator.addBehavior(vortex) // 17
     }
     
-    func generateLetterPosition(tileNum: Int) -> CGPoint {
-        var xpos: CGFloat
-        var ypos: CGFloat
-            switch tileNum {
-                
-            case 7, 8, 9:
-                xpos = 45.0 + CGFloat(tileNum - 7) * 55.0
-                ypos = 260.0
-            case 4, 5, 6:
-                xpos = CGFloat(tileNum - 3) * 65.0
-                ypos = 600.0
-            case 1, 2, 3:
-                xpos = (CGFloat(tileNum) * 85.0) - 40.0
-                ypos = 500.0
-            case 0:
-                xpos = 130.0
-                ypos = 400.0
-            default:
-                xpos = 130.0
-                ypos = 400.0
-            }
-
-        return CGPointMake(xpos, ypos)
-    }
-    
     func snapTileToPosition (tile: Tile) {
         if !occupied1 {
-            tile.snapBehavior?.snapPoint = position1
+            tile.snapBehavior?.snapPoint = positions![7].position //position1
+            positions![7].occupied = true // need to also set the from position to false
+            //TODO: have to get the 'from' Position somehow. How to get the Tile's Letter? add a Letter property to Tile?
             occupied1 = true
         } else if !occupied2 {
-            tile.snapBehavior?.snapPoint = position2
+            tile.snapBehavior?.snapPoint = positions![8].position
             occupied2 = true
+            positions![8].occupied = true // need to also set the from position to false
+
         } else if !occupied3 {
-            tile.snapBehavior?.snapPoint = position3
+            tile.snapBehavior?.snapPoint = positions![9].position
             occupied3 = true
+            positions![9].occupied = true // need to also set the from position to false
+
         }
     }
     
@@ -278,7 +280,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! WordListCell
-//        cell.word.text = "x x x"
         configureCell(cell, atIndexPath: indexPath)
         
         return cell

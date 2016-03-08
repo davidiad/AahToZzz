@@ -39,7 +39,7 @@ class AtoZModel {
     
     //This prevents others from using the default '()' initializer for this class.
     private init() {
-        
+
         positions = [Position]()
         wordsArray = [String]()
         wordsDictionary = [:] // init empty dictionary
@@ -59,7 +59,7 @@ class AtoZModel {
             wordsSet.insert(key)
         }
         game = fetchGameData() // fetches the exisiting game if there is one, or else creates a new game
-
+        
     }
     
     // read in the 3 letter word list with word definitions
@@ -176,6 +176,7 @@ class AtoZModel {
             letters[i].letterset = letterset
             letters[i].index = Int16(i)
             // After the positions have been created...
+            //TODO:-getting crash here
             letters[i].position = positions![i]
             positions![i].occupied = true
         }
@@ -190,19 +191,20 @@ class AtoZModel {
         var xpos: CGFloat
         var ypos: CGFloat
         switch tileNum {
-            
+         
+        // counting from the bottom to the top
+        case 0, 1, 2:
+            xpos = CGFloat(tileNum) * 65.0
+            ypos = 600.0
+        case 3, 4, 5:
+            xpos = (CGFloat(tileNum - 3) * 85.0) - 40.0
+            ypos = 500.0
+        case 6:
+            xpos = 130.0
+            ypos = 400.0
         case 7, 8, 9:
             xpos = 45.0 + CGFloat(tileNum - 7) * 55.0
             ypos = 260.0
-        case 4, 5, 6:
-            xpos = CGFloat(tileNum - 3) * 65.0
-            ypos = 600.0
-        case 1, 2, 3:
-            xpos = (CGFloat(tileNum) * 85.0) - 40.0
-            ypos = 500.0
-        case 0:
-            xpos = 130.0
-            ypos = 400.0
         default:
             xpos = 130.0
             ypos = 400.0
@@ -337,6 +339,12 @@ class AtoZModel {
         do {
             let gameArray = try sharedContext.executeFetchRequest(fetchRequest) as! [GameData]
             if gameArray.count > 0 {
+                for var i=0; i<10; i++ {
+                    positions = gameArray[0].positions?.allObjects as? [Position]
+                    positions!.sortInPlace {
+                        ($0.index as Int16?) < ($1.index as Int16?)
+                    }
+                }
                 return gameArray[0]
             } else {
                 let gameData = makeGameDataDictionary()
