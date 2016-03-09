@@ -26,7 +26,7 @@ class Position: NSManagedObject {
     
     // no need to track 'occupied' as a separate bool. If there is a letter, occupied is true. Otherwise, false.
     lazy var occupied: Bool = {
-        self.letter != nil
+        self.letter != nil  // is this correct?
     }()
     
     // standard Core Data init method.

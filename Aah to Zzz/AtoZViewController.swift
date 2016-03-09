@@ -219,38 +219,108 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         saveContext()
     }
     
-    func snapTileToUpperPosition(tile: Tile) {
-        if tile.letter?.position?.index < 7 { // for now, only moving tile if it is in a lower position
-            let newPosition = findVacancy()
-            if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
-                tile.snapBehavior?.snapPoint = (newPosition?.position)!
-                // update the Positions
-                tile.letter?.position?.letter = nil // the previous position is now vacant
-                tile.letter?.position = newPosition
-                newPosition?.letter = tile.letter
-                //tile.position = newPosition?.position // is this line needed?
-                saveContext()
+//    func snapTileToUpperPosition(tile: Tile) {
+//        //var newPosition: Position
+//        if tile.letter?.position?.index < 7 { // for now, only moving tile if it is in a lower position
+//            let newPosition = findUpperVacancy()
+//            if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
+//                tile.snapBehavior?.snapPoint = (newPosition?.position)!
+//                // update the Positions
+//                tile.letter?.position?.letter = nil // the previous position is now vacant
+//                tile.letter?.position = newPosition
+//                newPosition?.letter = tile.letter
+//                //tile.position = newPosition?.position // is this line needed?
+//                saveContext()
+//            }
+//        } else {
+//            let newPosition = findLowerVacancy()
+//        }
+//    }
+    
+    //TODO: Letter's position is getting set to nil, and that's a crash. Each letter should have a position
+    func swapTile(tile: Tile) {
+//        for l in letters {
+//            print("Lu: \(l)")
+//        }
+        let newPosition = findVacancy(tile)
+
+        if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
+            tile.snapBehavior?.snapPoint = (newPosition?.position)!
+            // update the Positions
+            let previousPosition = tile.letter?.position
+            
+            previousPosition?.letter = nil // the previous position is now vacant
+            for l in letters {
+                print("LUUU: \(l)")
             }
+            tile.letter?.position = newPosition
+            for l in letters {
+                print("LDDDDDDD: \(l)")
+            }
+            print("newPosition: \(newPosition)")
+            //newPosition?.letter = tile.letter // is the inverse needed?
+            saveContext() // safest to save the context here, after every letter swap
+            
         }
+
     }
     
-    // Find the lowest unoccupied position in the upper tiles which form the word
-    func findVacancy() -> Position? {
-        for var i=7; i<10; i++ {
-            if !positions![i].occupied {
-                return positions![i]
-            }
-        }
-        return nil
-    }
     
-    //TODO:
-    func snapTile (tile: Tile) {
-        // Get the Letter of the Tile and update Position
-        // tile.letter?.position
-        // set the old position to unoccupied and the new one to occupied
-        //update the positions
+    //TODO:-
+    //TODO:- Need to add a conditional so upper letter positions dont allow letters to be added
+    func findVacancy(tile: Tile) -> Position? {
+
+        if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard
+            // tile is in upper position, so look for vacancy in the uppers
+            if tile.letter?.position!.index < 7 {
+                for var i=7; i<10; i++ {
+                    if positions![i].letter == nil {
+                        return positions![i]
+                    }
+                }
+                return nil
+            } else { // must be in the upper positions, so look for a vacancy in the lowers
+                
+                for var i=6; i>=0; i-- {
+                    if positions![i].letter == nil {
+                        return positions![i]
+                    }
+                }
+                return nil
+            }
+        } else {
+            print ("was nil")
+            return nil
+        }
     }
+//TODO: ? Add an upper/lower property to Position, which would be computed from the index?
+// Find the lowest unoccupied position in the upper tiles which form the word
+//    func findUpperVacancy() -> Position? {
+//        for var i=7; i<10; i++ {
+//            if !positions![i].occupied {
+//                return positions![i]
+//            }
+//        }
+//        return nil
+//    }
+//    
+//    // Find the highest (and therefore closest to the upper tiles) unoccupied position in the lower tiles which form the pool of letters
+//    func findLowerVacancy() -> Position? {
+//        for var i=6; i>=0; i-- {
+//            if !positions![i].occupied {
+//                return positions![i]
+//            }
+//        }
+//        return nil
+//    }
+    
+//    //TODO:
+//    func snapTile (tile: Tile) {
+//        // Get the Letter of the Tile and update Position
+//        // tile.letter?.position
+//        // set the old position to unoccupied and the new one to occupied
+//        //update the positions
+//    }
     
 
     // MARK:- FetchedResultsController delegate protocol
@@ -413,7 +483,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func addLetterToWordInProgress(sender: Tile) {
         // add the new letter to the word in progress
         wordInProgress.text = wordInProgress.text! + (sender.titleLabel?.text)!
-        snapTileToUpperPosition(sender)
+        swapTile(sender)
+        print ("Sender: \(sender)")
         //sender.enabled = false
         
         if wordInProgress.text?.characters.count > 2 {
@@ -424,16 +495,39 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
             let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.55 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
             dispatch_after(time, dispatch_get_main_queue()) {
-                //put your code which should be executed with a delay here
                 
                 for var i=0; i<self.lettertiles.count; i++ {
                     self.lettertiles[i].enabled = true
                     self.lettertiles[i].snapBehavior?.snapPoint = self.lettertiles[i].position! // reset to default locations
+                    //TODO: instead of resetting to default locations, take into account which positions have changed
+                    // so they are returned to correct place
                 }
                 self.resetOccupied() // this should no longer be needed
+                
+                // find an unoccupied position
+                // snap the tile to the new position
+                // update the position and letter variables
+                // save the context
+                for t in self.lettertiles {
+                    if let test = t.letter?.position {
+                        if t.letter!.position!.index > 6 {
+                            self.swapTile(t)
+                            print("swap a tile: \(t.letter)") // should be 3 times if positions 7 8 and 9 are occupado
+                        }
+                    } else {
+                        print(" a nil")
+                        t.layer.opacity = 0.3
+                    }
+                }
             }
         }
-        
+    }
+    
+    //TODO: a function to check and reset positions to maintain integrity of model
+    func resetPositions() {
+        // There should be 7 positions with a letter, and 3 without
+        // All 7 Letter's should have a Position (and vice-versa)
+        // (Possibly these rules have been violated if their was a crash after the model has been changed, but before it was saved?)
     }
     
     func resetOccupied() {
@@ -500,7 +594,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             lettertiles[i].letter = letters[i]
             lettertiles[i].position = letters[i].position?.position
         }
-        //saveContext()
+        //saveContext() // not need because Tiles aren't in the context
     }
     
     override func didReceiveMemoryWarning() {
