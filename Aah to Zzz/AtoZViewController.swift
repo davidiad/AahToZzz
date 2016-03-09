@@ -452,6 +452,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK:- Actions
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
+        returnTiles() // if any tiles are in the upper positions, return them
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
         for var i=0; i<fetchedResultsController.fetchedObjects?.count; i++ {
@@ -505,6 +506,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                     //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
                     // rather than checking all 7 tiles
+                    self.returnTiles()
+                    /*
                     for t in self.lettertiles {
                         if let _ = t.letter?.position {
                             if t.letter!.position!.index > 6 {
@@ -514,8 +517,22 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                             t.layer.opacity = 0.3 // a visual cue that something is not working correctly
                         }
                     }
+                    */
                 }
             } // else: word is *not* walid. Do nothing in that case. The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
+        }
+    }
+    
+    // Check all 7 tiles over each position to find which ones to return
+    func returnTiles () {
+        for t in self.lettertiles {
+            if let _ = t.letter?.position {
+                if t.letter!.position!.index > 6 {
+                    self.swapTile(t)
+                }
+            } else {
+                t.layer.opacity = 0.3 // a visual cue that something is not working correctly
+            }
         }
     }
     
