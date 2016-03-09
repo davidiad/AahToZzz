@@ -155,7 +155,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         pushBehavior.magnitude = 0.1//magnitude / ThrowingVelocityPadding
         
         gravityBehavior = UIGravityBehavior(items: lettertiles)
-        collisionBehavior = UICollisionBehavior(items: lettertiles)
+        collisionBehavior = UICollisionBehavior(items: [])
         collisionBehavior.translatesReferenceBoundsIntoBoundary = true
         
         blackhole = UIFieldBehavior.radialGravityFieldWithPosition(CGPointMake(65, 150))
@@ -239,28 +239,23 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //TODO: Letter's position is getting set to nil, and that's a crash. Each letter should have a position
     func swapTile(tile: Tile) {
-//        for l in letters {
-//            print("Lu: \(l)")
-//        }
+
         let newPosition = findVacancy(tile)
 
         if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
+
             tile.snapBehavior?.snapPoint = (newPosition?.position)!
             // update the Positions
             let previousPosition = tile.letter?.position
             
             previousPosition?.letter = nil // the previous position is now vacant
-            for l in letters {
-                print("LUUU: \(l)")
-            }
+
             tile.letter?.position = newPosition
-            for l in letters {
-                print("LDDDDDDD: \(l)")
-            }
-            print("newPosition: \(newPosition)")
+//            for l in letters {
+//                print("LDDDDDDD: \(l)")
+//            }
             //newPosition?.letter = tile.letter // is the inverse needed?
             saveContext() // safest to save the context here, after every letter swap
-            
         }
 
     }
@@ -275,6 +270,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if tile.letter?.position!.index < 7 {
                 for var i=7; i<10; i++ {
                     if positions![i].letter == nil {
+                        collisionBehavior.addItem(tile) // enable collisions only for tiles when they are in 7 8 or 9
                         return positions![i]
                     }
                 }
@@ -283,6 +279,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 for var i=6; i>=0; i-- {
                     if positions![i].letter == nil {
+                        collisionBehavior.removeItem(tile)
                         return positions![i]
                     }
                 }
@@ -481,45 +478,44 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     @IBAction func addLetterToWordInProgress(sender: Tile) {
+        //NOTE: should no longer need wordInProgress, getting the text directly from the tiles
+        
         // add the new letter to the word in progress
         wordInProgress.text = wordInProgress.text! + (sender.titleLabel?.text)!
-        swapTile(sender)
-        print ("Sender: \(sender)")
-        //sender.enabled = false
-        
-        if wordInProgress.text?.characters.count > 2 {
-            _ = checkForValidWord(wordInProgress.text!)
+        swapTile(sender) // swapping whichever tile is tapped
+        // then, check for a valid word
+        // but iff 7 8 and 9 are occupado, then check for valid word
+        //TODO: occupied property of positions does not seem to be working right?
+        if positions![7].letter != nil && positions![8].letter != nil && positions![9].letter != nil {
+        //if wordInProgress.text?.characters.count > 2 {
+            //_ = checkForValidWord(wordInProgress.text!)
+            let wordToCheck = (positions![7].letter?.letter)! + (positions![8].letter?.letter)! + (positions![9].letter?.letter)!
+            let wordIsValid = checkForValidWord(wordToCheck)
             wordInProgress.text = ""
             
-            //TODO: would be better to do just the 3 that are not in original place
-            // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
-            let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.55 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
-            dispatch_after(time, dispatch_get_main_queue()) {
-                
-                for var i=0; i<self.lettertiles.count; i++ {
-                    self.lettertiles[i].enabled = true
-                    self.lettertiles[i].snapBehavior?.snapPoint = self.lettertiles[i].position! // reset to default locations
-                    //TODO: instead of resetting to default locations, take into account which positions have changed
-                    // so they are returned to correct place
-                }
-                self.resetOccupied() // this should no longer be needed
-                
-                // find an unoccupied position
-                // snap the tile to the new position
-                // update the position and letter variables
-                // save the context
-                for t in self.lettertiles {
-                    if let test = t.letter?.position {
-                        if t.letter!.position!.index > 6 {
-                            self.swapTile(t)
-                            print("swap a tile: \(t.letter)") // should be 3 times if positions 7 8 and 9 are occupado
+            if wordIsValid { // return the letters to the letter pool
+                // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
+                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.55 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
+                dispatch_after(time, dispatch_get_main_queue()) {
+                    
+                    for var i=0; i<self.lettertiles.count; i++ {
+                        // TODO: check whether this next line is sending tiles to correct position
+                        self.lettertiles[i].snapBehavior?.snapPoint = self.lettertiles[i].position! // reset to default locations
+                    }
+                    
+                    //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
+                    // rather than checking all 7 tiles
+                    for t in self.lettertiles {
+                        if let _ = t.letter?.position {
+                            if t.letter!.position!.index > 6 {
+                                self.swapTile(t)
+                            }
+                        } else {
+                            t.layer.opacity = 0.3 // a visual cue that something is not working correctly
                         }
-                    } else {
-                        print(" a nil")
-                        t.layer.opacity = 0.3
                     }
                 }
-            }
+            } // else: word is *not* walid. Do nothing in that case. The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
         }
     }
     
@@ -530,11 +526,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // (Possibly these rules have been violated if their was a crash after the model has been changed, but before it was saved?)
     }
     
-    func resetOccupied() {
-        occupied1 = false
-        occupied2 = false
-        occupied3 = false
-    }
+//    func resetOccupied() {
+//        occupied1 = false
+//        occupied2 = false
+//        occupied3 = false
+//    }
     
     func checkForValidWord(wordToCheck: String) -> Bool {
         //TODO: unwrap currentNumOfWords safely?
