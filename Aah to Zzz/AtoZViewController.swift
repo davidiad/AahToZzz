@@ -116,6 +116,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             tile.setTitle("Q", forState: .Normal) // Q is placeholder value
             tile.addTarget(self, action: "addLetterToWordInProgress:", forControlEvents:.TouchUpInside)
             lettertiles.append(tile)
+            //tile.animator = animator // so that we can affect the animator from inside the Tile class
+            setupPanRecognizer(tile)
             view.addSubview(tile)
         }
         
@@ -191,10 +193,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
         //animator.setValue(true, forKey: "debugEnabled")
         
+        
+        // why is this item behavirot=r needed?
         let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
         itemBehavior.density = 10.0
         itemBehavior.angularResistance = 10.0
-        animator.addBehavior(itemBehavior)
+        //animator.addBehavior(itemBehavior)
         
         //vortex.addItem(orbitingView)
         radialGravity.addItem(lettertiles[0])
@@ -618,6 +622,67 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //MARK:- Panning for Tiles
+    func setupPanRecognizer(tile: Tile) {
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: "pan:")
+        tile.addGestureRecognizer(panRecognizer)
+    }
+    
+    func pan(pan: UIPanGestureRecognizer) {
+        let t = pan.view as! Tile
+        let storedSnapBehavior = t.snapBehavior
+        animator?.removeBehavior(t.snapBehavior!)
+        //animator?.removeAllBehaviors()
+        var location = pan.locationInView(self.view)
+        
+        switch pan.state {
+        case .Began:
+            //print("Start HERE: \(tile.center)")
+            let center = t.center
+//            offset.x = location.x - center.x
+//            offset.y = location.y - center.y
+            
+            //animator?.removeAllBehaviors()
+            
+      
+        case .Changed:
+//            let referenceBounds = self.bounds
+//            let referenceWidth = referenceBounds.width
+//            let referenceHeight = referenceBounds.height
+//            
+//            // Get item bounds.
+//            let itemBounds = self.bounds
+//            let itemHalfWidth = itemBounds.width / 2.0
+//            let itemHalfHeight = itemBounds.height / 2.0
+            
+            //            // Apply the initial offset.
+            //            location.x -= offset.x
+            //            location.y -= offset.y
+            
+            // Bound the item position inside the reference view.
+            //            location.x = max(itemHalfWidth, location.x)
+            //            location.x = min(referenceWidth - itemHalfWidth, location.x)
+            //            location.y = max(itemHalfHeight, location.y)
+            //            location.y = min(referenceHeight - itemHalfHeight, location.y)
+            
+            t.center = location
+            
+        case .Ended:
+            let velocity = pan.velocityInView(self.view)
+            //TODO: need now to check for the nearest unoccipied position, and snap to that
+            animator.addBehavior(storedSnapBehavior!)
+            
+            //            animator?.addBehavior(radialGravity)
+            //            animator?.addBehavior(itemBehavior)
+            //            animator?.addBehavior(collisionBehavior)
+            //
+            //            itemBehavior.addLinearVelocity(velocity, forItem: raft)
+            
+        default: break
+        }
+    }
+
     
     // MARK: - Core Data Saving support
     
