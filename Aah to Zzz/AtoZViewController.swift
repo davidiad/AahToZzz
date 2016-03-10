@@ -189,17 +189,18 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // Thank you to Aaron Douglas for showing an easy way to turn on the cool fields of lines that visualize UIFieldBehaviors!
         // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
-        animator.setValue(true, forKey: "debugEnabled")
+        //animator.setValue(true, forKey: "debugEnabled")
         
         let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
-        itemBehavior.density = 0.5 // 12
-        animator.addBehavior(itemBehavior) // 13
+        itemBehavior.density = 10.0
+        itemBehavior.angularResistance = 10.0
+        animator.addBehavior(itemBehavior)
         
-        //vortex.addItem(orbitingView) // 14
-        radialGravity.addItem(lettertiles[0]) // 15
+        //vortex.addItem(orbitingView)
+        radialGravity.addItem(lettertiles[0])
         
-        //animator.addBehavior(radialGravity) // 16
-        //animator.addBehavior(vortex) // 17
+        //animator.addBehavior(radialGravity)
+        //animator.addBehavior(vortex)
     }
     
 //    func snapTileToPosition (tile: Tile) {
@@ -243,19 +244,22 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //    }
     
     // Each letter should have a position
+    //TODO: swap not updating properly when returning more than 1 tile, but only after New List
+    // If 3 tiles are left in upper register, after returnTiles, the middle one (numerically) will be correct, the other 2 will have wrong snap positions
     func swapTile(tile: Tile) {
 
         let newPosition = findVacancy(tile)
 
         if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
 
-            tile.snapBehavior?.snapPoint = (newPosition?.position)!
+            
             // update the Positions
             let previousPosition = tile.letter?.position
             
             previousPosition?.letter = nil // the previous position is now vacant
 
             tile.letter?.position = newPosition
+            tile.snapBehavior?.snapPoint = (newPosition?.position)!
 //            for l in letters {
 //                print("LDDDDDDD: \(l)")
 //            }
@@ -264,7 +268,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             printTileDiagram()
         }
     }
-    
     
     func findVacancy(tile: Tile) -> Position? {
 
@@ -441,7 +444,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK:- Actions
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
-
+        printTileDiagram()
         returnTiles() // if any tiles are in the upper positions, return them
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
@@ -462,10 +465,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // converting the new LetterSet to an array, for use in this class
         letters = currentLetterSet?.letters?.allObjects as! [Letter]
         updateTiles()
+        printTileDiagram()
         currentWords = model.generateWords(letters)
         // save the current # of words for use later in checkForValidWord
         currentNumberOfWords = currentWords?.count
-        printTileDiagram()
     }
 
     @IBAction func addLetterToWordInProgress(sender: Tile) {
@@ -590,8 +593,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             lettertiles[i].position = letters[i].position?.position
             
             lettertiles[i].letter!.position = positions![i]
-            //print(positions![i].position)
-            if lettertiles[i].snapBehavior == nil { // don't add more than one snap behavior to a Tile
+            
+            if lettertiles[i].snapBehavior != nil {
+                // update the snapPoint
+                lettertiles[i].snapBehavior?.snapPoint = (lettertiles[i].letter?.position?.position)!
+            } else { // Add snap behavior to Tile, but only if it doesn't already have one
+            //if lettertiles[i].snapBehavior == nil {
                 lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].letter!.position!.position)
                 lettertiles[i].snapBehavior?.damping = 0.75
                 animator.addBehavior(lettertiles[i].snapBehavior!)
@@ -600,6 +607,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         saveContext() // Tile is not in the context, but letter.position is
     }
+    
+//    //TODO: layout the Tiles which are not using autolayout
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
