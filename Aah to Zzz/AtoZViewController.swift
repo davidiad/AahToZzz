@@ -32,8 +32,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var currentNumberOfWords: Int?
 
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet var lettertiles: [Tile]!
-    var lettertiles: [Tile]!
+    var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
     @IBOutlet weak var wordInProgress: UILabel!
     
     //MARK:- vars for UIDynamics
@@ -58,9 +57,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private var gravityBehavior = UIGravityBehavior()
     private var collisionBehavior = UICollisionBehavior()
     private var blackhole = UIFieldBehavior!()
-//    private var snap0 = UISnapBehavior!()
-//    private var snap1 = UISnapBehavior!()
-//    private var snap2 = UISnapBehavior!()
     
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
@@ -106,7 +102,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             ($0.index as Int16?) < ($1.index as Int16?)
         }
         */
-        
+        animator = UIDynamicAnimator(referenceView: view)
         lettertiles = [Tile]()
         let image = UIImage(named: "tile") as UIImage?
         for var i=0; i<7; i++ {
@@ -117,7 +113,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             tile.setBackgroundImage(image, forState: .Normal)
             tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
            
-            tile.setTitle("Q", forState: .Normal)
+            tile.setTitle("Q", forState: .Normal) // Q is placeholder value
             tile.addTarget(self, action: "addLetterToWordInProgress:", forControlEvents:.TouchUpInside)
             lettertiles.append(tile)
             view.addSubview(tile)
@@ -128,21 +124,21 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //TODO: check for memory leak here
         // create an array to populate the buttons that hold the letters
         
-        animator = UIDynamicAnimator(referenceView: view)
-        for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
-            //lettertiles[i].position = generateLetterPosition(i)
-            print(positions?.count)
-            // Optional(0)
-            // TODO:-fatal error: Array index out of range
-            // happens not 1st time app is launched, but 2nd time
-            lettertiles[i].position = positions![i].position
-            lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].position!)
-            lettertiles[i].snapBehavior?.damping = 0.75
-            animator.addBehavior(lettertiles[i].snapBehavior!)
-        }
+
         checkForExistingLetters()
         updateTiles()
         generateWordList()
+        
+        
+//        for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
+//            lettertiles[i].letter!.position = positions![i]
+//            print(positions![i].position)
+//            lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].position!)
+//            lettertiles[i].snapBehavior?.damping = 0.75
+//            animator.addBehavior(lettertiles[i].snapBehavior!)
+//        }
+        
+        
         let mainGradient = model.yellowPinkBlueGreenGradient()
         
         mainGradient.frame = view.bounds
@@ -182,9 +178,18 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        print("Position check")
+        for var i=0; i<lettertiles.count; i++ {
+            print("")
+            print(positions![i])
+            print(lettertiles[i])
+            print("")
+        }
+        
         // Thank you to Aaron Douglas for showing an easy way to turn on the cool fields of lines that visualize UIFieldBehaviors!
         // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
-        //animator.setValue(true, forKey: "debugEnabled")
+        animator.setValue(true, forKey: "debugEnabled")
         
         let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
         itemBehavior.density = 0.5 // 12
@@ -197,27 +202,27 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //animator.addBehavior(vortex) // 17
     }
     
-    func snapTileToPosition (tile: Tile) {
-        if !positions![7].occupied {
-            tile.snapBehavior?.snapPoint = positions![7].position //position1
-            positions![7].occupied = true // need to also set the from position to false
-            //TODO: have to get the 'from' Position somehow. How to get the Tile's Letter? add a Letter property to Tile?
-            occupied1 = true
-        } else if !occupied2 {
-            tile.snapBehavior?.snapPoint = positions![8].position
-            occupied2 = true
-            positions![8].occupied = true // need to also set the from position to false
-
-        } else if !occupied3 {
-            tile.snapBehavior?.snapPoint = positions![9].position
-            occupied3 = true
-            positions![9].occupied = true // need to also set the from position to false
-
-        }
-        // update the status of the 'from' tile
-        tile.letter?.position?.occupied = false
-        saveContext()
-    }
+//    func snapTileToPosition (tile: Tile) {
+//        if !positions![7].occupied {
+//            tile.snapBehavior?.snapPoint = positions![7].position //position1
+//            positions![7].occupied = true // need to also set the from position to false
+//            //TODO: have to get the 'from' Position somehow. How to get the Tile's Letter? add a Letter property to Tile?
+//            occupied1 = true
+//        } else if !occupied2 {
+//            tile.snapBehavior?.snapPoint = positions![8].position
+//            occupied2 = true
+//            positions![8].occupied = true // need to also set the from position to false
+//
+//        } else if !occupied3 {
+//            tile.snapBehavior?.snapPoint = positions![9].position
+//            occupied3 = true
+//            positions![9].occupied = true // need to also set the from position to false
+//
+//        }
+//        // update the status of the 'from' tile
+//        tile.letter?.position?.occupied = false
+//        saveContext()
+//    }
     
 //    func snapTileToUpperPosition(tile: Tile) {
 //        //var newPosition: Position
@@ -237,7 +242,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        }
 //    }
     
-    //TODO: Letter's position is getting set to nil, and that's a crash. Each letter should have a position
+    // Each letter should have a position
     func swapTile(tile: Tile) {
 
         let newPosition = findVacancy(tile)
@@ -256,13 +261,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //            }
             //newPosition?.letter = tile.letter // is the inverse needed?
             saveContext() // safest to save the context here, after every letter swap
+            printTileDiagram()
         }
-
     }
     
     
-    //TODO:-
-    //TODO:- Need to add a conditional so upper letter positions dont allow letters to be added
     func findVacancy(tile: Tile) -> Position? {
 
         if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard
@@ -290,34 +293,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return nil
         }
     }
-//TODO: ? Add an upper/lower property to Position, which would be computed from the index?
-// Find the lowest unoccupied position in the upper tiles which form the word
-//    func findUpperVacancy() -> Position? {
-//        for var i=7; i<10; i++ {
-//            if !positions![i].occupied {
-//                return positions![i]
-//            }
-//        }
-//        return nil
-//    }
-//    
-//    // Find the highest (and therefore closest to the upper tiles) unoccupied position in the lower tiles which form the pool of letters
-//    func findLowerVacancy() -> Position? {
-//        for var i=6; i>=0; i-- {
-//            if !positions![i].occupied {
-//                return positions![i]
-//            }
-//        }
-//        return nil
-//    }
-    
-//    //TODO:
-//    func snapTile (tile: Tile) {
-//        // Get the Letter of the Tile and update Position
-//        // tile.letter?.position
-//        // set the old position to unoccupied and the new one to occupied
-//        //update the positions
-//    }
     
 
     // MARK:- FetchedResultsController delegate protocol
@@ -449,9 +424,24 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //MARK:-Tests
+    
+    // print out a diagram to see the state of the Tiles and Positions
+    
+    func printTileDiagram() {
+        for var i=0; i<lettertiles.count; i++ {
+            print("\(i): \(lettertiles[i].titleLabel!.text!)    \(lettertiles[i].letter!.position!.index)   \(lettertiles[i].letter!.position!.position)    \(lettertiles[i].snapBehavior!.snapPoint)")
+            
+        }
+        print("====================================")
+        print("")
+        print("")
+    }
+    
     //MARK:- Actions
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
+
         returnTiles() // if any tiles are in the upper positions, return them
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
@@ -475,14 +465,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         currentWords = model.generateWords(letters)
         // save the current # of words for use later in checkForValidWord
         currentNumberOfWords = currentWords?.count
-        
+        printTileDiagram()
     }
 
     @IBAction func addLetterToWordInProgress(sender: Tile) {
         //NOTE: should no longer need wordInProgress, getting the text directly from the tiles
         
         // add the new letter to the word in progress
-        wordInProgress.text = wordInProgress.text! + (sender.titleLabel?.text)!
+        //wordInProgress.text = wordInProgress.text! + (sender.titleLabel?.text)!
         swapTile(sender) // swapping whichever tile is tapped
         // then, check for a valid word
         // but iff 7 8 and 9 are occupado, then check for valid word
@@ -498,12 +488,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
                 let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.55 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
                 dispatch_after(time, dispatch_get_main_queue()) {
-                    
+                    /* unneeded?
                     for var i=0; i<self.lettertiles.count; i++ {
                         // TODO: check whether this next line is sending tiles to correct position
                         self.lettertiles[i].snapBehavior?.snapPoint = self.lettertiles[i].position! // reset to default locations
                     }
-                    
+                    */
                     //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
                     // rather than checking all 7 tiles
                     self.returnTiles()
@@ -543,12 +533,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // (Possibly these rules have been violated if their was a crash after the model has been changed, but before it was saved?)
     }
     
-//    func resetOccupied() {
-//        occupied1 = false
-//        occupied2 = false
-//        occupied3 = false
-//    }
-    
     func checkForValidWord(wordToCheck: String) -> Bool {
         //TODO: unwrap currentNumOfWords safely?
         for var i=0; i<currentNumberOfWords; i++ {
@@ -562,11 +546,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
                 return true
             }
-            
         }
         return false
     }
-    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
@@ -606,8 +588,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
             lettertiles[i].letter = letters[i]
             lettertiles[i].position = letters[i].position?.position
+            
+            lettertiles[i].letter!.position = positions![i]
+            //print(positions![i].position)
+            if lettertiles[i].snapBehavior == nil { // don't add more than one snap behavior to a Tile
+                lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].letter!.position!.position)
+                lettertiles[i].snapBehavior?.damping = 0.75
+                animator.addBehavior(lettertiles[i].snapBehavior!)
+            }
         }
-        //saveContext() // not need because Tiles aren't in the context
+        
+        saveContext() // Tile is not in the context, but letter.position is
     }
     
     override func didReceiveMemoryWarning() {

@@ -193,10 +193,10 @@ class AtoZModel {
          
         // counting from the bottom to the top
         case 0, 1, 2:
-            xpos = CGFloat(tileNum) * 65.0
+            xpos = 65.0 + (CGFloat(tileNum) * 65.0)
             ypos = 600.0
         case 3, 4, 5:
-            xpos = (CGFloat(tileNum - 3) * 85.0) - 40.0
+            xpos = 45.0 + (CGFloat(tileNum - 3) * 85.0)
             ypos = 500.0
         case 6:
             xpos = 130.0
@@ -212,7 +212,35 @@ class AtoZModel {
         return CGPointMake(xpos, ypos)
     }
     
+    /* previously
+    func generateLetterPosition(tileNum: Int) -> CGPoint {
+    var xpos: CGFloat
+    var ypos: CGFloat
+    switch tileNum {
     
+    // counting from the bottom to the top
+    case 0, 1, 2:
+    xpos = CGFloat(tileNum) * 65.0
+    ypos = 600.0
+    case 3, 4, 5:
+    xpos = (CGFloat(tileNum - 3) * 85.0) - 40.0
+    ypos = 500.0
+    case 6:
+    xpos = 130.0
+    ypos = 400.0
+    case 7, 8, 9:
+    xpos = 45.0 + CGFloat(tileNum - 7) * 55.0
+    ypos = 260.0
+    default:
+    xpos = 130.0
+    ypos = 400.0
+    }
+    
+    return CGPointMake(xpos, ypos)
+    }
+    */
+
+
     // creates a Letter object from a passed-in String, or generates a random 1 letter string if nil is passed in
     func createLetter(var letterString: String?) -> Letter {
         //TODO: test for validity of letter (e.g. what if it's a number, or more than 1 letter)
@@ -358,6 +386,7 @@ class AtoZModel {
                     let pos = generateLetterPosition(i)
                     position.xPos = Float(pos.x)
                     position.yPos = Float(pos.y)
+                    print(position.position)
                     positions?.append(position)
                     
                 }

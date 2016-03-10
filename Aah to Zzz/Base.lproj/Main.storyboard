@@ -73,7 +73,7 @@
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="48"/>
                                 <state key="normal" title="C" backgroundImage="tile"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ojv-Vd-35V">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ojv-Vd-35V">
                                 <rect key="frame" x="16" y="230" width="170" height="60"/>
                                 <color key="backgroundColor" red="0.84240257009999997" green="0.8800804793" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
