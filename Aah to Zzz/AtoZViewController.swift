@@ -11,12 +11,12 @@ import CoreData
 
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate {
     
-    let position1 = CGPointMake(45, 260)
-    let position2 = CGPointMake(100, 260)
-    let position3 = CGPointMake(155, 260)
-    var occupied1: Bool = false
-    var occupied2: Bool = false
-    var occupied3: Bool = false
+//    let position1 = CGPointMake(45, 260)
+//    let position2 = CGPointMake(100, 260)
+//    let position3 = CGPointMake(155, 260)
+//    var occupied1: Bool = false
+//    var occupied2: Bool = false
+//    var occupied3: Bool = false
 
     
     var model = AtoZModel.sharedInstance
@@ -34,6 +34,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var tableView: UITableView!
     var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
     @IBOutlet weak var wordInProgress: UILabel!
+    @IBAction func returnTiles(sender: AnyObject) {
+        returnTiles()
+    }
     
     //MARK:- vars for UIDynamics
     
@@ -180,14 +183,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        print("Position check")
-        for var i=0; i<lettertiles.count; i++ {
-            print("")
-            print(positions![i])
-            print(lettertiles[i])
-            print("")
-        }
         
         // Thank you to Aaron Douglas for showing an easy way to turn on the cool fields of lines that visualize UIFieldBehaviors!
         // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
@@ -702,17 +697,29 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             t.center = location
             
         case .Ended:
-            //let velocity = pan.velocityInView(self.view) // doesn't seem to be needed for a snap behavior
-            // check for the nearest unoccipied position, and snap to that
+            //TODO: make a completion block where 1st this code, then when velocity is below a set point, add the snap behavior
+//            let velocity = pan.velocityInView(self.view) // doesn't seem to be needed for a snap behavior
+//
+//            collisionBehavior = UICollisionBehavior(items: [t])
+//            collisionBehavior.translatesReferenceBoundsIntoBoundary = true
+//            
+//            itemBehavior = UIDynamicItemBehavior(items: [t])
+//            itemBehavior.resistance = 5.5
+//            itemBehavior.angularResistance = 2
+//            itemBehavior.elasticity = 1.1
+//            animator?.addBehavior(itemBehavior)
+//            animator?.addBehavior(collisionBehavior)
+//            itemBehavior.addLinearVelocity(velocity, forItem: t)
+            
             // interesting. is Position not an optional type, but then closestOpenPosition could still be a nil?
+            // check for the nearest unoccipied position, and snap to that
             if let closestOpenPosition = model.findClosestPosition(location, positionArray: positions!) {
                 swapTileToKnownPosition(t, pos: closestOpenPosition)
                 checkForWord()
             }
-            //storedSnapBehavior?.snapPoint = closestOpenPosition.position
             animator.addBehavior(storedSnapBehavior!)
             
-            
+                        //storedSnapBehavior?.snapPoint = closestOpenPosition.position
             //            animator?.addBehavior(radialGravity)
             //            animator?.addBehavior(itemBehavior)
             //            animator?.addBehavior(collisionBehavior)
