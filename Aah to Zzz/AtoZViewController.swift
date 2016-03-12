@@ -273,6 +273,20 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    // in the case that we already know the position
+    func swapTileToKnownPosition(tile: Tile, pos: Position) {
+        
+            // update the Positions
+            let previousPosition = tile.letter?.position
+            
+            previousPosition?.letter = nil // the previous position is now vacant
+           // printTileDiagram()
+            tile.letter?.position = pos
+            tile.snapBehavior?.snapPoint = pos.position
+            saveContext() // safest to save the context here, after every letter swap
+            //printTileDiagram()
+    }
+    
     func findVacancy(tile: Tile) -> Position? {
 
         if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard
@@ -437,7 +451,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func printTileDiagram() {
         for var i=0; i<lettertiles.count; i++ {
-            print("\(i): \(lettertiles[i].titleLabel!.text!)    \(lettertiles[i].letter!.position!.index)   \(lettertiles[i].letter!.position!.position)    \(lettertiles[i].snapBehavior!.snapPoint)")
+            //print("\(i): \(lettertiles[i].titleLabel!.text!)    \(lettertiles[i].letter!.position!.index)   \(lettertiles[i].letter!.position!.position)    \(lettertiles[i].snapBehavior!.snapPoint)")
+            print("   \(lettertiles[i].letter!.position!.index)   \(lettertiles[i].letter!.position!.position)    \(lettertiles[i].snapBehavior!.snapPoint)")
             
         }
         print("====================================")
@@ -517,6 +532,24 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     */
                 }
             } // else: word is *not* walid. Do nothing in that case. The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
+        }
+    }
+    
+    // need to incorporate this into func aboove this one (and consolidate with checkForValidWord)
+    func checkForWord () {
+        if positions![7].letter != nil && positions![8].letter != nil && positions![9].letter != nil {
+            let wordToCheck = (positions![7].letter?.letter)! + (positions![8].letter?.letter)! + (positions![9].letter?.letter)!
+            let wordIsValid = checkForValidWord(wordToCheck)
+            
+            if wordIsValid { // return the letters to the letter pool
+                // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
+                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.55 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
+                dispatch_after(time, dispatch_get_main_queue()) {
+                    //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
+                    // rather than checking all 7 tiles
+                    self.returnTiles()
+                }
+            } // else: word is *not* valid. Do nothing in that case. The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
         }
     }
     
@@ -650,7 +683,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //            let referenceBounds = self.bounds
 //            let referenceWidth = referenceBounds.width
 //            let referenceHeight = referenceBounds.height
-//            
+//             
 //            // Get item bounds.
 //            let itemBounds = self.bounds
 //            let itemHalfWidth = itemBounds.width / 2.0
@@ -669,9 +702,16 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             t.center = location
             
         case .Ended:
-            let velocity = pan.velocityInView(self.view)
-            //TODO: need now to check for the nearest unoccipied position, and snap to that
+            //let velocity = pan.velocityInView(self.view) // doesn't seem to be needed for a snap behavior
+            // check for the nearest unoccipied position, and snap to that
+            // interesting. is Position not an optional type, but then closestOpenPosition could still be a nil?
+            if let closestOpenPosition = model.findClosestPosition(location, positionArray: positions!) {
+                swapTileToKnownPosition(t, pos: closestOpenPosition)
+                checkForWord()
+            }
+            //storedSnapBehavior?.snapPoint = closestOpenPosition.position
             animator.addBehavior(storedSnapBehavior!)
+            
             
             //            animator?.addBehavior(radialGravity)
             //            animator?.addBehavior(itemBehavior)

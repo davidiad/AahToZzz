@@ -453,6 +453,26 @@ class AtoZModel {
         }
     }
     
+    //MARK: - Calculation helpers
+    
+    // find the closest point to a given point
+    func findClosestPosition(location: CGPoint, positionArray: [Position]) -> Position? {
+        var closestPosition = positionArray[0]
+        var lowestSquared = 99999999.0 // arbitrary largish number (ensure it's larger than the largest possible value of distance squared)
+        //TODO: optimizations to reduce # of calculations
+        for var i=0; i<positionArray.count; i++ {
+            if positionArray[i].letter == nil { // only check unoccupied poitions
+                // no need to use sqrt to get distance. the square of the distance can be used for comparison purposes w/out having to calculate actual distance
+                let distanceSquared = Double(pow(location.x - positionArray[i].position.x, 2) + pow(location.y - positionArray[i].position.y, 2))
+                if distanceSquared <= lowestSquared {
+                    closestPosition = positionArray[i]
+                    lowestSquared = distanceSquared
+                }
+            }
+        }
+        return closestPosition
+    }
+    
     //MARK:- Gradient background funcs
     func yellowPinkBlueGreenGradient() -> CAGradientLayer {
         
