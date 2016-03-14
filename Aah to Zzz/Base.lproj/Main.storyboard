@@ -22,17 +22,20 @@
                                 <rect key="frame" x="0.0" y="692" width="414" height="44"/>
                                 <items>
                                     <barButtonItem title="Options" id="oIr-N2-xN1">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <segue destination="St5-v4-e4w" kind="presentation" identifier="segueToOptions" id="gNQ-se-soE"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="JH2-Sa-22A"/>
                                     <barButtonItem title="New List" id="WIK-E7-zcd">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="generateNewWordlist:" destination="BYZ-38-t0r" id="aRj-zI-lKb"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
+                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ojv-Vd-35V">
                                 <rect key="frame" x="16" y="250" width="170" height="60"/>
@@ -46,21 +49,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iQk-rq-SuY">
-                                <rect key="frame" x="307" y="0.0" width="100" height="692"/>
+                                <rect key="frame" x="330" y="0.0" width="80" height="692"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="6qr-xV-NCv"/>
+                                    <constraint firstAttribute="width" constant="80" id="6qr-xV-NCv"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="yVc-70-ETY" customClass="WordListCell" customModule="AahToZzz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="100" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="80" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yVc-70-ETY" id="nST-1A-dcE">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyE-qt-1f8">
-                                                    <rect key="frame" x="38" y="11" width="54" height="21"/>
+                                                    <rect key="frame" x="18" y="11" width="54" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -69,7 +72,7 @@
                                             <constraints>
                                                 <constraint firstItem="eyE-qt-1f8" firstAttribute="trailing" secondItem="nST-1A-dcE" secondAttribute="trailingMargin" id="R59-Ji-u5x"/>
                                                 <constraint firstItem="eyE-qt-1f8" firstAttribute="top" secondItem="nST-1A-dcE" secondAttribute="topMargin" constant="3" id="Wdq-KA-958"/>
-                                                <constraint firstItem="eyE-qt-1f8" firstAttribute="leading" secondItem="nST-1A-dcE" secondAttribute="leadingMargin" constant="30" id="fvA-Rq-XrN"/>
+                                                <constraint firstItem="eyE-qt-1f8" firstAttribute="leading" secondItem="nST-1A-dcE" secondAttribute="leadingMargin" constant="10" id="fvA-Rq-XrN"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="eyE-qt-1f8" secondAttribute="bottom" constant="3.5" id="nzt-P0-mfG"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -109,7 +112,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="jOe-Nl-wN2" secondAttribute="bottom" id="egx-nc-KW4"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="centerX" secondItem="ojv-Vd-35V" secondAttribute="centerX" id="h97-8e-OtW"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="iQk-rq-SuY" secondAttribute="bottom" id="hjy-Pf-LZO"/>
-                            <constraint firstAttribute="trailing" secondItem="iQk-rq-SuY" secondAttribute="trailing" constant="7" id="let-Lw-kI7"/>
+                            <constraint firstAttribute="trailing" secondItem="iQk-rq-SuY" secondAttribute="trailing" constant="4" id="let-Lw-kI7"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="top" secondItem="ojv-Vd-35V" secondAttribute="bottom" constant="2" id="qde-c6-hRu"/>
                             <constraint firstAttribute="trailing" secondItem="jOe-Nl-wN2" secondAttribute="trailing" id="zpZ-54-fPw"/>
                         </constraints>

@@ -30,6 +30,8 @@ class AtoZModel {
     var game: GameData? // The managed object that is at the root of the object graph
     var positions: [Position]? // array to hold the letter Positions. Needed??
     
+    var anchorPoint: CGPoint? // anchor point to calculate tile and UI position. Will depend on device size. And will be adjustable by the user to some degree to what works best (hand size, left or right handed, personal preference.
+    
     //MARK:- vars for background gradient
     var location1: CGFloat?
     var location2: CGFloat?
@@ -184,32 +186,6 @@ class AtoZModel {
         saveContext()
 
         return letterset
-    }
-    
-    func generateLetterPosition(tileNum: Int) -> CGPoint {
-        var xpos: CGFloat
-        var ypos: CGFloat
-        switch tileNum {
-         
-        // counting from the bottom to the top
-        case 0, 1, 2:
-            xpos = 65.0 + (CGFloat(tileNum) * 65.0)
-            ypos = 600.0
-        case 3, 4, 5:
-            xpos = 45.0 + (CGFloat(tileNum - 3) * 85.0)
-            ypos = 500.0
-        case 6:
-            xpos = 130.0
-            ypos = 400.0
-        case 7, 8, 9:
-            xpos = 45.0 + CGFloat(tileNum - 7) * 55.0
-            ypos = 260.0
-        default:
-            xpos = 130.0
-            ypos = 400.0
-        }
-        
-        return CGPointMake(xpos, ypos)
     }
     
     /* previously
@@ -383,11 +359,12 @@ class AtoZModel {
                     let position = NSEntityDescription.insertNewObjectForEntityForName("Position", inManagedObjectContext: sharedContext) as! Position
                     position.index = Int16(i)
                     position.game = newGame
-                    let pos = generateLetterPosition(i)
-                    position.xPos = Float(pos.x)
-                    position.yPos = Float(pos.y)
-                    print(position.position)
                     positions?.append(position)
+                    updateLetterPosition(i) // setting the coordinates
+//                    let pos = generateLetterPosition(i)
+//                    position.xPos = Float(pos.x)
+//                    position.yPos = Float(pos.y)
+                    
                     
                 }
                 saveContext()
@@ -403,10 +380,21 @@ class AtoZModel {
         }
     }
     
-    func createPositions(game: GameData) {
-        
+    func updateLetterPosition(posIndex: Int) {
+        let pos = generateLetterPosition(posIndex)
+        positions![posIndex].xPos = Float(pos.x)
+        positions![posIndex].yPos = Float(pos.y)
     }
     
+    func updateLetterPositions() {
+        for var i=0; i<10; i++ {
+            updateLetterPosition(i)
+        }
+        saveContext()
+    }
+    
+    
+    // might not be using thias func
     func createGame() {
         deleteGames() // delete all games (for now) so there is only one at a time
         _ = NSFetchRequest(entityName: "GameData")
@@ -471,6 +459,50 @@ class AtoZModel {
             }
         }
         return closestPosition
+    }
+    
+    // find the point from which to anchor the tiles and associated views
+    func calculateAnchor(areaWidth: CGFloat, areaHeight: CGFloat, vertiShift: CGFloat, horizShift: CGFloat=0) -> CGPoint {
+        anchorPoint =  (CGPointMake( areaWidth * 0.5 + horizShift, areaHeight + vertiShift ) )
+        updateLetterPositions()
+        return anchorPoint! // TODO: should not need to both return, and set the anchorPoint var
+    }
+    
+    func generateLetterPosition(tileNum: Int) -> CGPoint {
+        var xpos: CGFloat
+        var ypos: CGFloat
+        
+        if anchorPoint == nil {
+            anchorPoint = CGPointMake(130.0, 200.0)
+        }
+        
+        switch tileNum {
+            
+        // counting from the bottom to the top
+        case 0, 2:
+            xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 59.0)
+            ypos = anchorPoint!.y + CGFloat(320.0)
+        case 1:
+            xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 59.0)
+            ypos = anchorPoint!.y + CGFloat(320.0) + 40.0
+        case 3, 5:
+            xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 64.0)
+            ypos = anchorPoint!.y + CGFloat(260.0)
+        case 4:
+            xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 64.0)
+            ypos = anchorPoint!.y + CGFloat(260.0) + 42.0
+        case 6:
+            xpos = anchorPoint!.x
+            ypos = anchorPoint!.y + CGFloat(200.0) + 35.0
+        case 7, 8, 9:
+            xpos = 45.0 + CGFloat(tileNum - 7) * 55.0
+            ypos = anchorPoint!.y + CGFloat(60.0)
+        default:
+            xpos = anchorPoint!.x
+            ypos = anchorPoint!.y + CGFloat(200.0)
+        }
+        
+        return CGPointMake(xpos, ypos)
     }
     
     //MARK:- Gradient background funcs

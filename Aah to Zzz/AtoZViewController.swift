@@ -95,9 +95,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         game = model.game
-        // Set positions here, to the sorted array position from the model
-        //(Confusing because model.game.positions is a Set
-        positions = model.positions
+
         
         /* May not be needed, as 'positions' is sorted in the model
         positions = game?.positions?.allObjects as? [Position]
@@ -105,6 +103,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             ($0.index as Int16?) < ($1.index as Int16?)
         }
         */
+        
+        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width - 84.0, areaHeight: view.frame.size.height, vertiShift: -520.0)
+        model.updateLetterPositions() // needed to get the view bounds first, and then go back to the model to update the Positions
+        // Set positions here, to the sorted array position from the model
+        //(Confusing because model.game.positions is a Set
+        positions = model.positions
+        
         animator = UIDynamicAnimator(referenceView: view)
         lettertiles = [Tile]()
         let image = UIImage(named: "tile") as UIImage?
@@ -112,6 +117,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             //let button   = UIButton(type: UIButtonType.Custom) as UIButton
             //TODO: move some of this stuff to init for Tile
+            //TODO: use the eventual tile positions
             let tile = Tile(frame: CGRectMake(120.0, 170.0 + 50 * CGFloat(i), 50, 50))
             tile.setBackgroundImage(image, forState: .Normal)
             tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
@@ -174,11 +180,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        animator.addBehavior(snap0)
 //        animator.addBehavior(snap1)
 //        animator.addBehavior(snap2)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
     }
     
     override func viewDidAppear(animated: Bool) {

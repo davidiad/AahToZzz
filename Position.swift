@@ -15,7 +15,6 @@ class Position: NSManagedObject {
     @NSManaged var index: Int16
     @NSManaged var xPos: Float
     @NSManaged var yPos: Float
-    //@NSManaged var occupied: Bool
     @NSManaged var letter: Letter?
     @NSManaged var game: GameData?
     
