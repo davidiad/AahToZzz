@@ -481,22 +481,22 @@ class AtoZModel {
         // counting from the bottom to the top
         case 0, 2:
             xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 59.0)
-            ypos = anchorPoint!.y + CGFloat(320.0)
+            ypos = anchorPoint!.y + CGFloat(330.0)
         case 1:
             xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 59.0)
-            ypos = anchorPoint!.y + CGFloat(320.0) + 40.0
+            ypos = anchorPoint!.y + CGFloat(330.0) + 40.0
         case 3, 5:
             xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 64.0)
-            ypos = anchorPoint!.y + CGFloat(260.0)
+            ypos = anchorPoint!.y + CGFloat(270.0)
         case 4:
             xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 64.0)
-            ypos = anchorPoint!.y + CGFloat(260.0) + 42.0
+            ypos = anchorPoint!.y + CGFloat(270.0) + 42.0
         case 6:
             xpos = anchorPoint!.x
-            ypos = anchorPoint!.y + CGFloat(200.0) + 35.0
+            ypos = anchorPoint!.y + CGFloat(210.0) + 35.0
         case 7, 8, 9:
-            xpos = 45.0 + CGFloat(tileNum - 7) * 55.0
-            ypos = anchorPoint!.y + CGFloat(60.0)
+            xpos = anchorPoint!.x + CGFloat(tileNum - 8) * 55.0
+            ypos = anchorPoint!.y + CGFloat(14.0)
         default:
             xpos = anchorPoint!.x
             ypos = anchorPoint!.y + CGFloat(200.0)

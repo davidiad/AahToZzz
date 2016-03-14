@@ -38,6 +38,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         returnTiles()
     }
     
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var inProgressLeading: NSLayoutConstraint!
     //MARK:- vars for UIDynamics
     
     lazy var center: CGPoint = {
@@ -109,6 +112,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Set positions here, to the sorted array position from the model
         //(Confusing because model.game.positions is a Set
         positions = model.positions
+        
+        topConstraint.constant = 200.0
+        inProgressLeading.constant = tilesAnchorPoint.x - 0.5 * wordInProgress.frame.width
+
         
         animator = UIDynamicAnimator(referenceView: view)
         lettertiles = [Tile]()
