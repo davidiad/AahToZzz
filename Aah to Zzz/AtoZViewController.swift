@@ -11,14 +11,6 @@ import CoreData
 
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate {
     
-//    let position1 = CGPointMake(45, 260)
-//    let position2 = CGPointMake(100, 260)
-//    let position3 = CGPointMake(155, 260)
-//    var occupied1: Bool = false
-//    var occupied2: Bool = false
-//    var occupied3: Bool = false
-
-    
     var model = AtoZModel.sharedInstance
     var letters: [Letter]! //TODO: why not ? instead of !
     var wordlist = [String]()
@@ -107,13 +99,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         */
         
-        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width - 84.0, areaHeight: view.frame.size.height, vertiShift: -520.0)
+        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width - 34.0, areaHeight: view.frame.size.height, vertiShift: -480.0)
         model.updateLetterPositions() // needed to get the view bounds first, and then go back to the model to update the Positions
         // Set positions here, to the sorted array position from the model
         //(Confusing because model.game.positions is a Set
         positions = model.positions
         
-        topConstraint.constant = 200.0
+        topConstraint.constant = tilesAnchorPoint.y + CGFloat(120.0) - 0.5 * wordInProgress.frame.height
+
         inProgressLeading.constant = tilesAnchorPoint.x - 0.5 * wordInProgress.frame.width
 
         

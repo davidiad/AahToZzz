@@ -496,7 +496,7 @@ class AtoZModel {
             ypos = anchorPoint!.y + CGFloat(210.0) + 35.0
         case 7, 8, 9:
             xpos = anchorPoint!.x + CGFloat(tileNum - 8) * 55.0
-            ypos = anchorPoint!.y + CGFloat(14.0)
+            ypos = anchorPoint!.y + CGFloat(120.0)
         default:
             xpos = anchorPoint!.x
             ypos = anchorPoint!.y + CGFloat(200.0)
