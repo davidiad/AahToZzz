@@ -34,7 +34,12 @@ class Tile: UIButton {
     }
     
     func setup() {
-        //setupPanRecognizer()
+        layer.cornerRadius = 8.0
+        layer.masksToBounds = false
+        layer.shadowColor = UIColor.purpleColor().CGColor
+        layer.shadowOpacity = 0.0
+        layer.shadowRadius = 6
+        layer.shadowOffset = CGSizeMake(2.0, 2.0)
     }
     
 //    func setupPanRecognizer() {

@@ -105,8 +105,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //(Confusing because model.game.positions is a Set
         positions = model.positions
         
+        // Adjust the constraints for the Tile UI background elements
         topConstraint.constant = tilesAnchorPoint.y + CGFloat(120.0) - 0.5 * wordInProgress.frame.height
-
         inProgressLeading.constant = tilesAnchorPoint.x - 0.5 * wordInProgress.frame.width
 
         
@@ -244,8 +244,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //    }
     
     // Each letter should have a position
-    //TODO: swap not updating properly when returning more than 1 tile, but only after New List
-    // If 3 tiles are left in upper register, after returnTiles, the middle one (numerically) will be correct, the other 2 will have wrong snap positions
     func swapTile(tile: Tile) {
 
         let newPosition = findVacancy(tile)
@@ -260,9 +258,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
             tile.letter?.position = newPosition
             tile.snapBehavior?.snapPoint = (newPosition?.position)!
-//            for l in letters {
-//                print("LDDDDDDD: \(l)")
-//            }
             //newPosition?.letter = tile.letter // is the inverse needed?
             saveContext() // safest to save the context here, after every letter swap
             printTileDiagram()
@@ -276,11 +271,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let previousPosition = tile.letter?.position
             
             previousPosition?.letter = nil // the previous position is now vacant
-           // printTileDiagram()
             tile.letter?.position = pos
             tile.snapBehavior?.snapPoint = pos.position
             saveContext() // safest to save the context here, after every letter swap
-            //printTileDiagram()
     }
     
     func findVacancy(tile: Tile) -> Position? {
@@ -495,6 +488,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // then, check for a valid word
         // but iff 7 8 and 9 are occupado, then check for valid word
         //TODO: occupied property of positions does not seem to be working right?
+        checkUpperPositionsForWord()
+        /*
         if positions![7].letter != nil && positions![8].letter != nil && positions![9].letter != nil {
         //if wordInProgress.text?.characters.count > 2 {
             //_ = checkForValidWord(wordInProgress.text!)
@@ -506,33 +501,18 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
                 let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.55 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
                 dispatch_after(time, dispatch_get_main_queue()) {
-                    /* unneeded?
-                    for var i=0; i<self.lettertiles.count; i++ {
-                        // TODO: check whether this next line is sending tiles to correct position
-                        self.lettertiles[i].snapBehavior?.snapPoint = self.lettertiles[i].position! // reset to default locations
-                    }
-                    */
+
                     //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
                     // rather than checking all 7 tiles
                     self.returnTiles()
-                    /*
-                    for t in self.lettertiles {
-                        if let _ = t.letter?.position {
-                            if t.letter!.position!.index > 6 {
-                                self.swapTile(t)
-                            }
-                        } else {
-                            t.layer.opacity = 0.3 // a visual cue that something is not working correctly
-                        }
-                    }
-                    */
                 }
-            } // else: word is *not* walid. Do nothing in that case. The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
+            } // else: word is *not* valid. Do nothing in that case. The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (or by tapping on return button)
         }
+        */
     }
     
-    // need to incorporate this into func aboove this one (and consolidate with checkForValidWord)
-    func checkForWord () {
+    // need to incorporate this into func above this one (and consolidate with checkForValidWord)
+    func checkUpperPositionsForWord () {
         if positions![7].letter != nil && positions![8].letter != nil && positions![9].letter != nil {
             let wordToCheck = (positions![7].letter?.letter)! + (positions![8].letter?.letter)! + (positions![9].letter?.letter)!
             let wordIsValid = checkForValidWord(wordToCheck)
@@ -547,6 +527,23 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             } // else: word is *not* valid. Do nothing in that case. The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
         }
+    }
+    
+    func checkForValidWord(wordToCheck: String) -> Bool {
+        //TODO: unwrap currentNumOfWords safely?
+        for var i=0; i<currentNumberOfWords; i++ {
+            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+            let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
+            if wordToCheck == aValidWord.word {
+                
+                let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
+                currentWord.found = true
+                saveContext()
+                tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
+                return true
+            }
+        }
+        return false
     }
     
     // Check all 7 tiles over each position to find which ones to return
@@ -567,23 +564,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // There should be 7 positions with a letter, and 3 without
         // All 7 Letter's should have a Position (and vice-versa)
         // (Possibly these rules have been violated if their was a crash after the model has been changed, but before it was saved?)
-    }
-    
-    func checkForValidWord(wordToCheck: String) -> Bool {
-        //TODO: unwrap currentNumOfWords safely?
-        for var i=0; i<currentNumberOfWords; i++ {
-            let indexPath = NSIndexPath(forRow: i, inSection: 0)
-            let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
-            if wordToCheck == aValidWord.word {
-                
-                let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
-                currentWord.found = true
-                saveContext()
-                tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
-                return true
-            }
-        }
-        return false
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -669,8 +649,31 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         case .Began:
             //print("Start HERE: \(tile.center)")
             let center = t.center
-//            offset.x = location.x - center.x
-//            offset.y = location.y - center.y
+            t.layer.shadowOpacity = 0.85
+            let scale = CGAffineTransformMakeScale(1.25, 1.25)
+            let move = CGAffineTransformMakeTranslation(0.0, -62.0)
+            
+            
+                UIView.animateWithDuration(0.35, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+                
+                //self.contentView.frame = CGRectMake(iXposition, 20, self.contentView.frame.size.width, self.contentView.frame.size.height)
+                t.transform = CGAffineTransformConcat(scale, move)
+                
+                }, completion: { (finished: Bool) -> Void in
+                    
+//                    if isMenuHidden == true {
+//                        isMenuHidden = false
+//                    } else {
+//                        isMenuHidden = true
+//                    }
+            })
+//            t.transform.animateWithDuration(3.0, delay: 5.0,
+//                options: UIViewAnimationOptions.CurveLinear,
+//                animations: {
+//                    self.theButton.alpha = 0
+//                }, 
+//                completion: nil)
+//        }
             
             //animator?.removeAllBehaviors()
             
@@ -716,10 +719,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             // check for the nearest unoccipied position, and snap to that
             if let closestOpenPosition = model.findClosestPosition(location, positionArray: positions!) {
                 swapTileToKnownPosition(t, pos: closestOpenPosition)
-                checkForWord()
+                checkUpperPositionsForWord()
             }
             animator.addBehavior(storedSnapBehavior!)
-            
+            t.layer.shadowOpacity = 0.0
+            t.transform = CGAffineTransformIdentity
                         //storedSnapBehavior?.snapPoint = closestOpenPosition.position
             //            animator?.addBehavior(radialGravity)
             //            animator?.addBehavior(itemBehavior)
@@ -731,6 +735,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
 
+func animateTile(sender: AnyObject) {
+    
+    [UIView.animateWithDuration(5.0, delay: 0.0, options: [.CurveLinear, .AllowUserInteraction], animations: {
+        //self.view.layoutIfNeeded()
+        }, completion: nil)]
+}
     
     // MARK: - Core Data Saving support
     
