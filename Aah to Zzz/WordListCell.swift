@@ -11,9 +11,11 @@ import UIKit
 class WordListCell: UITableViewCell {
     
     @IBOutlet weak var word: UILabel!
+    @IBOutlet weak var bg: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        bg.image = UIImage(named: "merged_small_tiles")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

@@ -647,35 +647,20 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         switch pan.state {
         case .Began:
-            //print("Start HERE: \(tile.center)")
+            t.superview?.bringSubviewToFront(t) // Make this Tile float above the other tiles
             let center = t.center
             t.layer.shadowOpacity = 0.85
             let scale = CGAffineTransformMakeScale(1.25, 1.25)
-            let move = CGAffineTransformMakeTranslation(0.0, -62.0)
+            let move = CGAffineTransformMakeTranslation(0.0, -58.0)
             
             
                 UIView.animateWithDuration(0.35, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
                 
-                //self.contentView.frame = CGRectMake(iXposition, 20, self.contentView.frame.size.width, self.contentView.frame.size.height)
-                t.transform = CGAffineTransformConcat(scale, move)
+                    t.transform = CGAffineTransformConcat(scale, move)
                 
                 }, completion: { (finished: Bool) -> Void in
                     
-//                    if isMenuHidden == true {
-//                        isMenuHidden = false
-//                    } else {
-//                        isMenuHidden = true
-//                    }
             })
-//            t.transform.animateWithDuration(3.0, delay: 5.0,
-//                options: UIViewAnimationOptions.CurveLinear,
-//                animations: {
-//                    self.theButton.alpha = 0
-//                }, 
-//                completion: nil)
-//        }
-            
-            //animator?.removeAllBehaviors()
             
       
         case .Changed:

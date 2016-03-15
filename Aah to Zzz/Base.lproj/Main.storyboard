@@ -38,20 +38,27 @@
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iQk-rq-SuY">
-                                <rect key="frame" x="330" y="0.0" width="80" height="692"/>
+                                <rect key="frame" x="326" y="0.0" width="84" height="692"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="6qr-xV-NCv"/>
+                                    <constraint firstAttribute="width" constant="84" id="6qr-xV-NCv"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="yVc-70-ETY" customClass="WordListCell" customModule="AahToZzz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="80" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="84" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yVc-70-ETY" id="nST-1A-dcE">
-                                            <rect key="frame" x="0.0" y="0.0" width="80" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="84" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyE-qt-1f8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ych-MU-hz3">
+                                                    <rect key="frame" x="-6" y="9" width="78" height="26"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="78" id="trZ-3U-obC"/>
+                                                        <constraint firstAttribute="height" constant="26" id="whJ-IM-PGI"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyE-qt-1f8">
                                                     <rect key="frame" x="18" y="11" width="54" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -62,12 +69,22 @@
                                                 <constraint firstItem="eyE-qt-1f8" firstAttribute="trailing" secondItem="nST-1A-dcE" secondAttribute="trailingMargin" id="R59-Ji-u5x"/>
                                                 <constraint firstItem="eyE-qt-1f8" firstAttribute="top" secondItem="nST-1A-dcE" secondAttribute="topMargin" constant="3" id="Wdq-KA-958"/>
                                                 <constraint firstItem="eyE-qt-1f8" firstAttribute="leading" secondItem="nST-1A-dcE" secondAttribute="leadingMargin" constant="10" id="fvA-Rq-XrN"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="eyE-qt-1f8" secondAttribute="trailing" constant="4" id="gYZ-8o-BHn"/>
+                                                <constraint firstItem="Ych-MU-hz3" firstAttribute="trailing" secondItem="eyE-qt-1f8" secondAttribute="trailing" id="k3A-Cx-XBA"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="eyE-qt-1f8" secondAttribute="bottom" constant="3.5" id="nzt-P0-mfG"/>
+                                                <constraint firstItem="Ych-MU-hz3" firstAttribute="centerY" secondItem="eyE-qt-1f8" secondAttribute="centerY" id="tHv-Ss-6fR"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="k3A-Cx-XBA"/>
+                                                    <exclude reference="tHv-Ss-6fR"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="0.72449995099999998" blue="0.92401636239999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="separatorInset" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="bg" destination="Ych-MU-hz3" id="C5d-hx-UyC"/>
                                             <outlet property="word" destination="eyE-qt-1f8" id="l8B-b5-oW6"/>
                                         </connections>
                                     </tableViewCell>
