@@ -109,25 +109,6 @@
                                     <constraint firstItem="ELs-lh-jFG" firstAttribute="top" secondItem="DVE-Kx-iP4" secondAttribute="top" id="top-qM-q2x"/>
                                 </constraints>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-Nl-wN2">
-                                <rect key="frame" x="2" y="690" width="303" height="44"/>
-                                <items>
-                                    <barButtonItem title="Options" id="oIr-N2-xN1">
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <segue destination="St5-v4-e4w" kind="presentation" identifier="segueToOptions" id="gNQ-se-soE"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="JH2-Sa-22A"/>
-                                    <barButtonItem title="New List" id="WIK-E7-zcd">
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="generateNewWordlist:" destination="BYZ-38-t0r" id="aRj-zI-lKb"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ojv-Vd-35V">
                                 <rect key="frame" x="0.0" y="20" width="170" height="60"/>
                                 <color key="backgroundColor" red="0.84240257009999997" green="0.8800804793" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -153,6 +134,37 @@
                                     <action selector="returnTiles:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rQ6-d8-f39"/>
                                 </connections>
                             </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-Nl-wN2">
+                                <rect key="frame" x="0.0" y="692" width="303" height="44"/>
+                                <items>
+                                    <barButtonItem image="icon_fill" id="X0V-lR-doz">
+                                        <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="8e4-CM-w4J"/>
+                                    <barButtonItem image="icon_settings" id="oIr-N2-xN1">
+                                        <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <segue destination="St5-v4-e4w" kind="presentation" identifier="segueToOptions" id="gNQ-se-soE"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="JH2-Sa-22A"/>
+                                    <barButtonItem image="icon_newlist" id="WIK-E7-zcd">
+                                        <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="generateNewWordlist:" destination="BYZ-38-t0r" id="aRj-zI-lKb"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="tVO-85-cHQ"/>
+                                    <barButtonItem image="icon_progress" id="Z33-9y-VmB">
+                                        <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="7ey-cy-esw"/>
+                                    <barButtonItem image="icon_shuffle" style="plain" id="4cc-f7-f9u">
+                                        <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="0.50939557690000004" green="0.74680393359999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -514,6 +526,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon_fill" width="26" height="26"/>
+        <image name="icon_newlist" width="17" height="26"/>
+        <image name="icon_progress" width="25" height="25"/>
+        <image name="icon_settings" width="26" height="26"/>
+        <image name="icon_shuffle" width="26" height="26"/>
         <image name="shadow_up.png" width="80" height="54"/>
         <image name="shadown_down" width="80" height="54"/>
         <image name="wordnik" width="100" height="21"/>
