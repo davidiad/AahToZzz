@@ -19,6 +19,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 // GradientSlider was downloaded from CocoaControls.com on 2/29/16
+// added rotation property so the slider can be vertcal -df
 
 import UIKit
 
@@ -36,6 +37,16 @@ import UIKit
         get{return _value}
         set{setValue(newValue, animated:true)}
     }
+    
+    /*@IBInspectable var rotation: CGFloat =  CGFloat(M_PI * 0.5) {
+           didSet{
+                updateRotation()
+            //transform = CGAffineTransformMakeRotation(rotation)
+        }
+//        //CGAffineTransformMakeRotation(CGFloat(M_PI * 0.5))
+//        get{return CGFloat(M_PI * 0.5)}
+//        //set{setValue(newValue, animated:true)}
+    }*/
     
     func setValue(value:CGFloat, animated:Bool = true) {
         _value = max(min(value,self.maximumValue),self.minimumValue)
@@ -281,6 +292,7 @@ import UIKit
         self.layer.addSublayer(_trackLayer)
         self.layer.addSublayer(_thumbLayer)
         _thumbLayer.addSublayer(_thumbIconLayer)
+        transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 0.5))
     }
     
     //MARK: - Layout
@@ -438,6 +450,10 @@ import UIKit
         _trackLayer.colors = locations.map({return UIColor(hue: $0, saturation: s, brightness: l, alpha: a).CGColor})
         _trackLayer.locations = locations
     }
+    
+   /* private func updateRotation() {
+        transform = CGAffineTransformMakeRotation(rotation)
+    }*/
 }
 
 

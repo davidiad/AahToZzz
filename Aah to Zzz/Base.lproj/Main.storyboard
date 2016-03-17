@@ -78,8 +78,8 @@
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
-                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="7r7-JN-Ptr"/>
-                                            <outlet property="delegate" destination="BYZ-38-t0r" id="gow-b2-VNt"/>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="4Le-lY-Xac"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="lGV-63-jFX"/>
                                         </connections>
                                     </tableView>
                                     <imageView userInteractionEnabled="NO" alpha="0.66000000000000003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_up.png" translatesAutoresizingMaskIntoConstraints="NO" id="ELs-lh-jFG">
@@ -134,8 +134,8 @@
                                     <action selector="returnTiles:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rQ6-d8-f39"/>
                                 </connections>
                             </button>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-Nl-wN2">
-                                <rect key="frame" x="0.0" y="692" width="303" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-Nl-wN2">
+                                <rect key="frame" x="2" y="690" width="303" height="44"/>
                                 <items>
                                     <barButtonItem image="icon_fill" id="X0V-lR-doz">
                                         <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -165,27 +165,75 @@
                                 </items>
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kw5-ip-w8O">
+                                <rect key="frame" x="94" y="15" width="45" height="658"/>
+                                <color key="backgroundColor" red="0.63636579299999996" green="0.77525252529999999" blue="0.22030560630000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Y4-1f-2hz">
+                                <rect key="frame" x="9" y="0.0" width="77" height="737"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="77" id="RgN-A6-1Qw"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="proxycell" id="LLV-Xy-sh9" customClass="ProxyTableCell" customModule="AahToZzz" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="77" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LLV-Xy-sh9" id="9lT-oK-I9N">
+                                            <rect key="frame" x="0.0" y="0.0" width="77" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wXQ-7L-LTT">
+                                                    <rect key="frame" x="0.0" y="0.0" width="77" height="44"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="bg" destination="wXQ-7L-LTT" id="JXG-9O-L4I"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="yj0-AI-ata"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="eeS-fY-nKn"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.50939557690000004" green="0.74680393359999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="bottom" secondItem="jOe-Nl-wN2" secondAttribute="bottom" constant="3" id="22w-TA-8ZC"/>
+                            <constraint firstAttribute="bottom" secondItem="4Y4-1f-2hz" secondAttribute="bottom" constant="-1" id="46A-Cs-V45"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="2" id="CKT-X1-GIn"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" constant="-3" id="Isv-RH-R5p"/>
+                            <constraint firstItem="kw5-ip-w8O" firstAttribute="top" secondItem="lJN-X8-6hn" secondAttribute="bottom" constant="15" id="Roc-HA-liD"/>
+                            <constraint firstItem="kw5-ip-w8O" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="15" id="Tk3-7F-Nge"/>
+                            <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="kw5-ip-w8O" secondAttribute="bottom" constant="17" id="YoG-P7-hDz"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" constant="-2" id="egx-nc-KW4"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eu5-Sw-OsY"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="centerX" secondItem="ojv-Vd-35V" secondAttribute="centerX" id="h97-8e-OtW"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" identifier="inProgressLeading" id="hhu-6t-4DQ"/>
+                            <constraint firstItem="DVE-Kx-iP4" firstAttribute="leading" secondItem="kw5-ip-w8O" secondAttribute="trailing" constant="168" id="oEq-im-W8K"/>
+                            <constraint firstItem="kw5-ip-w8O" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="94" id="piK-1h-r4A"/>
+                            <constraint firstItem="4Y4-1f-2hz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pot-2E-FRR"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="top" secondItem="ojv-Vd-35V" secondAttribute="bottom" constant="8" id="qde-c6-hRu"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" identifier="inProgessTop" id="qy0-rM-BjO"/>
+                            <constraint firstItem="4Y4-1f-2hz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="9" id="z27-At-0xo"/>
                             <constraint firstAttribute="trailing" secondItem="jOe-Nl-wN2" secondAttribute="trailing" constant="109" id="zpZ-54-fPw"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Roc-HA-liD"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="inProgressLeading" destination="hhu-6t-4DQ" id="xcm-P1-jFC"/>
-                        <outlet property="tableView" destination="iQk-rq-SuY" id="ngt-M2-LQ1"/>
+                        <outlet property="proxyTable" destination="4Y4-1f-2hz" id="bQR-QC-2sm"/>
+                        <outlet property="scrollProxy" destination="kw5-ip-w8O" id="rZL-ld-uBc"/>
                         <outlet property="topConstraint" destination="qy0-rM-BjO" id="xW2-dv-5eY"/>
                         <outlet property="wordInProgress" destination="ojv-Vd-35V" id="G6t-Rf-rXA"/>
+                        <outlet property="wordTable" destination="iQk-rq-SuY" id="O8c-An-Vq3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -236,7 +284,7 @@
                                     <action selector="resetToDefaults:" destination="St5-v4-e4w" eventType="touchUpInside" id="eRG-4w-XaL"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CEY-fr-yc9" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CEY-fr-yc9" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="22" y="160" width="370" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -257,7 +305,7 @@
                                     <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="Qfs-vb-I8p"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gcJ-tW-9xK" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcJ-tW-9xK" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="22" y="320" width="370" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -278,7 +326,7 @@
                                     <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="BO7-Qh-rdT"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2w1-mN-5bj" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2w1-mN-5bj" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="22" y="240" width="370" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -299,7 +347,7 @@
                                     <action selector="sliderChanged:" destination="St5-v4-e4w" eventType="valueChanged" id="fZO-LO-PPh"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pfF-yj-rHA" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pfF-yj-rHA" customClass="GradientSlider" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="22" y="80" width="370" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -523,6 +571,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJ7-wC-TPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1215" y="205"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="IwQ-5Y-KEO">
+            <objects>
+                <tableViewController id="Q6t-gt-IiE" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ChL-xM-SUY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="eXp-ha-LQH">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eXp-ha-LQH" id="YOy-ZR-9MQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Q6t-gt-IiE" id="oUa-bN-iHx"/>
+                            <outlet property="delegate" destination="Q6t-gt-IiE" id="4bX-IQ-7H6"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ua-dH-rg2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>

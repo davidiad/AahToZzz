@@ -11,6 +11,15 @@ import CoreData
 
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate {
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView == proxyTable {
+            wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
+        }
+//        if scrollView == wordTable {
+//            proxyTable.setContentOffset(wordTable.contentOffset, animated: false)
+//        }
+    }
+    
     var model = AtoZModel.sharedInstance
     var letters: [Letter]! //TODO: why not ? instead of !
     var wordlist = [String]()
@@ -23,7 +32,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var currentNumberOfWords: Int?
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var wordTable: UITableView!
+    @IBOutlet weak var proxyTable: UITableView!
+    @IBOutlet weak var scrollProxy: UIView!
+    
     var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
     @IBOutlet weak var wordInProgress: UILabel!
     @IBAction func returnTiles(sender: AnyObject) {
@@ -81,6 +93,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //proxyTable.registerClass(ProxyTableCell.self, forCellReuseIdentifier: "proxycell")
+        //wordTable.registerClass(WordListCell.self, forCellReuseIdentifier: "cell")
         
         do {
             try fetchedResultsController.performFetch()
@@ -109,6 +123,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         topConstraint.constant = tilesAnchorPoint.y + CGFloat(120.0) - 0.5 * wordInProgress.frame.height
         inProgressLeading.constant = tilesAnchorPoint.x - 0.5 * wordInProgress.frame.width
 
+        //scrollingSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 0.5))
         
         animator = UIDynamicAnimator(referenceView: view)
         lettertiles = [Tile]()
@@ -180,7 +195,33 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        animator.addBehavior(snap0)
 //        animator.addBehavior(snap1)
 //        animator.addBehavior(snap2)
+        
+        let scrollGesture = UIPanGestureRecognizer(target: self, action: "scrollByProxy:")
+        scrollProxy.addGestureRecognizer(scrollGesture)
     }
+    
+    func scrollByProxy(pan: UIPanGestureRecognizer) {
+        let startPoint = wordTable.contentOffset
+        var currentPoint = startPoint
+        var deltaY = startPoint.y - currentPoint.y
+        switch pan.state {
+        case .Began:
+            print("start pan: \(wordTable.contentOffset)")
+        case .Changed:
+            currentPoint = pan.locationInView(self.view)
+            deltaY = startPoint.y - currentPoint.y
+            wordTable.setContentOffset(CGPointMake(startPoint.x, deltaY), animated: false)
+        case .Ended:
+            currentPoint = pan.locationInView(self.view)
+            deltaY = startPoint.y - currentPoint.y
+            wordTable.setContentOffset(CGPointMake(startPoint.x, deltaY), animated: true)
+            print("end pan: \(wordTable.contentOffset)")
+        default:
+            break
+        }
+        
+    }
+    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -308,37 +349,43 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK:- FetchedResultsController delegate protocol
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        tableView.beginUpdates()
+        wordTable.beginUpdates()
+        proxyTable.beginUpdates()
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        tableView.endUpdates()
+        wordTable.endUpdates()
+        proxyTable.endUpdates()
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         switch (type) {
         case .Insert:
             if let indexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                wordTable.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                proxyTable.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
             break;
         case .Delete:
             if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                wordTable.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                proxyTable.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
             break;
         case .Update:
-            if let indexPath = indexPath, let cell = tableView.cellForRowAtIndexPath(indexPath) as? WordListCell {
+            if let indexPath = indexPath, let cell = wordTable.cellForRowAtIndexPath(indexPath) as? WordListCell {
                 configureCell(cell, atIndexPath: indexPath)
             }
             break;
         case .Move:
             if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                wordTable.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                proxyTable.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
             
             if let newIndexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+                wordTable.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+                proxyTable.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
             }
             break;
         }
@@ -365,12 +412,44 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return 0
     }
     
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! WordListCell
-        configureCell(cell, atIndexPath: indexPath)
+//        var cellIsProxy = false
+//        var proxyCell: ProxyTableCell?
+//        proxyCell = proxyTable.dequeueReusableCellWithIdentifier("proxycell", forIndexPath: indexPath) as? ProxyTableCell
+//        if proxyCell != nil {
+//            cellIsProxy = true
+//            //return proxyCell!
+//        }
+//
+////        if cellIsProxy == false {
+////            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as? WordListCell
+////            configureCell(cell!, atIndexPath: indexPath)
+////            return cell!
+////        }
+//        
+//        switch cellIsProxy {
+//        case false:
+//            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as? WordListCell
+//            configureCell(cell!, atIndexPath: indexPath)
+//            return cell!
+//        case true:
+//            return proxyCell!
+//        }
         
-        return cell
+        if tableView == proxyTable {
+            let proxyCell = tableView.dequeueReusableCellWithIdentifier("proxycell", forIndexPath: indexPath) as? ProxyTableCell
+            configureProxyCell(proxyCell!, atIndexPath: indexPath)
+            return proxyCell!
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as? WordListCell
+            configureCell(cell!, atIndexPath: indexPath)
+            return cell!
+        }
+        
+    }
+    
+    func configureProxyCell(cell: ProxyTableCell, atIndexPath indexPath: NSIndexPath) {
+        //
     }
     
     func configureCell(cell: WordListCell, atIndexPath indexPath: NSIndexPath) {
@@ -378,10 +457,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Fetch Word
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
             if word.found == true && word.inCurrentList == true {
-                cell.word.text = word.word
+                if cell.word != nil { // may be unneeded safeguard
+                    cell.word.text = word.word
+                }
             } else {
-            cell.word.text = "? ? ?"
+                cell.word.text = "? ? ?"
             }
+            
         }
     }
     
@@ -414,6 +496,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // TODO: prevent popover from attempting to present twice in a row
     }
+    
+
     
     //MARK:- Popover Delegate functions
     
@@ -539,8 +623,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
                 currentWord.found = true
                 saveContext()
-                tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
+                wordTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
+                proxyTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
                 return true
+                
             }
         }
         return false
@@ -632,13 +718,15 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
     //MARK:- Panning for Tiles
     func setupPanRecognizer(tile: Tile) {
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: "pan:")
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: "panTile:")
         tile.addGestureRecognizer(panRecognizer)
     }
     
-    func pan(pan: UIPanGestureRecognizer) {
+    func panTile(pan: UIPanGestureRecognizer) {
         let t = pan.view as! Tile
         let storedSnapBehavior = t.snapBehavior
         animator?.removeBehavior(t.snapBehavior!)

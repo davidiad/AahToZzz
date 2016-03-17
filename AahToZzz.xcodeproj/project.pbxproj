@@ -57,6 +57,8 @@
 		63C449791C99E3EA0053BE77 /* icon_newlist_52px@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C4496E1C99E3EA0053BE77 /* icon_newlist_52px@3x.png */; };
 		63C4497B1C99E4080053BE77 /* icon_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C4497A1C99E4080053BE77 /* icon_settings.png */; };
 		63C449841C99F78C0053BE77 /* icon_shuffle.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63C449831C99F78C0053BE77 /* icon_shuffle.pdf */; };
+		63C449861C9A18F10053BE77 /* RotatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C449851C9A18F10053BE77 /* RotatingView.swift */; };
+		63C449881C9A73B60053BE77 /* ProxyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C449871C9A73B60053BE77 /* ProxyTableCell.swift */; };
 		63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D57BA91C8A48AB0046E349 /* Tile.swift */; };
 		63D57BB61C8C00C80046E349 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D57BB41C8C00C80046E349 /* Position.swift */; };
 /* End PBXBuildFile section */
@@ -114,6 +116,8 @@
 		63C4496E1C99E3EA0053BE77 /* icon_newlist_52px@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_newlist_52px@3x.png"; sourceTree = "<group>"; };
 		63C4497A1C99E4080053BE77 /* icon_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_settings.png; sourceTree = "<group>"; };
 		63C449831C99F78C0053BE77 /* icon_shuffle.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = icon_shuffle.pdf; sourceTree = "<group>"; };
+		63C449851C9A18F10053BE77 /* RotatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotatingView.swift; sourceTree = "<group>"; };
+		63C449871C9A73B60053BE77 /* ProxyTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyTableCell.swift; sourceTree = "<group>"; };
 		63D57BA91C8A48AB0046E349 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		63D57BB41C8C00C80046E349 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -251,6 +255,8 @@
 				63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */,
 				637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */,
 				637AF06C1C83512F005A36BA /* OptionsViewController.swift */,
+				63C449851C9A18F10053BE77 /* RotatingView.swift */,
+				63C449871C9A73B60053BE77 /* ProxyTableCell.swift */,
 			);
 			name = Contoller;
 			sourceTree = "<group>";
@@ -361,6 +367,7 @@
 			files = (
 				63A3A1261C764E3E00F440B5 /* AtoZViewController.swift in Sources */,
 				63A3A12A1C7652C300F440B5 /* AtoZModel.swift in Sources */,
+				63C449861C9A18F10053BE77 /* RotatingView.swift in Sources */,
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
 				63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */,
 				63A9FEF41C7AC29C00AE54F1 /* GameData.swift in Sources */,
@@ -372,6 +379,7 @@
 				637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */,
 				63A9FEE81C7AB4B500AE54F1 /* CoreDataStackManager.swift in Sources */,
 				63A3A12E1C76603300F440B5 /* WordListCell.swift in Sources */,
+				63C449881C9A73B60053BE77 /* ProxyTableCell.swift in Sources */,
 				63A3A1191C763F6C00F440B5 /* AtoZ.xcdatamodeld in Sources */,
 				63A9FEF21C7AC29C00AE54F1 /* Letter.swift in Sources */,
 				63A3A1111C763F6C00F440B5 /* AppDelegate.swift in Sources */,
