@@ -34,7 +34,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBOutlet weak var wordTable: UITableView!
     @IBOutlet weak var proxyTable: UITableView!
-    @IBOutlet weak var scrollProxy: UIView!
     
     var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
     @IBOutlet weak var wordInProgress: UILabel!
@@ -113,7 +112,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         */
         
-        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width - 34.0, areaHeight: view.frame.size.height, vertiShift: -480.0)
+        // constants allow the tiles to be anchored at desired location
+        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width + 90.0, areaHeight: view.frame.size.height, vertiShift: -540.0)
         model.updateLetterPositions() // needed to get the view bounds first, and then go back to the model to update the Positions
         // Set positions here, to the sorted array position from the model
         //(Confusing because model.game.positions is a Set
@@ -196,31 +196,30 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        animator.addBehavior(snap1)
 //        animator.addBehavior(snap2)
         
-        let scrollGesture = UIPanGestureRecognizer(target: self, action: "scrollByProxy:")
-        scrollProxy.addGestureRecognizer(scrollGesture)
+//        let scrollGesture = UIPanGestureRecognizer(target: self, action: "scrollByProxy:")
+//        scrollProxy.addGestureRecognizer(scrollGesture)
     }
     
-    func scrollByProxy(pan: UIPanGestureRecognizer) {
-        let startPoint = wordTable.contentOffset
-        var currentPoint = startPoint
-        var deltaY = startPoint.y - currentPoint.y
-        switch pan.state {
-        case .Began:
-            print("start pan: \(wordTable.contentOffset)")
-        case .Changed:
-            currentPoint = pan.locationInView(self.view)
-            deltaY = startPoint.y - currentPoint.y
-            wordTable.setContentOffset(CGPointMake(startPoint.x, deltaY), animated: false)
-        case .Ended:
-            currentPoint = pan.locationInView(self.view)
-            deltaY = startPoint.y - currentPoint.y
-            wordTable.setContentOffset(CGPointMake(startPoint.x, deltaY), animated: true)
-            print("end pan: \(wordTable.contentOffset)")
-        default:
-            break
-        }
-        
-    }
+//    func scrollByProxy(pan: UIPanGestureRecognizer) {
+//        let startPoint = wordTable.contentOffset
+//        var currentPoint = startPoint
+//        var deltaY = startPoint.y - currentPoint.y
+//        switch pan.state {
+//        case .Began:
+//            print("start pan: \(wordTable.contentOffset)")
+//        case .Changed:
+//            currentPoint = pan.locationInView(self.view)
+//            deltaY = startPoint.y - currentPoint.y
+//            wordTable.setContentOffset(CGPointMake(startPoint.x, deltaY), animated: false)
+//        case .Ended:
+//            currentPoint = pan.locationInView(self.view)
+//            deltaY = startPoint.y - currentPoint.y
+//            wordTable.setContentOffset(CGPointMake(startPoint.x, deltaY), animated: true)
+//            print("end pan: \(wordTable.contentOffset)")
+//        default:
+//            break
+//        }
+//    }
     
     
     override func viewDidAppear(animated: Bool) {
@@ -481,7 +480,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let popover: UIPopoverPresentationController = vc.popoverPresentationController!
                 //popover.barButtonItem = sender
                 popover.delegate = self
-                popover.permittedArrowDirections = UIPopoverArrowDirection.Right
+                popover.permittedArrowDirections = UIPopoverArrowDirection.Left
                 // tell the popover that it should point from the cell that was tapped
                 popover.sourceView = tableView.cellForRowAtIndexPath(indexPath)
                 // make the popover arrow point from the sourceRect, further to the right than default
@@ -510,7 +509,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func presentationController(controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
         let navigationController = UINavigationController(rootViewController: controller.presentedViewController)
         let btnDone = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "dismiss")
-        navigationController.topViewController!.navigationItem.rightBarButtonItem = btnDone
+        navigationController.topViewController!.navigationItem.leftBarButtonItem = btnDone
         return navigationController
     }
     

@@ -12,11 +12,11 @@ import UIKit
 class ProxyTableCell: UITableViewCell {
     
     
-    @IBOutlet weak var bg: UIImageView!
+    @IBOutlet weak var bg: UIImageView?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        bg.image = UIImage(named: "merged_small_tiles")
+        //bg.image = UIImage(named: "merged_small_tiles")
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
