@@ -455,12 +455,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // Fetch Word
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+            //TODO: can i use cell.wordtext property instead and eliminate the uilabel?
             if word.found == true && word.inCurrentList == true {
                 if cell.word != nil { // may be unneeded safeguard
+                    //cell.firstLetterBg.image = UIImage(named: "small_tile_yellow")
                     cell.word.text = word.word
+                    cell.wordtext = cell.word.text // triggers didSet to add image and letters
+                    //cell.firstLetter.text = cell.word.text?.substringToIndex(cell.word.text!.startIndex.successor())
                 }
             } else {
-                cell.word.text = "? ? ?"
+                //TODO: remove Word the Label altogether
+                //cell.word.text = "? ? ?"
             }
             
         }
