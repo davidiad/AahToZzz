@@ -493,6 +493,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 popover.sourceRect = sourceRect
                 presentViewController(vc, animated: true, completion:nil)
             }
+        } else {
+            print("no word cell here")
         }
         return indexPath
     }
@@ -540,7 +542,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK:- Actions
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
-        printTileDiagram()
+        //printTileDiagram()
         returnTiles() // if any tiles are in the upper positions, return them
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
@@ -549,6 +551,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
                 if word.found == true {
                     word.numTimesFound += 1
+                    print("NTF: \(word.numTimesFound)")
+                } else {
+                    print("not found?")
+                    // if word is NOT found, then take away a point so to speak
+                    // but never go below 0, that could create an unfun hole for hthe player
+                    if word.numTimesFound > 0 {
+                        word.numTimesFound -= 1
+                    }
                 }
                 word.found = false
                 word.inCurrentList = false

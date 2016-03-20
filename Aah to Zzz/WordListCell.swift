@@ -22,6 +22,8 @@ class WordListCell: UITableViewCell {
     @IBOutlet weak var firstLetterBg: UIImageView!
     @IBOutlet weak var secondLetterBg: UIImageView!
     @IBOutlet weak var thirdLetterBg: UIImageView!
+    @IBOutlet weak var outlineView: UIImageView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,8 +43,8 @@ class WordListCell: UITableViewCell {
             secondLetter.text = wordtext?.substringWithRange(Range<String.Index>(start: wordtext!.startIndex.successor(), end: wordtext!.endIndex.predecessor()))
             thirdLetterBg.image = UIImage(named: "small_tile_yellow")
             thirdLetter.text = wordtext?.substringFromIndex(wordtext!.endIndex.predecessor())
+            outlineView.image = UIImage(named: "outline_yellow")
         }
-
     }
     
     //MARK:- Cell delegate
@@ -55,6 +57,7 @@ class WordListCell: UITableViewCell {
         secondLetter.text = nil
         thirdLetterBg.image = nil
         thirdLetter.text = nil
+        outlineView.image = nil
         
         word.text = ""
     }

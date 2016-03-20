@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630A9D1A1C9E2146008DF8DD /* outline_image.pdf */; };
 		633727601C7EAEA4003E8447 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337275E1C7EAEA4003E8447 /* Word.swift */; };
 		637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */; };
 		637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06A1C8236C8005A36BA /* WordnikClient.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		630A9D1A1C9E2146008DF8DD /* outline_image.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image.pdf; sourceTree = "<group>"; };
 		6337275E1C7EAEA4003E8447 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefinitionPopoverVC.swift; sourceTree = "<group>"; };
 		637AF06A1C8236C8005A36BA /* WordnikClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordnikClient.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 		637EA83C1C9C826C00A9D8AF /* small tiles */ = {
 			isa = PBXGroup;
 			children = (
+				630A9D1A1C9E2146008DF8DD /* outline_image.pdf */,
 				637EA8361C9C826300A9D8AF /* small_tile_yellow.png */,
 				637EA8371C9C826300A9D8AF /* small_tile_yellow@2x.png */,
 				637EA8381C9C826300A9D8AF /* small_tile_yellow@3x.png */,
@@ -178,7 +181,7 @@
 		63A3A10F1C763F6C00F440B5 /* AahToZzz */ = {
 			isa = PBXGroup;
 			children = (
-				63D57BA81C891C950046E349 /* Contoller */,
+				63D57BA81C891C950046E349 /* Controller */,
 				637AF0701C83EEE9005A36BA /* Assets */,
 				63A3A1101C763F6C00F440B5 /* AppDelegate.swift */,
 				63A3A1141C763F6C00F440B5 /* Main.storyboard */,
@@ -264,7 +267,7 @@
 			name = icons;
 			sourceTree = "<group>";
 		};
-		63D57BA81C891C950046E349 /* Contoller */ = {
+		63D57BA81C891C950046E349 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				63A3A12D1C76603300F440B5 /* WordListCell.swift */,
@@ -275,7 +278,7 @@
 				63C449851C9A18F10053BE77 /* RotatingView.swift */,
 				63C449871C9A73B60053BE77 /* ProxyTableCell.swift */,
 			);
-			name = Contoller;
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +372,7 @@
 				63C449751C99E3EA0053BE77 /* icon_fill@2x.png in Resources */,
 				63C449771C99E3EA0053BE77 /* icon_newlist_52px.png in Resources */,
 				637AF0751C83EF1F005A36BA /* wordnik-logo@2x.png in Resources */,
+				630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */,
 				63A3A11E1C763F6C00F440B5 /* LaunchScreen.storyboard in Resources */,
 				63C449631C98D8440053BE77 /* shadow_up@3x.png in Resources */,
 				63A3A11B1C763F6C00F440B5 /* Assets.xcassets in Resources */,

@@ -101,11 +101,19 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UXE-4Z-cC2">
+                                                            <rect key="frame" x="6" y="5" width="78" height="26"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="26" id="3wa-Fp-0kH"/>
+                                                                <constraint firstAttribute="width" constant="78" id="eBK-zR-bPc"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="OH0-Cj-VZ9" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="0UL-wJ-tQO"/>
                                                         <constraint firstItem="OH0-Cj-VZ9" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" constant="26" id="3vl-56-DDV"/>
                                                         <constraint firstItem="UIS-pU-w9j" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" id="6ZS-Xw-CAM"/>
+                                                        <constraint firstItem="UXE-4Z-cC2" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" id="AcO-Uq-3xb"/>
                                                         <constraint firstItem="2Da-J8-SQr" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="JYy-C8-AuM"/>
                                                         <constraint firstItem="eyE-qt-1f8" firstAttribute="trailing" secondItem="nST-1A-dcE" secondAttribute="trailingMargin" id="R59-Ji-u5x"/>
                                                         <constraint firstItem="LHj-NF-Bkx" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="SAQ-8a-RPD"/>
@@ -116,6 +124,7 @@
                                                         <constraint firstItem="rVv-VQ-rgZ" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" constant="-26" id="fu9-rJ-6Bw"/>
                                                         <constraint firstItem="eyE-qt-1f8" firstAttribute="leading" secondItem="nST-1A-dcE" secondAttribute="leadingMargin" constant="10" id="fvA-Rq-XrN"/>
                                                         <constraint firstItem="WyK-dH-Yfh" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" constant="-26" id="lRe-vo-Wia"/>
+                                                        <constraint firstItem="UXE-4Z-cC2" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="lgn-8q-WsL"/>
                                                         <constraint firstAttribute="bottomMargin" secondItem="eyE-qt-1f8" secondAttribute="bottom" constant="3.5" id="nzt-P0-mfG"/>
                                                         <constraint firstItem="UIS-pU-w9j" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="oev-bC-xfA"/>
                                                         <constraint firstItem="Ych-MU-hz3" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="rj3-1s-Uex"/>
@@ -129,6 +138,7 @@
                                                     <outlet property="bg" destination="Ych-MU-hz3" id="C5d-hx-UyC"/>
                                                     <outlet property="firstLetter" destination="rVv-VQ-rgZ" id="THh-9c-PHO"/>
                                                     <outlet property="firstLetterBg" destination="WyK-dH-Yfh" id="Bay-2e-ZyI"/>
+                                                    <outlet property="outlineView" destination="UXE-4Z-cC2" id="yHO-Ty-xwd"/>
                                                     <outlet property="secondLetter" destination="UIS-pU-w9j" id="XVH-6b-ON2"/>
                                                     <outlet property="secondLetterBg" destination="LHj-NF-Bkx" id="AJ9-76-ksk"/>
                                                     <outlet property="thirdLetter" destination="2Da-J8-SQr" id="eLg-9Q-6Z8"/>
