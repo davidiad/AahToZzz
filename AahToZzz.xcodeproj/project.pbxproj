@@ -9,6 +9,21 @@
 /* Begin PBXBuildFile section */
 		630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630A9D1A1C9E2146008DF8DD /* outline_image.pdf */; };
 		633727601C7EAEA4003E8447 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337275E1C7EAEA4003E8447 /* Word.swift */; };
+		635549821CA0836400DB5167 /* tile_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6355497F1CA0836400DB5167 /* tile_bg.png */; };
+		635549831CA0836400DB5167 /* tile_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549801CA0836400DB5167 /* tile_bg@2x.png */; };
+		635549841CA0836400DB5167 /* tile_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549811CA0836400DB5167 /* tile_bg@3x.png */; };
+		635549881CA0ADA900DB5167 /* upper_button_positions_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549851CA0ADA900DB5167 /* upper_button_positions_gray.png */; };
+		635549891CA0ADA900DB5167 /* upper_button_positions_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549861CA0ADA900DB5167 /* upper_button_positions_gray@2x.png */; };
+		6355498A1CA0ADA900DB5167 /* upper_button_positions_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549871CA0ADA900DB5167 /* upper_button_positions_gray@3x.png */; };
+		635549911CA0C6DC00DB5167 /* down_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6355498B1CA0C6DC00DB5167 /* down_arrow.png */; };
+		635549921CA0C6DC00DB5167 /* down_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6355498C1CA0C6DC00DB5167 /* down_arrow@2x.png */; };
+		635549931CA0C6DC00DB5167 /* down_arrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6355498D1CA0C6DC00DB5167 /* down_arrow@3x.png */; };
+		635549941CA0C6DC00DB5167 /* down_arrow_h.png in Resources */ = {isa = PBXBuildFile; fileRef = 6355498E1CA0C6DC00DB5167 /* down_arrow_h.png */; };
+		635549951CA0C6DC00DB5167 /* down_arrow_h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6355498F1CA0C6DC00DB5167 /* down_arrow_h@2x.png */; };
+		635549961CA0C6DC00DB5167 /* down_arrow_h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549901CA0C6DC00DB5167 /* down_arrow_h@3x.png */; };
+		6355499A1CA0E87D00DB5167 /* status_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549971CA0E87D00DB5167 /* status_bg.png */; };
+		6355499B1CA0E87D00DB5167 /* status_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549981CA0E87D00DB5167 /* status_bg@3x.png */; };
+		6355499C1CA0E87D00DB5167 /* status_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549991CA0E87D00DB5167 /* status_bg@2x.png */; };
 		637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */; };
 		637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06A1C8236C8005A36BA /* WordnikClient.swift */; };
 		637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06C1C83512F005A36BA /* OptionsViewController.swift */; };
@@ -70,6 +85,21 @@
 /* Begin PBXFileReference section */
 		630A9D1A1C9E2146008DF8DD /* outline_image.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image.pdf; sourceTree = "<group>"; };
 		6337275E1C7EAEA4003E8447 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		6355497F1CA0836400DB5167 /* tile_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_bg.png; sourceTree = "<group>"; };
+		635549801CA0836400DB5167 /* tile_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile_bg@2x.png"; sourceTree = "<group>"; };
+		635549811CA0836400DB5167 /* tile_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile_bg@3x.png"; sourceTree = "<group>"; };
+		635549851CA0ADA900DB5167 /* upper_button_positions_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upper_button_positions_gray.png; sourceTree = "<group>"; };
+		635549861CA0ADA900DB5167 /* upper_button_positions_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upper_button_positions_gray@2x.png"; sourceTree = "<group>"; };
+		635549871CA0ADA900DB5167 /* upper_button_positions_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upper_button_positions_gray@3x.png"; sourceTree = "<group>"; };
+		6355498B1CA0C6DC00DB5167 /* down_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_arrow.png; sourceTree = "<group>"; };
+		6355498C1CA0C6DC00DB5167 /* down_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down_arrow@2x.png"; sourceTree = "<group>"; };
+		6355498D1CA0C6DC00DB5167 /* down_arrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down_arrow@3x.png"; sourceTree = "<group>"; };
+		6355498E1CA0C6DC00DB5167 /* down_arrow_h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_arrow_h.png; sourceTree = "<group>"; };
+		6355498F1CA0C6DC00DB5167 /* down_arrow_h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down_arrow_h@2x.png"; sourceTree = "<group>"; };
+		635549901CA0C6DC00DB5167 /* down_arrow_h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down_arrow_h@3x.png"; sourceTree = "<group>"; };
+		635549971CA0E87D00DB5167 /* status_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bg.png; sourceTree = "<group>"; };
+		635549981CA0E87D00DB5167 /* status_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@3x.png"; sourceTree = "<group>"; };
+		635549991CA0E87D00DB5167 /* status_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@2x.png"; sourceTree = "<group>"; };
 		637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefinitionPopoverVC.swift; sourceTree = "<group>"; };
 		637AF06A1C8236C8005A36BA /* WordnikClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordnikClient.swift; sourceTree = "<group>"; };
 		637AF06C1C83512F005A36BA /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +253,21 @@
 		63C449571C98BDE20053BE77 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				635549971CA0E87D00DB5167 /* status_bg.png */,
+				635549981CA0E87D00DB5167 /* status_bg@3x.png */,
+				635549991CA0E87D00DB5167 /* status_bg@2x.png */,
+				6355498B1CA0C6DC00DB5167 /* down_arrow.png */,
+				6355498C1CA0C6DC00DB5167 /* down_arrow@2x.png */,
+				6355498D1CA0C6DC00DB5167 /* down_arrow@3x.png */,
+				6355498E1CA0C6DC00DB5167 /* down_arrow_h.png */,
+				6355498F1CA0C6DC00DB5167 /* down_arrow_h@2x.png */,
+				635549901CA0C6DC00DB5167 /* down_arrow_h@3x.png */,
+				635549851CA0ADA900DB5167 /* upper_button_positions_gray.png */,
+				635549861CA0ADA900DB5167 /* upper_button_positions_gray@2x.png */,
+				635549871CA0ADA900DB5167 /* upper_button_positions_gray@3x.png */,
+				6355497F1CA0836400DB5167 /* tile_bg.png */,
+				635549801CA0836400DB5167 /* tile_bg@2x.png */,
+				635549811CA0836400DB5167 /* tile_bg@3x.png */,
 				637EA83C1C9C826C00A9D8AF /* small tiles */,
 				63C4497C1C99E4150053BE77 /* icons */,
 				63C449581C98D8440053BE77 /* shadow_down.png */,
@@ -349,35 +394,50 @@
 				637EA83A1C9C826300A9D8AF /* small_tile_yellow@2x.png in Resources */,
 				63C449511C98BDD70053BE77 /* merged_small_tiles_yellow.png in Resources */,
 				63C449791C99E3EA0053BE77 /* icon_newlist_52px@3x.png in Resources */,
+				635549961CA0C6DC00DB5167 /* down_arrow_h@3x.png in Resources */,
 				63C449561C98BDD70053BE77 /* merged_small_tiles@3x.png in Resources */,
 				637AF0741C83EF1F005A36BA /* wordnik-logo.png in Resources */,
 				63C449711C99E3EA0053BE77 /* icon_progress@2x.png in Resources */,
 				63C449531C98BDD70053BE77 /* merged_small_tiles_yellow@3x.png in Resources */,
 				63C449601C98D8440053BE77 /* shadow_down@3x.png in Resources */,
+				6355499C1CA0E87D00DB5167 /* status_bg@2x.png in Resources */,
 				63C449731C99E3EA0053BE77 /* icon_settings@2x.png in Resources */,
+				6355499A1CA0E87D00DB5167 /* status_bg.png in Resources */,
+				635549891CA0ADA900DB5167 /* upper_button_positions_gray@2x.png in Resources */,
 				637EA83B1C9C826300A9D8AF /* small_tile_yellow@3x.png in Resources */,
 				63C449721C99E3EA0053BE77 /* icon_settings@3x.png in Resources */,
+				635549831CA0836400DB5167 /* tile_bg@2x.png in Resources */,
 				63C449521C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png in Resources */,
 				637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */,
 				63C449541C98BDD70053BE77 /* merged_small_tiles.png in Resources */,
 				63C449841C99F78C0053BE77 /* icon_shuffle.pdf in Resources */,
 				63C4497B1C99E4080053BE77 /* icon_settings.png in Resources */,
 				637AF07F1C846E15005A36BA /* tile_yellow@2x.png in Resources */,
+				635549951CA0C6DC00DB5167 /* down_arrow_h@2x.png in Resources */,
+				635549841CA0836400DB5167 /* tile_bg@3x.png in Resources */,
+				635549921CA0C6DC00DB5167 /* down_arrow@2x.png in Resources */,
+				6355499B1CA0E87D00DB5167 /* status_bg@3x.png in Resources */,
 				63C449781C99E3EA0053BE77 /* icon_newlist_52px@2x.png in Resources */,
 				637AF07E1C846E15005A36BA /* tile_yellow.png in Resources */,
 				63C449701C99E3EA0053BE77 /* icon_progress@3x.png in Resources */,
 				63C449741C99E3EA0053BE77 /* icon_fill.png in Resources */,
 				63C449621C98D8440053BE77 /* shadow_up@2x.png in Resources */,
+				635549821CA0836400DB5167 /* tile_bg.png in Resources */,
+				635549931CA0C6DC00DB5167 /* down_arrow@3x.png in Resources */,
 				63C449611C98D8440053BE77 /* shadow_up.png in Resources */,
 				63C449751C99E3EA0053BE77 /* icon_fill@2x.png in Resources */,
 				63C449771C99E3EA0053BE77 /* icon_newlist_52px.png in Resources */,
 				637AF0751C83EF1F005A36BA /* wordnik-logo@2x.png in Resources */,
 				630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */,
+				635549911CA0C6DC00DB5167 /* down_arrow.png in Resources */,
+				635549881CA0ADA900DB5167 /* upper_button_positions_gray.png in Resources */,
 				63A3A11E1C763F6C00F440B5 /* LaunchScreen.storyboard in Resources */,
+				635549941CA0C6DC00DB5167 /* down_arrow_h.png in Resources */,
 				63C449631C98D8440053BE77 /* shadow_up@3x.png in Resources */,
 				63A3A11B1C763F6C00F440B5 /* Assets.xcassets in Resources */,
 				63C449761C99E3EA0053BE77 /* icon_fill@3x.png in Resources */,
 				63C449551C98BDD70053BE77 /* merged_small_tiles@2x.png in Resources */,
+				6355498A1CA0ADA900DB5167 /* upper_button_positions_gray@3x.png in Resources */,
 				63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

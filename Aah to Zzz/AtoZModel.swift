@@ -495,7 +495,7 @@ class AtoZModel {
             xpos = anchorPoint!.x
             ypos = anchorPoint!.y + CGFloat(210.0) + 35.0
         case 7, 8, 9:
-            xpos = anchorPoint!.x + CGFloat(tileNum - 8) * 55.0
+            xpos = anchorPoint!.x + CGFloat(tileNum - 8) * 60.0
             ypos = anchorPoint!.y + CGFloat(120.0)
         default:
             xpos = anchorPoint!.x
@@ -504,6 +504,46 @@ class AtoZModel {
         
         return CGPointMake(xpos, ypos)
     }
+    
+    //MARK:- Stats calculations
+    
+    func numUniqueWordsFound() -> Int? {
+        return game?.words?.count
+    }
+    
+    func numWordsFound() -> Int? {
+        var numWords: Int16 = 0
+        for aWord in (game?.words)! {
+            let w = aWord as? Word
+            numWords += w!.numTimesFound
+        }
+        return Int(numWords)
+    }
+    
+    func numWordsPlayed() -> Int? {
+        var numWords: Int16 = 0
+        for aWord in (game?.words)! {
+            let w = aWord as? Word
+            numWords += w!.numTimesPlayed
+        }
+        return Int(numWords)
+    }
+    
+    func percentageFound() -> Float? {
+        guard let numWordsPlayed = numWordsPlayed() else {
+            return nil
+        }
+        guard let numWordsFound = numWordsFound() else {
+            return nil
+        }
+        if numWordsPlayed > 0 {
+            return Float(numWordsFound) / Float(numWordsPlayed)
+        } else {
+            return nil
+        }
+    }
+    
+    //TODO: What about word 'mastery'?
     
     //MARK:- Gradient background funcs
     func yellowPinkBlueGreenGradient() -> CAGradientLayer {

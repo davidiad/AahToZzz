@@ -25,6 +25,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var wordlist = [String]()
     var positions: [Position]?
     
+    @IBOutlet weak var progressLabl: UILabel!
     
     var game: GameData?
     var currentLetterSet: LetterSet?
@@ -128,12 +129,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         animator = UIDynamicAnimator(referenceView: view)
         lettertiles = [Tile]()
         let image = UIImage(named: "tile") as UIImage?
+        let bgImage = UIImage(named: "tile_bg") as UIImage?
         for var i=0; i<7; i++ {
-            
+
             //let button   = UIButton(type: UIButtonType.Custom) as UIButton
             //TODO: move some of this stuff to init for Tile
             //TODO: use the eventual tile positions
-            let tile = Tile(frame: CGRectMake(120.0, 170.0 + 50 * CGFloat(i), 50, 50))
+            //lettertiles[i].letter!.position!.position
+            if let tilePos = positions?[i].position {
+                let tile = Tile(frame: CGRectMake(tilePos.x, tilePos.y * CGFloat(i), 50, 50))
+            let bgView = UIImageView(image: bgImage)
+            bgView.center = tilePos
             tile.setBackgroundImage(image, forState: .Normal)
             tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
            
@@ -142,9 +148,19 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             lettertiles.append(tile)
             //tile.animator = animator // so that we can affect the animator from inside the Tile class
             setupPanRecognizer(tile)
+            view.addSubview(bgView)
             view.addSubview(tile)
+            }
         }
-        
+        let upperPositionsBg = UIImage(named: "upper_positions_bg") as UIImage?
+        let upperPositionsView = UIImageView(image: upperPositionsBg)
+        upperPositionsView.center = CGPointMake(tilesAnchorPoint.x, tilesAnchorPoint.y + 120)
+        view.addSubview(upperPositionsView)
+        // TODO:-make sure all tiles have higher z index than all bg's. Also when tapped
+        for t in lettertiles {
+            //t.bringSubviewToFront(view)
+            view.bringSubviewToFront(t)
+        }
         // reference for memory leak bug, and fix:
         // http://stackoverflow.com/questions/34075326/swift-2-iboutlet-collection-uibutton-leaks-memory
         //TODO: check for memory leak here
@@ -154,7 +170,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         checkForExistingLetters()
         updateTiles()
         generateWordList()
-        
+        updateProgress()
         
 //        for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
 //            lettertiles[i].letter!.position = positions![i]
@@ -461,6 +477,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     //cell.firstLetterBg.image = UIImage(named: "small_tile_yellow")
                     cell.word.text = word.word
                     cell.wordtext = cell.word.text // triggers didSet to add image and letters
+                    updateProgress() // update the lebel showing the player progress
+                    
                     //cell.firstLetter.text = cell.word.text?.substringToIndex(cell.word.text!.startIndex.successor())
                 }
             } else {
@@ -539,6 +557,31 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         print("")
     }
     
+    // Progress update //TODO: should these vars be stored to avoid recalc each word?
+    func updateProgress() {
+        let numFound = currentNumFound()
+        if currentNumberOfWords != nil {
+            if numFound < currentNumberOfWords {
+                progressLabl.text = "\(numFound) of \(currentNumberOfWords!) words found"
+            } else {
+                progressLabl.text = "Word List Completed!"
+            }
+        }
+        //progressLabl.text = "\(numFound) of \((fetchedResultsController.fetchedObjects?.count)!) words found"
+    }
+    
+    // each time a word is found, calculate how many have been found to show to the player
+    func currentNumFound() -> Int {
+        var numWordsFound: Int16 = 0
+        for aWord in (fetchedResultsController.fetchedObjects)! {
+            let w = aWord as? Word
+            if w?.found == true {
+                numWordsFound += 1
+            }
+        }
+        return Int(numWordsFound)
+    }
+    
     //MARK:- Actions
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
@@ -549,17 +592,19 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         for var i=0; i<fetchedResultsController.fetchedObjects?.count; i++ {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+                word.numTimesPlayed += 1 // the # times the game has put that word into play
                 if word.found == true {
                     word.numTimesFound += 1
                     print("NTF: \(word.numTimesFound)")
-                } else {
-                    print("not found?")
-                    // if word is NOT found, then take away a point so to speak
-                    // but never go below 0, that could create an unfun hole for hthe player
-                    if word.numTimesFound > 0 {
-                        word.numTimesFound -= 1
-                    }
                 }
+                //else {
+//                    print("not found?")
+//                    // if word is NOT found, then take away a point so to speak
+//                    // but never go below 0, that could create an unfun hole for the player
+//                    if word.numTimesFound > 0 {
+//                        word.numTimesFound -= 1
+//                    }
+               // }
                 word.found = false
                 word.inCurrentList = false
             }
@@ -571,10 +616,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // converting the new LetterSet to an array, for use in this class
         letters = currentLetterSet?.letters?.allObjects as! [Letter]
         updateTiles()
-        printTileDiagram()
+        //printTileDiagram()
         currentWords = model.generateWords(letters)
         // save the current # of words for use later in checkForValidWord
         currentNumberOfWords = currentWords?.count
+        updateProgress()
     }
 
     @IBAction func addLetterToWordInProgress(sender: Tile) {
@@ -713,7 +759,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             } else { // Add snap behavior to Tile, but only if it doesn't already have one
             //if lettertiles[i].snapBehavior == nil {
                 lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].letter!.position!.position)
-                lettertiles[i].snapBehavior?.damping = 0.75
+                lettertiles[i].snapBehavior?.damping = 0.6
                 animator.addBehavior(lettertiles[i].snapBehavior!)
             }
         }

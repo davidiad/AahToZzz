@@ -179,7 +179,7 @@
                                     <constraint firstItem="ELs-lh-jFG" firstAttribute="top" secondItem="DVE-Kx-iP4" secondAttribute="top" id="top-qM-q2x"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ojv-Vd-35V">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ojv-Vd-35V">
                                 <rect key="frame" x="135" y="262" width="170" height="60"/>
                                 <color key="backgroundColor" red="0.84240257009999997" green="0.8800804793" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -190,16 +190,16 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJN-X8-6hn">
-                                <rect key="frame" x="181" y="330" width="78" height="30"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJN-X8-6hn">
+                                <rect key="frame" x="141" y="330" width="157" height="29"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="78" id="8XG-iw-rsq"/>
-                                    <constraint firstAttribute="height" constant="30" id="ZCE-CD-XZ2"/>
+                                    <constraint firstAttribute="width" constant="157" id="8XG-iw-rsq"/>
+                                    <constraint firstAttribute="height" constant="29" id="ZCE-CD-XZ2"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <state key="normal" title="Return">
+                                <state key="normal" backgroundImage="down_arrow.png">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <state key="highlighted" image="down_arrow_h"/>
                                 <connections>
                                     <action selector="returnTiles:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rQ6-d8-f39"/>
                                 </connections>
@@ -281,6 +281,33 @@
                                 </items>
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="status_bg" translatesAutoresizingMaskIntoConstraints="NO" id="P9D-OZ-Gqm">
+                                <rect key="frame" x="125" y="200" width="190" height="52"/>
+                                <rect key="contentStretch" x="0.0785" y="0.28299999999999997" width="0.84299999999999997" height="0.434"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="4DO-1G-JrI"/>
+                                    <constraint firstAttribute="width" constant="190" id="e6e-rg-gsC"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word List Completed!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kp7-7N-n01">
+                                <rect key="frame" x="130" y="211.5" width="180" height="28.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="5Ev-oS-NIM"/>
+                                    <constraint firstAttribute="height" constant="21" id="azr-2u-C5Q"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="dML-Lw-8qH"/>
+                                    <constraint firstAttribute="width" constant="180" id="v7m-od-pFY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
+                                <color key="textColor" red="0.99747711419999996" green="0.8684134483" blue="0.038625180719999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="highlightedColor" red="0.3344411705" green="0.52740943149999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="shadowColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="azr-2u-C5Q"/>
+                                        <exclude reference="v7m-od-pFY"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.50939557690000004" green="0.74680393359999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -288,20 +315,25 @@
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="46A-Cs-V45"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="107" id="CKT-X1-GIn"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="3" id="Isv-RH-R5p"/>
+                            <constraint firstItem="kp7-7N-n01" firstAttribute="centerX" secondItem="P9D-OZ-Gqm" secondAttribute="centerX" id="NuU-XB-5bW"/>
+                            <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="P9D-OZ-Gqm" secondAttribute="bottom" constant="10" id="ea0-yK-Ys3"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" constant="-2" id="egx-nc-KW4"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eu5-Sw-OsY"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="centerX" secondItem="ojv-Vd-35V" secondAttribute="centerX" id="h97-8e-OtW"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="135" identifier="inProgressLeading" id="hhu-6t-4DQ"/>
+                            <constraint firstItem="kp7-7N-n01" firstAttribute="centerY" secondItem="P9D-OZ-Gqm" secondAttribute="centerY" id="pgl-g8-hWy"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pot-2E-FRR"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="top" secondItem="ojv-Vd-35V" secondAttribute="bottom" constant="8" id="qde-c6-hRu"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="242" identifier="inProgessTop" id="qy0-rM-BjO"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="z27-At-0xo"/>
+                            <constraint firstItem="P9D-OZ-Gqm" firstAttribute="centerX" secondItem="ojv-Vd-35V" secondAttribute="centerX" id="zFU-gH-ByP"/>
                             <constraint firstAttribute="trailing" secondItem="jOe-Nl-wN2" secondAttribute="trailing" constant="2" id="zpZ-54-fPw"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="inProgressLeading" destination="hhu-6t-4DQ" id="xcm-P1-jFC"/>
+                        <outlet property="progressLabl" destination="kp7-7N-n01" id="pKF-ZI-LW7"/>
                         <outlet property="proxyTable" destination="4Y4-1f-2hz" id="bQR-QC-2sm"/>
                         <outlet property="topConstraint" destination="qy0-rM-BjO" id="xW2-dv-5eY"/>
                         <outlet property="wordInProgress" destination="ojv-Vd-35V" id="G6t-Rf-rXA"/>
@@ -674,6 +706,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="down_arrow.png" width="157" height="29"/>
+        <image name="down_arrow_h" width="157" height="29"/>
         <image name="icon_fill" width="26" height="26"/>
         <image name="icon_newlist" width="17" height="26"/>
         <image name="icon_progress" width="25" height="25"/>
@@ -681,6 +715,7 @@
         <image name="icon_shuffle" width="26" height="26"/>
         <image name="shadow_up.png" width="80" height="54"/>
         <image name="shadown_down" width="80" height="54"/>
+        <image name="status_bg" width="190" height="52"/>
         <image name="wordnik" width="100" height="21"/>
     </resources>
 </document>
