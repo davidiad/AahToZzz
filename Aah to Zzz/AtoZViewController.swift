@@ -11,6 +11,9 @@ import CoreData
 
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate {
     
+    //TODO: WHen proxy scroll is touched, show scroll indicator. Also show vertical bar with progress?
+    //TODO: Fade status message back, increase to alpha 1 when new message displayed, then slowly animate to faded
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView == proxyTable {
             wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
@@ -170,7 +173,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         checkForExistingLetters()
         updateTiles()
         generateWordList()
-        updateProgress()
         
 //        for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
 //            lettertiles[i].letter!.position = positions![i]
@@ -237,10 +239,15 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        }
 //    }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        updateProgress(nil)
         // Thank you to Aaron Douglas for showing an easy way to turn on the cool fields of lines that visualize UIFieldBehaviors!
         // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
         //animator.setValue(true, forKey: "debugEnabled")
@@ -477,9 +484,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     //cell.firstLetterBg.image = UIImage(named: "small_tile_yellow")
                     cell.word.text = word.word
                     cell.wordtext = cell.word.text // triggers didSet to add image and letters
-                    updateProgress() // update the lebel showing the player progress
-                    
-                    //cell.firstLetter.text = cell.word.text?.substringToIndex(cell.word.text!.startIndex.successor())
+                    //updateProgress(nil) // update the label showing the player progress
                 }
             } else {
                 //TODO: remove Word the Label altogether
@@ -558,16 +563,18 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     // Progress update //TODO: should these vars be stored to avoid recalc each word?
-    func updateProgress() {
-        let numFound = currentNumFound()
-        if currentNumberOfWords != nil {
-            if numFound < currentNumberOfWords {
-                progressLabl.text = "\(numFound) of \(currentNumberOfWords!) words found"
-            } else {
-                progressLabl.text = "Word List Completed!"
+    func updateProgress(message: String?) {
+        if message != nil {
+            progressLabl.text = message
+        } else {
+            let numFound = currentNumFound()
+            if currentNumberOfWords != nil {
+                if numFound == currentNumberOfWords {
+                    progressLabl.text = "Word List Completed!"
+                } else {
+                    progressLabl.text = "\(numFound) of \(currentNumberOfWords!) words found"                }
             }
         }
-        //progressLabl.text = "\(numFound) of \((fetchedResultsController.fetchedObjects?.count)!) words found"
     }
     
     // each time a word is found, calculate how many have been found to show to the player
@@ -595,7 +602,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 word.numTimesPlayed += 1 // the # times the game has put that word into play
                 if word.found == true {
                     word.numTimesFound += 1
-                    print("NTF: \(word.numTimesFound)")
+                    //print("NTF: \(word.numTimesFound)")
                 }
                 //else {
 //                    print("not found?")
@@ -620,7 +627,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         currentWords = model.generateWords(letters)
         // save the current # of words for use later in checkForValidWord
         currentNumberOfWords = currentWords?.count
-        updateProgress()
+        updateProgress(nil)
     }
 
     @IBAction func addLetterToWordInProgress(sender: Tile) {
@@ -662,29 +669,45 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let wordIsValid = checkForValidWord(wordToCheck)
             
             if wordIsValid { // return the letters to the letter pool
+                
                 // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
-                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.55 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
+                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.45 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
                 dispatch_after(time, dispatch_get_main_queue()) {
                     //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
                     // rather than checking all 7 tiles
                     self.returnTiles()
                 }
-            } // else: word is *not* valid. Do nothing in that case. The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
+            } else {
+            //word is *not* valid. Do nothing in that case (except show a message). The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
+                updateProgress("That's not a word!")
+            }
         }
     }
     
     func checkForValidWord(wordToCheck: String) -> Bool {
         //TODO: unwrap currentNumOfWords safely?
+        var wordWasPreviouslyFound = false
         for var i=0; i<currentNumberOfWords; i++ {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
             if wordToCheck == aValidWord.word {
-                
+                if aValidWord.found == true {
+                    wordWasPreviouslyFound = true
+                    updateProgress("Already found \(wordToCheck)")
+                }
                 let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
                 currentWord.found = true
                 saveContext()
+                // Needed to wait until after .found was set before updateProgress, otherwise the newly found word isn't counted
+                // But conditional, so we don't overwrite the "Already found.." message
+                if wordWasPreviouslyFound == false {
+                    updateProgress(nil)
+                }
                 wordTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
                 proxyTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
+                
+
+                
                 return true
                 
             }
