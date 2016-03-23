@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -290,7 +290,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word List Completed!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kp7-7N-n01">
-                                <rect key="frame" x="130" y="211.5" width="180" height="28.5"/>
+                                <rect key="frame" x="130" y="209" width="180" height="28.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="5Ev-oS-NIM"/>
                                     <constraint firstAttribute="height" constant="21" id="azr-2u-C5Q"/>
@@ -308,6 +308,21 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Udf-GC-b5o">
+                                <rect key="frame" x="123" y="213.5" width="194" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="194" id="Sc4-z4-3Lm"/>
+                                    <constraint firstAttribute="height" constant="27" id="ayU-SP-UJk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title=" Start New List?" image="icon_newlist">
+                                    <color key="titleColor" red="0.99747711419999996" green="0.8684134483" blue="0.038625180719999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="generateNewWordlist:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BZ5-yo-YJe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.50939557690000004" green="0.74680393359999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -319,9 +334,11 @@
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="P9D-OZ-Gqm" secondAttribute="bottom" constant="10" id="ea0-yK-Ys3"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" constant="-2" id="egx-nc-KW4"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eu5-Sw-OsY"/>
+                            <constraint firstItem="Udf-GC-b5o" firstAttribute="centerX" secondItem="P9D-OZ-Gqm" secondAttribute="centerX" id="gXX-gc-bUT"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="centerX" secondItem="ojv-Vd-35V" secondAttribute="centerX" id="h97-8e-OtW"/>
+                            <constraint firstItem="Udf-GC-b5o" firstAttribute="centerY" secondItem="P9D-OZ-Gqm" secondAttribute="bottom" constant="-25" id="hL2-86-i8Z"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="135" identifier="inProgressLeading" id="hhu-6t-4DQ"/>
-                            <constraint firstItem="kp7-7N-n01" firstAttribute="centerY" secondItem="P9D-OZ-Gqm" secondAttribute="centerY" id="pgl-g8-hWy"/>
+                            <constraint firstItem="kp7-7N-n01" firstAttribute="centerY" secondItem="P9D-OZ-Gqm" secondAttribute="top" constant="23" id="pgl-g8-hWy"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pot-2E-FRR"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="top" secondItem="ojv-Vd-35V" secondAttribute="bottom" constant="8" id="qde-c6-hRu"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="242" identifier="inProgessTop" id="qy0-rM-BjO"/>
@@ -335,6 +352,8 @@
                         <outlet property="inProgressLeading" destination="hhu-6t-4DQ" id="xcm-P1-jFC"/>
                         <outlet property="progressLabl" destination="kp7-7N-n01" id="pKF-ZI-LW7"/>
                         <outlet property="proxyTable" destination="4Y4-1f-2hz" id="bQR-QC-2sm"/>
+                        <outlet property="startNewList" destination="Udf-GC-b5o" id="zng-Qk-Zq1"/>
+                        <outlet property="statusBgHeight" destination="4DO-1G-JrI" id="X6P-nS-bw6"/>
                         <outlet property="topConstraint" destination="qy0-rM-BjO" id="xW2-dv-5eY"/>
                         <outlet property="wordInProgress" destination="ojv-Vd-35V" id="G6t-Rf-rXA"/>
                         <outlet property="wordTable" destination="iQk-rq-SuY" id="O8c-An-Vq3"/>

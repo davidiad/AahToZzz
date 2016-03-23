@@ -12,7 +12,6 @@ import CoreData
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate {
     
     //TODO: WHen proxy scroll is touched, show scroll indicator. Also show vertical bar with progress?
-    //TODO: Fade status message back, increase to alpha 1 when new message displayed, then slowly animate to faded
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView == proxyTable {
@@ -41,6 +40,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
     @IBOutlet weak var wordInProgress: UILabel!
+    @IBOutlet weak var startNewList: UIButton!
+    
+    
     @IBAction func returnTiles(sender: AnyObject) {
         returnTiles()
     }
@@ -48,6 +50,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var inProgressLeading: NSLayoutConstraint!
+    
+    @IBOutlet weak var statusBgHeight: NSLayoutConstraint!
+    
     //MARK:- vars for UIDynamics
     
     lazy var center: CGPoint = {
@@ -173,7 +178,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         checkForExistingLetters()
         updateTiles()
         generateWordList()
-        
+        startNewList.alpha = 0
+        startNewList.hidden = true
 //        for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
 //            lettertiles[i].letter!.position = positions![i]
 //            print(positions![i].position)
@@ -564,17 +570,27 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // Progress update //TODO: should these vars be stored to avoid recalc each word?
     func updateProgress(message: String?) {
+        progressLabl.alpha = 1.0
         if message != nil {
             progressLabl.text = message
         } else {
             let numFound = currentNumFound()
             if currentNumberOfWords != nil {
                 if numFound == currentNumberOfWords {
+                    animateStatusHeight(80.0)
                     progressLabl.text = "Word List Completed!"
+                    animateNewListButton()
                 } else {
                     progressLabl.text = "\(numFound) of \(currentNumberOfWords!) words found"                }
             }
         }
+        UIView.animateWithDuration(2.35, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+            self.progressLabl.alpha = 0.58
+            
+            }, completion: { (finished: Bool) -> Void in
+                
+        })
     }
     
     // each time a word is found, calculate how many have been found to show to the player
@@ -592,6 +608,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK:- Actions
     
     @IBAction func generateNewWordlist(sender: AnyObject) {
+        startNewList.alpha = 0
+        startNewList.hidden = true
         //printTileDiagram()
         returnTiles() // if any tiles are in the upper positions, return them
         // Generating a new list, so first, set all the previous Words 'found' property to false
@@ -628,6 +646,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // save the current # of words for use later in checkForValidWord
         currentNumberOfWords = currentWords?.count
         updateProgress(nil)
+        animateStatusHeight(52.0)
     }
 
     @IBAction func addLetterToWordInProgress(sender: Tile) {
@@ -802,7 +821,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    
     //MARK:- Panning for Tiles
     func setupPanRecognizer(tile: Tile) {
         let panRecognizer = UIPanGestureRecognizer(target: self, action: "panTile:")
@@ -890,13 +908,31 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         default: break
         }
     }
-
-func animateTile(sender: AnyObject) {
     
-    [UIView.animateWithDuration(5.0, delay: 0.0, options: [.CurveLinear, .AllowUserInteraction], animations: {
-        //self.view.layoutIfNeeded()
-        }, completion: nil)]
-}
+    //MARK:- Animations
+
+
+    func animateTile(sender: AnyObject) {
+        
+        [UIView.animateWithDuration(5.0, delay: 0.0, options: [.CurveLinear, .AllowUserInteraction], animations: {
+            //self.view.layoutIfNeeded()
+            }, completion: nil)]
+    }
+    
+    func animateStatusHeight(ht: CGFloat) {
+        UIView.animateWithDuration(0.4) {
+            self.statusBgHeight.constant = ht
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func animateNewListButton() {
+        UIView.animateWithDuration(0.9) {
+            self.startNewList.hidden = false
+            self.startNewList.alpha = 1.0
+            self.view.layoutIfNeeded()
+        }
+    }
     
     // MARK: - Core Data Saving support
     
