@@ -577,6 +577,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let numFound = currentNumFound()
             if currentNumberOfWords != nil {
                 if numFound == currentNumberOfWords {
+                    // TODO: make wordListCompleted func
                     animateStatusHeight(80.0)
                     progressLabl.text = "Word List Completed!"
                     animateNewListButton()
@@ -647,6 +648,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         currentNumberOfWords = currentWords?.count
         updateProgress(nil)
         animateStatusHeight(52.0)
+        model.printStats()
     }
 
     @IBAction func addLetterToWordInProgress(sender: Tile) {

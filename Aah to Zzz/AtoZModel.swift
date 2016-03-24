@@ -302,18 +302,15 @@ class AtoZModel {
                 // assign letterset to the string
                 // set inCurrentList to true
                 // set found to false
-                // add 1 to numTimesPlayed
+                // add 1 to numTimesPlayed -- //TODO:-or add that in the VC?
                 // set the game property
                 newWord.game = game // make sure that game is not nil
                 // need to find the current letterset
                 newWord.letterlist = game?.currentLetterSet as? LetterSet //TODO: need to use ID to locate letterset?
                 newWord.inCurrentList = true
                 
-                newWord.numTimesPlayed += 1
+                //newWord.numTimesPlayed += 1
                 currentWords.append(newWord)
-//                print("newWord.word: \(newWord.word)")
-//                print("newWord.found: \(newWord.found)")
-//                print("newWord.inCurrentList: \(newWord.inCurrentList)")
                 
             } catch {
                 let fetchError = error as NSError
@@ -507,8 +504,26 @@ class AtoZModel {
     
     //MARK:- Stats calculations
     
+    func numUniqueWordsPlayed() -> Int? {
+        var numUniqueWords: Int16 = 0
+        for aWord in (game?.words)! {
+            let w = aWord as? Word
+            if w?.numTimesPlayed > 0 {
+                numUniqueWords += 1
+            }
+        }
+        return Int(numUniqueWords)
+    }
+    
     func numUniqueWordsFound() -> Int? {
-        return game?.words?.count
+        var numUniqueWords: Int16 = 0
+        for aWord in (game?.words)! {
+            let w = aWord as? Word
+            if w?.numTimesFound > 0 {
+                numUniqueWords += 1
+            }
+        }
+        return Int(numUniqueWords)
     }
     
     func numWordsFound() -> Int? {
@@ -529,7 +544,8 @@ class AtoZModel {
         return Int(numWords)
     }
     
-    func percentageFound() -> Float? {
+    
+    func percentageFound() -> Int? {
         guard let numWordsPlayed = numWordsPlayed() else {
             return nil
         }
@@ -537,10 +553,17 @@ class AtoZModel {
             return nil
         }
         if numWordsPlayed > 0 {
-            return Float(numWordsFound) / Float(numWordsPlayed)
+            return Int(100.0 * Float(numWordsFound) / Float(numWordsPlayed))
         } else {
             return nil
         }
+    }
+    
+    func printStats() {
+        print("***********STATS****************")
+        print("You have found \(numWordsFound()!) words out of \(numWordsPlayed()!) words played")
+        print("Your percentage: \(percentageFound()!)%")
+        print("You have found \(numUniqueWordsFound()!) unique words out of the \(numUniqueWordsPlayed()!) unique words played from a dictionary of \(wordsArray.count) three letter words")
     }
     
     //TODO: What about word 'mastery'?
