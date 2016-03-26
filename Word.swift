@@ -18,7 +18,16 @@ class Word: NSManagedObject {
     @NSManaged var numTimesPlayed: Int16
     @NSManaged var numTimesFound: Int16
     @NSManaged var letterlist: LetterSet? // should really (in the future) allow many letterlist's to each word
-    @NSManaged var game: GameData? 
+    @NSManaged var game: GameData?
+    
+    lazy var level: Int = {
+        let checkLevel = 2 * (self.numTimesFound) - self.numTimesPlayed
+        if checkLevel >= 0 {
+            return Int(checkLevel)
+        } else {
+            return 0
+        }
+    }()
     
     // standard Core Data init method.
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {

@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6300C6471CA4B07300E3B4D5 /* ColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6300C6461CA4B07300E3B4D5 /* ColorCode.swift */; };
+		6300C64B1CA5B11B00E3B4D5 /* small_tile_magenta.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6481CA5B11B00E3B4D5 /* small_tile_magenta.png */; };
+		6300C64C1CA5B11B00E3B4D5 /* small_tile_magenta@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6491CA5B11B00E3B4D5 /* small_tile_magenta@2x.png */; };
+		6300C64D1CA5B11B00E3B4D5 /* small_tile_magenta@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C64A1CA5B11B00E3B4D5 /* small_tile_magenta@3x.png */; };
+		6300C6541CA5E6E500E3B4D5 /* small_tile_blue_kimba.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C64E1CA5E6E500E3B4D5 /* small_tile_blue_kimba.png */; };
+		6300C6551CA5E6E500E3B4D5 /* small_tile_blue_kimba@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C64F1CA5E6E500E3B4D5 /* small_tile_blue_kimba@2x.png */; };
+		6300C6561CA5E6E500E3B4D5 /* small_tile_blue_kimba@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6501CA5E6E500E3B4D5 /* small_tile_blue_kimba@3x.png */; };
+		6300C6571CA5E6E500E3B4D5 /* small_tile_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6511CA5E6E500E3B4D5 /* small_tile_green.png */; };
+		6300C6581CA5E6E500E3B4D5 /* small_tile_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6521CA5E6E500E3B4D5 /* small_tile_green@2x.png */; };
+		6300C6591CA5E6E500E3B4D5 /* small_tile_green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6531CA5E6E500E3B4D5 /* small_tile_green@3x.png */; };
+		6300C65D1CA61F4B00E3B4D5 /* small_tiles_bg_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C65A1CA61F4B00E3B4D5 /* small_tiles_bg_yellow.png */; };
+		6300C65E1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C65B1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@2x.png */; };
+		6300C65F1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C65C1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@3x.png */; };
+		6300C6661CA6224000E3B4D5 /* small_tile_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6601CA6224000E3B4D5 /* small_tile_orange.png */; };
+		6300C6671CA6224000E3B4D5 /* small_tile_orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6611CA6224000E3B4D5 /* small_tile_orange@2x.png */; };
+		6300C6681CA6224000E3B4D5 /* small_tile_orange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6621CA6224000E3B4D5 /* small_tile_orange@3x.png */; };
+		6300C6691CA6224000E3B4D5 /* small_tile_purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6631CA6224000E3B4D5 /* small_tile_purple.png */; };
+		6300C66A1CA6224000E3B4D5 /* small_tile_purple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6641CA6224000E3B4D5 /* small_tile_purple@2x.png */; };
+		6300C66B1CA6224000E3B4D5 /* small_tile_purple@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6651CA6224000E3B4D5 /* small_tile_purple@3x.png */; };
 		630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630A9D1A1C9E2146008DF8DD /* outline_image.pdf */; };
 		633727601C7EAEA4003E8447 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337275E1C7EAEA4003E8447 /* Word.swift */; };
 		635549821CA0836400DB5167 /* tile_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6355497F1CA0836400DB5167 /* tile_bg.png */; };
@@ -83,6 +102,25 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6300C6461CA4B07300E3B4D5 /* ColorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCode.swift; sourceTree = "<group>"; };
+		6300C6481CA5B11B00E3B4D5 /* small_tile_magenta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_magenta.png; sourceTree = "<group>"; };
+		6300C6491CA5B11B00E3B4D5 /* small_tile_magenta@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_magenta@2x.png"; sourceTree = "<group>"; };
+		6300C64A1CA5B11B00E3B4D5 /* small_tile_magenta@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_magenta@3x.png"; sourceTree = "<group>"; };
+		6300C64E1CA5E6E500E3B4D5 /* small_tile_blue_kimba.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_blue_kimba.png; sourceTree = "<group>"; };
+		6300C64F1CA5E6E500E3B4D5 /* small_tile_blue_kimba@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_blue_kimba@2x.png"; sourceTree = "<group>"; };
+		6300C6501CA5E6E500E3B4D5 /* small_tile_blue_kimba@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_blue_kimba@3x.png"; sourceTree = "<group>"; };
+		6300C6511CA5E6E500E3B4D5 /* small_tile_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_green.png; sourceTree = "<group>"; };
+		6300C6521CA5E6E500E3B4D5 /* small_tile_green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_green@2x.png"; sourceTree = "<group>"; };
+		6300C6531CA5E6E500E3B4D5 /* small_tile_green@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_green@3x.png"; sourceTree = "<group>"; };
+		6300C65A1CA61F4B00E3B4D5 /* small_tiles_bg_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tiles_bg_yellow.png; sourceTree = "<group>"; };
+		6300C65B1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tiles_bg_yellow@2x.png"; sourceTree = "<group>"; };
+		6300C65C1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tiles_bg_yellow@3x.png"; sourceTree = "<group>"; };
+		6300C6601CA6224000E3B4D5 /* small_tile_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_orange.png; sourceTree = "<group>"; };
+		6300C6611CA6224000E3B4D5 /* small_tile_orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_orange@2x.png"; sourceTree = "<group>"; };
+		6300C6621CA6224000E3B4D5 /* small_tile_orange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_orange@3x.png"; sourceTree = "<group>"; };
+		6300C6631CA6224000E3B4D5 /* small_tile_purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_purple.png; sourceTree = "<group>"; };
+		6300C6641CA6224000E3B4D5 /* small_tile_purple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_purple@2x.png"; sourceTree = "<group>"; };
+		6300C6651CA6224000E3B4D5 /* small_tile_purple@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_purple@3x.png"; sourceTree = "<group>"; };
 		630A9D1A1C9E2146008DF8DD /* outline_image.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image.pdf; sourceTree = "<group>"; };
 		6337275E1C7EAEA4003E8447 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		6355497F1CA0836400DB5167 /* tile_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_bg.png; sourceTree = "<group>"; };
@@ -184,6 +222,21 @@
 		637EA83C1C9C826C00A9D8AF /* small tiles */ = {
 			isa = PBXGroup;
 			children = (
+				6300C6601CA6224000E3B4D5 /* small_tile_orange.png */,
+				6300C6611CA6224000E3B4D5 /* small_tile_orange@2x.png */,
+				6300C6621CA6224000E3B4D5 /* small_tile_orange@3x.png */,
+				6300C6631CA6224000E3B4D5 /* small_tile_purple.png */,
+				6300C6641CA6224000E3B4D5 /* small_tile_purple@2x.png */,
+				6300C6651CA6224000E3B4D5 /* small_tile_purple@3x.png */,
+				6300C64E1CA5E6E500E3B4D5 /* small_tile_blue_kimba.png */,
+				6300C64F1CA5E6E500E3B4D5 /* small_tile_blue_kimba@2x.png */,
+				6300C6501CA5E6E500E3B4D5 /* small_tile_blue_kimba@3x.png */,
+				6300C6511CA5E6E500E3B4D5 /* small_tile_green.png */,
+				6300C6521CA5E6E500E3B4D5 /* small_tile_green@2x.png */,
+				6300C6531CA5E6E500E3B4D5 /* small_tile_green@3x.png */,
+				6300C6481CA5B11B00E3B4D5 /* small_tile_magenta.png */,
+				6300C6491CA5B11B00E3B4D5 /* small_tile_magenta@2x.png */,
+				6300C64A1CA5B11B00E3B4D5 /* small_tile_magenta@3x.png */,
 				630A9D1A1C9E2146008DF8DD /* outline_image.pdf */,
 				637EA8361C9C826300A9D8AF /* small_tile_yellow.png */,
 				637EA8371C9C826300A9D8AF /* small_tile_yellow@2x.png */,
@@ -246,6 +299,7 @@
 				63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */,
 				63A3A1291C7652C300F440B5 /* AtoZModel.swift */,
 				637AF06A1C8236C8005A36BA /* WordnikClient.swift */,
+				6300C6461CA4B07300E3B4D5 /* ColorCode.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -253,6 +307,9 @@
 		63C449571C98BDE20053BE77 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6300C65A1CA61F4B00E3B4D5 /* small_tiles_bg_yellow.png */,
+				6300C65B1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@2x.png */,
+				6300C65C1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@3x.png */,
 				635549971CA0E87D00DB5167 /* status_bg.png */,
 				635549981CA0E87D00DB5167 /* status_bg@3x.png */,
 				635549991CA0E87D00DB5167 /* status_bg@2x.png */,
@@ -386,12 +443,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				63C4496F1C99E3EA0053BE77 /* icon_progress.png in Resources */,
+				6300C6591CA5E6E500E3B4D5 /* small_tile_green@3x.png in Resources */,
+				6300C6661CA6224000E3B4D5 /* small_tile_orange.png in Resources */,
 				63A3A1281C76520500F440B5 /* 3letterwordlist.txt in Resources */,
 				63C4495E1C98D8440053BE77 /* shadow_down.png in Resources */,
 				63C4495F1C98D8440053BE77 /* shadow_down@2x.png in Resources */,
 				637AF0801C846E15005A36BA /* tile_yellow@3x.png in Resources */,
+				6300C6551CA5E6E500E3B4D5 /* small_tile_blue_kimba@2x.png in Resources */,
 				637EA8391C9C826300A9D8AF /* small_tile_yellow.png in Resources */,
+				6300C65D1CA61F4B00E3B4D5 /* small_tiles_bg_yellow.png in Resources */,
 				637EA83A1C9C826300A9D8AF /* small_tile_yellow@2x.png in Resources */,
+				6300C66B1CA6224000E3B4D5 /* small_tile_purple@3x.png in Resources */,
+				6300C65F1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@3x.png in Resources */,
 				63C449511C98BDD70053BE77 /* merged_small_tiles_yellow.png in Resources */,
 				63C449791C99E3EA0053BE77 /* icon_newlist_52px@3x.png in Resources */,
 				635549961CA0C6DC00DB5167 /* down_arrow_h@3x.png in Resources */,
@@ -400,17 +463,22 @@
 				63C449711C99E3EA0053BE77 /* icon_progress@2x.png in Resources */,
 				63C449531C98BDD70053BE77 /* merged_small_tiles_yellow@3x.png in Resources */,
 				63C449601C98D8440053BE77 /* shadow_down@3x.png in Resources */,
+				6300C64D1CA5B11B00E3B4D5 /* small_tile_magenta@3x.png in Resources */,
 				6355499C1CA0E87D00DB5167 /* status_bg@2x.png in Resources */,
+				6300C6681CA6224000E3B4D5 /* small_tile_orange@3x.png in Resources */,
 				63C449731C99E3EA0053BE77 /* icon_settings@2x.png in Resources */,
 				6355499A1CA0E87D00DB5167 /* status_bg.png in Resources */,
 				635549891CA0ADA900DB5167 /* upper_button_positions_gray@2x.png in Resources */,
 				637EA83B1C9C826300A9D8AF /* small_tile_yellow@3x.png in Resources */,
 				63C449721C99E3EA0053BE77 /* icon_settings@3x.png in Resources */,
+				6300C6571CA5E6E500E3B4D5 /* small_tile_green.png in Resources */,
 				635549831CA0836400DB5167 /* tile_bg@2x.png in Resources */,
 				63C449521C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png in Resources */,
 				637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */,
+				6300C64C1CA5B11B00E3B4D5 /* small_tile_magenta@2x.png in Resources */,
 				63C449541C98BDD70053BE77 /* merged_small_tiles.png in Resources */,
 				63C449841C99F78C0053BE77 /* icon_shuffle.pdf in Resources */,
+				6300C6581CA5E6E500E3B4D5 /* small_tile_green@2x.png in Resources */,
 				63C4497B1C99E4080053BE77 /* icon_settings.png in Resources */,
 				637AF07F1C846E15005A36BA /* tile_yellow@2x.png in Resources */,
 				635549951CA0C6DC00DB5167 /* down_arrow_h@2x.png in Resources */,
@@ -418,9 +486,11 @@
 				635549921CA0C6DC00DB5167 /* down_arrow@2x.png in Resources */,
 				6355499B1CA0E87D00DB5167 /* status_bg@3x.png in Resources */,
 				63C449781C99E3EA0053BE77 /* icon_newlist_52px@2x.png in Resources */,
+				6300C6671CA6224000E3B4D5 /* small_tile_orange@2x.png in Resources */,
 				637AF07E1C846E15005A36BA /* tile_yellow.png in Resources */,
 				63C449701C99E3EA0053BE77 /* icon_progress@3x.png in Resources */,
 				63C449741C99E3EA0053BE77 /* icon_fill.png in Resources */,
+				6300C6541CA5E6E500E3B4D5 /* small_tile_blue_kimba.png in Resources */,
 				63C449621C98D8440053BE77 /* shadow_up@2x.png in Resources */,
 				635549821CA0836400DB5167 /* tile_bg.png in Resources */,
 				635549931CA0C6DC00DB5167 /* down_arrow@3x.png in Resources */,
@@ -430,14 +500,19 @@
 				637AF0751C83EF1F005A36BA /* wordnik-logo@2x.png in Resources */,
 				630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */,
 				635549911CA0C6DC00DB5167 /* down_arrow.png in Resources */,
+				6300C6691CA6224000E3B4D5 /* small_tile_purple.png in Resources */,
 				635549881CA0ADA900DB5167 /* upper_button_positions_gray.png in Resources */,
 				63A3A11E1C763F6C00F440B5 /* LaunchScreen.storyboard in Resources */,
 				635549941CA0C6DC00DB5167 /* down_arrow_h.png in Resources */,
 				63C449631C98D8440053BE77 /* shadow_up@3x.png in Resources */,
 				63A3A11B1C763F6C00F440B5 /* Assets.xcassets in Resources */,
 				63C449761C99E3EA0053BE77 /* icon_fill@3x.png in Resources */,
+				6300C66A1CA6224000E3B4D5 /* small_tile_purple@2x.png in Resources */,
+				6300C64B1CA5B11B00E3B4D5 /* small_tile_magenta.png in Resources */,
 				63C449551C98BDD70053BE77 /* merged_small_tiles@2x.png in Resources */,
 				6355498A1CA0ADA900DB5167 /* upper_button_positions_gray@3x.png in Resources */,
+				6300C65E1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@2x.png in Resources */,
+				6300C6561CA5E6E500E3B4D5 /* small_tile_blue_kimba@3x.png in Resources */,
 				63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -453,6 +528,7 @@
 				63A3A12A1C7652C300F440B5 /* AtoZModel.swift in Sources */,
 				63C449861C9A18F10053BE77 /* RotatingView.swift in Sources */,
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
+				6300C6471CA4B07300E3B4D5 /* ColorCode.swift in Sources */,
 				63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */,
 				63A9FEF41C7AC29C00AE54F1 /* GameData.swift in Sources */,
 				637AF07A1C84560D005A36BA /* GradientSlider.swift in Sources */,

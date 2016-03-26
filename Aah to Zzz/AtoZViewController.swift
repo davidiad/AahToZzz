@@ -485,12 +485,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Fetch Word
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
             //TODO: can i use cell.wordtext property instead and eliminate the uilabel?
+            //TODO: use the word.numTimesFound property to send the correctly colored tiles to the cell
             if word.found == true && word.inCurrentList == true {
                 if cell.word != nil { // may be unneeded safeguard
                     //cell.firstLetterBg.image = UIImage(named: "small_tile_yellow")
+                    cell.colorCode = ColorCode(code: word.level)
                     cell.word.text = word.word
                     cell.wordtext = cell.word.text // triggers didSet to add image and letters
-                    //updateProgress(nil) // update the label showing the player progress
+                    
                 }
             } else {
                 //TODO: remove Word the Label altogether
