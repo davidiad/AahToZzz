@@ -329,7 +329,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             tile.snapBehavior?.snapPoint = (newPosition?.position)!
             //newPosition?.letter = tile.letter // is the inverse needed?
             saveContext() // safest to save the context here, after every letter swap
-            printTileDiagram()
+            //printTileDiagram()
         }
     }
     
@@ -489,9 +489,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if word.found == true && word.inCurrentList == true {
                 if cell.word != nil { // may be unneeded safeguard
                     //cell.firstLetterBg.image = UIImage(named: "small_tile_yellow")
+                    
                     cell.colorCode = ColorCode(code: word.level)
                     cell.word.text = word.word
                     cell.wordtext = cell.word.text // triggers didSet to add image and letters
+                    print("In configureCell: \(cell.word.text) at level \(word.level)")
                     
                 }
             } else {
@@ -623,7 +625,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 word.numTimesPlayed += 1 // the # times the game has put that word into play
                 if word.found == true {
                     word.numTimesFound += 1
-                    //print("NTF: \(word.numTimesFound)")
+                    print("Word Level for \(word.word!): \(word.level)")
                 }
                 //else {
 //                    print("not found?")
@@ -692,7 +694,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let wordIsValid = checkForValidWord(wordToCheck)
             
             if wordIsValid { // return the letters to the letter pool
-                
+                //print("\(wordToCheck): at level \(wordToCheck.level)")
                 // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
                 let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.45 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
                 dispatch_after(time, dispatch_get_main_queue()) {

@@ -24,6 +24,7 @@ struct ColorCode {
     
     lazy var tile_bg: UIImage? = {
         var image = UIImage()
+        
         switch self.level! {
         case 0:
             image = UIImage(named: "small_tile_yellow")!
@@ -38,6 +39,7 @@ struct ColorCode {
         case 5:
             image = UIImage(named: "small_tile_purple")!
         default:
+            image = UIImage(named: "small_tile_yellow")!
             print("hit default: \(self.level)")
             break
         }
@@ -50,6 +52,8 @@ struct ColorCode {
         case 0:
             image = UIImage(named: "outline_yellow")!
         default:
+            //image = UIImage(named: "outline_orange")!
+
             break
         }
         return image
