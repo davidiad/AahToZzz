@@ -27,6 +27,9 @@
 		6300C66A1CA6224000E3B4D5 /* small_tile_purple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6641CA6224000E3B4D5 /* small_tile_purple@2x.png */; };
 		6300C66B1CA6224000E3B4D5 /* small_tile_purple@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6651CA6224000E3B4D5 /* small_tile_purple@3x.png */; };
 		630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630A9D1A1C9E2146008DF8DD /* outline_image.pdf */; };
+		6331F3281CA9D6CC00F98737 /* outline_image_thick.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F3271CA9D6CC00F98737 /* outline_image_thick.pdf */; };
+		6331F32C1CA9FBD700F98737 /* outline_image_thicker.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */; };
+		6331F3301CA9FE8B00F98737 /* outline_image_double.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */; };
 		633727601C7EAEA4003E8447 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337275E1C7EAEA4003E8447 /* Word.swift */; };
 		635549821CA0836400DB5167 /* tile_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6355497F1CA0836400DB5167 /* tile_bg.png */; };
 		635549831CA0836400DB5167 /* tile_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549801CA0836400DB5167 /* tile_bg@2x.png */; };
@@ -122,6 +125,9 @@
 		6300C6641CA6224000E3B4D5 /* small_tile_purple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_purple@2x.png"; sourceTree = "<group>"; };
 		6300C6651CA6224000E3B4D5 /* small_tile_purple@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_purple@3x.png"; sourceTree = "<group>"; };
 		630A9D1A1C9E2146008DF8DD /* outline_image.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image.pdf; sourceTree = "<group>"; };
+		6331F3271CA9D6CC00F98737 /* outline_image_thick.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_thick.pdf; sourceTree = "<group>"; };
+		6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_thicker.pdf; sourceTree = "<group>"; };
+		6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_double.pdf; sourceTree = "<group>"; };
 		6337275E1C7EAEA4003E8447 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		6355497F1CA0836400DB5167 /* tile_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_bg.png; sourceTree = "<group>"; };
 		635549801CA0836400DB5167 /* tile_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile_bg@2x.png"; sourceTree = "<group>"; };
@@ -222,6 +228,9 @@
 		637EA83C1C9C826C00A9D8AF /* small tiles */ = {
 			isa = PBXGroup;
 			children = (
+				6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */,
+				6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */,
+				6331F3271CA9D6CC00F98737 /* outline_image_thick.pdf */,
 				6300C6601CA6224000E3B4D5 /* small_tile_orange.png */,
 				6300C6611CA6224000E3B4D5 /* small_tile_orange@2x.png */,
 				6300C6621CA6224000E3B4D5 /* small_tile_orange@3x.png */,
@@ -469,10 +478,12 @@
 				63C449731C99E3EA0053BE77 /* icon_settings@2x.png in Resources */,
 				6355499A1CA0E87D00DB5167 /* status_bg.png in Resources */,
 				635549891CA0ADA900DB5167 /* upper_button_positions_gray@2x.png in Resources */,
+				6331F3281CA9D6CC00F98737 /* outline_image_thick.pdf in Resources */,
 				637EA83B1C9C826300A9D8AF /* small_tile_yellow@3x.png in Resources */,
 				63C449721C99E3EA0053BE77 /* icon_settings@3x.png in Resources */,
 				6300C6571CA5E6E500E3B4D5 /* small_tile_green.png in Resources */,
 				635549831CA0836400DB5167 /* tile_bg@2x.png in Resources */,
+				6331F32C1CA9FBD700F98737 /* outline_image_thicker.pdf in Resources */,
 				63C449521C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png in Resources */,
 				637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */,
 				6300C64C1CA5B11B00E3B4D5 /* small_tile_magenta@2x.png in Resources */,
@@ -513,6 +524,7 @@
 				6355498A1CA0ADA900DB5167 /* upper_button_positions_gray@3x.png in Resources */,
 				6300C65E1CA61F4B00E3B4D5 /* small_tiles_bg_yellow@2x.png in Resources */,
 				6300C6561CA5E6E500E3B4D5 /* small_tile_blue_kimba@3x.png in Resources */,
+				6331F3301CA9FE8B00F98737 /* outline_image_double.pdf in Resources */,
 				63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

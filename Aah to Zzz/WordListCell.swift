@@ -45,7 +45,14 @@ class WordListCell: UITableViewCell {
             secondLetter.text = wordtext?.substringWithRange(Range<String.Index>(start: wordtext!.startIndex.successor(), end: wordtext!.endIndex.predecessor()))
             thirdLetterBg.image = colorCode?.tile_bg!//UIImage(named: "small_tile_yellow")
             thirdLetter.text = wordtext?.substringFromIndex(wordtext!.endIndex.predecessor())
-            outlineView.image = colorCode?.outline!
+            // set the image (if any) to use as an outline for the cell
+            if let outline = colorCode?.outline {
+                outlineView.image = outline
+                //TODO: Set this once, elsewhere?
+                outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                //TODO: SOULD BE SET IN COLORCODE
+                outlineView.tintColor = colorCode?.tint
+            }
         }
     }
     

@@ -585,7 +585,14 @@ class AtoZModel {
         
         return gradientLayer
     }
-
+    
+    //MARK:- Colors
+//    
+//    struct Colors {
+//        
+//        static let magenta = UIColor(hue: 300/360, saturation: 1.0, brightness: 0.7, alpha: 1.0)
+//        
+//    }
 }
 
 

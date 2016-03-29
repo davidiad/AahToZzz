@@ -22,7 +22,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        }
     }
     
-    var model = AtoZModel.sharedInstance
+    var model = AtoZModel.sharedInstance //why not let?
     var letters: [Letter]! //TODO: why not ? instead of !
     var wordlist = [String]()
     var positions: [Position]?
@@ -314,7 +314,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // Each letter should have a position
     func swapTile(tile: Tile) {
-
+        
         let newPosition = findVacancy(tile)
 
         if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
@@ -656,6 +656,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     @IBAction func addLetterToWordInProgress(sender: Tile) {
+        //print("in ADDLETTERTO...")
         //NOTE: should no longer need wordInProgress, getting the text directly from the tiles
         
         // add the new letter to the word in progress
@@ -696,7 +697,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if wordIsValid { // return the letters to the letter pool
                 //print("\(wordToCheck): at level \(wordToCheck.level)")
                 // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
-                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.45 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
+                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.35 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
                 dispatch_after(time, dispatch_get_main_queue()) {
                     //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
                     // rather than checking all 7 tiles
@@ -835,13 +836,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func panTile(pan: UIPanGestureRecognizer) {
         let t = pan.view as! Tile
-        let storedSnapBehavior = t.snapBehavior
-        animator?.removeBehavior(t.snapBehavior!)
+        let storedSnapBehavior = t.snapBehavior // really being stotrd?
+//        animator?.removeBehavior(t.snapBehavior!)
         //animator?.removeAllBehaviors()
-        var location = pan.locationInView(self.view)
+        let location = pan.locationInView(self.view)
         
         switch pan.state {
         case .Began:
+            animator?.removeBehavior(t.snapBehavior!)
             t.superview?.bringSubviewToFront(t) // Make this Tile float above the other tiles
             let center = t.center
             t.layer.shadowOpacity = 0.85
@@ -881,6 +883,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             t.center = location
             
         case .Ended:
+            print("ended")
             //TODO: make a completion block where 1st this code, then when velocity is below a set point, add the snap behavior
 //            let velocity = pan.velocityInView(self.view) // doesn't seem to be needed for a snap behavior
 //
@@ -911,7 +914,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //
             //            itemBehavior.addLinearVelocity(velocity, forItem: raft)
             
-        default: break
+        default:
+            print("in default")
+            break
         }
     }
     
