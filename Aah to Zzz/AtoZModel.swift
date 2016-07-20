@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import UIKit
+import GameplayKit // used for random shuffling methods
 
 class AtoZModel {
     
@@ -557,6 +558,12 @@ class AtoZModel {
         } else {
             return nil
         }
+    }
+    
+    func randomize7() -> [Int] {
+        let sevenInts = [0,1,2,3,4,5,6]
+        return GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(sevenInts) as! [Int]
+         //GKMersenneTwisterRandomSource // more randomized but slower method
     }
     
     func printStats() {

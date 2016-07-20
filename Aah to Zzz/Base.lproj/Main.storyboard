@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -102,6 +102,13 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oWa-Iv-e7i">
+                                                            <rect key="frame" x="6" y="5" width="78" height="26"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="78" id="YFw-YB-qWs"/>
+                                                                <constraint firstAttribute="height" constant="26" id="uFK-5H-I6l"/>
+                                                            </constraints>
+                                                        </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UXE-4Z-cC2">
                                                             <rect key="frame" x="6" y="5" width="78" height="26"/>
                                                             <constraints>
@@ -116,6 +123,7 @@
                                                         <constraint firstItem="UIS-pU-w9j" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" id="6ZS-Xw-CAM"/>
                                                         <constraint firstItem="UXE-4Z-cC2" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" id="AcO-Uq-3xb"/>
                                                         <constraint firstItem="2Da-J8-SQr" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="JYy-C8-AuM"/>
+                                                        <constraint firstItem="oWa-Iv-e7i" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" id="KwS-lr-6Qm"/>
                                                         <constraint firstItem="eyE-qt-1f8" firstAttribute="trailing" secondItem="nST-1A-dcE" secondAttribute="trailingMargin" id="R59-Ji-u5x"/>
                                                         <constraint firstItem="LHj-NF-Bkx" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="SAQ-8a-RPD"/>
                                                         <constraint firstItem="Ych-MU-hz3" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" id="Vmr-rx-X1H"/>
@@ -124,6 +132,7 @@
                                                         <constraint firstItem="2Da-J8-SQr" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" constant="26" id="epO-r1-MJc"/>
                                                         <constraint firstItem="rVv-VQ-rgZ" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" constant="-26" id="fu9-rJ-6Bw"/>
                                                         <constraint firstItem="eyE-qt-1f8" firstAttribute="leading" secondItem="nST-1A-dcE" secondAttribute="leadingMargin" constant="10" id="fvA-Rq-XrN"/>
+                                                        <constraint firstItem="oWa-Iv-e7i" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="gmc-z8-Mf2"/>
                                                         <constraint firstItem="WyK-dH-Yfh" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" constant="-26" id="lRe-vo-Wia"/>
                                                         <constraint firstItem="UXE-4Z-cC2" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="lgn-8q-WsL"/>
                                                         <constraint firstAttribute="bottomMargin" secondItem="eyE-qt-1f8" secondAttribute="bottom" constant="3.5" id="nzt-P0-mfG"/>
@@ -139,6 +148,7 @@
                                                     <outlet property="bg" destination="Ych-MU-hz3" id="C5d-hx-UyC"/>
                                                     <outlet property="firstLetter" destination="rVv-VQ-rgZ" id="THh-9c-PHO"/>
                                                     <outlet property="firstLetterBg" destination="WyK-dH-Yfh" id="Bay-2e-ZyI"/>
+                                                    <outlet property="outlineShadowView" destination="oWa-Iv-e7i" id="gdX-8t-KGa"/>
                                                     <outlet property="outlineView" destination="UXE-4Z-cC2" id="yHO-Ty-xwd"/>
                                                     <outlet property="secondLetter" destination="UIS-pU-w9j" id="XVH-6b-ON2"/>
                                                     <outlet property="secondLetterBg" destination="LHj-NF-Bkx" id="AJ9-76-ksk"/>
@@ -278,6 +288,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="7ey-cy-esw"/>
                                     <barButtonItem image="icon_shuffle" style="plain" id="4cc-f7-f9u">
                                         <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="jumbleTiles:" destination="BYZ-38-t0r" id="9Da-2V-vuz"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -355,9 +368,11 @@
                         <outlet property="proxyTable" destination="4Y4-1f-2hz" id="bQR-QC-2sm"/>
                         <outlet property="startNewList" destination="Udf-GC-b5o" id="zng-Qk-Zq1"/>
                         <outlet property="statusBgHeight" destination="4DO-1G-JrI" id="X6P-nS-bw6"/>
+                        <outlet property="toolbar" destination="jOe-Nl-wN2" id="xaw-MU-B6q"/>
                         <outlet property="topConstraint" destination="qy0-rM-BjO" id="xW2-dv-5eY"/>
                         <outlet property="wordInProgress" destination="ojv-Vd-35V" id="G6t-Rf-rXA"/>
                         <outlet property="wordTable" destination="iQk-rq-SuY" id="O8c-An-Vq3"/>
+                        <outlet property="wordTableHolderView" destination="DVE-Kx-iP4" id="1z0-bi-AtJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -18,7 +18,7 @@ class Tile: UIButton {
     var position: CGPoint? // when this is updated, need to also update the letter position
     var letter: Letter? // letter.position.position would remove the need for the CGPoint position
     //var animator: UIDynamicAnimator?  // or use animator in view file?
-    
+    var boundingPath: UIBezierPath? // used for collision boundary
     //MARK:- Private vars
     //private var offset: CGPoint = CGPoint(x: 0, y: 0)
     
@@ -40,6 +40,7 @@ class Tile: UIButton {
         layer.shadowOpacity = 0.0
         layer.shadowRadius = 6
         layer.shadowOffset = CGSizeMake(2.0, 2.0)
+        boundingPath = UIBezierPath(roundedRect: bounds, cornerRadius: layer.cornerRadius)
     }
     
 //    func setupPanRecognizer() {

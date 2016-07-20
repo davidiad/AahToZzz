@@ -26,6 +26,8 @@
 		6300C6691CA6224000E3B4D5 /* small_tile_purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6631CA6224000E3B4D5 /* small_tile_purple.png */; };
 		6300C66A1CA6224000E3B4D5 /* small_tile_purple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6641CA6224000E3B4D5 /* small_tile_purple@2x.png */; };
 		6300C66B1CA6224000E3B4D5 /* small_tile_purple@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6300C6651CA6224000E3B4D5 /* small_tile_purple@3x.png */; };
+		630681C41CADCC6B0010489E /* outline_shadow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630681C31CADCC6B0010489E /* outline_shadow.pdf */; };
+		630681C61CADE57F0010489E /* outline_triple.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630681C51CADE57F0010489E /* outline_triple.pdf */; };
 		630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630A9D1A1C9E2146008DF8DD /* outline_image.pdf */; };
 		6331F3281CA9D6CC00F98737 /* outline_image_thick.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F3271CA9D6CC00F98737 /* outline_image_thick.pdf */; };
 		6331F32C1CA9FBD700F98737 /* outline_image_thicker.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */; };
@@ -124,6 +126,8 @@
 		6300C6631CA6224000E3B4D5 /* small_tile_purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_purple.png; sourceTree = "<group>"; };
 		6300C6641CA6224000E3B4D5 /* small_tile_purple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_purple@2x.png"; sourceTree = "<group>"; };
 		6300C6651CA6224000E3B4D5 /* small_tile_purple@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_purple@3x.png"; sourceTree = "<group>"; };
+		630681C31CADCC6B0010489E /* outline_shadow.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_shadow.pdf; sourceTree = "<group>"; };
+		630681C51CADE57F0010489E /* outline_triple.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_triple.pdf; sourceTree = "<group>"; };
 		630A9D1A1C9E2146008DF8DD /* outline_image.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image.pdf; sourceTree = "<group>"; };
 		6331F3271CA9D6CC00F98737 /* outline_image_thick.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_thick.pdf; sourceTree = "<group>"; };
 		6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_thicker.pdf; sourceTree = "<group>"; };
@@ -228,6 +232,8 @@
 		637EA83C1C9C826C00A9D8AF /* small tiles */ = {
 			isa = PBXGroup;
 			children = (
+				630681C51CADE57F0010489E /* outline_triple.pdf */,
+				630681C31CADCC6B0010489E /* outline_shadow.pdf */,
 				6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */,
 				6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */,
 				6331F3271CA9D6CC00F98737 /* outline_image_thick.pdf */,
@@ -486,6 +492,7 @@
 				6331F32C1CA9FBD700F98737 /* outline_image_thicker.pdf in Resources */,
 				63C449521C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png in Resources */,
 				637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */,
+				630681C41CADCC6B0010489E /* outline_shadow.pdf in Resources */,
 				6300C64C1CA5B11B00E3B4D5 /* small_tile_magenta@2x.png in Resources */,
 				63C449541C98BDD70053BE77 /* merged_small_tiles.png in Resources */,
 				63C449841C99F78C0053BE77 /* icon_shuffle.pdf in Resources */,
@@ -495,6 +502,7 @@
 				635549951CA0C6DC00DB5167 /* down_arrow_h@2x.png in Resources */,
 				635549841CA0836400DB5167 /* tile_bg@3x.png in Resources */,
 				635549921CA0C6DC00DB5167 /* down_arrow@2x.png in Resources */,
+				630681C61CADE57F0010489E /* outline_triple.pdf in Resources */,
 				6355499B1CA0E87D00DB5167 /* status_bg@3x.png in Resources */,
 				63C449781C99E3EA0053BE77 /* icon_newlist_52px@2x.png in Resources */,
 				6300C6671CA6224000E3B4D5 /* small_tile_orange@2x.png in Resources */,

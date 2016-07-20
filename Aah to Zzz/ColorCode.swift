@@ -37,7 +37,7 @@ struct ColorCode {
         var image = UIImage()
         
         if let level = self.level {
-            let tintLevel = level % 6
+            let tintLevel = level % 4
             
             switch tintLevel {
             case 0:
@@ -63,7 +63,7 @@ struct ColorCode {
     
     lazy var tint: UIColor? = {
         if let level = self.level {
-            let tintLevel = level % 6
+            let tintLevel = level % 4
             
             switch tintLevel {
             case 0:
@@ -74,10 +74,10 @@ struct ColorCode {
                 return Colors.bluek
             case 3:
                 return Colors.green
-            case 4:
-                return Colors.orange
-            case 5:
-                return Colors.purple
+//            case 4:
+//                return Colors.orange
+//            case 5:
+//                return Colors.purple
             default:
                 return UIColor.yellowColor()
             }
@@ -91,14 +91,18 @@ struct ColorCode {
 
         if self.level != nil {
             switch self.level! {
-            case 0, 1, 2, 3, 4, 5:
-                image = UIImage(named: "outline_thicker")!
+            case 0:
+                //image = UIImage(named: "outline_thick")!
+                return nil
+                
+            case 1:
+                image = UIImage(named: "outline_double")!
+            //TODO: Implement tripled lines (tripled lines too close)
             default:
                 image = UIImage(named: "outline_double")!
             }
         }
         return image
     }()
-    
 }
 

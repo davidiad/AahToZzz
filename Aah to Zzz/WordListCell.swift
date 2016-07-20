@@ -23,7 +23,7 @@ class WordListCell: UITableViewCell {
     @IBOutlet weak var secondLetterBg: UIImageView!
     @IBOutlet weak var thirdLetterBg: UIImageView!
     @IBOutlet weak var outlineView: UIImageView!
-     
+    @IBOutlet weak var outlineShadowView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,6 +39,7 @@ class WordListCell: UITableViewCell {
     
     var wordtext: String? {
         didSet {
+            print("didSet")
             firstLetterBg.image = colorCode?.tile_bg!
             firstLetter.text = wordtext?.substringToIndex(wordtext!.startIndex.successor())
             secondLetterBg.image = colorCode?.tile_bg!
@@ -49,9 +50,13 @@ class WordListCell: UITableViewCell {
             if let outline = colorCode?.outline {
                 outlineView.image = outline
                 //TODO: Set this once, elsewhere?
-                outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                //TODO: SOULD BE SET IN COLORCODE
-                outlineView.tintColor = colorCode?.tint
+                if outlineView.image != nil {
+                    outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                    //TODO: SOULD BE SET IN COLORCODE
+                    outlineView.tintColor = colorCode?.tint
+                    outlineShadowView.image = UIImage(named: "outline_shadow")
+                    outlineShadowView.alpha = 0.45
+                }
             }
         }
     }
@@ -67,6 +72,7 @@ class WordListCell: UITableViewCell {
         thirdLetterBg.image = nil
         thirdLetter.text = nil
         outlineView.image = nil
+        outlineShadowView.image = nil
         
         word.text = ""
         
