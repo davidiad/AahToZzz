@@ -151,6 +151,8 @@ class AtoZModel {
         // Add the first letter to to letterset -- 1st letter is a random letter
         letters = [createLetter(nil)]
         
+        //TODO:- pick the words only from unmastered words
+        
         // pick 2 random words from wordsArray
         let firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
         let secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
@@ -245,6 +247,7 @@ class AtoZModel {
     //TODO: rename all the word funcs  so less confusing and more clear
     func getWordlist(letters: [Letter]) -> [String] {
         
+        
         var allLetterPermutationsSet = Set<String>()
         var sequence: String = ""
         
@@ -271,6 +274,7 @@ class AtoZModel {
         let validWordsSet = allLetterPermutationsSet.intersect(wordsSet)
         let validWordsArray = Array(validWordsSet)
 
+        
         return validWordsArray.sort()
     }
     

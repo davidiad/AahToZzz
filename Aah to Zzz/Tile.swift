@@ -14,7 +14,7 @@ class Tile: UIButton {
     var snapBehavior: UISnapBehavior?
     //TODO: this property is confusing, as there is also a position property in Letter which is a Position
     // check whether it's really needed? The Tile should get its position from its letter.position property
-    //TODO: Consider removing position behavior. It's cover by position.letter.position. And besides, there's already an x and a y
+    //TODO: Consider removing position behavior. It's covered by position.letter.position. And besides, there's already an x and a y
     var position: CGPoint? // when this is updated, need to also update the letter position
     var letter: Letter? // letter.position.position would remove the need for the CGPoint position
     //var animator: UIDynamicAnimator?  // or use animator in view file?

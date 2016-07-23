@@ -266,6 +266,9 @@
                                 <items>
                                     <barButtonItem image="icon_fill" id="X0V-lR-doz">
                                         <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="fillWordList:" destination="BYZ-38-t0r" id="BdU-fq-ljP"/>
+                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="8e4-CM-w4J"/>
                                     <barButtonItem image="icon_settings" id="oIr-N2-xN1">

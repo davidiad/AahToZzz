@@ -22,6 +22,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        }
     }
     
+    let gravity = UIGravityBehavior()
+    
     var model = AtoZModel.sharedInstance //why not let?
     var letters: [Letter]! //TODO: why not ? instead of !
     var wordlist = [String]()
@@ -37,6 +39,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var currentNumberOfWords: Int?
 
+    var fillingInBlanks: Bool = false // flag for configuring cells when Fill in the Blanks button is touched
+    
     @IBOutlet weak var wordTableHolderView: UIView!
     @IBOutlet weak var wordTable: UITableView!
     @IBOutlet weak var proxyTable: UITableView!
@@ -51,6 +55,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         returnTiles()
     }
     
+    @IBAction func fillWordList(sender: AnyObject) {
+        fillInTheBlanks()
+    }
     
     lazy var collider:UICollisionBehavior = {
         let lazyCollider = UICollisionBehavior()
@@ -146,7 +153,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        
 //        let pushes = [UIPushBehavior]()
         
-        let gravity = UIGravityBehavior()
+
         uiDynamicItemBehavior.addItem(toolbar)
         //uiDynamicItemBehavior.addItem(wordTableHolderView)
         animator.addBehavior(gravity)
@@ -185,6 +192,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     //tile.snapBehavior?.snapPoint = (tile.letter?.position?.position)!
                     self.animator.addBehavior(tile.snapBehavior!)
                     self.collider.removeItem(tile)
+                    self.saveContext()
+                    
                 }
             }
         }
@@ -328,6 +337,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //scrollingSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 0.5))
         
         animator = UIDynamicAnimator(referenceView: view)
+
         lettertiles = [Tile]()
         tileBackgrounds = [UIView]() // putting the tile bg's into an array so as to refer to them in collision detection
         let image = UIImage(named: "tile") as UIImage?
@@ -398,11 +408,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         mainGradient.name = "mainGradientLayer"
         view.layer.addSublayer(mainGradient)
         
-        pushBehavior = UIPushBehavior(items: lettertiles, mode: .Instantaneous)
-        pushBehavior.pushDirection = CGVector(dx: 3.0, dy: 3.0)
-        pushBehavior.magnitude = 0.1//magnitude / ThrowingVelocityPadding
-        
-        gravityBehavior = UIGravityBehavior(items: lettertiles)
+//        pushBehavior = UIPushBehavior(items: lettertiles, mode: .Instantaneous)
+//        pushBehavior.pushDirection = CGVector(dx: 3.0, dy: 3.0)
+//        pushBehavior.magnitude = 0.1//magnitude / ThrowingVelocityPadding
+//        
+//        gravityBehavior = UIGravityBehavior(items: lettertiles)
         collisionBehavior = UICollisionBehavior(items: [])
         //collisionBehavior.translatesReferenceBoundsIntoBoundary = true
         for tile in lettertiles {
@@ -710,21 +720,54 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
             //TODO: can i use cell.wordtext property instead and eliminate the uilabel?
             //TODO: use the word.numTimesFound property to send the correctly colored tiles to the cell
+            if fillingInBlanks == true {
+                
+                if word.found == false && word.inCurrentList == true {
+                    cell.colorCode = ColorCode(code: -1) //-1 for red, temp. overide to word level
+                    let reddish_white = UIColor(hue: 2/360, saturation: 0.1, brightness: 1.0, alpha: 1.0)
+                    //TODO:- consolidate this color with the others in ColorCode.Colors struct
+                    cell.firstLetter.textColor = reddish_white
+                    cell.secondLetter.textColor = reddish_white
+                    cell.thirdLetter.textColor = reddish_white
+                    // (repeated below, but needed to trigger configureCell
+                    cell.word.text = word.word
+                    cell.wordtext = cell.word.text // triggers didSet to add image and letters
+                    
+                    // hack for now TODO:-- single line outlines need to have a different shadow image than doubled lines
+                    cell.outlineShadowView.image = UIImage(named: "outline_thick")
+                    cell.outlineShadowView.alpha = 0.2
+                }
+            }
             if word.found == true && word.inCurrentList == true {
                 if cell.word != nil { // may be unneeded safeguard
                     //cell.firstLetterBg.image = UIImage(named: "small_tile_yellow")
-                    
+                    /*
+                     if fillingInBlanks == true { // The player has used the 'cheat' button to get all the words
+                     cell.colorCode = ColorCode(code: -1) //-1 for red, temp. overide to word level
+                     let reddish_white = UIColor(hue: 2/360, saturation: 0.1, brightness: 1.0, alpha: 1.0)
+                     //TODO:- consolidate this color with the others in ColorCode.Colors struct
+                     cell.firstLetter.textColor = reddish_white
+                     cell.secondLetter.textColor = reddish_white
+                     cell.thirdLetter.textColor = reddish_white
+                     //                        word.found = false // kinda kludgy, but if fillingInBlanks is true, then word.found was set to true so that configureCell is triggered. But it wasn't *actually* found by the player, so now set it back to false, so that player does not get credit for finding this word.
+                     //                        saveContext()
+                     
+                     */
+                    //} else {
                     cell.colorCode = ColorCode(code: word.level)
+                    cell.firstLetter.textColor = UIColor.blackColor()
+                    cell.secondLetter.textColor = UIColor.blackColor()
+                    cell.thirdLetter.textColor = UIColor.blackColor()
+                    //}
+                    
+                    
+                    // Note: cell.word is a UILabel (todo--rename it to be less confusing)
                     cell.word.text = word.word
                     cell.wordtext = cell.word.text // triggers didSet to add image and letters
                     print("In configureCell: \(cell.word.text) at level \(word.level)")
                     
                 }
-            } else {
-                //TODO: remove Word the Label altogether
-                //cell.word.text = "? ? ?"
             }
-            
         }
     }
     
@@ -836,6 +879,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK:- Actions
     
+    // This is where stats for a word are tracked (numTimesFound, numTimesPlayed)
+    //TODO:-- move tracking to separate func?
     @IBAction func generateNewWordlist(sender: AnyObject) {
         startNewList.alpha = 0
         startNewList.hidden = true
@@ -843,6 +888,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         returnTiles() // if any tiles are in the upper positions, return them
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
+        fillingInBlanks = false // otherwise it's as if the 'cheat' button was pressed and all words appear but in red
         for var i=0; i<fetchedResultsController.fetchedObjects?.count; i++ {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
@@ -1064,6 +1110,60 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         saveContext() // Tile is not in the context, but letter.position is
     }
     
+    func fillInTheBlanks() {
+        fillingInBlanks = true
+        // 'Cheat' function, to fill in unanswered words
+        for var i=0; i<currentNumberOfWords; i++ {
+            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+            let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
+
+                if aValidWord.found == false {
+                    // fill in the word with red tiles
+                    
+                    aValidWord.found = true // need to switch this to something else that will trigger configureCell
+                    aValidWord.found = false
+                    
+                    
+                    
+                }
+//                let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
+//                currentWord.found = true
+                saveContext()
+                
+            
+        }
+        
+    }
+    
+    /* obj -c version
+     // 'Cheat' function, to fill in unanswered words
+     - (IBAction) fillInTheBlanks {
+     if (!wordlistCompleted) {
+     [self animateStatus:NO]; // NO meaning the status box grows, not shrinks
+     wordlistCompleted = YES;
+     }
+     filledInTheBlanks = YES;
+     for (NSString *checkString in currentWordList) {
+     int indexOfCurrentWord = [currentWordList indexOfObject:checkString];
+     
+     UILabel *currentLabel = (UILabel *)[self.view viewWithTag:100 + indexOfCurrentWord];
+     UIView *thisView = (UIView *)[self.view viewWithTag:200 + indexOfCurrentWord];
+     //NSString * blankString = [[NSString alloc] initWithFormat:@""];
+     NSString * blankString = @"";
+     if ([currentLabel.text isEqualToString: blankString]) {
+     [currentLabel setText:checkString];
+     [currentLabel setTextColor:[UIColor redColor]];
+     currentLabel.hidden = YES;
+     [self fillInTheBlanksByLetter:indexOfCurrentWord :checkString :[UIColor whiteColor] : 0.6];
+     thisView.hidden = NO;
+     [thisView setOpaque:NO];
+     thisView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"merged_small_tiles_red.png"]];
+     }
+     }
+     }
+     
+     */
+    
 //    //TODO: layout the Tiles which are not using autolayout
 //    override func layoutSubviews() {
 //        super.layoutSubviews()
@@ -1099,7 +1199,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        }
     }
     
+    //TODO:-set up custom behaviors as separate classes
     func panTile(pan: UIPanGestureRecognizer) {
+        
+        animator.removeAllBehaviors()
+//        animator.removeBehavior(gravity)
+//        animator.removeBehavior(collider)
         
         let t = pan.view as! Tile
 //        if let gestureRecognizers = t.gestureRecognizers {
@@ -1107,15 +1212,21 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //                pan.requireGestureRecognizerToFail(tap)
 //            }
 //        }
-        let storedSnapBehavior = t.snapBehavior // TODO:-really being stored?
-//        animator?.removeBehavior(t.snapBehavior!)
-        //animator?.removeAllBehaviors()
+        //let storedSnapBehavior = t.snapBehavior // TODO:-really being stored?
+        
+        //animator?.removeBehavior(t.snapBehavior!)
+        
+
+//                for behavior in animator.behaviors {
+//                    print(behavior.debugDescription)
+//                }
         let location = pan.locationInView(self.view)
         //var hasFinishedBeganAnimation = false
         
         switch pan.state {
         case .Began:
-            animator?.removeBehavior(t.snapBehavior!) //TODO: behavior not being removed, and fighting with pan.
+            print(t.snapBehavior?.snapPoint)
+            //animator?.removeBehavior(t.snapBehavior!) //TODO: behavior not being removed, and fighting with pan.
             //TODO:-- each remove behavior, and/or, use attachment behavior instead of pan, as in WWDC video
             t.superview?.bringSubviewToFront(t) // Make this Tile float above the other tiles
             //let center = t.center
@@ -1157,19 +1268,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let closestOpenPosition = model.findClosestPosition(location, positionArray: positions!) {
                 swapTileToKnownPosition(t, pos: closestOpenPosition)
                 checkUpperPositionsForWord()
+                // seemed to have extra snapping behaviors interfering, so removed all behaviors, and added back here.
+                for tile in lettertiles {
+                    animator.addBehavior(tile.snapBehavior!)
+                }
+                
             }
-            animator.addBehavior(storedSnapBehavior!)
+            
             t.layer.shadowOpacity = 0.0
             t.transform = CGAffineTransformIdentity
-                        //storedSnapBehavior?.snapPoint = closestOpenPosition.position
-            //            animator?.addBehavior(radialGravity)
-            //            animator?.addBehavior(itemBehavior)
-            //            animator?.addBehavior(collisionBehavior)
-            //
-            //            itemBehavior.addLinearVelocity(velocity, forItem: raft)
             
         default:
-            print("in default")
             break
         }
     }

@@ -33,6 +33,9 @@
 		6331F32C1CA9FBD700F98737 /* outline_image_thicker.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */; };
 		6331F3301CA9FE8B00F98737 /* outline_image_double.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */; };
 		633727601C7EAEA4003E8447 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337275E1C7EAEA4003E8447 /* Word.swift */; };
+		634E76FA1D41E52800F9FC52 /* small_tile_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 634E76F71D41E52800F9FC52 /* small_tile_red.png */; };
+		634E76FB1D41E52800F9FC52 /* small_tile_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 634E76F81D41E52800F9FC52 /* small_tile_red@2x.png */; };
+		634E76FC1D41E52800F9FC52 /* small_tile_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 634E76F91D41E52800F9FC52 /* small_tile_red@3x.png */; };
 		635549821CA0836400DB5167 /* tile_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6355497F1CA0836400DB5167 /* tile_bg.png */; };
 		635549831CA0836400DB5167 /* tile_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549801CA0836400DB5167 /* tile_bg@2x.png */; };
 		635549841CA0836400DB5167 /* tile_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549811CA0836400DB5167 /* tile_bg@3x.png */; };
@@ -133,6 +136,9 @@
 		6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_thicker.pdf; sourceTree = "<group>"; };
 		6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_double.pdf; sourceTree = "<group>"; };
 		6337275E1C7EAEA4003E8447 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		634E76F71D41E52800F9FC52 /* small_tile_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_red.png; sourceTree = "<group>"; };
+		634E76F81D41E52800F9FC52 /* small_tile_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_red@2x.png"; sourceTree = "<group>"; };
+		634E76F91D41E52800F9FC52 /* small_tile_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_red@3x.png"; sourceTree = "<group>"; };
 		6355497F1CA0836400DB5167 /* tile_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_bg.png; sourceTree = "<group>"; };
 		635549801CA0836400DB5167 /* tile_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile_bg@2x.png"; sourceTree = "<group>"; };
 		635549811CA0836400DB5167 /* tile_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile_bg@3x.png"; sourceTree = "<group>"; };
@@ -232,6 +238,9 @@
 		637EA83C1C9C826C00A9D8AF /* small tiles */ = {
 			isa = PBXGroup;
 			children = (
+				634E76F71D41E52800F9FC52 /* small_tile_red.png */,
+				634E76F81D41E52800F9FC52 /* small_tile_red@2x.png */,
+				634E76F91D41E52800F9FC52 /* small_tile_red@3x.png */,
 				630681C51CADE57F0010489E /* outline_triple.pdf */,
 				630681C31CADCC6B0010489E /* outline_shadow.pdf */,
 				6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */,
@@ -492,13 +501,16 @@
 				6331F32C1CA9FBD700F98737 /* outline_image_thicker.pdf in Resources */,
 				63C449521C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png in Resources */,
 				637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */,
+				634E76FC1D41E52800F9FC52 /* small_tile_red@3x.png in Resources */,
 				630681C41CADCC6B0010489E /* outline_shadow.pdf in Resources */,
 				6300C64C1CA5B11B00E3B4D5 /* small_tile_magenta@2x.png in Resources */,
+				634E76FA1D41E52800F9FC52 /* small_tile_red.png in Resources */,
 				63C449541C98BDD70053BE77 /* merged_small_tiles.png in Resources */,
 				63C449841C99F78C0053BE77 /* icon_shuffle.pdf in Resources */,
 				6300C6581CA5E6E500E3B4D5 /* small_tile_green@2x.png in Resources */,
 				63C4497B1C99E4080053BE77 /* icon_settings.png in Resources */,
 				637AF07F1C846E15005A36BA /* tile_yellow@2x.png in Resources */,
+				634E76FB1D41E52800F9FC52 /* small_tile_red@2x.png in Resources */,
 				635549951CA0C6DC00DB5167 /* down_arrow_h@2x.png in Resources */,
 				635549841CA0836400DB5167 /* tile_bg@3x.png in Resources */,
 				635549921CA0C6DC00DB5167 /* down_arrow@2x.png in Resources */,

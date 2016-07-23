@@ -16,6 +16,7 @@ struct ColorCode {
         static let green = UIColor(hue: 90/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
         static let orange = UIColor(hue: 30/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
         static let purple = UIColor(hue: 275/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
+        static let whitish_red = UIColor(hue: 2/360, saturation: 0.35, brightness: 1.0, alpha: 1.0)
     }
     
     var level: Int?
@@ -37,25 +38,29 @@ struct ColorCode {
         var image = UIImage()
         
         if let level = self.level {
-            let tintLevel = level % 4
-            
-            switch tintLevel {
-            case 0:
-                image = UIImage(named: "small_tile_yellow")!
-            case 1:
-                image = UIImage(named: "small_tile_magenta")!
-            case 2:
-                image = UIImage(named: "small_tile_blue_kimba")!
-            case 3:
-                image = UIImage(named: "small_tile_green")!
-            case 4:
-                image = UIImage(named: "small_tile_orange")!
-            case 5:
-                image = UIImage(named: "small_tile_purple")!
-            default:
-                image = UIImage(named: "small_tile_yellow")!
-                print("hit default: \(self.level)")
-                break
+            if level == -1 {
+                image = UIImage(named: "small_tile_red")!
+            } else {
+                let tintLevel = level % 4
+                
+                switch tintLevel {
+                case 0:
+                    image = UIImage(named: "small_tile_yellow")!
+                case 1:
+                    image = UIImage(named: "small_tile_magenta")!
+                case 2:
+                    image = UIImage(named: "small_tile_blue_kimba")!
+                case 3:
+                    image = UIImage(named: "small_tile_green")!
+                case 4:
+                    image = UIImage(named: "small_tile_orange")!
+                case 5:
+                    image = UIImage(named: "small_tile_purple")!
+                default:
+                    image = UIImage(named: "small_tile_yellow")!
+                    print("hit default: \(self.level)")
+                    break
+                }
             }
         }
         return image
@@ -63,6 +68,11 @@ struct ColorCode {
     
     lazy var tint: UIColor? = {
         if let level = self.level {
+            
+            if level == -1 {
+                return Colors.whitish_red
+            }
+            
             let tintLevel = level % 4
             
             switch tintLevel {
@@ -99,7 +109,7 @@ struct ColorCode {
                 image = UIImage(named: "outline_double")!
             //TODO: Implement tripled lines (tripled lines too close)
             default:
-                image = UIImage(named: "outline_double")!
+                image = UIImage(named: "outline_yellow")! // thin outline, can be tinted other colors
             }
         }
         return image
