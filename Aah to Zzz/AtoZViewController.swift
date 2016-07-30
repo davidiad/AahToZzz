@@ -892,6 +892,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         for var i=0; i<fetchedResultsController.fetchedObjects?.count; i++ {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+                //TODO:-- check for active or not
                 word.numTimesPlayed += 1 // the # times the game has put that word into play
                 if word.found == true {
                     word.numTimesFound += 1
@@ -905,6 +906,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //                        word.numTimesFound -= 1
 //                    }
                // }
+                
+                // reset values as the previous words are removed from the current list
                 word.found = false
                 word.inCurrentList = false
             }

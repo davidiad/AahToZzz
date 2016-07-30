@@ -104,6 +104,7 @@ class AtoZModel {
         return getWordlist(letters)
     }
     
+    // May not be used. using generateLetterSet instead
     func generateLetters () -> [Letter] {
         
         // create an array that will be filled with 7 Strings
@@ -151,14 +152,46 @@ class AtoZModel {
         // Add the first letter to to letterset -- 1st letter is a random letter
         letters = [createLetter(nil)]
         
-        //TODO:- pick the words only from unmastered words
+        var firstWordIndex: Int
+        var secondWordIndex: Int
         
-        // pick 2 random words from wordsArray
-        let firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
-        let secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+        //TODO:- pick the words only from unmastered words
+        // Case 1: No Words have been saved -- no changes to code
+        // Case 2: Some, but not all, Words have been saved. 
+        // Need to choose only from the unsaved in cases 1 and 2
+        // Case 2.5: All but 1 word have been saved
+        // Case 3: All Words have been saved, and at least 2 are unmastered
+        // Case 4: All Words have been saved, and 1 is unmastered
+        // Case 5: All Words have been saved, and none are unmastered
+        
+//        let fetchRequest = NSFetchRequest(entityName: "Word")
+//        
+//        do {
+//            let fetchedWords = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+//            // check to see if anything was returned
+//            let numUnsavedWords = wordsArray.count - fetchedWords.count
+//            switch fetchedWords.count {
+//            case 0:
+//                // need to pick from unmastered words
+//                // pick 2 random words from wordsArray
+//                firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+//                secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+//            case 1:
+//                print("Need to find that one unsaved word")
+//            default:
+//                print("Need to find unmastered words")
+//                
+//            }
+//        } catch {
+//            let fetchError = error as NSError
+//            print(fetchError)
+//        }
+
+
         
         // Add the 6 letters from 2 random words to the letterset, for a total of 7 letters
-        let sixLettersFromWords = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
+        //let sixLettersFromWords = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
+        let sixLettersFromWords = getWordsForLetters()
         for char in sixLettersFromWords.characters {
             letters.append(createLetter(String(char)))
         }
@@ -191,33 +224,7 @@ class AtoZModel {
         return letterset
     }
     
-    /* previously
-    func generateLetterPosition(tileNum: Int) -> CGPoint {
-    var xpos: CGFloat
-    var ypos: CGFloat
-    switch tileNum {
-    
-    // counting from the bottom to the top
-    case 0, 1, 2:
-    xpos = CGFloat(tileNum) * 65.0
-    ypos = 600.0
-    case 3, 4, 5:
-    xpos = (CGFloat(tileNum - 3) * 85.0) - 40.0
-    ypos = 500.0
-    case 6:
-    xpos = 130.0
-    ypos = 400.0
-    case 7, 8, 9:
-    xpos = 45.0 + CGFloat(tileNum - 7) * 55.0
-    ypos = 260.0
-    default:
-    xpos = 130.0
-    ypos = 400.0
-    }
-    
-    return CGPointMake(xpos, ypos)
-    }
-    */
+
 
 
     // creates a Letter object from a passed-in String, or generates a random 1 letter string if nil is passed in
@@ -245,6 +252,99 @@ class AtoZModel {
     //MARK:- Word functions
     
     //TODO: rename all the word funcs  so less confusing and more clear
+    
+    // get the 2 words used to get 6 of the 7 letters for a letterset
+    // TODO: return one string of 6  letters instead of an array
+    func getWordsForLetters () -> String {
+        var wordsForLetters: String = ""
+        var firstWordIndex: Int
+        var secondWordIndex: Int
+
+        
+        let fetchRequest = NSFetchRequest(entityName: "Word")
+        
+        do {
+            let fetchedWords = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+            let numUnsavedWords = wordsArray.count - fetchedWords.count
+            
+            switch fetchedWords.count {
+                
+            case 0: // no words have been saved
+
+                // pick 2 random words from wordsArray
+                firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+                secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+                wordsForLetters = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
+                
+                
+            case wordsArray.count: // all words have been saved
+                // need to pick from unmastered words
+                var unmasteredWordsArray = [String]()
+                
+                for word in fetchedWords {
+                    if word.mastered == false {
+                        unmasteredWordsArray.append(word.word!)
+                    }
+                }
+                
+                switch unmasteredWordsArray.count {
+                    
+                case 0: // note -- repeating code under case 0 above
+                    // pick 2 random words from wordsArray
+                    firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+                    secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+                    wordsForLetters = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
+                case 1:
+                    firstWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
+                    secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+                    wordsForLetters = unmasteredWordsArray[firstWordIndex] + wordsArray[secondWordIndex]
+                default: // 2 or more
+                    // pick 2 random words from unmasteredWordsArray
+                    firstWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
+                    secondWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
+                    wordsForLetters = unmasteredWordsArray[firstWordIndex] + unmasteredWordsArray[secondWordIndex]
+                    
+                }
+//            case _ where numUnsavedWords == 1: // get the 1 unsaved word, and then find another word
+
+            default:
+                // some words have been saved, and >= 1 unsaved
+                // need to get 2 random from the unsaved
+                
+                // Create a set of just the text(.word property) from the Word objects
+                var savedWordsSet: Set<String> = Set<String>()
+                
+                for word in fetchedWords {
+                    savedWordsSet.insert(word.word!)
+                }
+                
+                // unsavedWords = wordsSet - savedWords
+                let unsavedWordsSet = wordsSet.subtract(savedWordsSet)
+                wordsForLetters = randomElementIndex(unsavedWordsSet)
+                if  numUnsavedWords > 1 {
+                    wordsForLetters += randomElementIndex(unsavedWordsSet)
+                } else {
+                    // only 1 from the unsaved, still need to add another word to the array
+                    secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+                    wordsForLetters += wordsArray[secondWordIndex]
+                }
+            }
+            
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+        print(wordsForLetters)
+        return wordsForLetters
+    }
+    
+    // helper function to get a random element from a set
+    func randomElementIndex<T>(s: Set<T>) -> T {
+        let n = Int(arc4random_uniform(UInt32(s.count)))
+        let i = s.startIndex.advancedBy(n)
+        return s[i]
+    }
+    
     func getWordlist(letters: [Letter]) -> [String] {
         
         
@@ -293,11 +393,12 @@ class AtoZModel {
             fetchRequest.predicate = predicate
             
             do {
-                let wordsArray = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+                // not to be confused with global var wordsArray
+                let wordArray = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
                 // check to see if anything was returned
-                if wordsArray.count > 0 {
+                if wordArray.count > 0 {
                     // a Word was returned for that String. Do not create another with the same string!
-                    newWord = wordsArray[0]
+                    newWord = wordArray[0]
                 } else {
                     newWord = Word(wordString: wordlist[i], context: sharedContext)
                     newWord.found = false
@@ -507,6 +608,33 @@ class AtoZModel {
         return CGPointMake(xpos, ypos)
     }
     
+    func calculateInactiveQuota(wordlistCount: Int) -> Int {
+        let inactiveFactor = 0.1  // arbitrary amount to give reasonable limits to max # inactives
+        var inactiveQuota: Int = 0
+        var tensPlace = Int(Double(wordlistCount) * 0.1)
+        if (tensPlace > 3) { tensPlace -= 1 } // better distribution this way
+        //for var i=0; i<=tensPlace; i += 1 {
+        for _ in 0...tensPlace {
+            inactiveQuota += (Int)(inactiveFactor * Double(wordlistCount))
+        }
+        return inactiveQuota
+    }
+    
+//    // Obj-C version
+//    - (int) calculateInactiveQuota : (int) wordlistCount {
+//    float inactiveFactor = 0.1; // arbitrary amount to give reasonable limits to max # inactives
+//    int inactiveQuota = 0;
+//    int tensPlace = (int)(wordlistCount * 0.1);
+//    if (tensPlace > 3) {
+//    tensPlace -= 1; // better distribution this way
+//    }
+//    for (int i=0; i<=tensPlace; i++) {
+//    inactiveQuota += (int)(inactiveFactor * wordlistCount);
+//    }
+//    NSLog(@"IQ is: %d", inactiveQuota);
+//    return inactiveQuota;
+//    }
+    
     //MARK:- Stats calculations
     
     func numUniqueWordsPlayed() -> Int? {
@@ -576,6 +704,7 @@ class AtoZModel {
         print("Your percentage: \(percentageFound()!)%")
         print("You have found \(numUniqueWordsFound()!) unique words out of the \(numUniqueWordsPlayed()!) unique words played from a dictionary of \(wordsArray.count) three letter words")
     }
+    
     
     //TODO: What about word 'mastery'?
     
