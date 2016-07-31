@@ -14,6 +14,7 @@ class GameData: NSManagedObject {
 
     @NSManaged var currentLetterSetID: String?
     @NSManaged var gameID: String?
+    @NSManaged var masteryLevel: Int16
     @NSManaged var name: String?
     @NSManaged var positions: NSSet?
     @NSManaged var lettersets: NSSet?
@@ -34,6 +35,7 @@ class GameData: NSManagedObject {
         if let gameName = dictionary["name"] as? String {
             name = gameName
         }
+        masteryLevel = 3 // default value
     }
 
 }

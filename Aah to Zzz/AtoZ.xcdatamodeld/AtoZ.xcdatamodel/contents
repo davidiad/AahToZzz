@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F27" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
     <entity name="GameData" representedClassName=".GameData" syncable="YES">
         <attribute name="currentLetterSetID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gameID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="masteryLevel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="currentLetterSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="currentGame" inverseEntity="LetterSet" syncable="YES"/>
         <relationship name="lettersets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="game" inverseEntity="LetterSet" syncable="YES"/>
@@ -31,6 +32,7 @@
         <relationship name="letter" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Letter" inverseName="position" inverseEntity="Letter" syncable="YES"/>
     </entity>
     <entity name="Word" representedClassName=".Word" syncable="YES">
+        <attribute name="active" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="found" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="inCurrentList" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="numTimesFound" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -40,10 +42,10 @@
         <relationship name="letterlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="wordlist" inverseEntity="LetterSet" syncable="YES"/>
     </entity>
     <elements>
-        <element name="GameData" positionX="-191" positionY="-1062" width="128" height="148"/>
+        <element name="GameData" positionX="-191" positionY="-1062" width="128" height="163"/>
         <element name="Letter" positionX="171" positionY="-711" width="128" height="103"/>
         <element name="LetterSet" positionX="-351" positionY="-756" width="128" height="133"/>
-        <element name="Word" positionX="180" positionY="-576" width="128" height="148"/>
         <element name="Position" positionX="169" positionY="-981" width="128" height="118"/>
+        <element name="Word" positionX="180" positionY="-576" width="128" height="163"/>
     </elements>
 </model>

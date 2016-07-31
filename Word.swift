@@ -15,6 +15,7 @@ class Word: NSManagedObject {
     @NSManaged var word: String?
     @NSManaged var inCurrentList: Bool
     @NSManaged var found: Bool
+    @NSManaged var active: Bool // frequently found words will sometimes be set to inactive, meaning the game fills the word automatically, the word is greyed out, and neither adds nor subtracts from the score.
     @NSManaged var numTimesPlayed: Int16
     @NSManaged var numTimesFound: Int16 // should never go below 0, so player doesn't get into a huge hole
     @NSManaged var letterlist: LetterSet? // should really (in the future) allow many letterlist's to each word
@@ -64,6 +65,7 @@ class Word: NSManagedObject {
         found = false // when a word is first created, it has not yet been found
         numTimesPlayed = 0
         numTimesFound = 0
+        active = true // active by default. Only inactive when word has been mastered, under the inactive quota
         // letterlist will be nil by default
                 
 
