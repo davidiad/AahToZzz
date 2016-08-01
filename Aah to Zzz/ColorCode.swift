@@ -10,16 +10,17 @@ import Foundation
 import UIKit
 
 struct ColorCode {
-    struct Colors {
-        static let magenta = UIColor(hue: 300/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-        static let bluek = UIColor(hue: 200/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-        static let green = UIColor(hue: 90/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-        static let orange = UIColor(hue: 30/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-        static let purple = UIColor(hue: 275/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-        static let whitish_red = UIColor(hue: 2/360, saturation: 0.35, brightness: 1.0, alpha: 1.0)
-    }
+//    struct Colors {
+//        static let magenta = UIColor(hue: 300/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
+//        static let bluek = UIColor(hue: 200/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
+//        static let green = UIColor(hue: 90/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
+//        static let orange = UIColor(hue: 30/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
+//        static let purple = UIColor(hue: 275/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
+//        static let whitish_red = UIColor(hue: 2/360, saturation: 0.35, brightness: 1.0, alpha: 1.0)
+//    }
     
-    var level: Int?
+    
+    var colorCode: Int? // typically the colorCode is the level, but sometimes there's an override (red/-1 when filling in the blanks, gray/-2 when inactive)
     //var tile_bg: UIImage?
     //var outline: UIImage?
     //var tint: UIColor
@@ -30,20 +31,46 @@ struct ColorCode {
     }
     
     init(code: Int) {
-        level = code
-        //tint = UIColor.yellowColor()
+        colorCode = code
     }
     
     lazy var tile_bg: UIImage? = {
         var image = UIImage()
         
-        if let level = self.level {
-            if level == -1 {
-                image = UIImage(named: "small_tile_red")!
-            } else {
-                let tintLevel = level % 4
+        if let colorCode = self.colorCode {
+            
+//            if colorCode < 0 {
+//                switch colorCode {
+//                    
+//                case -1:
+//                    image = UIImage(named: "small_tile_red")!
+//                case -2:
+//                    image = UIImage(named: "small_tile_gray")!
+//                default:
+//                    image = UIImage(named: "small_tile_yellow")!
+//                    break
+//                }
+//                
+//                //            }
+//                //            if colorCode == -1 {
+//                //                image = UIImage(named: "small_tile_red")!
+//                //            } else if colorCode == -2 {
+//                //                image = UIImage(named: "small_tile_gray")!
+//                //            }
+//                
+//            } else {
+//                var tintLevel = colorCode
+//                if colorCode >= 0 {
+//                    tintLevel = colorCode % 4
+//                }
+                
+                let tintLevel = colorCode % 4
                 
                 switch tintLevel {
+                case -2:
+                    image = UIImage(named: "small_tile_gray")! // the word is inactive
+                case -1:
+                    image = UIImage(named: "small_tile_red")! // the word hadn't been found, and player tapped FillInTheBlanks
                 case 0:
                     image = UIImage(named: "small_tile_yellow")!
                 case 1:
@@ -58,24 +85,29 @@ struct ColorCode {
                     image = UIImage(named: "small_tile_purple")!
                 default:
                     image = UIImage(named: "small_tile_yellow")!
-                    print("hit default: \(self.level)")
+                    print("hit default: \(self.colorCode)")
                     break
                 }
             }
-        }
+        //}
         return image
     }()
     
+    // set the tint color for the outlines, etc
     lazy var tint: UIColor? = {
-        if let level = self.level {
+        if let colorCode = self.colorCode {
             
-            if level == -1 {
-                return Colors.whitish_red
-            }
+//            if colorCode == -1 {
+//                return Colors.whitish_red
+//            }
             
-            let tintLevel = level % 4
+            let tintLevel = colorCode % 4
             
             switch tintLevel {
+            case -2:
+                return Colors.gray_text
+            case -1:
+                return Colors.whitish_red
             case 0:
                 return UIColor.yellowColor()
             case 1:
@@ -95,12 +127,12 @@ struct ColorCode {
         return UIColor.yellowColor()
     }()
 
-    
+    // set which image to use for outline
     lazy var outline: UIImage? = {
         var image = UIImage()
 
-        if self.level != nil {
-            switch self.level! {
+        if self.colorCode != nil {
+            switch self.colorCode! {
             case 0:
                 //image = UIImage(named: "outline_thick")!
                 return nil

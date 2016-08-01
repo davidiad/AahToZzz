@@ -107,6 +107,7 @@
 		63C449881C9A73B60053BE77 /* ProxyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C449871C9A73B60053BE77 /* ProxyTableCell.swift */; };
 		63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D57BA91C8A48AB0046E349 /* Tile.swift */; };
 		63D57BB61C8C00C80046E349 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D57BB41C8C00C80046E349 /* Position.swift */; };
+		63EA98D71D4F46E000537F2A /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA98D61D4F46DF00537F2A /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -212,6 +213,7 @@
 		63C449871C9A73B60053BE77 /* ProxyTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyTableCell.swift; sourceTree = "<group>"; };
 		63D57BA91C8A48AB0046E349 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		63D57BB41C8C00C80046E349 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		63EA98D61D4F46DF00537F2A /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +326,7 @@
 				63A3A1291C7652C300F440B5 /* AtoZModel.swift */,
 				637AF06A1C8236C8005A36BA /* WordnikClient.swift */,
 				6300C6461CA4B07300E3B4D5 /* ColorCode.swift */,
+				63EA98D61D4F46DF00537F2A /* Colors.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				637AF07A1C84560D005A36BA /* GradientSlider.swift in Sources */,
 				637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */,
 				637AF0781C84297C005A36BA /* FlickrClient.swift in Sources */,
+				63EA98D71D4F46E000537F2A /* Colors.swift in Sources */,
 				63D57BB61C8C00C80046E349 /* Position.swift in Sources */,
 				633727601C7EAEA4003E8447 /* Word.swift in Sources */,
 				637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */,

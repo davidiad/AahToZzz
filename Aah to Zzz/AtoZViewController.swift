@@ -724,11 +724,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 if word.found == false && word.inCurrentList == true {
                     cell.colorCode = ColorCode(code: -1) //-1 for red, temp. overide to word level
-                    let reddish_white = UIColor(hue: 2/360, saturation: 0.1, brightness: 1.0, alpha: 1.0)
+//                    let reddish_white = UIColor(hue: 2/360, saturation: 0.1, brightness: 1.0, alpha: 1.0)
                     //TODO:- consolidate this color with the others in ColorCode.Colors struct
-                    cell.firstLetter.textColor = reddish_white
-                    cell.secondLetter.textColor = reddish_white
-                    cell.thirdLetter.textColor = reddish_white
+                    cell.firstLetter.textColor = Colors.reddish_white
+                    cell.secondLetter.textColor = Colors.reddish_white
+                    cell.thirdLetter.textColor = Colors.gray_text
                     // (repeated below, but needed to trigger configureCell
                     cell.word.text = word.word
                     cell.wordtext = cell.word.text // triggers didSet to add image and letters
@@ -740,25 +740,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             if word.found == true && word.inCurrentList == true {
                 if cell.word != nil { // may be unneeded safeguard
-                    //cell.firstLetterBg.image = UIImage(named: "small_tile_yellow")
-                    /*
-                     if fillingInBlanks == true { // The player has used the 'cheat' button to get all the words
-                     cell.colorCode = ColorCode(code: -1) //-1 for red, temp. overide to word level
-                     let reddish_white = UIColor(hue: 2/360, saturation: 0.1, brightness: 1.0, alpha: 1.0)
-                     //TODO:- consolidate this color with the others in ColorCode.Colors struct
-                     cell.firstLetter.textColor = reddish_white
-                     cell.secondLetter.textColor = reddish_white
-                     cell.thirdLetter.textColor = reddish_white
-                     //                        word.found = false // kinda kludgy, but if fillingInBlanks is true, then word.found was set to true so that configureCell is triggered. But it wasn't *actually* found by the player, so now set it back to false, so that player does not get credit for finding this word.
-                     //                        saveContext()
-                     
-                     */
-                    //} else {
+
                     cell.colorCode = ColorCode(code: word.level)
                     cell.firstLetter.textColor = UIColor.blackColor()
                     cell.secondLetter.textColor = UIColor.blackColor()
                     cell.thirdLetter.textColor = UIColor.blackColor()
-                    //}
                     
                     
                     // Note: cell.word is a UILabel (todo--rename it to be less confusing)
@@ -769,6 +755,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
+    }
+    
+    //TODO: helper func for setting cell attributes
+    func colorCell(cell: WordListCell, colorcode: Int, textcolor: UIColor) {
+        
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
