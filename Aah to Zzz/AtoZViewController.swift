@@ -723,15 +723,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if fillingInBlanks == true {
                 
                 if word.found == false && word.inCurrentList == true {
-                    cell.colorCode = ColorCode(code: -1) //-1 for red, temp. overide to word level
-//                    let reddish_white = UIColor(hue: 2/360, saturation: 0.1, brightness: 1.0, alpha: 1.0)
-                    //TODO:- consolidate this color with the others in ColorCode.Colors struct
-                    cell.firstLetter.textColor = Colors.reddish_white
-                    cell.secondLetter.textColor = Colors.reddish_white
-                    cell.thirdLetter.textColor = Colors.gray_text
-                    // (repeated below, but needed to trigger configureCell
-                    cell.word.text = word.word
-                    cell.wordtext = cell.word.text // triggers didSet to add image and letters
+                    
+                    setWordListCellProperties(cell, colorCode: -1, textcolor: Colors.reddish_white, text: word.word!)
                     
                     // hack for now TODO:-- single line outlines need to have a different shadow image than doubled lines
                     cell.outlineShadowView.image = UIImage(named: "outline_thick")
@@ -740,16 +733,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             if word.found == true && word.inCurrentList == true {
                 if cell.word != nil { // may be unneeded safeguard
-
-                    cell.colorCode = ColorCode(code: word.level)
-                    cell.firstLetter.textColor = UIColor.blackColor()
-                    cell.secondLetter.textColor = UIColor.blackColor()
-                    cell.thirdLetter.textColor = UIColor.blackColor()
                     
+                    setWordListCellProperties(cell, colorCode: word.level, textcolor: UIColor.blackColor(), text: word.word!)
                     
-                    // Note: cell.word is a UILabel (todo--rename it to be less confusing)
-                    cell.word.text = word.word
-                    cell.wordtext = cell.word.text // triggers didSet to add image and letters
                     print("In configureCell: \(cell.word.text) at level \(word.level)")
                     
                 }
@@ -758,7 +744,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     //TODO: helper func for setting cell attributes
-    func colorCell(cell: WordListCell, colorcode: Int, textcolor: UIColor) {
+    func setWordListCellProperties(cell: WordListCell, colorCode: Int, textcolor: UIColor, text: String) {
+        cell.colorCode = ColorCode(code: colorCode)
+        cell.firstLetter.textColor = textcolor
+        cell.secondLetter.textColor = textcolor
+        cell.thirdLetter.textColor = textcolor
+        cell.word.text = text // cell.word is a UILabel
+        cell.wordtext = text // triggers didSet to add image and letters
         
     }
     
