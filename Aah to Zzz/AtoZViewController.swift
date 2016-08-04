@@ -740,6 +740,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                 }
             }
+            //TODO:-- Ensure that inactive words are being counted (or not counted) correctly
+            if word.active == false {
+                setWordListCellProperties(cell, colorCode: -2, textcolor: Colors.gray_text, text: word.word!)
+                // hack for now TODO:-- single line outlines need to have a different shadow image than doubled lines
+                cell.outlineShadowView.image = UIImage(named: "outline_thick")
+                cell.outlineShadowView.alpha = 0.2
+            }
+            
         }
     }
     
@@ -876,10 +884,16 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
                 //TODO:-- check for active or not
-                word.numTimesPlayed += 1 // the # times the game has put that word into play
-                if word.found == true {
-                    word.numTimesFound += 1
-                    print("Word Level for \(word.word!): \(word.level)")
+                if word.active == true {
+                    word.numTimesPlayed += 1 // the # times the game has put that word into play
+                    if word.found == true {
+                        word.numTimesFound += 1
+                        print("Word Level for \(word.word!): \(word.level)")
+                    }
+                } else { // Word was inactive for this round
+                    print("Word was inactive: Level for \(word.word!): \(word.level)")
+                    // Inactive words do not add to either numTimesPlayed nor numTimesFound
+                    word.active = true // reset all inactive words to inactive -- changes with each round
                 }
                 //else {
 //                    print("not found?")

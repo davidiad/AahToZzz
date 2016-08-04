@@ -38,7 +38,7 @@ class Word: NSManagedObject {
     
     var mastered: Bool {
         get {
-            let masteryLevel = 3 // TODO:- Set this for entire game
+            let masteryLevel = 1 // TODO:- Set this for entire game
             if level >= masteryLevel {
                 return true
             } else {

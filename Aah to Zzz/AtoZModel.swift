@@ -378,6 +378,8 @@ class AtoZModel {
         return validWordsArray.sort()
     }
     
+    //TODO:- add a func that takes the array of words from createOrUpdateWords, finds the mastered(if any), sorts them by level, and sets them to inactive starting from the highest level, continueing til inactive quota is reached.
+    
     // either fetch or create Word managed objects for the current list, and update values to reflect their status
     func createOrUpdateWords(wordlist: [String]) -> [Word] {
         var currentWords = [Word]()
@@ -425,8 +427,52 @@ class AtoZModel {
         }
         
         saveContext()
+        //TODO:-- check currentWords for mastered words, and set to inactive up till inactive quota limit
+        checkForInactiveWords(currentWords)
+        
         return currentWords
  
+    }
+    
+    func checkForInactiveWords(words: [Word]) {
+        //create a array to hold the mastered words
+        var masteredWords = [Word]()
+        
+        for word in words {
+            if word.mastered == true {
+                word.active = false
+                masteredWords.append(word)
+            }
+            print(word.active)
+
+            if word.active == false {
+                print("::")
+                print(word.word)
+            }
+        }
+        saveContext()
+        
+        // check if # of mastered words is greater than inactive quota
+        let iq = calculateInactiveQuota(words.count)
+        print("iq: \(iq)")
+        if masteredWords.count > iq {
+            
+            for _ in 0 ..< masteredWords.count {
+                masteredWords.sortInPlace { $0.level > $1.level }
+            }
+            for i in 0 ..< masteredWords.count {
+                print("\(masteredWords[i].word) : \(masteredWords[i].level)")
+            }
+            
+            // for the sake of playability, set some of the words back to active
+            // leaving the ones with the highest level (up til masteredWords[iq-1] as inactive
+            for i in iq ..< masteredWords.count {
+                masteredWords[i].active = true
+            }
+        }
+        
+        saveContext()
+        
     }
     
     func getDefinition(word: String) -> String {
