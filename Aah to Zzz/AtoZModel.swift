@@ -27,6 +27,7 @@ class AtoZModel {
     var wordsArray: [String]
     var wordsDictionary: [String: String]
     var wordsSet: Set<String> // may not need to use this outside of this class, consider relocating the declaration
+    var inactiveCount: Int?
     
     var game: GameData? // The managed object that is at the root of the object graph
     var positions: [Position]? // array to hold the letter Positions. Needed??
@@ -435,9 +436,12 @@ class AtoZModel {
     }
     
     func checkForInactiveWords(words: [Word]) {
+        
+        inactiveCount = 0 // need the # of inactive's so the VC can find out when a list is completed
+        
         //create a array to hold the mastered words
         var masteredWords = [Word]()
-        
+    
         for word in words {
             if word.mastered == true {
                 word.active = false
@@ -472,6 +476,12 @@ class AtoZModel {
         }
         
         saveContext()
+        
+        for word in masteredWords {
+            if word.active == false {
+                inactiveCount! += 1
+            }
+        }
         
     }
     

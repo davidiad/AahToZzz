@@ -38,7 +38,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var currentWords: [Word]?
     
     var currentNumberOfWords: Int?
-
+    var currentNumberOfActiveWords: Int?
+    
     var fillingInBlanks: Bool = false // flag for configuring cells when Fill in the Blanks button is touched
     
     @IBOutlet weak var wordTableHolderView: UIView!
@@ -837,14 +838,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             progressLabl.text = message
         } else {
             let numFound = currentNumFound()
-            if currentNumberOfWords != nil {
-                if numFound == currentNumberOfWords {
+            if currentNumberOfWords != nil && model.inactiveCount != nil {
+                if numFound == currentNumberOfWords! - model.inactiveCount! {
                     // TODO: make wordListCompleted func
                     animateStatusHeight(80.0)
                     progressLabl.text = "Word List Completed!"
                     animateNewListButton()
                 } else {
-                    progressLabl.text = "\(numFound) of \(currentNumberOfWords!) words found"                }
+                    progressLabl.text = "\(numFound) of \(currentNumberOfWords! - model.inactiveCount!) words found"                }
             }
         }
         UIView.animateWithDuration(2.35, delay: 0.25, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
@@ -892,7 +893,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     }
                 } else { // Word was inactive for this round
                     print("Word was inactive: Level for \(word.word!): \(word.level)")
-                    // Inactive words do not add to either numTimesPlayed nor numTimesFound
+                    // Inactive words add to neither numTimesPlayed nor numTimesFound
                     word.active = true // reset all inactive words to inactive -- changes with each round
                 }
                 //else {
@@ -1006,27 +1007,33 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func checkForValidWord(wordToCheck: String) -> Bool {
         //TODO: unwrap currentNumOfWords safely?
-        var wordWasPreviouslyFound = false
+        var wordIsNew = false
         for var i=0; i<currentNumberOfWords; i++ {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
             if wordToCheck == aValidWord.word {
-                if aValidWord.found == true {
-                    wordWasPreviouslyFound = true
+                // 3 cases:
+                // 1. word is inactive word.found==false && word.active==false
+                // 2. word has already been found  word.found==true && word.active==true
+                // 3. word has been found for the first time   word.found==false && word.active==true
+                
+                if aValidWord.found == true { // case 2
                     updateProgress("Already found \(wordToCheck)")
+                } else if aValidWord.active == false { // case 1
+                    updateProgress("\(wordToCheck) – already mastered!")
+                } else { // case 3
+                    aValidWord.found = true
+                    wordIsNew = true
+                    saveContext()
                 }
-                let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
-                currentWord.found = true
-                saveContext()
+                
                 // Needed to wait until after .found was set before updateProgress, otherwise the newly found word isn't counted
                 // But conditional, so we don't overwrite the "Already found.." message
-                if wordWasPreviouslyFound == false {
+                if wordIsNew == true {
                     updateProgress(nil)
                 }
                 wordTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
                 proxyTable.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
-                
-
                 
                 return true
                 
