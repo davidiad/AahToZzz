@@ -153,8 +153,11 @@ class AtoZModel {
         // Add the first letter to to letterset -- 1st letter is a random letter
         letters = [createLetter(nil)]
         
+        
+        /************ ??never used??
         var firstWordIndex: Int
         var secondWordIndex: Int
+        ********/
         
         //TODO:- pick the words only from unmastered words
         // Case 1: No Words have been saved -- no changes to code
@@ -211,7 +214,7 @@ class AtoZModel {
         
         // make the LetterSet the letterset property for each Letter
         // and set the index for each letter for id'ing it later
-        for var i=0; i<letters.count; i++ {
+        for i in 0 ..< letters.count {
             letters[i].letterset = letterset
             letters[i].index = Int16(i)
             // After the positions have been created...
@@ -354,13 +357,13 @@ class AtoZModel {
         
         // find all 210 possible permutations of 7 letters into 3 letter sequences, and add to a set
         // (call them 'sequences' as we don't know yet if they are words until they are checked against the 3 letter word list)
-        for var i=0; i<letters.count; i++ {
+        for i in 0 ..< letters.count {
             
             // reset sequence so we start a new word on each loop of i
             sequence = ""
-            for var j=0; j<letters.count; j++ {
+            for j in 0 ..< letters.count {
                 if j != i { // a letter can be selected only once per word
-                    for var k=0; k<letters.count; k++ {
+                    for k in 0 ..< letters.count {
                         if k != i && k != j {
                             sequence = letters[i].letter! + letters[j].letter! + letters[k].letter!
                             // add the sequence to the set
@@ -388,7 +391,7 @@ class AtoZModel {
         // starting a new fetch request, in case none has been made, or it needs updating
         var newWord: Word
         //TODO:- keep the words sorted
-        for var i=0; i<wordlist.count; i++ {
+        for i in 0 ..< wordlist.count {
        // for wordString in wordlist {
             let fetchRequest = NSFetchRequest(entityName: "Word")
             // Create Predicate
@@ -501,7 +504,7 @@ class AtoZModel {
         do {
             let gameArray = try sharedContext.executeFetchRequest(fetchRequest) as! [GameData]
             if gameArray.count > 0 {
-                for var i=0; i<10; i++ {
+                for i in 0 ..< 10 {
                     positions = gameArray[0].positions?.allObjects as? [Position]
                     positions!.sortInPlace {
                         ($0.index as Int16?) < ($1.index as Int16?)
@@ -512,7 +515,7 @@ class AtoZModel {
                 let gameData = makeGameDataDictionary()
                 let newGame = GameData(dictionary: gameData, context: sharedContext)
                 // create the Positions and add to game
-                for var i=0; i<10; i++ {
+                for i in 0 ..< 10 {
                     // create the Positions for the tiles. There are 10 per game.
                     // TODO: use init instead
                     let position = NSEntityDescription.insertNewObjectForEntityForName("Position", inManagedObjectContext: sharedContext) as! Position
@@ -546,7 +549,7 @@ class AtoZModel {
     }
     
     func updateLetterPositions() {
-        for var i=0; i<10; i++ {
+        for i in 0 ..< 10 {
             updateLetterPosition(i)
         }
         saveContext()
@@ -607,7 +610,7 @@ class AtoZModel {
         var closestPosition = positionArray[0]
         var lowestSquared = 99999999.0 // arbitrary largish number (ensure it's larger than the largest possible value of distance squared)
         //TODO: optimizations to reduce # of calculations
-        for var i=0; i<positionArray.count; i++ {
+        for i in 0 ..< positionArray.count {
             if positionArray[i].letter == nil { // only check unoccupied poitions
                 // no need to use sqrt to get distance. the square of the distance can be used for comparison purposes w/out having to calculate actual distance
                 let distanceSquared = Double(pow(location.x - positionArray[i].position.x, 2) + pow(location.y - positionArray[i].position.y, 2))

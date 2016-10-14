@@ -344,7 +344,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let image = UIImage(named: "tile") as UIImage?
         let bgImage = UIImage(named: "tile_bg") as UIImage?
         
-        for var i=0; i<7; i++ {
+        for i in 0 ..< 7 {
 
             //let button   = UIButton(type: UIButtonType.Custom) as UIButton
             //TODO: move some of this stuff to init for Tile
@@ -365,7 +365,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
             lettertiles.append(tile)
             //tile.animator = animator // so that we can affect the animator from inside the Tile class
-            let tileTapGR = UITapGestureRecognizer(target: self, action: Selector("tileTapped:"))
+            let tileTapGR = UITapGestureRecognizer(target: self, action: #selector(AtoZViewController.tileTapped(_:)))
             tileTapGR.delegate = self
             tile.addGestureRecognizer(tileTapGR)
             setupPanRecognizer(tile)
@@ -585,7 +585,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard. Which doesn't seem to work anyway.
             // tile is in upper position, so look for vacancy in the uppers
             if tile.letter?.position!.index < 7 {
-                for var i=7; i<10; i++ {
+                for i in 7 ..< 10 {
                     if positions![i].letter == nil {
                         collisionBehavior.addItem(tile) // enable collisions only for tiles when they are in 7 8 or 9
                         return positions![i]
@@ -594,7 +594,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return nil
             } else { // must be in the upper positions, so look for a vacancy in the lowers
                 
-                for var i=6; i>=0; i-- {
+                //TODO: verify that .reversed is working correctly
+                for var i=6; i>=0; i -= 1 {
+                //for i in (0 ..< 6).reversed() {
+                    
                     if positions![i].letter == nil {
                         collisionBehavior.removeItem(tile)
                         return positions![i]
@@ -821,7 +824,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // print out a diagram to see the state of the Tiles and Positions
     
     func printTileDiagram() {
-        for var i=0; i<lettertiles.count; i++ {
+        for i in 0 ..< lettertiles.count {
             //print("\(i): \(lettertiles[i].titleLabel!.text!)    \(lettertiles[i].letter!.position!.index)   \(lettertiles[i].letter!.position!.position)    \(lettertiles[i].snapBehavior!.snapPoint)")
             print("   \(lettertiles[i].letter!.position!.index)   \(lettertiles[i].letter!.position!.position)    \(lettertiles[i].snapBehavior!.snapPoint)")
             
@@ -881,7 +884,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
         fillingInBlanks = false // otherwise it's as if the 'cheat' button was pressed and all words appear but in red
-        for var i=0; i<fetchedResultsController.fetchedObjects?.count; i++ {
+        for var i=0; i<fetchedResultsController.fetchedObjects?.count; i += 1 {
+        //for i in 0 ..< fetchedResultsController.fetchedObjects?.count {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
                 //TODO:-- check for active or not
@@ -1006,9 +1010,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func checkForValidWord(wordToCheck: String) -> Bool {
-        //TODO: unwrap currentNumOfWords safely?
+        
         var wordIsNew = false
-        for var i=0; i<currentNumberOfWords; i++ {
+        //TODO: unwrap currentNumOfWords safely?
+        for i in 0 ..< currentNumberOfWords! {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
             if wordToCheck == aValidWord.word {
@@ -1096,7 +1101,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // convert the LetterSet into an array
         letters = currentLetterSet?.letters?.allObjects as! [Letter]
         
-        for var i=0; i<lettertiles.count; i++ {
+        for i in 0 ..< lettertiles.count {
             lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
             lettertiles[i].letter = letters[i]
             lettertiles[i].position = letters[i].position?.position
@@ -1120,7 +1125,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func fillInTheBlanks() {
         fillingInBlanks = true
         // 'Cheat' function, to fill in unanswered words
-        for var i=0; i<currentNumberOfWords; i++ {
+        //for var i=0; i<currentNumberOfWords; i += 1 {
+        for i in 0 ..< currentNumberOfWords! { //TODO: unwrap currentNumberOfWords safely
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
 
