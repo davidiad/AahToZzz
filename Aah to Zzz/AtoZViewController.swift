@@ -594,8 +594,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return nil
             } else { // must be in the upper positions, so look for a vacancy in the lowers
                 
-                //TODO: verify that .reversed is working correctly
-                for var i=6; i>=0; i -= 1 {
+                //TODO: verify that .stride is working correctly
+                // for var i=6; i>=0; i -= 1 {
+                for i in 6.stride(to: 0, by: -1) {
                 //for i in (0 ..< 6).reversed() {
                     
                     if positions![i].letter == nil {
