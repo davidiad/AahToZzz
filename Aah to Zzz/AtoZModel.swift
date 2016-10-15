@@ -54,7 +54,8 @@ class AtoZModel {
         
         // convert wordsArray to wordsDictionary
         // even elements of wordsArray are the keys (the word itself); odd entries are the values, which are the word definitions
-        for var i = 0; i < rawWordsArray.count - 1; i = i + 2 {
+        //for var i = 0; i < rawWordsArray.count - 1; i = i + 2 { // Swift2 code
+        for i in 0.stride(to: rawWordsArray.count - 1, by: 2) { // Swift3 code
             let key = rawWordsArray[i]
             let value = rawWordsArray[i + 1]
             

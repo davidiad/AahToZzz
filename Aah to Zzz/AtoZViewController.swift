@@ -572,15 +572,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func findVacancy(tile: Tile) -> Position? {
-//        print("In findVacancy")
-//        if let l = tile.letter {
-//            print("Letter: \(l)")
-//        } else {
-//            print("No letter!")
-//        }
-//        
-//            
-        
         
         if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard. Which doesn't seem to work anyway.
             // tile is in upper position, so look for vacancy in the uppers
@@ -596,7 +587,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 //TODO: verify that .stride is working correctly
                 // for var i=6; i>=0; i -= 1 {
-                for i in 6.stride(to: 0, by: -1) {
+                for i in 6.stride(through: 0, by: -1) {
                 //for i in (0 ..< 6).reversed() {
                     
                     if positions![i].letter == nil {
@@ -885,8 +876,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
         fillingInBlanks = false // otherwise it's as if the 'cheat' button was pressed and all words appear but in red
-        for var i=0; i<fetchedResultsController.fetchedObjects?.count; i += 1 {
-        //for i in 0 ..< fetchedResultsController.fetchedObjects?.count {
+        //for var i=0; i<fetchedResultsController.fetchedObjects?.count; i += 1 {
+        //TODO:-need to unwrap .fetchedObjects safely?
+        //TODO:- is this change to swift3 for loop causing a bug where one tile is not returned properly?
+        for i in 0 ..< fetchedResultsController.fetchedObjects!.count {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
                 //TODO:-- check for active or not
@@ -901,15 +894,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     // Inactive words add to neither numTimesPlayed nor numTimesFound
                     word.active = true // reset all inactive words to inactive -- changes with each round
                 }
-                //else {
-//                    print("not found?")
-//                    // if word is NOT found, then take away a point so to speak
-//                    // but never go below 0, that could create an unfun hole for the player
-//                    if word.numTimesFound > 0 {
-//                        word.numTimesFound -= 1
-//                    }
-               // }
-                
                 // reset values as the previous words are removed from the current list
                 word.found = false
                 word.inCurrentList = false
