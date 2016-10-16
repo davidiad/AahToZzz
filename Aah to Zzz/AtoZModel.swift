@@ -259,7 +259,7 @@ class AtoZModel {
     //TODO: rename all the word funcs  so less confusing and more clear
     
     // get the 2 words used to get 6 of the 7 letters for a letterset
-    // TODO: return one string of 6  letters instead of an array
+    // TODO: return one string of 6 letters instead of an array
     func getWordsForLetters () -> String {
         var wordsForLetters: String = ""
         var firstWordIndex: Int
@@ -505,7 +505,7 @@ class AtoZModel {
         do {
             let gameArray = try sharedContext.executeFetchRequest(fetchRequest) as! [GameData]
             if gameArray.count > 0 {
-                for i in 0 ..< 10 {
+                for _ in 0 ..< 10 {
                     positions = gameArray[0].positions?.allObjects as? [Position]
                     positions!.sortInPlace {
                         ($0.index as Int16?) < ($1.index as Int16?)

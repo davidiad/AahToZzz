@@ -802,7 +802,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func presentationController(controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
         let navigationController = UINavigationController(rootViewController: controller.presentedViewController)
-        let btnDone = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "dismiss")
+        let btnDone = UIBarButtonItem(title: "Done", style: .Done, target: self, action: #selector(AtoZViewController.dismiss))
         navigationController.topViewController!.navigationItem.leftBarButtonItem = btnDone
         return navigationController
     }
@@ -1184,7 +1184,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK:- Panning for Tiles
     func setupPanRecognizer(tile: Tile) {
 
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: "panTile:")
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(AtoZViewController.panTile(_:)))
         panRecognizer.delegate = self
         tile.addGestureRecognizer(panRecognizer)
 //        if let gestureRecognizers = tile.gestureRecognizers {
