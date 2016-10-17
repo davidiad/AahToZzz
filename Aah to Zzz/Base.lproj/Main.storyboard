@@ -287,6 +287,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="tVO-85-cHQ"/>
                                     <barButtonItem image="icon_progress" id="Z33-9y-VmB">
                                         <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <segue destination="7W8-FQ-237" kind="presentation" identifier="Progress View" id="Tp4-kp-UOL"/>
+                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="7ey-cy-esw"/>
                                     <barButtonItem image="icon_shuffle" style="plain" id="4cc-f7-f9u">
@@ -381,6 +384,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="506" y="73"/>
+        </scene>
+        <!--Progress View Controller-->
+        <scene sceneID="nrc-aF-haQ">
+            <objects>
+                <viewController id="7W8-FQ-237" customClass="ProgressViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MEv-vp-N4w"/>
+                        <viewControllerLayoutGuide type="bottom" id="KuB-ai-F5Y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fp7-4l-nEv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hj1-ul-mhH">
+                                <rect key="frame" x="20" y="13" width="96" height="623"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="7W8-FQ-237" id="aYJ-9j-H1U"/>
+                                    <outlet property="delegate" destination="7W8-FQ-237" id="yyF-w7-Xm0"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jox-Sd-kb8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="308" y="995"/>
         </scene>
         <!--Options View Controller-->
         <scene sceneID="BjG-S7-4U2">
@@ -549,7 +580,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dpO-Oq-c7n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="564" y="1131"/>
+            <point key="canvasLocation" x="964" y="957"/>
         </scene>
         <!--Definition PopoverVC-->
         <scene sceneID="cZU-Q6-T7H">
@@ -713,34 +744,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJ7-wC-TPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1215" y="205"/>
-        </scene>
-        <!--Table View Controller-->
-        <scene sceneID="IwQ-5Y-KEO">
-            <objects>
-                <tableViewController id="Q6t-gt-IiE" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ChL-xM-SUY">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableviewcell" id="eXp-ha-LQH">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eXp-ha-LQH" id="YOy-ZR-9MQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Q6t-gt-IiE" id="oUa-bN-iHx"/>
-                            <outlet property="delegate" destination="Q6t-gt-IiE" id="4bX-IQ-7H6"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4ua-dH-rg2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-187" y="312"/>
         </scene>
     </scenes>
     <resources>
