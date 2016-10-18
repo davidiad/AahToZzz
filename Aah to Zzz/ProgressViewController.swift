@@ -19,7 +19,9 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Word")
-        fetchRequest.predicate = NSPredicate(format: "inCurrentList == %@", true)
+        //fetchRequest.predicate = NSPredicate(format: "inCurrentList == %@", true)
+        fetchRequest.predicate = NSPredicate(format: "numTimesFound > 0")
+        
         // Add Sort Descriptors
         let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -56,8 +58,14 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
 
     func tableView(tableView:UITableView, numberOfRowsInSection section:Int) -> Int
     {
-        return 20
+        guard let numRows = fetchedResultsController.fetchedObjects?.count else {
+            return 20
+        }
+        print("NUM: \(numRows)")
+        return numRows
     }
+    
+    //TODO:-- The tables will be populated by the words found at each level. There will be a table for each level (up to a reasonable limit, like 10 or 20 for now)
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
@@ -66,7 +74,9 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         //cell.detailTextLabel!.text="subtitle#\(indexPath.row)"
         
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
-            cell.detailTextLabel!.text = word.word
+           // if word.level == 1 {
+                cell.detailTextLabel!.text = word.word
+           // }
         }
         
         return cell
