@@ -11,6 +11,7 @@ import CoreData
 
 class ProgressViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
+    var tableHt: Int = 0
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
         CoreDataStackManager.sharedInstance().managedObjectContext
@@ -20,7 +21,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let fetchRequest = NSFetchRequest(entityName: "Word")
         //fetchRequest.predicate = NSPredicate(format: "inCurrentList == %@", true)
-        fetchRequest.predicate = NSPredicate(format: "numTimesFound > 0")
+        //fetchRequest.predicate = NSPredicate(format: "numTimesFound > 0")
         
         // Add Sort Descriptors
         let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
@@ -42,9 +43,13 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             let fetchError = error as NSError
             print("\(fetchError), \(fetchError.localizedDescription)")
         }
-        
+
         //needed?
         //game = model.game
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
 
     }
 
@@ -56,13 +61,24 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         return 0
     }
 
-    func tableView(tableView:UITableView, numberOfRowsInSection section:Int) -> Int
-    {
-        guard let numRows = fetchedResultsController.fetchedObjects?.count else {
-            return 20
+    func tableView(tableView:UITableView, numberOfRowsInSection section:Int) -> Int {
+//        guard let numRows = fetchedResultsController.fetchedObjects?.count else {
+//            return 20
+//        }
+//        print("NUM: \(numRows)")
+        for result in fetchedResultsController.fetchedObjects! {
+            if let word = result as? Word {
+                
+                print("\(word.word): level is: \(word.level)")
+                if word.level == 1 {
+                    tableHt += 1
+                    
+                }
+            } else {
+                print("noward")
+            }
         }
-        print("NUM: \(numRows)")
-        return numRows
+        return tableHt
     }
     
     //TODO:-- The tables will be populated by the words found at each level. There will be a table for each level (up to a reasonable limit, like 10 or 20 for now)
@@ -75,6 +91,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
            // if word.level == 1 {
+//            print("\(word.word): level is: \(word.level)")
                 cell.detailTextLabel!.text = word.word
            // }
         }
