@@ -11,6 +11,8 @@ import CoreData
 
 class ProgressViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
+    @IBOutlet weak var table_00: UITableView!
+    
     var tableHt: Int = 0
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
@@ -43,10 +45,15 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             let fetchError = error as NSError
             print("\(fetchError), \(fetchError.localizedDescription)")
         }
-
-        //needed?
-        //game = model.game
-
+    
+        automaticallyAdjustsScrollViewInsets = false
+        table_00.backgroundColor = UIColor.yellowColor()
+        table_00.layoutMargins = UIEdgeInsets.init(top: 1, left: 0, bottom: 1, right: 0)
+        
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor.clearColor()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -60,6 +67,16 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return 0
     }
+    
+    // set height for cells
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 10.0;
+    }
+//    Swift 3 version
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+//    {
+//        return 10.0;//Choose your custom row height
+//    }
 
     func tableView(tableView:UITableView, numberOfRowsInSection section:Int) -> Int {
 //        guard let numRows = fetchedResultsController.fetchedObjects?.count else {
@@ -69,15 +86,14 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         for result in fetchedResultsController.fetchedObjects! {
             if let word = result as? Word {
                 
-                print("\(word.word): level is: \(word.level)")
-                if word.level == 1 {
+//                print("\(word.word): level is: \(word.level)")
+                if word.level == 0 {
                     tableHt += 1
-                    
                 }
-            } else {
-                print("noward")
             }
         }
+        //TODO:being called multiple times. put somewhere else?
+        print("TH: \(tableHt)")
         return tableHt
     }
     
@@ -85,18 +101,31 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell:UITableViewCell=UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "mycell")
-        cell.textLabel!.text="row#\(indexPath.row)"
+        //let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "mycell") as! ProgressTableCell
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("level0", forIndexPath: indexPath) as? ProgressTableCell
+        
+        //cell.textLabel!.text="row#\(indexPath.row)"
         //cell.detailTextLabel!.text="subtitle#\(indexPath.row)"
         
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
            // if word.level == 1 {
 //            print("\(word.word): level is: \(word.level)")
-                cell.detailTextLabel!.text = word.word
+            cell?.label.font = UIFont(name: "Courier", size: 9)
+            cell?.label.text = word.word
+            cell?.label.textColor = UIColor.blueColor()
+           
+            cell?.backgroundView?.backgroundColor = UIColor.clearColor()
+            //cell.layoutMargins = UIEdgeInsets.init(top: 1, left: 0, bottom: 1, right: 0)
+            cell?.layoutMargins = UIEdgeInsetsZero;
+            cell?.preservesSuperviewLayoutMargins = false;
            // }
         }
         
-        return cell
+        
+        return cell!
     }
+    
+    
 
 }

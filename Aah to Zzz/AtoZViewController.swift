@@ -11,6 +11,10 @@ import CoreData
 
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate {
     
+    // MARK: - Unwind segue from Progress view
+    @IBAction func cancelToProgressViewController(segue:UIStoryboardSegue) {
+    }
+    
     //TODO: When proxy scroll is touched, show scroll indicator. Also show vertical bar with progress?
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
