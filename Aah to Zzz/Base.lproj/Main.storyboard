@@ -385,6 +385,34 @@
             </objects>
             <point key="canvasLocation" x="506" y="73"/>
         </scene>
+        <!--Level Table View Controller-->
+        <scene sceneID="PFf-E0-MxZ">
+            <objects>
+                <tableViewController storyboardIdentifier="Second" id="6Ae-aR-M6n" customClass="LevelTableViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1Ib-nO-tfH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="i9a-Rb-KBw">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i9a-Rb-KBw" id="T6q-0D-etL">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="6Ae-aR-M6n" id="71I-KB-SgR"/>
+                            <outlet property="delegate" destination="6Ae-aR-M6n" id="lN3-y1-Xls"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yYY-Ha-LiG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-224" y="1360"/>
+        </scene>
         <!--Progress View Controller-->
         <scene sceneID="nrc-aF-haQ">
             <objects>
@@ -455,7 +483,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jox-Sd-kb8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="YZv-BW-iqG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="308" y="995"/>
+            <point key="canvasLocation" x="243" y="980"/>
         </scene>
         <!--Options View Controller-->
         <scene sceneID="BjG-S7-4U2">
@@ -788,23 +816,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJ7-wC-TPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1215" y="205"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="Ofb-bF-viV">
-            <objects>
-                <viewController id="ku9-my-Y4M" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="cMc-lQ-kFt"/>
-                        <viewControllerLayoutGuide type="bottom" id="Mj3-oA-vSt"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="uZM-A4-aUu">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="O9g-ZY-soN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
     </scenes>
     <resources>
