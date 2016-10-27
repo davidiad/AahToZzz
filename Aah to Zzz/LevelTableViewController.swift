@@ -10,9 +10,17 @@ import UIKit
 
 class LevelTableViewController: UITableViewController {
 
+    var level: Int?
+    var wordsInLevel = [Word]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //guard let checky = wordsInLevel[0].word else {
+            print("NOWARD")
+            print(level)
+            return
+        //}
+        //print("\(checky) check check"   )
     }
 
     // MARK: - Table view data source
@@ -22,7 +30,10 @@ class LevelTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+//        guard let numRows = wordsInLevel.count else {
+//            return 0
+//        }
+        return wordsInLevel.count
     }
     
     // set height for cells
@@ -45,10 +56,12 @@ class LevelTableViewController: UITableViewController {
             
             //cell?.layoutMargins = UIEdgeInsetsZero;
             //cell?.preservesSuperviewLayoutMargins = false;
+        
+       // var word: Word = wordsInLevel[1] as? Word {
             
-       // }
+        cell?.label.text = wordsInLevel[indexPath.row].word
         
-        
+    
         return cell!
 
     }

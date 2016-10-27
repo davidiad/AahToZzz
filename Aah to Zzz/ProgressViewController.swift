@@ -74,14 +74,28 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         view.addSubview(containerView)
         NSLayoutConstraint.activateConstraints([
             containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 100),
-            containerView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: -200),
+            containerView.widthAnchor.constraintEqualToConstant(30.0),
+            
             containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 100),
             containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
             ])
+        //myView.widthAnchor.constraintEqualToConstant(50.0).active = true
+        //containerView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: -200),
         
         // add child view controller view to container
         
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("Second")
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
+        controller.level = 1
+        
+        for result in fetchedResultsController.fetchedObjects! {
+            if let word = result as? Word {
+                
+                if word.level == controller.level {
+                    controller.wordsInLevel.append(word)
+                }
+            }
+        }
+        
         addChildViewController(controller)
         controller.view.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(controller.view)
@@ -95,7 +109,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         
         controller.didMoveToParentViewController(self)
         
-        
+
         // Add another container view
         let containerView2 = UIView()
         containerView2.translatesAutoresizingMaskIntoConstraints = false
@@ -103,15 +117,29 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         view.addSubview(containerView2)
         NSLayoutConstraint.activateConstraints([
             containerView2.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 200),
-            containerView2.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: -30),
+            containerView2.widthAnchor.constraintEqualToConstant(30.0),
             containerView2.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 140),
             containerView2.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
             ])
         
         // add child view controller view to container
         
-        let controller2 = storyboard!.instantiateViewControllerWithIdentifier("Second")
+        let controller2 = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
         addChildViewController(controller2)
+        
+        // pass the data
+        controller2.level = 0
+        for result in fetchedResultsController.fetchedObjects! {
+            if let word = result as? Word {
+                
+                if word.level == controller2.level {
+                    controller2.wordsInLevel.append(word)
+                }
+            }
+        }
+        
+        
+        
         controller2.view.translatesAutoresizingMaskIntoConstraints = false
         containerView2.addSubview(controller2.view)
         
@@ -123,7 +151,9 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             ])
         
         controller2.didMoveToParentViewController(self)
+        
     }
+    
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         cell.backgroundColor = UIColor.clearColor()
@@ -199,6 +229,11 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell!
     }
     
-    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        print("in PFS")
+    }
 
 }
