@@ -1,0 +1,28 @@
+//
+//  LevelTableCell.swift
+//  AahToZzz
+//
+//  Created by David Fierstein on 10/27/16.
+//  Copyright © 2016 David Fierstein. All rights reserved.
+//
+
+import UIKit
+
+class LevelTableCell: UITableViewCell {
+
+    @IBOutlet weak var label: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.layoutMargins = UIEdgeInsetsZero;
+        self.preservesSuperviewLayoutMargins = false;
+        
+    }
+
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
+}

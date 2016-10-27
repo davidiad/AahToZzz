@@ -13,39 +13,46 @@ class LevelTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 7
+    }
+    
+    // set height for cells
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 10.0;
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("levelcell", forIndexPath: indexPath) as? LevelTableCell
+        
+        
+      //  if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
 
-        // Configure the cell...
+            cell?.label.font = UIFont(name: "Courier", size: 9)
+            cell?.label.text = "ABC"//word.word
+            cell?.label.textColor = UIColor.blueColor()
+            
+            //cell?.backgroundView?.backgroundColor = UIColor.clearColor()
+            
+            //cell?.layoutMargins = UIEdgeInsetsZero;
+            //cell?.preservesSuperviewLayoutMargins = false;
+            
+       // }
+        
+        
+        return cell!
 
-        return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.
@@ -67,20 +74,7 @@ class LevelTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
 
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
