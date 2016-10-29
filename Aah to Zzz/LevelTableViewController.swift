@@ -38,7 +38,7 @@ class LevelTableViewController: UITableViewController {
     
     // set height for cells
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 10.0;
+        return 8.0;
     }
 
     
@@ -48,7 +48,7 @@ class LevelTableViewController: UITableViewController {
         
       //  if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
 
-            cell?.label.font = UIFont(name: "Courier", size: 9)
+            cell?.label.font = UIFont(name: "Courier", size: 7)
             cell?.label.text = "ABC"//word.word
             cell?.label.textColor = UIColor.blueColor()
             

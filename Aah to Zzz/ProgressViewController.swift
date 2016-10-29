@@ -26,7 +26,13 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var table_00: UITableView!
     
+    let model = AtoZModel.sharedInstance
+    let graphHeight: Float = 500.0
+    
+    var levelArrays: [[Word]?] = [[Word]?]()
+    var highestLevel: Int = 6 // the highest level that will be in the graph. Min set here to 6, could be higher.
     var tableHt: Int = 0
+    
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
         CoreDataStackManager.sharedInstance().managedObjectContext
@@ -48,6 +54,64 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return fetchedResultsController
     }()
+    
+    // Go thru the fetched results and determine how many level and how high, relatively
+    func addWordsToLevels() {
+        // need overall # of words found
+        // need total possible # words in dictionary
+        // need # of levels with words in it. actually the highest level
+        // need # of words in each of those levels
+        // need a place to store the results of the above
+        
+//        levelArrays = [[Word]?]()
+
+        for result in fetchedResultsController.fetchedObjects! {
+            
+            if let word = result as? Word {
+                // level is a computed property, so store it in a constant
+                let level = word.level
+                // if the level is higher than the count of arrays, we need to add the level to avoid index out of range error
+                if level > levelArrays.count {
+                    // go thru each possible level, because a level could be lower than this one, and not yet be init'd
+                    for i in 0 ..< level {
+                        // only init the levelArray if it isn't already init'd
+                        guard let levelArrayToCheck = levelArrays[i] else {
+                            levelArrays[i] = [Word]?()
+                            break
+                        }
+                    }
+                }
+                // add the word to the array
+                levelArrays[level]!.append(word)
+                
+                // Check if we need to increase the highest level to include in the graph
+                if level > highestLevel { highestLevel = level }
+            }
+        }
+    }
+    
+    func analyzeWords() {
+        addWordsToLevels()
+        var numWordsInDictionary = model.wordsDictionary.count
+        let maxLevelCount = findMaxLevelCount()
+        for i in 0 ..< levelArrays.count {
+            print("Level \(i) has \(levelArrays[i]?.count) words")
+        }
+    }
+    
+    // helper to find the level with greatest number of words
+    func findMaxLevelCount() -> Int {
+        var maxLevelCount: Int = 0
+        for i in 0 ..< levelArrays.count {
+            // level might have 0 words, in which case, don't check for maxLevelCount
+            if let levelCount = levelArrays[i]?.count {
+                if levelCount > maxLevelCount {
+                    maxLevelCount = levelCount
+                }
+            }
+        }
+        return maxLevelCount
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +127,13 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         table_00.backgroundColor = UIColor.yellowColor()
         table_00.layoutMargins = UIEdgeInsets.init(top: 1, left: 0, bottom: 1, right: 0)
         
+        analyzeWords()
         
+        //TODO:- 
+        // 1. Go thru fetched objects and determine how many levels will need a bar. And their relative heights
+        // 2. refactor the container code to create an array of containers with level bars
+        // 3. Cont. with customizing the look of the bars
+        // 4. Add text labels to the layout
         
         //Swift add container view in code
         // add container
@@ -153,6 +223,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         controller2.didMoveToParentViewController(self)
         
     }
+    
     
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
