@@ -71,14 +71,14 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
                 // level is a computed property, so store it in a constant
                 let level = word.level
                 // if the level is higher than the count of arrays, we need to add the level to avoid index out of range error
-                if level > levelArrays.count {
+                if level >= levelArrays.count {
                     // go thru each possible level, because a level could be lower than this one, and not yet be init'd
-                    for i in 0 ..< level {
+                    for _ in levelArrays.count ... level {
                         // only init the levelArray if it isn't already init'd
-                        guard let levelArrayToCheck = levelArrays[i] else {
-                            levelArrays[i] = [Word]?()
-                            break
-                        }
+                        let newLevelArray = [Word]()
+                        levelArrays.append(newLevelArray)
+                        print("level: \(level)")
+                        print("count: \(levelArrays.count)")
                     }
                 }
                 // add the word to the array
