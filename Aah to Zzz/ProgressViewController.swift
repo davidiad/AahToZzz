@@ -11,19 +11,6 @@ import CoreData
 
 class ProgressViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
-//    // Adding a container view
-//    [self addChildViewController:content];                 // 1
-//    content.view.frame = [self frameForContentController]; // 2
-//    [self.view addSubview:content.view];
-//    [content didMoveToParentViewController:self];          // 3
-    
-  
-    
-    
-    
-    
-    //////////**************
-    
     @IBOutlet weak var table_00: UITableView!
     
     let model = AtoZModel.sharedInstance
@@ -55,37 +42,38 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         return fetchedResultsController
     }()
     
-    // Go thru the fetched results and determine how many level and how high, relatively
+    // helper to add a level array
+    func addLevelArray() {
+        let newLevelArray = [Word]()
+        levelArrays.append(newLevelArray)
+    }
+    
+    // Go thru the fetched results and and put each Word into its level array
     func addWordsToLevels() {
-        // need overall # of words found
-        // need total possible # words in dictionary
-        // need # of levels with words in it. actually the highest level
-        // need # of words in each of those levels
-        // need a place to store the results of the above
         
-//        levelArrays = [[Word]?]()
-
+        // Init the minimum, default # of level arrays
+        for _ in 0 ..< highestLevel {
+            addLevelArray()
+        }
+        
         for result in fetchedResultsController.fetchedObjects! {
             
             if let word = result as? Word {
                 // level is a computed property, so store it in a constant
                 let level = word.level
-                // if the level is higher than the count of arrays, we need to add the level to avoid index out of range error
+                // if the level is higher than the count of arrays, add the level to avoid index out of range error
                 if level >= levelArrays.count {
                     // go thru each possible level, because a level could be lower than this one, and not yet be init'd
                     for _ in levelArrays.count ... level {
-                        // only init the levelArray if it isn't already init'd
-                        let newLevelArray = [Word]()
-                        levelArrays.append(newLevelArray)
-                        print("level: \(level)")
-                        print("count: \(levelArrays.count)")
+                        addLevelArray()
                     }
+                    // Check if we need to increase the highest level to include in the graph
+                    if level > highestLevel { highestLevel = level }
                 }
+                
                 // add the word to the array
                 levelArrays[level]!.append(word)
                 
-                // Check if we need to increase the highest level to include in the graph
-                if level > highestLevel { highestLevel = level }
             }
         }
     }
@@ -138,93 +126,137 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         //Swift add container view in code
         // add container
         
-        let containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = Colors.orange
-        view.addSubview(containerView)
-        NSLayoutConstraint.activateConstraints([
-            containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 100),
-            containerView.widthAnchor.constraintEqualToConstant(30.0),
-            
-            containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 100),
-            containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
-            ])
-        //myView.widthAnchor.constraintEqualToConstant(50.0).active = true
-        //containerView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: -200),
-        
-        // add child view controller view to container
-        
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
-        controller.level = 1
-        
-        for result in fetchedResultsController.fetchedObjects! {
-            if let word = result as? Word {
-                
-                if word.level == controller.level {
-                    controller.wordsInLevel.append(word)
-                }
-            }
-        }
-        
-        addChildViewController(controller)
-        controller.view.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(controller.view)
-        
-        NSLayoutConstraint.activateConstraints([
-            controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
-            controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
-            controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
-            controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
-            ])
-        
-        controller.didMoveToParentViewController(self)
-        
-
-        // Add another container view
-        let containerView2 = UIView()
-        containerView2.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(containerView2)
-        NSLayoutConstraint.activateConstraints([
-            containerView2.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 200),
-            containerView2.widthAnchor.constraintEqualToConstant(30.0),
-            containerView2.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 140),
-            containerView2.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
-            ])
-        
-        // add child view controller view to container
-        
-        let controller2 = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
-        addChildViewController(controller2)
-        
-        // pass the data
-        controller2.level = 0
-        for result in fetchedResultsController.fetchedObjects! {
-            if let word = result as? Word {
-                
-                if word.level == controller2.level {
-                    controller2.wordsInLevel.append(word)
-                }
-            }
-        }
-        
-        
-        
-        controller2.view.translatesAutoresizingMaskIntoConstraints = false
-        containerView2.addSubview(controller2.view)
-        
-        NSLayoutConstraint.activateConstraints([
-            controller2.view.leadingAnchor.constraintEqualToAnchor(containerView2.leadingAnchor),
-            controller2.view.trailingAnchor.constraintEqualToAnchor(containerView2.trailingAnchor),
-            controller2.view.topAnchor.constraintEqualToAnchor(containerView2.topAnchor),
-            controller2.view.bottomAnchor.constraintEqualToAnchor(containerView2.bottomAnchor)
-            ])
-        
-        controller2.didMoveToParentViewController(self)
-        
+//        let containerView = UIView()
+//        containerView.translatesAutoresizingMaskIntoConstraints = false
+//        containerView.backgroundColor = Colors.orange
+//        view.addSubview(containerView)
+//        NSLayoutConstraint.activateConstraints([
+//            containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 100),
+//            containerView.widthAnchor.constraintEqualToConstant(30.0),
+//            
+//            containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 100),
+//            containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
+//            ])
+//        //myView.widthAnchor.constraintEqualToConstant(50.0).active = true
+//        //containerView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: -200),
+//        
+//        // add child view controller view to container
+//        
+//        let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
+//        controller.level = 1
+//        
+//        for result in fetchedResultsController.fetchedObjects! {
+//            if let word = result as? Word {
+//                
+//                if word.level == controller.level {
+//                    controller.wordsInLevel.append(word)
+//                }
+//            }
+//        }
+//        
+//        addChildViewController(controller)
+//        controller.view.translatesAutoresizingMaskIntoConstraints = false
+//        containerView.addSubview(controller.view)
+//        
+//        NSLayoutConstraint.activateConstraints([
+//            controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
+//            controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
+//            controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
+//            controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
+//            ])
+//        
+//        controller.didMoveToParentViewController(self)
+//        
+//
+//        // Add another container view
+//        let containerView2 = UIView()
+//        containerView2.translatesAutoresizingMaskIntoConstraints = false
+//
+//        view.addSubview(containerView2)
+//        NSLayoutConstraint.activateConstraints([
+//            containerView2.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 200),
+//            containerView2.widthAnchor.constraintEqualToConstant(30.0),
+//            containerView2.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 140),
+//            containerView2.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
+//            ])
+//        
+//        // add child view controller view to container
+//        
+//        let controller2 = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
+//        addChildViewController(controller2)
+//        
+//        // pass the data
+//        controller2.level = 0
+//        for result in fetchedResultsController.fetchedObjects! {
+//            if let word = result as? Word {
+//                
+//                if word.level == controller2.level {
+//                    controller2.wordsInLevel.append(word)
+//                }
+//            }
+//        }
+//        
+//        
+//        
+//        controller2.view.translatesAutoresizingMaskIntoConstraints = false
+//        containerView2.addSubview(controller2.view)
+//        
+//        NSLayoutConstraint.activateConstraints([
+//            controller2.view.leadingAnchor.constraintEqualToAnchor(containerView2.leadingAnchor),
+//            controller2.view.trailingAnchor.constraintEqualToAnchor(containerView2.trailingAnchor),
+//            controller2.view.topAnchor.constraintEqualToAnchor(containerView2.topAnchor),
+//            controller2.view.bottomAnchor.constraintEqualToAnchor(containerView2.bottomAnchor)
+//            ])
+//        
+//        controller2.didMoveToParentViewController(self)
+        addLevelContainers()
     }
     
-    
+    // Add an array of container views containing the level bars
+    //TODO: Set the height of the container by the relative number of words in the level
+    func addLevelContainers() {
+        for i in 0 ..< levelArrays.count {
+            
+            let containerView = UIView()
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(containerView)
+            NSLayoutConstraint.activateConstraints([
+                containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 40 * CGFloat(i) + 100.0),
+                containerView.widthAnchor.constraintEqualToConstant(30.0),
+                
+                containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 100),
+                containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
+                ])
+            
+            // add child view controller view to container
+            
+            let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
+            controller.level = i
+            
+            for result in fetchedResultsController.fetchedObjects! {
+                if let word = result as? Word {
+                    
+                    if word.level == controller.level {
+                        controller.wordsInLevel.append(word)
+                    }
+                }
+            }
+            
+            addChildViewController(controller)
+            controller.view.translatesAutoresizingMaskIntoConstraints = false
+            containerView.addSubview(controller.view)
+            
+            NSLayoutConstraint.activateConstraints([
+                controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
+                controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
+                controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
+                controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
+                ])
+            
+            controller.didMoveToParentViewController(self)
+        }
+        
+    }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         cell.backgroundColor = UIColor.clearColor()
