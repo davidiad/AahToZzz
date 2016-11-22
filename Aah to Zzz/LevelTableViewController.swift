@@ -15,17 +15,13 @@ class LevelTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //guard let checky = wordsInLevel[0].word else {
-            print("NOWARD")
-            print(level)
             return
-        //}
-        //print("\(checky) check check"   )
     }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        tableView.backgroundColor = UIColor.grayColor()
         return 1
     }
 
@@ -51,7 +47,7 @@ class LevelTableViewController: UITableViewController {
             cell?.label.font = UIFont(name: "Courier", size: 7)
             cell?.label.text = "ABC"//word.word
             cell?.label.textColor = UIColor.blueColor()
-            
+            cell?.backgroundColor = Colors.bluek
             //cell?.backgroundView?.backgroundColor = UIColor.clearColor()
             
             //cell?.layoutMargins = UIEdgeInsetsZero;

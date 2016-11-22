@@ -14,7 +14,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var table_00: UITableView!
     
     let model = AtoZModel.sharedInstance
-    let graphHeight: Float = 500.0
+    let graphHeight: Float = 1.0
     
     var levelArrays: [[Word]?] = [[Word]?]()
     var highestLevel: Int = 6 // the highest level that will be in the graph. Min set here to 6, could be higher.
@@ -88,7 +88,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     // helper to find the level with greatest number of words
-    func findMaxLevelCount() -> Int {
+    func findMaxLevelCount() -> Float {
         var maxLevelCount: Int = 0
         for i in 0 ..< levelArrays.count {
             // level might have 0 words, in which case, don't check for maxLevelCount
@@ -98,7 +98,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
         }
-        return maxLevelCount
+        return Float(maxLevelCount)
     }
 
     override func viewDidLoad() {
@@ -218,13 +218,17 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         for i in 0 ..< levelArrays.count {
             
             let containerView = UIView()
+            
             containerView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(containerView)
-            NSLayoutConstraint.activateConstraints([
+            
+            let height = CGFloat(graphHeight)// * (Float(levelArrays[i]!.count)  / findMaxLevelCount() ) )
+            
+                NSLayoutConstraint.activateConstraints([
                 containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 40 * CGFloat(i) + 100.0),
-                containerView.widthAnchor.constraintEqualToConstant(30.0),
+                containerView.widthAnchor.constraintEqualToConstant(20.0),
                 
-                containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 100),
+                containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 200 ),
                 containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
                 ])
             
