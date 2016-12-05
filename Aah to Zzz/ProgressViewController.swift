@@ -14,7 +14,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var table_00: UITableView!
     
     let model = AtoZModel.sharedInstance
-    let graphHeight: Float = 1.0
+    let graphHeight: Float = 100.0
     
     var levelArrays: [[Word]?] = [[Word]?]()
     var highestLevel: Int = 6 // the highest level that will be in the graph. Min set here to 6, could be higher.
@@ -222,14 +222,18 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             containerView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(containerView)
             
-            let height = CGFloat(graphHeight)// * (Float(levelArrays[i]!.count)  / findMaxLevelCount() ) )
             
+            // for now, hardcoding in a value of 640 for screen size (iPhone 6 plus size of 1920 / by 3x retina resolution)
+            // top constraint measures from top of screen, 
+            // bottom constraint from bottom
+            let height = Float(graphHeight) * ( Float(levelArrays[i]!.count)  / findMaxLevelCount()  )
+            print("height: \(height * graphHeight)")
                 NSLayoutConstraint.activateConstraints([
                 containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 40 * CGFloat(i) + 100.0),
                 containerView.widthAnchor.constraintEqualToConstant(20.0),
                 
-                containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 200 ),
-                containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
+                containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: CGFloat(600 - ( 3 * height) )  ),
+                containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: CGFloat(-40)),
                 ])
             
             // add child view controller view to container
