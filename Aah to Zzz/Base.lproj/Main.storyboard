@@ -390,15 +390,16 @@
             <objects>
                 <tableViewController storyboardIdentifier="level" title="Level Graph Bar" id="6Ae-aR-M6n" customClass="LevelTableViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1Ib-nO-tfH">
-                        <rect key="frame" x="0.0" y="0.0" width="20" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="40" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sectionIndexBackgroundColor" red="0.99747711419999996" green="0.8684134483" blue="0.038625180719999999" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="levelcell" id="i9a-Rb-KBw" customClass="LevelTableCell" customModule="AahToZzz" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="20" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="40" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i9a-Rb-KBw" id="T6q-0D-etL">
-                                    <rect key="frame" x="0.0" y="0.0" width="20" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="40" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9QK-Cn-zaG">
@@ -426,7 +427,7 @@
                         </connections>
                     </tableView>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="20" height="300"/>
+                    <size key="freeformSize" width="40" height="300"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yYY-Ha-LiG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -492,10 +493,21 @@
                                     <outlet property="delegate" destination="7W8-FQ-237" id="yyF-w7-Xm0"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rIs-4h-gJe">
+                                <rect key="frame" x="49" y="94" width="322" height="522"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="rIs-4h-gJe" firstAttribute="top" secondItem="MEv-vp-N4w" secondAttribute="bottom" constant="74" id="UeN-rK-bM3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rIs-4h-gJe" secondAttribute="trailing" constant="23" id="XU7-IU-DjT"/>
+                            <constraint firstItem="KuB-ai-F5Y" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="bottom" constant="120" id="iBo-KV-41K"/>
+                            <constraint firstItem="rIs-4h-gJe" firstAttribute="leading" secondItem="fp7-4l-nEv" secondAttribute="leading" constant="49" id="ngh-pI-lkt"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="graphBgView" destination="rIs-4h-gJe" id="xkl-Cq-bhB"/>
                         <outlet property="table_00" destination="hj1-ul-mhH" id="1Wq-Uc-UsT"/>
                     </connections>
                 </viewController>

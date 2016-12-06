@@ -12,6 +12,7 @@ import CoreData
 class ProgressViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var table_00: UITableView!
+    @IBOutlet weak var graphBgView: UIView!
     
     let model = AtoZModel.sharedInstance
     let graphHeight: Float = 100.0
@@ -220,7 +221,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             let containerView = UIView()
             
             containerView.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(containerView)
+            graphBgView.addSubview(containerView)
             
             
             // for now, hardcoding in a value of 640 for screen size (iPhone 6 plus size of 1920 / by 3x retina resolution)
@@ -230,10 +231,10 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             print("height: \(height * graphHeight)")
                 NSLayoutConstraint.activateConstraints([
                 containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 40 * CGFloat(i) + 100.0),
-                containerView.widthAnchor.constraintEqualToConstant(20.0),
+                containerView.widthAnchor.constraintEqualToConstant(32.0),
                 
-                containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: CGFloat(600 - ( 3 * height) )  ),
-                containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: CGFloat(-40)),
+                containerView.topAnchor.constraintEqualToAnchor(graphBgView.topAnchor, constant: CGFloat(522 - ( 3 * height) )  ),
+                containerView.bottomAnchor.constraintEqualToAnchor(graphBgView.bottomAnchor, constant: CGFloat(-10)),
                 ])
             
             // add child view controller view to container
