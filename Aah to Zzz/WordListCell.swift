@@ -39,7 +39,6 @@ class WordListCell: UITableViewCell {
     
     var wordtext: String? {
         didSet {
-            print("didSet")
             firstLetterBg.image = colorCode?.tile_bg!
             firstLetter.text = wordtext?.substringToIndex(wordtext!.startIndex.successor())
             secondLetterBg.image = colorCode?.tile_bg!
@@ -52,13 +51,14 @@ class WordListCell: UITableViewCell {
                 //TODO: Set this once, elsewhere?
                 if outlineView.image != nil {
                     outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                    //TODO: SOULD BE SET IN COLORCODE
+                    //TODO: SHOULD BE SET IN COLORCODE
                     outlineView.tintColor = colorCode?.tint
-                    outlineShadowView.image = UIImage(named: "outline_shadow")
+                    outlineShadowView.image = UIImage(named: "outline_shadow_unstretched")
                     outlineShadowView.alpha = 0.45
                 }
             }
         }
+        
     }
     
     //MARK:- Cell delegate

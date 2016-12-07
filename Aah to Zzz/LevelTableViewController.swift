@@ -21,7 +21,7 @@ class LevelTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        tableView.backgroundColor = UIColor.grayColor()
+        tableView.backgroundColor = Colors.magenta
         return 1
     }
 

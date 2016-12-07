@@ -11,6 +11,13 @@ import CoreData
 
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate {
     
+    
+    // TODO:- Some words are grayed out, but are still in the list and findable
+    // Check -- are word levels updating correctly?
+    // Tile that snap back after jumble are off by a small amount
+    // Tapping on tiles, sometimes they get moved in the wrong sequence -- frustrating
+    // 
+    
     // MARK: - Unwind segue from Progress view
     @IBAction func cancelToProgressViewController(segue:UIStoryboardSegue) {
     }

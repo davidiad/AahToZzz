@@ -263,6 +263,24 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
                 ])
             
             controller.didMoveToParentViewController(self)
+            
+            // Add the outline image on top of the level bar table controller
+            // first, the shadow image beneath to help the outline stand out
+            let outlineShadowImage = UIImage(named: "outline_shadow")
+            let outlineShadowView = UIImageView(image: outlineShadowImage)
+            outlineShadowView.alpha = 0.65
+            outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
+            
+            // create the outline view
+            //TODO: seems like the outline image is being scaled up
+            let outlineImage = UIImage(named: "outline_double")
+            let outlineView = UIImageView(image: outlineImage)
+            outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
+            outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            outlineView.tintColor = Colors.magenta
+            
+            containerView.addSubview(outlineShadowView)
+            containerView.addSubview(outlineView)
         }
         
     }
