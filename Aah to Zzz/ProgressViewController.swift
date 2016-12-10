@@ -221,6 +221,8 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             let containerView = UIView()
             
             containerView.translatesAutoresizingMaskIntoConstraints = false
+            //TODO: - set the background color per level
+            containerView.backgroundColor = Colors.whitish_red
             graphBgView.addSubview(containerView)
             
             
@@ -264,6 +266,13 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             
             controller.didMoveToParentViewController(self)
             
+            // create mask to round the corners of the graph bar
+            let rect: CGRect = CGRectMake(0, 0, 32, CGFloat((3 * height) + 10) )
+            let mask: UIView = UIView(frame: rect)
+            mask.backgroundColor = UIColor.whiteColor()
+            mask.layer.cornerRadius = 6
+            containerView.maskView = mask
+            
             // Add the outline image on top of the level bar table controller
             // first, the shadow image beneath to help the outline stand out
             let outlineShadowImage = UIImage(named: "outline_shadow")
@@ -277,6 +286,7 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             let outlineView = UIImageView(image: outlineImage)
             outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
             outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            //TODO:- set the outlineView tintcolor per level
             outlineView.tintColor = Colors.magenta
             
             containerView.addSubview(outlineShadowView)

@@ -11,17 +11,21 @@ import UIKit
 class LevelTableViewController: UITableViewController {
 
     var level: Int?
+    var colorCode: ColorCode?
     var wordsInLevel = [Word]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let colorCodeLevel = level {
+            colorCode = ColorCode(code: colorCodeLevel)
+        }
             return
     }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        tableView.backgroundColor = Colors.magenta
+        tableView.backgroundColor = UIColor.clearColor()
         return 1
     }
 
@@ -47,7 +51,7 @@ class LevelTableViewController: UITableViewController {
             cell?.label.font = UIFont(name: "Courier", size: 7)
             cell?.label.text = "ABC"//word.word
             cell?.label.textColor = UIColor.blueColor()
-            cell?.backgroundColor = Colors.bluek
+            cell?.backgroundColor = colorCode?.tint
             //cell?.backgroundView?.backgroundColor = UIColor.clearColor()
             
             //cell?.layoutMargins = UIEdgeInsetsZero;

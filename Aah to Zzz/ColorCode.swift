@@ -134,14 +134,15 @@ struct ColorCode {
         if self.colorCode != nil {
             switch self.colorCode! {
             case 0:
-                //image = UIImage(named: "outline_thick")!
-                return nil
+                image = UIImage(named: "outline_double_unstretched")!
+                //return nil
                 
             case 1:
                 image = UIImage(named: "outline_double_unstretched")!
             //TODO: Implement tripled lines (tripled lines too close)
             default:
-                image = UIImage(named: "outline_yellow")! // thin outline, can be tinted other colors
+                //image = UIImage(named: "outline_yellow")! // thin outline, can be tinted other colors
+                image = UIImage(named: "outline_double_unstretched")!
             }
         }
         return image
