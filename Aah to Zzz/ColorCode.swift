@@ -101,7 +101,7 @@ struct ColorCode {
 //                return Colors.whitish_red
 //            }
             
-            let tintLevel = colorCode % 4
+            let tintLevel = colorCode % 6
             
             switch tintLevel {
             case -2:
@@ -116,10 +116,10 @@ struct ColorCode {
                 return Colors.bluek
             case 3:
                 return Colors.green
-//            case 4:
-//                return Colors.orange
-//            case 5:
-//                return Colors.purple
+            case 4:
+                return Colors.orange
+            case 5:
+                return Colors.purple
             default:
                 return UIColor.yellowColor()
             }

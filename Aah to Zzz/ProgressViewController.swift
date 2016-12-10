@@ -9,9 +9,10 @@
 import UIKit
 import CoreData
 
-class ProgressViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class ProgressViewController: UIViewController, NSFetchedResultsControllerDelegate//, UITableViewDataSource, UITableViewDelegate,
+    {
     
-    @IBOutlet weak var table_00: UITableView!
+    // hidden but saved for example @IBOutlet weak var table_00: UITableView!
     @IBOutlet weak var graphBgView: UIView!
     
     let model = AtoZModel.sharedInstance
@@ -113,8 +114,12 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     
         automaticallyAdjustsScrollViewInsets = false
+        
+        // hiding table_00 
+        /*
         table_00.backgroundColor = UIColor.yellowColor()
         table_00.layoutMargins = UIEdgeInsets.init(top: 1, left: 0, bottom: 1, right: 0)
+        */
         
         analyzeWords()
         
@@ -217,12 +222,12 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
     //TODO: Set the height of the container by the relative number of words in the level
     func addLevelContainers() {
         for i in 0 ..< levelArrays.count {
-            
+            var colorCode = ColorCode(code: i)
             let containerView = UIView()
             
             containerView.translatesAutoresizingMaskIntoConstraints = false
-            //TODO: - set the background color per level
-            containerView.backgroundColor = Colors.whitish_red
+            // set the background color per level
+            containerView.backgroundColor = colorCode.tint
             graphBgView.addSubview(containerView)
             
             
@@ -286,8 +291,8 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
             let outlineView = UIImageView(image: outlineImage)
             outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
             outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-            //TODO:- set the outlineView tintcolor per level
-            outlineView.tintColor = Colors.magenta
+            // set the outlineView tintcolor per level
+            outlineView.tintColor = colorCode.tint
             
             containerView.addSubview(outlineShadowView)
             containerView.addSubview(outlineView)
@@ -295,13 +300,12 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    //MARK:- Table View stuff (hidden saved for example)
+    /*
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         cell.backgroundColor = UIColor.clearColor()
     }
     
-    override func viewDidAppear(animated: Bool) {
-
-    }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if let _ = fetchedResultsController.sections {
@@ -344,25 +348,17 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        //let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "mycell") as! ProgressTableCell
         
         let cell = tableView.dequeueReusableCellWithIdentifier("level0", forIndexPath: indexPath) as? ProgressTableCell
         
-        //cell.textLabel!.text="row#\(indexPath.row)"
-        //cell.detailTextLabel!.text="subtitle#\(indexPath.row)"
-        
         if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
-           // if word.level == 1 {
-//            print("\(word.word): level is: \(word.level)")
             cell?.label.font = UIFont(name: "Courier", size: 9)
             cell?.label.text = word.word
             cell?.label.textColor = UIColor.blueColor()
            
             cell?.backgroundView?.backgroundColor = UIColor.clearColor()
-            //cell.layoutMargins = UIEdgeInsets.init(top: 1, left: 0, bottom: 1, right: 0)
             cell?.layoutMargins = UIEdgeInsetsZero;
             cell?.preservesSuperviewLayoutMargins = false;
-           // }
         }
         
         
@@ -375,5 +371,5 @@ class ProgressViewController: UIViewController, UITableViewDataSource, UITableVi
         
         print("in PFS")
     }
-
+    */
 }

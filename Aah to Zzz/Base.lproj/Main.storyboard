@@ -452,7 +452,7 @@
                                     <segue destination="YZv-BW-iqG" kind="unwind" unwindAction="cancelToProgressViewController:" id="dtK-5L-qQQ"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" directionalLockEnabled="YES" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="10" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="83" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hj1-ul-mhH">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" directionalLockEnabled="YES" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="10" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="83" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hj1-ul-mhH">
                                 <rect key="frame" x="20" y="28" width="21" height="509"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -487,10 +487,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="7W8-FQ-237" id="aYJ-9j-H1U"/>
-                                    <outlet property="delegate" destination="7W8-FQ-237" id="yyF-w7-Xm0"/>
-                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rIs-4h-gJe">
                                 <rect key="frame" x="49" y="94" width="322" height="522"/>
@@ -507,7 +503,6 @@
                     </view>
                     <connections>
                         <outlet property="graphBgView" destination="rIs-4h-gJe" id="xkl-Cq-bhB"/>
-                        <outlet property="table_00" destination="hj1-ul-mhH" id="1Wq-Uc-UsT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jox-Sd-kb8" userLabel="First Responder" sceneMemberID="firstResponder"/>
