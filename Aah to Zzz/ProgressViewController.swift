@@ -14,6 +14,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
     // hidden but saved for example @IBOutlet weak var table_00: UITableView!
     @IBOutlet weak var graphBgView: UIView!
+    @IBOutlet weak var graphStackView: UIStackView! // not working to add bars to stack view, so remove if can't get to work
+    @IBOutlet weak var numWordsLabel: UILabel!
     
     let model = AtoZModel.sharedInstance
     let graphHeight: Float = 100.0
@@ -43,6 +45,11 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         
         return fetchedResultsController
     }()
+    
+    //TODO:- calculate # words *not* found, add that as level 0, and add a bar with the words
+    // - Get # words in dictionary
+    // - Make an array of all the words that have *not* been found
+    // - make a 0 level array (may have to create Word objects to store them)
     
     // helper to add a level array
     func addLevelArray() {
@@ -221,6 +228,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // Add an array of container views containing the level bars
     //TODO: Set the height of the container by the relative number of words in the level
     func addLevelContainers() {
+        var containerArray = [UIView]()
         for i in 0 ..< levelArrays.count {
             var colorCode = ColorCode(code: i)
             let containerView = UIView()
@@ -228,22 +236,27 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             containerView.translatesAutoresizingMaskIntoConstraints = false
             // set the background color per level
             containerView.backgroundColor = colorCode.tint
-            graphBgView.addSubview(containerView)
+            graphStackView.translatesAutoresizingMaskIntoConstraints = false
+            graphStackView.addSubview(containerView)
             
             
             // for now, hardcoding in a value of 640 for screen size (iPhone 6 plus size of 1920 / by 3x retina resolution)
-            // top constraint measures from top of screen, 
+            // top constraint measures from top of screen,
             // bottom constraint from bottom
             let height = Float(graphHeight) * ( Float(levelArrays[i]!.count)  / findMaxLevelCount()  )
             print("height: \(height * graphHeight)")
-                NSLayoutConstraint.activateConstraints([
-                containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 40 * CGFloat(i) + 100.0),
-                containerView.widthAnchor.constraintEqualToConstant(32.0),
+            NSLayoutConstraint.activateConstraints([
+                containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + 10.0),
+                containerView.widthAnchor.constraintEqualToConstant(36.0),
                 
-                containerView.topAnchor.constraintEqualToAnchor(graphBgView.topAnchor, constant: CGFloat(522 - ( 3 * height) )  ),
+                containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(340 - (3 * height) )  ),
                 containerView.bottomAnchor.constraintEqualToAnchor(graphBgView.bottomAnchor, constant: CGFloat(-10)),
                 ])
             
+            //was working, but not with stack view
+            /*
+  containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(522 - ( 3 * height) )  ),
+ */
             // add child view controller view to container
             
             let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
@@ -296,8 +309,28 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             
             containerView.addSubview(outlineShadowView)
             containerView.addSubview(outlineView)
+            containerArray.append(containerView)
+            numWordsLabel.text = String(Int(findMaxLevelCount()))
         }
         
+        //let stackView = UIStackView(arrangedSubviews: containerArray)
+        //stackView.axis = .Horizontal
+        //stackView.distribution = .FillEqually
+        //stackView.alignment = .Fill
+        //stackView.spacing = 5
+        //stackView.translatesAutoresizingMaskIntoConstraints = false
+        //graphBgView.addSubview(stackView)
+        
+//        for cv in containerArray {
+//            graphStackView.addSubview(cv)
+//            NSLayoutConstraint.activateConstraints([
+//                //containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 40 * CGFloat(i) + 120.0),
+//                cv.widthAnchor.constraintEqualToConstant(36.0),
+//                
+//                cv.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(200)  ),
+//                cv.bottomAnchor.constraintEqualToAnchor(graphStackView.bottomAnchor, constant: CGFloat(-10)),
+//                ])
+//        }
     }
     
     //MARK:- Table View stuff (hidden saved for example)
