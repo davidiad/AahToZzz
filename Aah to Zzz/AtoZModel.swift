@@ -27,6 +27,7 @@ class AtoZModel {
     var wordsArray: [String]
     var wordsDictionary: [String: String]
     var wordsSet: Set<String> // may not need to use this outside of this class, consider relocating the declaration
+    // update: using wordsSet in ProgressViewController
     var inactiveCount: Int?
     
     var game: GameData? // The managed object that is at the root of the object graph

@@ -22,7 +22,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func cancelToProgressViewController(segue:UIStoryboardSegue) {
     }
     
-    //TODO: When proxy scroll is touched, show scroll indicator. Also show vertical bar with progress?
+    //TODO: When proxy scroll (invisible scrolling table on right, synced to table on left) is touched, show custom scroll indicator. Also show vertical bar with progress?
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView == proxyTable {
