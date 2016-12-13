@@ -12,7 +12,8 @@ class LevelTableViewController: UITableViewController {
 
     var level: Int?
     var colorCode: ColorCode?
-    var wordsInLevel = [Word]()
+//    var wordsInLevel = [Word]()
+    var wordsInLevel = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +60,7 @@ class LevelTableViewController: UITableViewController {
         
        // var word: Word = wordsInLevel[1] as? Word {
             
-        cell?.label.text = wordsInLevel[indexPath.row].word
+        cell?.label.text = wordsInLevel[indexPath.row]
         
     
         return cell!

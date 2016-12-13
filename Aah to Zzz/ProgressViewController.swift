@@ -20,11 +20,12 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     let model = AtoZModel.sharedInstance
     let graphHeight: Float = 100.0
     
-    var levelArrays: [[Word]?] = [[Word]?]()
+//    var levelArrays: [[Word]?] = [[Word]?]()
+    var levelArrays: [[String]?] = [[String]?]()
     var highestLevel: Int = 6 // the highest level that will be in the graph. Min set here to 6, could be higher.
     var tableHt: Int = 0
     var unplayedWordsExist: Bool = false
-    var unplayedWordsArray = [Word]()
+    var unplayedWordsArray = [String]()
     
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
@@ -55,7 +56,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
     // helper to add a level array
     func addLevelArray() {
-        let newLevelArray = [Word]()
+        let newLevelArray = [String]()
         levelArrays.append(newLevelArray)
     }
     
@@ -83,7 +84,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 }
                 
                 // add the word to the array
-                levelArrays[level]!.append(word)
+                levelArrays[level]!.append(word.word!) // forced unwraps -- look into
                 
             }
         }
@@ -122,9 +123,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             let allWordsSet = AtoZModel.sharedInstance.wordsSet
             let unplayedWordsSet = allWordsSet.subtract(fetchedWordsSet)
             for wordString in unplayedWordsSet {
-                let wordObject = Word(wordString: wordString, context: sharedContext)
-                wordObject.word = wordString
-                unplayedWordsArray.append(wordObject)
+                //let wordObject = Word(wordString: wordString, context: sharedContext)
+                //wordObject.word = wordString
+                unplayedWordsArray.append(wordString)
                 // now we have an array of word objects to use to create the level table.
                 // Note: not saving these Word object to the context. They are only for a one time use in this view.
                 // TODO: find a way to do this using just strings instead of Word objects
@@ -286,6 +287,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         // var containerArray = [UIView]()
         for i in -1 ..< levelArrays.count {
             if unplayedWordsExist || i >= 0 { // Don't allow the case where i = -1, but there are no unplayed words
+                // (-1 is being used for the unplayed words array, which sometimes exists and sometimes not)
                 let containerView = UIView()
                 var numWordsInLevel: Float = 0.0
                 var colorCode = ColorCode(code: i)
@@ -407,98 +409,98 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         //        }
     }
     
-    // to add a bar for the unplayed words // Not needed, cover by the above
-    func addUnplayedLevel() {
-        
-        let shiftRight: CGFloat = unplayedWordsExist ? 40.0 : 0.0
-        // if there are unplayed words, then start with
-        var startingIndex: Int
-        startingIndex = 0
-        // var containerArray = [UIView]()
-        for i in startingIndex ..< levelArrays.count {
-            var colorCode = ColorCode(code: i)
-            let containerView = UIView()
-            
-            containerView.translatesAutoresizingMaskIntoConstraints = false
-            // set the background color per level
-            containerView.backgroundColor = colorCode.tint
-            graphStackView.translatesAutoresizingMaskIntoConstraints = false
-            graphStackView.addSubview(containerView)
-            
-            
-            // for now, hardcoding in a value of 640 for screen size (iPhone 6 plus size of 1920 / by 3x retina resolution)
-            // top constraint measures from top of screen,
-            // bottom constraint from bottom
-            let height = Float(graphHeight) * ( Float(levelArrays[i]!.count)  / findMaxLevelCount()  )
-            print("height: \(height * graphHeight)")
-            NSLayoutConstraint.activateConstraints([
-                containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + 10.0 + shiftRight),
-                containerView.widthAnchor.constraintEqualToConstant(36.0),
-                
-                containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(340 - (3 * height) )  ),
-                containerView.bottomAnchor.constraintEqualToAnchor(graphBgView.bottomAnchor, constant: CGFloat(-10)),
-                ])
-            
-            //was working, but not with stack view
-            /*
-             containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(522 - ( 3 * height) )  ),
-             */
-            // add child view controller view to container
-            
-            let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
-            controller.level = i
-            
-            for result in fetchedResultsController.fetchedObjects! {
-                if let word = result as? Word {
-                    
-                    if word.level == controller.level {
-                        controller.wordsInLevel.append(word)
-                    }
-                }
-            }
-            
-            addChildViewController(controller)
-            controller.view.translatesAutoresizingMaskIntoConstraints = false
-            containerView.addSubview(controller.view)
-            
-            NSLayoutConstraint.activateConstraints([
-                controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
-                controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
-                controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
-                controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
-                ])
-            
-            controller.didMoveToParentViewController(self)
-            
-            // create mask to round the corners of the graph bar
-            let rect: CGRect = CGRectMake(0, 0, 32, CGFloat((3 * height) + 10) )
-            let mask: UIView = UIView(frame: rect)
-            mask.backgroundColor = UIColor.whiteColor()
-            mask.layer.cornerRadius = 6
-            containerView.maskView = mask
-            
-            // Add the outline image on top of the level bar table controller
-            // first, the shadow image beneath to help the outline stand out
-            let outlineShadowImage = UIImage(named: "outline_shadow")
-            let outlineShadowView = UIImageView(image: outlineShadowImage)
-            outlineShadowView.alpha = 0.65
-            outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
-            
-            // create the outline view
-            //TODO: seems like the outline image is being scaled up
-            let outlineImage = UIImage(named: "outline_double")
-            let outlineView = UIImageView(image: outlineImage)
-            outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
-            outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-            // set the outlineView tintcolor per level
-            outlineView.tintColor = colorCode.tint
-            
-            containerView.addSubview(outlineShadowView)
-            containerView.addSubview(outlineView)
-            //containerArray.append(containerView)
-            numWordsLabel.text = String(Int(findMaxLevelCount()))
-        }
-    }
+//    // to add a bar for the unplayed words // Not needed, cover by the above
+//    func addUnplayedLevel() {
+//        
+//        let shiftRight: CGFloat = unplayedWordsExist ? 40.0 : 0.0
+//        // if there are unplayed words, then start with
+//        var startingIndex: Int
+//        startingIndex = 0
+//        // var containerArray = [UIView]()
+//        for i in startingIndex ..< levelArrays.count {
+//            var colorCode = ColorCode(code: i)
+//            let containerView = UIView()
+//            
+//            containerView.translatesAutoresizingMaskIntoConstraints = false
+//            // set the background color per level
+//            containerView.backgroundColor = colorCode.tint
+//            graphStackView.translatesAutoresizingMaskIntoConstraints = false
+//            graphStackView.addSubview(containerView)
+//            
+//            
+//            // for now, hardcoding in a value of 640 for screen size (iPhone 6 plus size of 1920 / by 3x retina resolution)
+//            // top constraint measures from top of screen,
+//            // bottom constraint from bottom
+//            let height = Float(graphHeight) * ( Float(levelArrays[i]!.count)  / findMaxLevelCount()  )
+//            print("height: \(height * graphHeight)")
+//            NSLayoutConstraint.activateConstraints([
+//                containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + 10.0 + shiftRight),
+//                containerView.widthAnchor.constraintEqualToConstant(36.0),
+//                
+//                containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(340 - (3 * height) )  ),
+//                containerView.bottomAnchor.constraintEqualToAnchor(graphBgView.bottomAnchor, constant: CGFloat(-10)),
+//                ])
+//            
+//            //was working, but not with stack view
+//            /*
+//             containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(522 - ( 3 * height) )  ),
+//             */
+//            // add child view controller view to container
+//            
+//            let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
+//            controller.level = i
+//            
+//            for result in fetchedResultsController.fetchedObjects! {
+//                if let word = result as? Word {
+//                    
+//                    if word.level == controller.level {
+//                        controller.wordsInLevel.append(word)
+//                    }
+//                }
+//            }
+//            
+//            addChildViewController(controller)
+//            controller.view.translatesAutoresizingMaskIntoConstraints = false
+//            containerView.addSubview(controller.view)
+//            
+//            NSLayoutConstraint.activateConstraints([
+//                controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
+//                controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
+//                controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
+//                controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
+//                ])
+//            
+//            controller.didMoveToParentViewController(self)
+//            
+//            // create mask to round the corners of the graph bar
+//            let rect: CGRect = CGRectMake(0, 0, 32, CGFloat((3 * height) + 10) )
+//            let mask: UIView = UIView(frame: rect)
+//            mask.backgroundColor = UIColor.whiteColor()
+//            mask.layer.cornerRadius = 6
+//            containerView.maskView = mask
+//            
+//            // Add the outline image on top of the level bar table controller
+//            // first, the shadow image beneath to help the outline stand out
+//            let outlineShadowImage = UIImage(named: "outline_shadow")
+//            let outlineShadowView = UIImageView(image: outlineShadowImage)
+//            outlineShadowView.alpha = 0.65
+//            outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
+//            
+//            // create the outline view
+//            //TODO: seems like the outline image is being scaled up
+//            let outlineImage = UIImage(named: "outline_double")
+//            let outlineView = UIImageView(image: outlineImage)
+//            outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
+//            outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+//            // set the outlineView tintcolor per level
+//            outlineView.tintColor = colorCode.tint
+//            
+//            containerView.addSubview(outlineShadowView)
+//            containerView.addSubview(outlineView)
+//            //containerArray.append(containerView)
+//            numWordsLabel.text = String(Int(findMaxLevelCount()))
+//        }
+//    }
 
     
     //MARK:- Table View stuff (hidden saved for example)
