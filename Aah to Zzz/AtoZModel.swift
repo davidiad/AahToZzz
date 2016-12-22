@@ -232,16 +232,29 @@ class AtoZModel {
     
 
 
-
+    // Swift 2 version -- works but gives warning: AtoZModel.swift:237:23: 'var' parameters are deprecated and will be removed in Swift 3
     // creates a Letter object from a passed-in String, or generates a random 1 letter string if nil is passed in
-    func createLetter(var letterString: String?) -> Letter {
+//    func createLetter(var letterString: String?) -> Letter {
+//        //TODO: test for validity of letter (e.g. what if it's a number, or more than 1 letter)
+//        let alphabetArray = generateAlphabetArray()
+//        if letterString == nil {
+//            letterString = alphabetArray[Int(arc4random_uniform(UInt32(alphabetArray.count)))]
+//        }
+//        let letter = Letter(someLetter: letterString!, context: sharedContext)
+//        //let letter = NSEntityDescription.insertNewObjectForEntityForName("Letter", inManagedObjectContext: sharedContext) as! Letter
+//        return letter
+//    }
+    
+    // Swift 3 version -- removed var parameter (which are deprecated in Swift 3) and replaced with var inside the func
+    func createLetter(letterStringIn: String?) -> Letter {
         //TODO: test for validity of letter (e.g. what if it's a number, or more than 1 letter)
+        var letterString = letterStringIn
         let alphabetArray = generateAlphabetArray()
         if letterString == nil {
             letterString = alphabetArray[Int(arc4random_uniform(UInt32(alphabetArray.count)))]
         }
         let letter = Letter(someLetter: letterString!, context: sharedContext)
-        //let letter = NSEntityDescription.insertNewObjectForEntityForName("Letter", inManagedObjectContext: sharedContext) as! Letter
+
         return letter
     }
     

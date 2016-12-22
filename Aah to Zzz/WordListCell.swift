@@ -42,7 +42,13 @@ class WordListCell: UITableViewCell {
             firstLetterBg.image = colorCode?.tile_bg!
             firstLetter.text = wordtext?.substringToIndex(wordtext!.startIndex.successor())
             secondLetterBg.image = colorCode?.tile_bg!
-            secondLetter.text = wordtext?.substringWithRange(Range<String.Index>(start: wordtext!.startIndex.successor(), end: wordtext!.endIndex.predecessor()))
+            
+            // Fix warning: 'init(start:end:)' is deprecated: it will be removed in Swift 3.  Use the '..<' operator.
+            //secondLetter.text = wordtext?.substringWithRange(Range<String.Index>(start: wordtext!.startIndex.successor(), end: wordtext!.endIndex.predecessor()))
+            secondLetter.text = wordtext?.substringWithRange( wordtext!.startIndex.successor() ..< wordtext!.endIndex.predecessor() )
+                
+                
+            
             thirdLetterBg.image = colorCode?.tile_bg!//UIImage(named: "small_tile_yellow")
             thirdLetter.text = wordtext?.substringFromIndex(wordtext!.endIndex.predecessor())
             // set the image (if any) to use as an outline for the cell
