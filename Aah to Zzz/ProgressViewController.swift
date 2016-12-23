@@ -315,7 +315,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     containerView.widthAnchor.constraintEqualToConstant(32.0),
                     
                     containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(340 - (3 * height) )  ),
-                    containerView.bottomAnchor.constraintEqualToAnchor(graphBgView.bottomAnchor, constant: CGFloat(-10)),
+                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.bottomAnchor, constant: CGFloat(0)),
                     ])
                 
                 //was working, but not with stack view
@@ -386,6 +386,30 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 containerView.addSubview(outlineView)
                 //containerArray.append(containerView)
                 numWordsLabel.text = String(Int(findMaxLevelCount()))
+                
+                // Create a text label for the number of words that floats above the container
+                let topLabel = UILabel()
+                topLabel.textColor = colorCode.tint
+                topLabel.font = UIFont.systemFontOfSize(9)
+                topLabel.text = String(controller.wordsInLevel.count)
+                view.addSubview(topLabel)
+                
+                topLabel.translatesAutoresizingMaskIntoConstraints = false
+                topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
+                topLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
+                
+                // Create a text label for the word level that floats below the container
+                let bottomLabel = UILabel()
+                bottomLabel.textColor = colorCode.tint
+                bottomLabel.font = UIFont.systemFontOfSize(11)
+                bottomLabel.text = String(controller.level!)
+                view.addSubview(bottomLabel)
+                
+                bottomLabel.translatesAutoresizingMaskIntoConstraints = false
+                bottomLabel.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 10.0).active = true
+                bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
+                
+
             }
         }
         
