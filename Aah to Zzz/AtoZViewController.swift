@@ -285,7 +285,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private var itemBehavior: UIDynamicItemBehavior!
     private var gravityBehavior = UIGravityBehavior()
     private var collisionBehavior = UICollisionBehavior()
-    private var blackhole = UIFieldBehavior!()
+    private var blackhole = UIFieldBehavior!(nil) //for Swift 3, add nil inside parens
     
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
