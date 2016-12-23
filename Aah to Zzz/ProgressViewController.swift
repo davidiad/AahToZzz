@@ -18,7 +18,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     @IBOutlet weak var numWordsLabel: UILabel!
     
     let model = AtoZModel.sharedInstance
-    let graphHeight: Float = 100.0
+    var graphHeight: CGFloat = 100.0
     
 //    var levelArrays: [[Word]?] = [[Word]?]()
     var levelArrays: [[String]?] = [[String]?]()
@@ -179,7 +179,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         table_00.backgroundColor = UIColor.yellowColor()
         table_00.layoutMargins = UIEdgeInsets.init(top: 1, left: 0, bottom: 1, right: 0)
         */
-        
+        graphHeight = graphStackView.frame.size.height
         analyzeWords()
         
         //TODO:- 
@@ -308,14 +308,16 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 // for now, hardcoding in a value of 640 for screen size (iPhone 6 plus size of 1920 / by 3x retina resolution)
                 // top constraint measures from top of screen,
                 // bottom constraint from bottom
-                let height = Float(graphHeight) * ( numWordsInLevel / findMaxLevelCount()  )
-                print("height: \(height * graphHeight)")
+                //let height = Float(graphHeight) * ( numWordsInLevel / findMaxLevelCount()  )
+                let height = graphHeight * CGFloat((numWordsInLevel / findMaxLevelCount()))
+                print("height: \(height)")
                 NSLayoutConstraint.activateConstraints([
+                    
                     containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + 10.0 + shiftRight),
                     containerView.widthAnchor.constraintEqualToConstant(32.0),
                     
-                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(340 - (3 * height) )  ),
-                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.bottomAnchor, constant: CGFloat(0)),
+                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.bottomAnchor, constant: CGFloat(-1 * height )  ),
+                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview?.superview!.bottomAnchor, constant: CGFloat(0)),
                     ])
                 
                 //was working, but not with stack view
@@ -371,13 +373,13 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 let outlineShadowImage = UIImage(named: "outline_shadow")
                 let outlineShadowView = UIImageView(image: outlineShadowImage)
                 outlineShadowView.alpha = 0.65
-                outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
+                outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height + 5.0))
                 
                 // create the outline view
                 //TODO: seems like the outline image is being scaled up
                 let outlineImage = UIImage(named: "outline_double")
                 let outlineView = UIImageView(image: outlineImage)
-                outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
+                outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height + 5))
                 outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
                 // set the outlineView tintcolor per level
                 outlineView.tintColor = colorCode.tint
@@ -402,17 +404,26 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 let bottomLabel = UILabel()
                 bottomLabel.textColor = colorCode.tint
                 bottomLabel.font = UIFont.systemFontOfSize(11)
-                bottomLabel.text = String(controller.level!)
+                
+                if i < 0 {
+                    bottomLabel.text = "Words not yet played"
+                    bottomLabel.lineBreakMode = .ByWordWrapping
+                    bottomLabel.numberOfLines = 4
+                    bottomLabel.textAlignment = .Center
+                    bottomLabel.widthAnchor.constraintEqualToConstant(40).active = true
+
+                } else {
+                    bottomLabel.text = String(controller.level!)
+                }
                 view.addSubview(bottomLabel)
                 
                 bottomLabel.translatesAutoresizingMaskIntoConstraints = false
-                bottomLabel.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 10.0).active = true
+                bottomLabel.topAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 5.0).active = true
                 bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
-                
-
             }
         }
-        
+    }
+    
         //let stackView = UIStackView(arrangedSubviews: containerArray)
         //stackView.axis = .Horizontal
         //stackView.distribution = .FillEqually
@@ -431,7 +442,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         //                cv.bottomAnchor.constraintEqualToAnchor(graphStackView.bottomAnchor, constant: CGFloat(-10)),
         //                ])
         //        }
-    }
+    
     
 //    // to add a bar for the unplayed words // Not needed, cover by the above
 //    func addUnplayedLevel() {
