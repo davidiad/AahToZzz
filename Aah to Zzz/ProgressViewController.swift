@@ -15,10 +15,10 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // hidden but saved for example @IBOutlet weak var table_00: UITableView!
     @IBOutlet weak var graphBgView: UIView!
     @IBOutlet weak var graphStackView: UIStackView! // not working to add bars to stack view, so remove if can't get to work
-    @IBOutlet weak var numWordsLabel: UILabel!
     
     let model = AtoZModel.sharedInstance
     var graphHeight: CGFloat = 100.0
+    var graphWidth: CGFloat = 100.0
     
 //    var levelArrays: [[Word]?] = [[Word]?]()
     var levelArrays: [[String]?] = [[String]?]()
@@ -179,8 +179,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         table_00.backgroundColor = UIColor.yellowColor()
         table_00.layoutMargins = UIEdgeInsets.init(top: 1, left: 0, bottom: 1, right: 0)
         */
-        graphHeight = graphStackView.frame.size.height
+        
         analyzeWords()
+        
         
         //TODO:- 
         // 1. Go thru fetched objects and determine how many levels will need a bar. And their relative heights
@@ -274,6 +275,15 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
 //            ])
 //        
 //        controller2.didMoveToParentViewController(self)
+        
+    }
+    
+    // get the graph height after viewDidLoad – otherwise, the views have not yet adapted to the device screen size
+    // but causes a visible delay in displaying the graphs
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        graphHeight = graphStackView.superview!.frame.size.height
+        graphWidth = graphStackView.superview!.frame.size.width
         addLevelContainers()
     }
     
@@ -283,6 +293,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         
         // offset bars to the right to make room for the unplayed words bar – if it exists
         let shiftRight: CGFloat = unplayedWordsExist ? 40.0 : 0.0
+        let leftLeading: CGFloat = graphWidth * 0.5 - 133.0
         
         // var containerArray = [UIView]()
         for i in -1 ..< levelArrays.count {
@@ -305,19 +316,18 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     numWordsInLevel = Float(levelArrays[i]!.count)
                 }
                 
-                // for now, hardcoding in a value of 640 for screen size (iPhone 6 plus size of 1920 / by 3x retina resolution)
                 // top constraint measures from top of screen,
                 // bottom constraint from bottom
-                //let height = Float(graphHeight) * ( numWordsInLevel / findMaxLevelCount()  )
+                // graphStackView.leadingAnchor
                 let height = graphHeight * CGFloat((numWordsInLevel / findMaxLevelCount()))
                 print("height: \(height)")
                 NSLayoutConstraint.activateConstraints([
                     
-                    containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + 10.0 + shiftRight),
+                    containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + leftLeading + shiftRight),
                     containerView.widthAnchor.constraintEqualToConstant(32.0),
                     
-                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.bottomAnchor, constant: CGFloat(-1 * height )  ),
-                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview?.superview!.bottomAnchor, constant: CGFloat(0)),
+                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height + 20)  ),
+                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(0)),
                     ])
                 
                 //was working, but not with stack view
@@ -362,7 +372,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 controller.didMoveToParentViewController(self)
                 
                 // create mask to round the corners of the graph bar
-                let rect: CGRect = CGRectMake(0, 0, 32, CGFloat((3 * height) + 10) )
+                let rect: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
                 let mask: UIView = UIView(frame: rect)
                 mask.backgroundColor = UIColor.whiteColor()
                 mask.layer.cornerRadius = 6
@@ -373,21 +383,19 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 let outlineShadowImage = UIImage(named: "outline_shadow")
                 let outlineShadowView = UIImageView(image: outlineShadowImage)
                 outlineShadowView.alpha = 0.65
-                outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height + 5.0))
+                outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(CGFloat(height - 20)))
                 
                 // create the outline view
                 //TODO: seems like the outline image is being scaled up
                 let outlineImage = UIImage(named: "outline_double")
                 let outlineView = UIImageView(image: outlineImage)
-                outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height + 5))
+                outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height - 20))
                 outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
                 // set the outlineView tintcolor per level
                 outlineView.tintColor = colorCode.tint
                 
                 containerView.addSubview(outlineShadowView)
                 containerView.addSubview(outlineView)
-                //containerArray.append(containerView)
-                numWordsLabel.text = String(Int(findMaxLevelCount()))
                 
                 // Create a text label for the number of words that floats above the container
                 let topLabel = UILabel()
@@ -418,7 +426,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 view.addSubview(bottomLabel)
                 
                 bottomLabel.translatesAutoresizingMaskIntoConstraints = false
-                bottomLabel.topAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 5.0).active = true
+                bottomLabel.topAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 9.0).active = true
                 bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
             }
         }
