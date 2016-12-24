@@ -101,6 +101,32 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         
     }
     
+    // find the lowest level with any words and return a string formatted to one decimal (e.g. 1.2)
+    // TODO:- if there are any words in the 0 level, the level should be 0.x
+    // What happens if you are at a higher level (eg 2), and some words are reduced to 0?
+    // Should a word keep it's mastered status, even if it is missed later?
+    // Increase the percentage of mastered words that are grayed out?
+    func calculateLevel() -> String {
+        var levelString = "0"
+        
+        for i in 1 ..< levelArrays.count {
+            guard let currentLevelArray = levelArrays[i] else {
+                return levelString
+            }
+            // if 0 words in level, then that level is finished (or else not started)
+            // so don't do anything with it, just go on to the next
+            if currentLevelArray.count > 0 {
+                let level = Float(i - 1) + Float(currentLevelArray.count) / Float(model.wordsDictionary.count)
+                // Will display level in tenth point increments
+                levelString = String(format: "%.1f", level)
+                return levelString // the level is the first one with some words, so return here
+                // (you don't move to the next level until all are found)
+            }
+        }
+        // no levels had any words so return 0
+        return levelString
+    }
+    
     //TODO: Save how many rounds have been played (In game managed object). Make sure dictionary can be switched (requires new game). Possibly save details needed to show an animation of progress. Calculate levels to tenth digit, eg, Level 0.3, level 2.1, to give more of a sense of progress.
     // Add tips, e.g., if you miss a word, or fill in the blanks, you will go down a level for that/those word(s)
     
@@ -285,6 +311,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         graphHeight = graphStackView.superview!.frame.size.height
         graphWidth = graphStackView.superview!.frame.size.width
         addLevelContainers()
+        print("Level: \(calculateLevel())")
     }
     
     // Add an array of container views containing the level bars
