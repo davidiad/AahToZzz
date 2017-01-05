@@ -52,7 +52,7 @@ class LevelTableViewController: UITableViewController {
             cell?.label.font = UIFont(name: "Courier", size: 7)
             cell?.label.text = "ABC"//word.word
             cell?.label.textColor = UIColor.blueColor()
-            cell?.backgroundColor = colorCode?.tint
+            cell?.backgroundColor = UIColor.clearColor()//   colorCode?.tint
             //cell?.backgroundView?.backgroundColor = UIColor.clearColor()
             
             //cell?.layoutMargins = UIEdgeInsetsZero;

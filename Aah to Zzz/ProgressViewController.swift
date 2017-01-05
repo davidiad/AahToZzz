@@ -106,6 +106,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // What happens if you are at a higher level (eg 2), and some words are reduced to 0?
     // Should a word keep it's mastered status, even if it is missed later?
     // Increase the percentage of mastered words that are grayed out?
+    // TODO: consider whether this should be a calculated, or lazy var, instead of a func
     func calculateLevel() -> String {
         var levelString = "0"
         
@@ -330,10 +331,16 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 var numWordsInLevel: Float = 0.0
                 var colorCode = ColorCode(code: i)
                 
-                
                 containerView.translatesAutoresizingMaskIntoConstraints = false
+                
                 // set the background color per level
-                containerView.backgroundColor = colorCode.tint
+                let bg_image = UIImage(named:"graph_bg")
+                let insets = UIEdgeInsets(top: 0,left: 0,bottom: 0,right: 0)
+                bg_image!.resizableImageWithCapInsets(insets, resizingMode: .Tile)
+                
+                containerView.backgroundColor = UIColor(patternImage: bg_image!)
+                //containerView.backgroundColor = UIColor.colorWithPatternImage(UIImage(named:"merged_small_tiles.png")!)
+                //containerView.backgroundColor = colorCode.tint
                 graphStackView.translatesAutoresizingMaskIntoConstraints = false
                 graphStackView.addSubview(containerView)
                 

@@ -393,7 +393,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="40" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="sectionIndexBackgroundColor" red="0.99747711419999996" green="0.8684134483" blue="0.038625180719999999" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="levelcell" id="i9a-Rb-KBw" customClass="LevelTableCell" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="40" height="44"/>
