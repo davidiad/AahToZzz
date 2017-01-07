@@ -26,6 +26,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     var tableHt: Int = 0
     var unplayedWordsExist: Bool = false
     var unplayedWordsArray = [String]()
+    var levelText: String?
     
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
@@ -312,7 +313,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         graphHeight = graphStackView.superview!.frame.size.height
         graphWidth = graphStackView.superview!.frame.size.width
         addLevelContainers()
-        print("Level: \(calculateLevel())")
+        levelText = calculateLevel()
+        //print("Level: \(calculateLevel())")
+        
     }
     
     // Add an array of container views containing the level bars
@@ -463,6 +466,18 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 bottomLabel.topAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 9.0).active = true
                 bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
             }
+        }
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let infoViewController = segue.destinationViewController as? ProgressInfoViewController {
+            //calculateLevel() not working - guessing because the segue happens before the levels are created
+            //infoViewController.levelByTenths = calculateLevel()
+
+        } else {
+            print("segue to CollectionViewController fail")
         }
     }
     

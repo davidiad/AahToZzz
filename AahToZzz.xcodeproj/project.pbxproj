@@ -461,13 +461,13 @@
 				637AF06C1C83512F005A36BA /* OptionsViewController.swift */,
 				63C449851C9A18F10053BE77 /* RotatingView.swift */,
 				63C449871C9A73B60053BE77 /* ProxyTableCell.swift */,
+				637F675F1E20743600347F15 /* ProgressInfoViewController.swift */,
 				633C7B061DB46A060055CD83 /* ProgressViewController.swift */,
 				633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */,
 				63E4A2C01DC0102F002BC4CE /* ProgressTableCell.swift */,
 				63E4A2C21DC17498002BC4CE /* TestViewController.swift */,
 				63E4A2C41DC1AF98002BC4CE /* LevelTableViewController.swift */,
 				63E4A2C61DC24CBA002BC4CE /* LevelTableCell.swift */,
-				637F675F1E20743600347F15 /* ProgressInfoViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
