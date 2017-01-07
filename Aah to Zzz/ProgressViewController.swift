@@ -416,7 +416,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 // first, the shadow image beneath to help the outline stand out
                 let outlineShadowImage = UIImage(named: "outline_shadow")
                 let outlineShadowView = UIImageView(image: outlineShadowImage)
-                outlineShadowView.alpha = 0.65
+                outlineShadowView.alpha = 0.5
                 outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(CGFloat(height - 20)))
                 
                 // create the outline view

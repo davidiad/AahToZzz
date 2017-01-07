@@ -710,29 +710,7 @@ class AtoZModel {
 //    }
     
     //MARK:- Stats calculations
-    
-    func numUniqueWordsPlayed() -> Int? {
-        var numUniqueWords: Int16 = 0
-        for aWord in (game?.words)! {
-            let w = aWord as? Word
-            if w?.numTimesPlayed > 0 {
-                numUniqueWords += 1
-            }
-        }
-        return Int(numUniqueWords)
-    }
-    
-    func numUniqueWordsFound() -> Int? {
-        var numUniqueWords: Int16 = 0
-        for aWord in (game?.words)! {
-            let w = aWord as? Word
-            if w?.numTimesFound > 0 {
-                numUniqueWords += 1
-            }
-        }
-        return Int(numUniqueWords)
-    }
-    
+  
     func numWordsFound() -> Int? {
         var numWords: Int16 = 0
         for aWord in (game?.words)! {
@@ -750,6 +728,29 @@ class AtoZModel {
         }
         return Int(numWords)
     }
+    
+    func numUniqueWordsFound() -> Int? {
+        var numUniqueWords: Int16 = 0
+        for aWord in (game?.words)! {
+            let w = aWord as? Word
+            if w?.numTimesFound > 0 {
+                numUniqueWords += 1
+            }
+        }
+        return Int(numUniqueWords)
+    }
+    
+    func numUniqueWordsPlayed() -> Int? {
+        var numUniqueWords: Int16 = 0
+        for aWord in (game?.words)! {
+            let w = aWord as? Word
+            if w?.numTimesPlayed > 0 {
+                numUniqueWords += 1
+            }
+        }
+        return Int(numUniqueWords)
+    }
+    
     
     
     func percentageFound() -> Int? {
