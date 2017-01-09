@@ -122,6 +122,7 @@
 		63E4A2C31DC17498002BC4CE /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E4A2C21DC17498002BC4CE /* TestViewController.swift */; };
 		63E4A2C51DC1AF98002BC4CE /* LevelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E4A2C41DC1AF98002BC4CE /* LevelTableViewController.swift */; };
 		63E4A2C71DC24CBA002BC4CE /* LevelTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E4A2C61DC24CBA002BC4CE /* LevelTableCell.swift */; };
+		63E5EE7A1E234D9A00269624 /* OSPD5_3letter.txt in Resources */ = {isa = PBXBuildFile; fileRef = 63E5EE791E234D9A00269624 /* OSPD5_3letter.txt */; };
 		63EA98D71D4F46E000537F2A /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA98D61D4F46DF00537F2A /* Colors.swift */; };
 		63EA98E11D52B98700537F2A /* small_tile_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EA98DE1D52B98700537F2A /* small_tile_gray.png */; };
 		63EA98E21D52B98700537F2A /* small_tile_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EA98DF1D52B98700537F2A /* small_tile_gray@2x.png */; };
@@ -246,6 +247,7 @@
 		63E4A2C21DC17498002BC4CE /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		63E4A2C41DC1AF98002BC4CE /* LevelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelTableViewController.swift; sourceTree = "<group>"; };
 		63E4A2C61DC24CBA002BC4CE /* LevelTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelTableCell.swift; sourceTree = "<group>"; };
+		63E5EE791E234D9A00269624 /* OSPD5_3letter.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OSPD5_3letter.txt; sourceTree = "<group>"; };
 		63EA98D61D4F46DF00537F2A /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		63EA98DE1D52B98700537F2A /* small_tile_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_gray.png; sourceTree = "<group>"; };
 		63EA98DF1D52B98700537F2A /* small_tile_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_gray@2x.png"; sourceTree = "<group>"; };
@@ -282,7 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				63A3A11A1C763F6C00F440B5 /* Assets.xcassets */,
-				63A3A1271C76520500F440B5 /* 3letterwordlist.txt */,
+				63E5EE781E234D6200269624 /* word lists */,
 				63C449571C98BDE20053BE77 /* images */,
 			);
 			name = Assets;
@@ -372,10 +374,10 @@
 		63A9FEF61C7AC2D200AE54F1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				63A9FEF51C7AC2AC00AE54F1 /* Core Data Managed Objects */,
 				63D57BA91C8A48AB0046E349 /* Tile.swift */,
 				637AF0771C84297C005A36BA /* FlickrClient.swift */,
 				63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */,
-				63A9FEF51C7AC2AC00AE54F1 /* Core Data Managed Objects */,
 				63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */,
 				63A3A1291C7652C300F440B5 /* AtoZModel.swift */,
 				637AF06A1C8236C8005A36BA /* WordnikClient.swift */,
@@ -470,6 +472,15 @@
 				63E4A2C61DC24CBA002BC4CE /* LevelTableCell.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		63E5EE781E234D6200269624 /* word lists */ = {
+			isa = PBXGroup;
+			children = (
+				63E5EE791E234D9A00269624 /* OSPD5_3letter.txt */,
+				63A3A1271C76520500F440B5 /* 3letterwordlist.txt */,
+			);
+			name = "word lists";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -575,6 +586,7 @@
 				630681C41CADCC6B0010489E /* outline_shadow.pdf in Resources */,
 				6300C64C1CA5B11B00E3B4D5 /* small_tile_magenta@2x.png in Resources */,
 				634E76FA1D41E52800F9FC52 /* small_tile_red.png in Resources */,
+				63E5EE7A1E234D9A00269624 /* OSPD5_3letter.txt in Resources */,
 				63C449541C98BDD70053BE77 /* merged_small_tiles.png in Resources */,
 				63C449841C99F78C0053BE77 /* icon_shuffle.pdf in Resources */,
 				6300C6581CA5E6E500E3B4D5 /* small_tile_green@2x.png in Resources */,

@@ -23,6 +23,7 @@ class AtoZModel {
     // adding extra vowels as they are more freqent in english words
     let alphabetSoup = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
     
+    var dictionaryName: String // which dictionary 3 letter word list to use
     // 3 different data structures to hold the 3 letter word list info, each with its own purpose
     var wordsArray: [String]
     var wordsDictionary: [String: String]
@@ -44,14 +45,16 @@ class AtoZModel {
     
     //This prevents others from using the default '()' initializer for this class.
     private init() {
-
+        //TODO: Add the rest of the new words from OSPD5, from G on
         positions = [Position]()
         wordsArray = [String]()
         wordsDictionary = [:] // init empty dictionary
         wordsSet = Set<String>()
         
+        dictionaryName = "OSPD5_3letter" // default wordlist
+        
         var rawWordsArray = [String]()
-        rawWordsArray = arrayFromContentsOfFileWithName("3letterwordlist")!
+        rawWordsArray = arrayFromContentsOfFileWithName(dictionaryName)!
         
         // convert wordsArray to wordsDictionary
         // even elements of wordsArray are the keys (the word itself); odd entries are the values, which are the word definitions

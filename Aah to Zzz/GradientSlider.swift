@@ -38,7 +38,7 @@ import UIKit
         set{setValue(newValue, animated:true)}
     }
     
-    /*@IBInspectable var rotation: CGFloat =  CGFloat(M_PI * 0.5) {
+    @IBInspectable var rotation: CGFloat =  CGFloat(M_PI * 0.5) {
            didSet{
                 updateRotation()
             //transform = CGAffineTransformMakeRotation(rotation)
@@ -46,7 +46,7 @@ import UIKit
 //        //CGAffineTransformMakeRotation(CGFloat(M_PI * 0.5))
 //        get{return CGFloat(M_PI * 0.5)}
 //        //set{setValue(newValue, animated:true)}
-    }*/
+    }
     
     func setValue(value:CGFloat, animated:Bool = true) {
         _value = max(min(value,self.maximumValue),self.minimumValue)
@@ -451,9 +451,9 @@ import UIKit
         _trackLayer.locations = locations
     }
     
-   /* private func updateRotation() {
+    private func updateRotation() {
         transform = CGAffineTransformMakeRotation(rotation)
-    }*/
+    }
 }
 
 
