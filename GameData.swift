@@ -14,6 +14,7 @@ class GameData: NSManagedObject {
 
     @NSManaged var currentLetterSetID: String?
     @NSManaged var gameID: String?
+    @NSManaged var dictionaryName: String?
     @NSManaged var masteryLevel: Int16
     @NSManaged var name: String?
     @NSManaged var positions: NSSet?
