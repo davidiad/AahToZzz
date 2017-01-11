@@ -114,13 +114,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }()
     
     // This function will be called with every and each collision starts between all the views added to our collision behavior.
-    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint){
-        
-        // Wer're only interested in collisions with the black circle (snappingCircle).
-        if (item1 as? UIView)?.tag >= 2000 {
-            print("Collides!: \((item1 as? UIView)?.tag) and \((item2 as? UIView)?.tag)")
-        }
-    }
+//    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint){
+//        
+//        // We're only interested in collisions with the black circle (snappingCircle).
+//        if (item1 as? UIView)?.tag >= 2000 {
+//            print("Collides!: \((item1 as? UIView)?.tag) and \((item2 as? UIView)?.tag)")
+//        }
+//    }
     
     lazy var dynamicItemBehavior:UIDynamicItemBehavior = {
         let lazyBehavior = UIDynamicItemBehavior()
@@ -182,17 +182,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         jumbleTiles()
         
-        // Jumble a 2nd time, after a slight delay
-        let timer = 1.5
-        let delay = timer * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue()) {
-            for tile in self.lettertiles {
-//                tile.snapBehavior?.snapPoint = (tile.letter?.position?.position)!
-                //tile.frame = CGRect(origin: (tile.letter?.position?.position)!, size: tile.frame.size)
-            }
-            //self.jumbleTiles()
-        }
+//        // Jumble a 2nd time, after a slight delay
+//        let timer = 1.5
+//        let delay = timer * Double(NSEC_PER_SEC)
+//        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+//        dispatch_after(time, dispatch_get_main_queue()) {
+//            for tile in self.lettertiles {
+////                tile.snapBehavior?.snapPoint = (tile.letter?.position?.position)!
+//                //tile.frame = CGRect(origin: (tile.letter?.position?.position)!, size: tile.frame.size)
+//            }
+//            //self.jumbleTiles()
+//        }
         
         /*
         // find the current positions of the letters
@@ -392,7 +392,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private var itemBehavior: UIDynamicItemBehavior!
     private var gravityBehavior = UIGravityBehavior()
     private var collisionBehavior = UICollisionBehavior()
-    private var blackhole = UIFieldBehavior!(nil) //for Swift 3, add nil inside parens
+    //private var blackhole = UIFieldBehavior!(nil) //for Swift 3, add nil inside parens
     
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
@@ -653,6 +653,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Each letter should have a position
     func swapTile(tile: Tile) {
         print("in swapTile")
+        
+        animator.removeAllBehaviors()
+        for anyTile in lettertiles {
+            animator.addBehavior(anyTile.snapBehavior!)
+        }
+        
         let newPosition = findVacancy(tile)
 
         if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
@@ -667,6 +673,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             // Tiles drop slightly from gravity unless it's removed here. Gravity is added each time the tiles are jumbled anyway.
             animator.removeBehavior(gravity)
+            //collisionBehavior.removeItem(tile)
+
             print("Behaviors: \(animator.behaviors)")
             saveContext() // safest to save the context here, after every letter swap
             
