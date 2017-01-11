@@ -690,12 +690,16 @@ GID
 disease of sheep
 GIE
 to give
+GIF
+a computer file (added in OSPD5)
 GIG
 to catch fish with a pronged spear
 GIN
 to begin/to remove seeds from cotton
 GIP
 to gyp
+GIS
+plural of gi (added in OSPD5)
 GIT
 interjection used as an order of dismissal
 GNU
@@ -718,6 +722,8 @@ GOX
 gaseous oxygen
 GOY
 non-Jewish person
+GRR
+interjection used to express annoyance (added in OSPD5)
 GUL
 design in oriental carpets
 GUM
@@ -804,8 +810,12 @@ HOE
 to use a hoe
 HOG
 to take more than one's share
+HOM
+a sacred plant of the ancient Persians (added in OSPD5)
 HON
 honeybun
+HOO
+interjection expressing suprise (added in OSPD5)
 HOP
 to move by jumping on one foot
 HOT
@@ -984,6 +994,8 @@ LAD
 boy
 LAG
 to fall behind
+LAH
+la (added in OSPD5)
 LAM
 to flee
 LAP
@@ -1048,16 +1060,22 @@ LOO
 to subject to a forfeit at the card game loo
 LOP
 to chop off
+LOR
+variant of lord (added in OSPD5)
 LOT
 to distribute proportionately
 LOW
 close to the ground/to make the sound of cattle
 LOX
 to supply with lox (liquid oxygen)
+LUD
+a form of address to a judge in a court (added in OSPD5)
 LUG
 to pull with effort
 LUM
 chimney
+LUN
+a lee (added in OSPD5)
 LUV
 sweetheart
 LUX

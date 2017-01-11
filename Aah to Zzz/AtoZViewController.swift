@@ -9,14 +9,47 @@
 import UIKit
 import CoreData
 
-class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate {
+class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate, UIDynamicAnimatorDelegate {
     
-    
+    // Finish adding OSPD5 words, get paper copy to check for sure which are in
+    // Need to add from M on
+    // Possible, add option to pick dictionary.
+    // If multiple dictionaries, make a new game for each dictionary.
+    // Allow user to have multiple games, and to name their games.
+    // Add more dictionaries, including one that removes offensive words. Use as default?
     // TODO:- Some words are grayed out, but are still in the list and findable
+    // Also, when fill in the blanks is used, check that words are considered missed
+    // Show definitions only when word has been found
+    // Once a level has been reached, prevent words from going below that level (?)
+    // Add a speed thru feature for testing
+    // Help/tutorial
+    // ghosted arrows to show you can scroll on right side. Maybe
+    // they show up when touching the side area?
+    // Figure out where to add 2 letter word games, and other games
+    // Add Game center and leaderboards. 
+    // Challenges: Play all words once (missed or not). Find all words once. etc.
     // Check -- are word levels updating correctly?
-    // Tile that snap back after jumble are off by a small amount
+    // Tiles that snap back after jumble are off by a small amount
+    // if possible, vary the snap back angle/direction
+    // clean up UIDynamics code (some is not being used)
     // Tapping on tiles, sometimes they get moved in the wrong sequence -- frustrating
-    // 
+    // (Need to make sure the first one is moved before the 2nd, etc)
+    // Tiles sometimes get stuck at an angle
+    // Make format of progress view finished and nicer (what to do with empty columns)
+    // fix autolayout bug with Progress View
+    // If possible, add a mini progress viewer that appears on the main page
+    // Word definitions: find a better picture source.
+    // Cache visual dictionary (download in background after word list is generated)
+    // Upgrade to Xcode 8 and test with iOS10
+    // Possible: refactor to MVVM
+    // Need app icons
+    // Change name to "AA to ZZZ"
+    // Update stats icon to be vertical instead of horizontal
+    // replace options with help/options(?)
+    // swap position of help/options icon with Fill in the Blanks icon
+    // fix Error warning
+    // Add better error handling
+    // Fix infoViewController warning
     
     // MARK: - Unwind segue from Progress view
     @IBAction func cancelToProgressViewController(segue:UIStoryboardSegue) {
@@ -119,55 +152,65 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return lazyBehavior
     }()
     
-    lazy var dynamicItemBehavior_tile0:UIDynamicItemBehavior = {
-        let lazyBehavior = UIDynamicItemBehavior()
-        // Let's make our square elastic
-        // 0 = no elacticity, 1.0 = max elacticity
-        lazyBehavior.elasticity = 1.0
-        
-        // Other configurations
-        lazyBehavior.allowsRotation = true
-        lazyBehavior.density = 300.0
-        lazyBehavior.friction = 0.0
-        lazyBehavior.resistance = 0.0
-        
-        return lazyBehavior
-    }()
+//    lazy var dynamicItemBehavior_tile0:UIDynamicItemBehavior = {
+//        let lazyBehavior = UIDynamicItemBehavior()
+//        // Let's make our square elastic
+//        // 0 = no elacticity, 1.0 = max elacticity
+//        lazyBehavior.elasticity = 1.0
+//        
+//        // Other configurations
+//        lazyBehavior.allowsRotation = true
+//        lazyBehavior.density = 300.0
+//        lazyBehavior.friction = 0.0
+//        lazyBehavior.resistance = 0.0
+//        
+//        return lazyBehavior
+//    }()
     
     @IBAction func jumbleTiles(sender: AnyObject) {
-
+        
         // find the current positions of the letters
         // randomize the positions of the letters
         // later, snap to those positions
         let sevenRandomizedInts = model.randomize7()
-//        for i in 0 ..< lettertiles.count {
-//            let t = lettertiles[i]
-//            t.letter? = letters![sevenRandomizedInts[i]]
-//            
-//        }
         for j in 0 ..< 7 {
-
-
-            // There are 10 Positions, not 7. Tiles in the upper positions (7,8,9) will be returned to lower positionas
+            
+            // There are 10 Positions, not 7. Tiles in the upper positions (7,8,9) will be returned to lower positions
             letters[j].position = positions![sevenRandomizedInts[j]]
-
-            //saveContext()
-            //print("LLLLL \(lettertiles[j].letter!)")
         }
         saveContext() // TODO: Need dispatch async?
         
-        //animator.setValue(true, forKey: "debugEnabled")
-        animator.removeAllBehaviors()
+        jumbleTiles()
         
-//        let jumble = UIPushBehavior(items: lettertiles, mode: .Instantaneous)
-//        jumble.pushDirection = CGVectorMake(0, -2.5)
-//        animator.addBehavior(jumble)
-//        
-//        let pushes = [UIPushBehavior]()
+        // Jumble a 2nd time, after a slight delay
+        let timer = 1.5
+        let delay = timer * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_main_queue()) {
+            for tile in self.lettertiles {
+//                tile.snapBehavior?.snapPoint = (tile.letter?.position?.position)!
+                //tile.frame = CGRect(origin: (tile.letter?.position?.position)!, size: tile.frame.size)
+            }
+            //self.jumbleTiles()
+        }
         
+        /*
+        // find the current positions of the letters
+        // randomize the positions of the letters
+        // later, snap to those positions
+        let sevenRandomizedInts = model.randomize7()
+        for j in 0 ..< 7 {
 
+            // There are 10 Positions, not 7. Tiles in the upper positions (7,8,9) will be returned to lower positions
+            letters[j].position = positions![sevenRandomizedInts[j]]
+
+        }
+        saveContext() // TODO: Need dispatch async?
+        
+        // animator.setValue(true, forKey: "debugEnabled") // uncomment to see dynamics reference lines
+        animator.removeAllBehaviors() // reset the animator
+        
         uiDynamicItemBehavior.addItem(toolbar)
-        //uiDynamicItemBehavior.addItem(wordTableHolderView)
         animator.addBehavior(gravity)
         animator.addBehavior(collider)
         animator.addBehavior(dynamicItemBehavior)
@@ -176,24 +219,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //collider.addItem(wordTableHolderView)
         collider.addItem(toolbar)
 
-
-//        let wordHolderSnap = UISnapBehavior(item: wordTableHolderView, snapToPoint: wordHolderCenter!)
-//        animator.addBehavior(wordHolderSnap)
-//        animator.addBehavior(radialGravity0)
-//        animator.addBehavior(radialGravity1)
-//        animator.addBehavior(radialGravity2)
-//        animator.addBehavior(radialGravity3)
-
         // Delay snapping tiles back to positions until after the tiles have departed
         var timer = 0.2
         let delay = timer * Double(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue()) {
-//            for bg in self.tileBackgrounds! {
-//                self.collider.addItem(bg)
-//                let bgViewSnap = UISnapBehavior(item: bg, snapToPoint: bg.center)
-//                self.animator.addBehavior(bgViewSnap)
-//            }
+
             timer = 0.1
             for tile in self.lettertiles {
                 timer += 0.1
@@ -201,7 +232,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 dispatch_after(time, dispatch_get_main_queue()) {
                     tile.snapBehavior = UISnapBehavior(item: tile, snapToPoint: (tile.letter?.position?.position)!)
-                    //tile.snapBehavior?.snapPoint = (tile.letter?.position?.position)!
                     self.animator.addBehavior(tile.snapBehavior!)
                     self.collider.removeItem(tile)
                     self.saveContext()
@@ -222,12 +252,89 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             push.angle = CGFloat(direction)
             push.magnitude = CGFloat(7.0 * drand48() + 7.0)
             animator.addBehavior(push)
+            print(animator.running)
             
             // add gravity to each tile
             collider.addItem(lettertiles[i])
             gravity.addItem(lettertiles[i])
             dynamicItemBehavior.addItem(lettertiles[i])
 
+        }
+         */
+    }
+    
+    func jumbleTiles() {
+        
+        //animator.setValue(true, forKey: "debugEnabled") // uncomment to see dynamics reference lines
+        animator.removeAllBehaviors() // reset the animator
+        
+        uiDynamicItemBehavior.addItem(toolbar)
+        animator.addBehavior(gravity)
+        animator.addBehavior(collider)
+        animator.addBehavior(dynamicItemBehavior)
+        animator.addBehavior(uiDynamicItemBehavior)
+        // add the scroll view that holds the word list as a collider
+        //collider.addItem(wordTableHolderView)
+        collider.addItem(toolbar)
+        
+        // Need to turn off gravity after awhile, otherwise it moves the tiles out of position
+        let gravityTimer = 1.0
+        let gravityDelay = gravityTimer * Double(NSEC_PER_SEC)
+        let gravityTime = dispatch_time(DISPATCH_TIME_NOW, Int64(gravityDelay))
+        dispatch_after(gravityTime, dispatch_get_main_queue()) {
+            self.animator.removeBehavior(self.gravity)
+        }
+        
+        // Delay snapping tiles back to positions until after the tiles have departed
+        var timer = 0.2
+        let delay = timer * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_main_queue()) {
+            
+            timer = 0.1
+            for tile in self.lettertiles {
+                timer += 0.1
+                let delay = timer * Double(NSEC_PER_SEC)
+                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                dispatch_after(time, dispatch_get_main_queue()) {
+                    tile.snapBehavior = UISnapBehavior(item: tile, snapToPoint: (tile.letter?.position?.position)!)
+ 
+//                    // To do an action on every frame
+//                    tile.snapBehavior?.action = {
+//                        () -> Void in
+//                        print("action")
+//                    }
+                    
+                    self.animator.addBehavior(tile.snapBehavior!)
+                    self.collider.removeItem(tile)  // keeps the letters from getting stuck on each other.
+                    
+                    self.saveContext()
+                    
+                }
+            }
+        }
+        
+        
+        
+        //        for tile in lettertiles {
+        for i in 0 ..< lettertiles.count {
+            
+            // add a push in a random but up direction
+            // taking into account that 0 (in radians) pushes to the right, and we want to vary between about 90 degrees (-1.57 radians) to the left, and to the right
+            // direction should be between ~ -3 and 0. or maybe ~ -.5 and -2.5 (needs fine tuning)
+            let direction = -1.5 * drand48() - 0.9
+            let push = UIPushBehavior(items: [lettertiles[i]], mode: .Instantaneous)
+            //push.pushDirection = CGVectorMake(0, CGFloat(direction))
+            push.angle = CGFloat(direction)
+            push.magnitude = CGFloat(7.0 * drand48() + 7.0)
+            animator.addBehavior(push)
+            print(animator.running)
+            
+            // add gravity to each tile
+            collider.addItem(lettertiles[i])
+            gravity.addItem(lettertiles[i])
+            dynamicItemBehavior.addItem(lettertiles[i])
+            
         }
     }
     
@@ -243,41 +350,41 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return CGPoint(x: self.view.frame.midX, y: self.view.frame.midY)
     }()
 
-    lazy var radialGravity0: UIFieldBehavior = {
-        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![0].position)
-        radialGravity.region = UIRegion(radius: 100.0)
-        radialGravity.strength = 50.0
-        radialGravity.falloff = 2.0
-        radialGravity.minimumRadius = 60.0
-        return radialGravity
-    }()
-    
-    lazy var radialGravity1: UIFieldBehavior = {
-        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![1].position)
-        radialGravity.region = UIRegion(radius: 100.0)
-        radialGravity.strength = 50.0
-        radialGravity.falloff = 2.0
-        radialGravity.minimumRadius = 60.0
-        return radialGravity
-    }()
-    
-    lazy var radialGravity2: UIFieldBehavior = {
-        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![2].position)
-        radialGravity.region = UIRegion(radius: 100.0)
-        radialGravity.strength = 50.0
-        radialGravity.falloff = 2.0
-        radialGravity.minimumRadius = 60.0
-        return radialGravity
-    }()
-    
-    lazy var radialGravity3: UIFieldBehavior = {
-        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![3].position)
-        radialGravity.region = UIRegion(radius: 100.0)
-        radialGravity.strength = 50.0
-        radialGravity.falloff = 2.0
-        radialGravity.minimumRadius = 60.0
-        return radialGravity
-    }()
+//    lazy var radialGravity0: UIFieldBehavior = {
+//        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![0].position)
+//        radialGravity.region = UIRegion(radius: 100.0)
+//        radialGravity.strength = 50.0
+//        radialGravity.falloff = 2.0
+//        radialGravity.minimumRadius = 60.0
+//        return radialGravity
+//    }()
+//    
+//    lazy var radialGravity1: UIFieldBehavior = {
+//        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![1].position)
+//        radialGravity.region = UIRegion(radius: 100.0)
+//        radialGravity.strength = 50.0
+//        radialGravity.falloff = 2.0
+//        radialGravity.minimumRadius = 60.0
+//        return radialGravity
+//    }()
+//    
+//    lazy var radialGravity2: UIFieldBehavior = {
+//        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![2].position)
+//        radialGravity.region = UIRegion(radius: 100.0)
+//        radialGravity.strength = 50.0
+//        radialGravity.falloff = 2.0
+//        radialGravity.minimumRadius = 60.0
+//        return radialGravity
+//    }()
+//    
+//    lazy var radialGravity3: UIFieldBehavior = {
+//        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![3].position)
+//        radialGravity.region = UIRegion(radius: 100.0)
+//        radialGravity.strength = 50.0
+//        radialGravity.falloff = 2.0
+//        radialGravity.minimumRadius = 60.0
+//        return radialGravity
+//    }()
     
     private var animator: UIDynamicAnimator!
     private var attachmentBehavior: UIAttachmentBehavior!
@@ -349,7 +456,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //scrollingSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 0.5))
         
         animator = UIDynamicAnimator(referenceView: view)
-
+        animator.delegate = self
         lettertiles = [Tile]()
         tileBackgrounds = [UIView]() // putting the tile bg's into an array so as to refer to them in collision detection
         let image = UIImage(named: "tile") as UIImage?
@@ -433,9 +540,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         
-        blackhole = UIFieldBehavior.radialGravityFieldWithPosition(CGPointMake(65, 150))
-        blackhole.falloff = 0.01
-        blackhole.strength = 1234.9
+//        blackhole = UIFieldBehavior.radialGravityFieldWithPosition(CGPointMake(65, 150))
+//        blackhole.falloff = 0.01
+//        blackhole.strength = 1234.9
         
 //        snap0 = UISnapBehavior(item: lettertiles[0], snapToPoint: CGPointMake(40, 300))
 //        snap1 = UISnapBehavior(item: lettertiles[1], snapToPoint: CGPointMake(140, 300))
@@ -495,9 +602,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //animator.addBehavior(itemBehavior)
         
         //vortex.addItem(orbitingView)
-        radialGravity0.addItem(lettertiles[0])
-        
-        radialGravity1.addItem(lettertiles[1])
+//        radialGravity0.addItem(lettertiles[0])
+//        
+//        radialGravity1.addItem(lettertiles[1])
         
         //animator.addBehavior(radialGravity)
         //animator.addBehavior(vortex)
@@ -557,11 +664,29 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             previousPosition?.letter = nil // the previous position is now vacant
 
             tile.letter?.position = newPosition
-            tile.snapBehavior?.snapPoint = (newPosition?.position)!
-            print("TILE POS for \(tile.titleLabel?.text): \(tile.transform)")
-            //newPosition?.letter = tile.letter // is the inverse needed?
+            
+            // Tiles drop slightly from gravity unless it's removed here. Gravity is added each time the tiles are jumbled anyway.
+            animator.removeBehavior(gravity)
+            print("Behaviors: \(animator.behaviors)")
             saveContext() // safest to save the context here, after every letter swap
-            //printTileDiagram()
+            
+            tile.snapBehavior?.snapPoint = (newPosition?.position)!
+            printTileDiagram()
+            print("Snappoint: \(tile.snapBehavior?.snapPoint)")
+            print("Origin: \(tile.frame.origin)")
+            print("Tile.Position: \(tile.position)")
+            print("tile.letter.position: \(tile.letter?.position)")
+            print("transform: \(tile.transform)")
+            //tile.transform = CGAffineTransformIdentity
+//            let timer = 3.5
+//            let delay = timer * Double(NSEC_PER_SEC)
+//            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+//            dispatch_after(time, dispatch_get_main_queue()) {
+//                tile.snapBehavior?.snapPoint = (newPosition?.position)!
+//            }
+            print("transform: \(tile.transform)")
+            print("Position 7: \(positions![7])")
+            //tile.frame.origin = CGPointMake(CGFloat(positions![7].xPos), CGFloat(positions![7].yPos))
         }
     }
     
@@ -578,9 +703,96 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         saveContext() // safest to save the context here, after every letter swap
     }
     
+    //MARK:- dynamic animator delegate
+    var animatorBeganPause: Bool = false
+    
     func dynamicAnimatorDidPause(animator: UIDynamicAnimator){
-        print("Stasis! The universe stopped moving.")
+        if !animatorBeganPause { // otherwise this is called continually
+            print("Stasis! The universe stopped moving.")
+            for tile in lettertiles {
+                checkTilePosition(tile)
+            }
+            animatorBeganPause = true
+        }
     }
+    
+    
+    func dynamicAnimatorWillResume(animator: UIDynamicAnimator) {
+        animatorBeganPause = false // reset
+    }
+    
+    // Helper to see if tile has reached its position after dynamic animator has paused
+    func checkTilePosition(tile: Tile) {
+        // TODO: check if the position checking is working
+        //animator.removeBehavior(tile.snapBehavior!)
+        
+        let tolerance: Float = 0.1
+        guard let tilePosX = tile.letter!.position?.xPos else {
+            return
+        }
+        let checkX = abs(Float(tile.frame.origin.x) - tilePosX)
+        
+        guard let tilePosY = tile.letter!.position?.yPos else {
+            return
+        }
+        let checkY = abs(Float(tile.frame.origin.y) - tilePosY)
+        
+        
+        if checkX > tolerance || checkY > tolerance {
+            // The tile is not at its correct position, so move it to correct position
+            
+//            if let snap = tile.snapBehavior {
+//                animator.addBehavior(snap)
+//            }
+
+            
+//            tile.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+//                    tile.frame.origin = tile.position
+//                    self.view.layoutIfNeeded()
+//                }, completion: nil)
+            
+            
+            
+            
+//            let animation = CABasicAnimation(keyPath: "position")
+//            animation.fromValue = [tile.frame.origin.x, tile.frame.origin.y]
+//            animation.toValue = [tilePosX, tilePosY]
+//            
+//            tile.layer.addAnimation(animation, forKey: "position")
+            
+            
+            //let move = CGAffineTransformMakeTranslation(0.0, -90.0)
+            
+            UIView.animateWithDuration(0.15, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+                
+                //t.transform = CGAffineTransformConcat(scale, move)
+                //tile.transform = CGAffineTransformTranslate(move, 90, 90)
+                print("In Animation")
+                tile.transform = CGAffineTransformIdentity
+                tile.center = (tile.letter?.position?.position)!
+                
+                }, completion: { (finished: Bool) -> Void in
+            })
+            
+            
+            
+            
+            //tile.center = (tile.letter?.position?.position)!
+            
+            
+            
+            
+        }
+        
+    }
+    //MARK:-
+//    
+//    func test (v: UIView) {
+//        view.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+//            tile.frame.origin = tile.position
+//            self.view.layoutIfNeeded()
+//            }, completion: nil)
+//    }
     
     func findVacancy(tile: Tile) -> Position? {
         

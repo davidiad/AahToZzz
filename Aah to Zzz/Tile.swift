@@ -12,6 +12,7 @@ import UIKit
 
 class Tile: UIButton {
     var snapBehavior: UISnapBehavior?
+    
     //TODO: this property is confusing, as there is also a position property in Letter which is a Position
     // check whether it's really needed? The Tile should get its position from its letter.position property
     //TODO: Consider removing position behavior. It's covered by position.letter.position. And besides, there's already an x and a y
