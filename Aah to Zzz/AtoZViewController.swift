@@ -11,6 +11,7 @@ import CoreData
 
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate, UIDynamicAnimatorDelegate {
     
+    //TODO:- LIST
     // Finish adding OSPD5 words, get paper copy to check for sure which are in
     // Need to add from M on
     // Possible, add option to pick dictionary.
@@ -29,12 +30,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Add Game center and leaderboards. 
     // Challenges: Play all words once (missed or not). Find all words once. etc.
     // Check -- are word levels updating correctly?
-    // Tiles that snap back after jumble are off by a small amount
+    // Tiles that snap back after jumble are off by a small amount - Fixed!
     // if possible, vary the snap back angle/direction
     // clean up UIDynamics code (some is not being used)
     // Tapping on tiles, sometimes they get moved in the wrong sequence -- frustrating
     // (Need to make sure the first one is moved before the 2nd, etc)
-    // Tiles sometimes get stuck at an angle
+    // Tiles sometimes get stuck at an angle -Fixed i think, needs verification
     // Make format of progress view finished and nicer (what to do with empty columns)
     // fix autolayout bug with Progress View
     // If possible, add a mini progress viewer that appears on the main page
@@ -50,6 +51,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // fix Error warning
     // Add better error handling
     // Fix infoViewController warning
+    // words in found word list -- determine # of outline rings -- also for bar graphs
+    // when tapping 2 letters, sometimes the 2nd one, instead of going to the upper positions, goes to an open lower position. So need to prioritize upper position
+    // If possible, in Progress view, get rid of the delay in the bars being displayed. Or animate them?
+    // Using Model Versioning and Migration for core data
+    // after swapTiles, make sure the context is saved before using findVacancy again. Completion handler? Delay? Notification? Add a delay every time, but later replace with a test for the flag first, so the delay doesn't run every single time
+    // add sound fx (or wait til next version)?
     
     // MARK: - Unwind segue from Progress view
     @IBAction func cancelToProgressViewController(segue:UIStoryboardSegue) {
@@ -659,42 +666,31 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             animator.addBehavior(anyTile.snapBehavior!)
         }
         
-        let newPosition = findVacancy(tile)
-
-        if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
-
+        // add slight delay to give time for the positions to be updated and saved to context
+        // TODO: use completion handler instead of a delay every single time
+        delay(0.15) { // still sometimes moves to a lower pos when an upper is open, and should be moved to
+            let newPosition = self.findVacancy(tile)
             
-            // update the Positions
-            let previousPosition = tile.letter?.position
             
-            previousPosition?.letter = nil // the previous position is now vacant
+            if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
+                
+                
+                // update the Positions
+                let previousPosition = tile.letter?.position
+                
+                previousPosition?.letter = nil // the previous position is now vacant
+                
+                tile.letter?.position = newPosition
+                
+                // Tiles drop slightly from gravity unless it's removed here. Gravity is added each time the tiles are jumbled anyway.
+                self.animator.removeBehavior(self.gravity)
+                
+                self.saveContext() // safest to save the context here, after every letter swap
+                
+                tile.snapBehavior?.snapPoint = (newPosition?.position)!
 
-            tile.letter?.position = newPosition
-            
-            // Tiles drop slightly from gravity unless it's removed here. Gravity is added each time the tiles are jumbled anyway.
-            animator.removeBehavior(gravity)
-            //collisionBehavior.removeItem(tile)
-
-            print("Behaviors: \(animator.behaviors)")
-            saveContext() // safest to save the context here, after every letter swap
-            
-            tile.snapBehavior?.snapPoint = (newPosition?.position)!
-            printTileDiagram()
-            print("Snappoint: \(tile.snapBehavior?.snapPoint)")
-            print("Origin: \(tile.frame.origin)")
-            print("Tile.Position: \(tile.position)")
-            print("tile.letter.position: \(tile.letter?.position)")
-            print("transform: \(tile.transform)")
-            //tile.transform = CGAffineTransformIdentity
-//            let timer = 3.5
-//            let delay = timer * Double(NSEC_PER_SEC)
-//            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-//            dispatch_after(time, dispatch_get_main_queue()) {
-//                tile.snapBehavior?.snapPoint = (newPosition?.position)!
-//            }
-            print("transform: \(tile.transform)")
-            print("Position 7: \(positions![7])")
-            //tile.frame.origin = CGPointMake(CGFloat(positions![7].xPos), CGFloat(positions![7].yPos))
+                self.checkUpperPositionsForWord() // moved here from tileTapped, so it runs after the delay
+            }
         }
     }
     
@@ -803,35 +799,44 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //    }
     
     func findVacancy(tile: Tile) -> Position? {
-        
-        if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard. Which doesn't seem to work anyway.
-            // tile is in upper position, so look for vacancy in the uppers
-            if tile.letter?.position!.index < 7 {
-                for i in 7 ..< 10 {
-                    if positions![i].letter == nil {
-                        collisionBehavior.addItem(tile) // enable collisions only for tiles when they are in 7 8 or 9
-                        return positions![i]
+//        var position: Position?
+//        let delay = 0.2 * Double(NSEC_PER_SEC)
+//        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+//        
+//        dispatch_after(time, dispatch_get_main_queue()) {
+            // delay, just so the previous one has time to finish
+            
+            
+            if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard. Which doesn't seem to work anyway.
+                // tile is in lower position, so look for vacancy in the uppers
+                if tile.letter?.position!.index < 7 {
+                    for i in 7 ..< 10 {
+                        if self.positions![i].letter == nil {
+                            self.collisionBehavior.addItem(tile) // enable collisions only for tiles when they are in 7 8 or 9
+                            return positions![i]
+                        }
                     }
-                }
-                return nil
-            } else { // must be in the upper positions, so look for a vacancy in the lowers
-                
-                //TODO: verify that .stride is working correctly
-                // for var i=6; i>=0; i -= 1 {
-                for i in 6.stride(through: 0, by: -1) {
-                //for i in (0 ..< 6).reversed() {
+                    return nil
+                } else { // must be in the upper positions, so look for a vacancy in the lowers
                     
-                    if positions![i].letter == nil {
-                        collisionBehavior.removeItem(tile)
-                        return positions![i]
+                    //TODO: verify that .stride is working correctly
+                    // for var i=6; i>=0; i -= 1 {
+                    for i in 6.stride(through: 0, by: -1) {
+                        //for i in (0 ..< 6).reversed() {
+                        
+                        if self.positions![i].letter == nil {
+                            self.collisionBehavior.removeItem(tile)
+                            return positions![i]
+                        }
                     }
+                    return nil
                 }
+            } else {
+                print ("was nil")
                 return nil
             }
-        } else {
-            print ("was nil")
-            return nil
-        }
+//            return position
+//        }
     }
     
 
@@ -1149,7 +1154,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //    func requireGestureRecognizerToFail(otherGR: UIGestureRecognizer) {
 //        
 //    }
-    
+    //MARK:-Tile Tapped
     // replaces addLetterToWordInProgress(sender: Tile)
     @IBAction func tileTapped(gesture: UIGestureRecognizer) {
         print("in TileTapped")
@@ -1162,14 +1167,20 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //                }
 //            }
             // add the new letter to the word in progress
+            
+            // if the flag that last tile has been finished is true, then:
             swapTile(tile) // swapping whichever tile is tapped
+            // otherwise, add a very slight delay first
+            
             // then, check for a valid word
             // but iff 7 8 and 9 are occupado, then check for valid word
-            checkUpperPositionsForWord()
+//            checkUpperPositionsForWord() // moved to findVacancy(), so it can be inside the delay
+            // TODO: use a completion handler, so this line can be moved back to here
         }
     }
 
     // being replaced by tileTapped GR
+    //TODO:- remove this func if no longer being used
     @IBAction func addLetterToWordInProgress(sender: Tile) {
         print("in ADDLETTERTO...")
         //NOTE: should no longer need wordInProgress, getting the text directly from the tiles
@@ -1549,6 +1560,19 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    // MARK:- Delay function
+    //http://www.globalnerdy.com/2015/09/30/swift-programming-tip-how-to-execute-a-block-of-code-after-a-specified-delay/
+    func delay(delay: Double, closure: ()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(),
+            closure
+        )
     }
     
 }
