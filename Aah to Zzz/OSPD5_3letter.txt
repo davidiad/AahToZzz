@@ -1090,6 +1090,8 @@ MAE
 more
 MAG
 magazine
+MAM
+a mother (added in OSPD5)
 MAN
 adult human male/to supply with men
 MAP
@@ -1110,12 +1112,16 @@ MED
 medical
 MEG
 megabyte (added in OSPD4)
+MEH
+interjection expressing boring (added in OSPD5)
 MEL
 honey
 MEM
 Hebrew letter
 MEN
 [man] (adult human male)
+MES
+no definition (added in OSPD5)
 MET
 [meet-conj] (to make the acquaintance of)
 MEW
@@ -1140,6 +1146,8 @@ MIS
 [mi] (third tone of diatonic musical scale)
 MIX
 to combine
+MMM
+mm (added in OSPD5)
 MOA
 extinct flightless bird
 MOB
@@ -1150,6 +1158,8 @@ MOD
 one who wears boldly stylish clothes
 MOG
 to move away
+MOI
+me- interjection (added in OSPD5)
 MOL
 unit of quantity in chemistry (mole)
 MOM
@@ -1180,6 +1190,8 @@ MUS
 [mu] (Greek letter)
 MUT
 mutt
+MUX
+to transmit several messages simultaneously along a single channel (added in OSPD5)
 MYC
 gene that regulates other genes (added in OSPD4)
 NAB
@@ -1196,6 +1208,8 @@ NAN
 Indian flat round leavened bread (added in OSPD3)
 NAP
 to sleep briefly
+NAV
+navigation (added in OSPD5)
 NAW
 no
 NAY
@@ -1246,6 +1260,8 @@ NTH
 pert. to item number n
 NUB
 protuberance
+NUG
+a chunk of wood sawn from a log (added in OSPD5)
 NUN
 woman belonging to a religious order
 NUS
@@ -1268,6 +1284,8 @@ OBI
 African sorcery (obeah)
 OCA
 South American herb
+OCH
+used to express surprise or regret (added in OSPD5)
 ODA
 harem room (added in OSPD4)
 ODD
@@ -1288,6 +1306,8 @@ OHO
 interjection expressing surprise
 OHS
 [oh] (to exclaim "oh")
+OIK
+a very rude or stupid person (added in OSPD5)
 OIL
 to supply with oil
 OKA
@@ -1298,6 +1318,8 @@ OLD
 individual of a specified age/living or existing for a relatively long time
 OLE
 shout of approval
+OMA
+grandmother (added in OSPD5)
 OMS
 [om] (mantra used in meditation)
 ONE
@@ -1306,10 +1328,14 @@ ONO
 large mackerel (added in OSPD4)
 ONS
 [on] (side of wicket in cricket)
+OOF
+interjection used to express discomfort (added in OSPD5)
 OOH
 to exclaim in amazement
 OOT
 out
+OPA
+grandfather (added in OSPD5)
 OPE
 to open
 OPS
@@ -1324,6 +1350,8 @@ ORC
 marine mammal (orca)
 ORE
 mineral or rock containing valuable metal
+ORG
+organization (added in OSPD5)
 ORS
 [or] (heraldic color gold)
 ORT
@@ -1344,6 +1372,8 @@ OWL
 nocturnal bird
 OWN
 to possess
+OWT
+anything (added in OSPD5)
 OXO
 containing oxygen
 OXY
@@ -1354,6 +1384,8 @@ PAD
 to line with padding
 PAH
 interjection used as an exclamation of disgust
+PAK
+pack (added in OSPD5)
 PAL
 to hang around with as friends
 PAM
@@ -1400,6 +1432,8 @@ PEW
 bench for seating people in church
 PHI
 Greek letter
+PHO
+Vietnamese soup (added in OSPD5)
 PHT
 interjection used as an expression of mild anger or annoyance
 PIA
@@ -1436,6 +1470,8 @@ POM
 English immigrant in Australia {offensive}
 POP
 to make a sharp, explosive sound
+POS
+plural of po (added in OSPD5)
 POT
 to put into a pot
 POW
@@ -1532,6 +1568,8 @@ REV
 to increase the speed of
 REX
 animal with a single wavy layer of hair/king
+REZ
+reservation (area of land) (added in OSPD5)
 RHO
 Greek letter
 RIA
@@ -1560,6 +1598,8 @@ ROE
 mass of eggs within a female fish
 ROM
 male gypsy
+ROO
+kangaroo (added in OSPD5)
 ROT
 to decompose
 ROW
@@ -1580,6 +1620,8 @@ RYA
 Scandinavian handwoven rug
 RYE
 cereal grass
+RYU
+school of japanese martial arts (added in OSPD5)
 SAB
 to sob
 SAC
@@ -1592,6 +1634,8 @@ SAG
 to bend or sink downward from weight or pressure
 SAL
 salt
+SAN
+a sanatorium (added in OSPD5)
 SAP
 to weaken gradually
 SAT
@@ -1622,22 +1666,30 @@ SER
 unit of weight of India
 SET
 to put in a particular position
+SEV
+an Indian food of deep fried strands of flour (added in OSPD5)
 SEW
 to mend or fasten with a needle and thread
 SEX
 to determine the sex of
+SEZ
+no definition (added in OSPD5)
 SHA
 interjection used to urge silence (shh)
 SHE
 female person
 SHH
 interjection used to urge silence
+SHO
+former monetary unit of Tibet (added in OSPD5)
 SHY
 timid/to move suddenly back in fear
 SIB
 sibling
 SIC
 to urge to attack
+SIG
+an email signature (added in OSPD5)
 SIM
 simulation
 SIN
@@ -1662,8 +1714,12 @@ SLY
 crafty
 SOB
 to cry with a convulsive catching of the breath
+SOC
+a sociology course (added in OSPD5)
 SOD
 to cover with sod (turf)
+SOH
+sol (added in OSPD5)
 SOL
 fifth tone of diatonic musical scale (so)
 SOM
@@ -1706,6 +1762,8 @@ SUP
 to eat supper
 SUQ
 marketplace (souk) (added in OSPD3)
+SUS
+to suss (figure out) (added in OSPD5)
 SYN
 syne
 TAB
@@ -1742,6 +1800,8 @@ TAX
 to place a tax on
 TEA
 beverage made by infusing dried leaves in boiling water
+TEC
+tech (added in OSPD5)
 TED
 to spread for drying
 TEE
@@ -1752,6 +1812,8 @@ TEL
 ancient mound in the Middle East
 TEN
 number 10
+TES
+plural of te (added in OSPD5)
 TET
 Hebrew letter (teth)
 TEW
@@ -1776,6 +1838,10 @@ TIS
 [ti] (seventh tone of diatonic musical scale)
 TIT
 small bird
+TIX
+tickets (added in OSPD5)
+TIZ
+tizzy (added in OSPD5)
 TOD
 British unit of weight
 TOE
@@ -1808,6 +1874,8 @@ TUG
 to pull with force
 TUI
 bird of New Zealand
+TUM
+stomach (added in OSPD5)
 TUN
 to store in a large cask
 TUP
@@ -1834,6 +1902,10 @@ UMM
 interjection expressing hesitation (um)
 UMP
 to umpire
+UMS
+to pause in speaking (added in OSPD5)
+UNI
+uniform/ university (added in OSPD5)
 UNS
 [un] (one)
 UPO
@@ -1890,10 +1962,14 @@ VIG
 charge paid to a bookie on a bet (vigorish)
 VIM
 energy
+VIN
+French wine (added in OSPD5)
 VIS
 force or power
 VOE
 small bay, creek, or inlet
+VOG
+air pollution caused by volcano (added in OSPD5)
 VOW
 to make a vow
 VOX
@@ -1974,10 +2050,14 @@ WRY
 contorted/to contort
 WUD
 insane
+WUZ
+no definition (added in OSPD5)
 WYE
 letter 'y'
 WYN
 rune for 'W' (wynn)
+XED
+to mark with an X (added in OSPD5)
 XIS
 [xi] (Greek letter)
 YAG
@@ -1992,6 +2072,8 @@ YAP
 to bark shrilly
 YAR
 yare
+YAS
+an Asian pear (added in OSPD5)
 YAW
 to deviate from an intended course
 YAY
@@ -2004,12 +2086,16 @@ YEN
 to yearn
 YEP
 yes
+YER
+no definition (found on naspa website) (added in OSPD5)
 YES
 to give an affirmative reply to
 YET
 up to now
 YEW
 evergreen tree or shrub
+YEZ
+you (added in OSPD5)
 YID
 Jew {offensive}
 YIN

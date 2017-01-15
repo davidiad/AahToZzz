@@ -12,6 +12,7 @@ import CoreData
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate, UIDynamicAnimatorDelegate {
     
     //TODO:- LIST
+    // Fix bug that prevents tiles from enlarging and raising when dragged (used to work)
     // Finish adding OSPD5 words, get paper copy to check for sure which are in
     // Need to add from M on
     // Possible, add option to pick dictionary.
@@ -771,8 +772,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 //t.transform = CGAffineTransformConcat(scale, move)
                 //tile.transform = CGAffineTransformTranslate(move, 90, 90)
-                print("In Animation")
-                tile.transform = CGAffineTransformIdentity
+                //print("In Animation")
+                
+                
+                //tile.transform = CGAffineTransformIdentity // this line is a safeguard in case tiles get rotated after a jumble. However, may not be needed, and was preventing enlarging the tiles during a pan (to make them appear raised above the others while panning)
+                
                 tile.center = (tile.letter?.position?.position)!
                 
                 }, completion: { (finished: Bool) -> Void in
@@ -1465,7 +1469,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         switch pan.state {
         case .Began:
-            print(t.snapBehavior?.snapPoint)
+            print("Began pan")
             //animator?.removeBehavior(t.snapBehavior!) //TODO: behavior not being removed, and fighting with pan.
             //TODO:-- each remove behavior, and/or, use attachment behavior instead of pan, as in WWDC video
             t.superview?.bringSubviewToFront(t) // Make this Tile float above the other tiles
