@@ -686,11 +686,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 // Tiles drop slightly from gravity unless it's removed here. Gravity is added each time the tiles are jumbled anyway.
                 self.animator.removeBehavior(self.gravity)
                 
-                self.saveContext() // safest to save the context here, after every letter swap
+                //self.saveContext() // safest to save the context here, after every letter swap
                 
-                tile.snapBehavior?.snapPoint = (newPosition?.position)!
+                self.saveContext() { success in
+                    if success {
+                        print("successful save")
+                    }
+                
+                    tile.snapBehavior?.snapPoint = (newPosition?.position)!
 
-                self.checkUpperPositionsForWord() // moved here from tileTapped, so it runs after the delay
+                    self.checkUpperPositionsForWord() // moved here from tileTapped, so it runs after the delay
+                }
             }
         }
     }
@@ -1160,16 +1166,15 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //    }
     //MARK:-Tile Tapped
     // replaces addLetterToWordInProgress(sender: Tile)
+    
+    //TODO: instead of swapping the tile right away, check if a flag for a previous tileTap is true, if so, save the tile, wait until the context has been saved in swapTile, and then swap this new tile
+    
+    // Create an array of Tiles to hold any tiles that are tapped, and waiting in line to be swapped
+    
     @IBAction func tileTapped(gesture: UIGestureRecognizer) {
         print("in TileTapped")
         if let tile = gesture.view as? Tile {
-//            if let gestureRecognizers = tile.gestureRecognizers {
-//                for pan in gestureRecognizers {
-//                    if pan.isKindOfClass(UIPanGestureRecognizer) {
-//                        gesture.requireGestureRecognizerToFail(pan)
-//                    }
-//                }
-//            }
+
             // add the new letter to the word in progress
             
             // if the flag that last tile has been finished is true, then:
@@ -1562,6 +1567,21 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 let nserror = error as NSError
                 print("Could not save the Managed Object Context")
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+    
+    // save context with completion handler
+    func saveContext (completion: (success: Bool)-> Void) {
+        if sharedContext.hasChanges {
+            do {
+                try sharedContext.save()
+                completion(success: true)
+            } catch {
+                let nserror = error as NSError
+                print("Could not save the Managed Object Context")
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+                completion(success: false)
             }
         }
     }
