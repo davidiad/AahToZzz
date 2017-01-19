@@ -640,6 +640,13 @@ class AtoZModel {
         }
         return closestPosition
     }
+ 
+    //TODO:- Remove if not using
+//    func calculateDistance(p1: CGPoint, p2: CGPoint) -> Float {
+//        let xDist = Float((p2.x - p1.x))
+//        let yDist = Float((p2.y - p1.y))
+//        return sqrt((xDist * xDist) + (yDist * yDist))
+//    }
     
     // find the point from which to anchor the tiles and associated views
     func calculateAnchor(areaWidth: CGFloat, areaHeight: CGFloat, vertiShift: CGFloat, horizShift: CGFloat=0) -> CGPoint {

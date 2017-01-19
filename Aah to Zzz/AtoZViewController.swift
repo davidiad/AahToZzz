@@ -100,6 +100,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var toolbar: UIToolbar!
     
     var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
+    var tilesToSwap: [Tile]? // an array to temporarilly hold the tiles waiting to be swapped
+    var maxTilesToSwap: Int = 0 // temp. diagnostic
     @IBOutlet weak var wordInProgress: UILabel!
     @IBOutlet weak var startNewList: UIButton!
     
@@ -460,43 +462,40 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Adjust the constraints for the Tile UI background elements
         topConstraint.constant = tilesAnchorPoint.y + CGFloat(120.0) - 0.5 * wordInProgress.frame.height
         inProgressLeading.constant = tilesAnchorPoint.x - 0.5 * wordInProgress.frame.width
-
+        
         //scrollingSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 0.5))
         
         animator = UIDynamicAnimator(referenceView: view)
         animator.delegate = self
         lettertiles = [Tile]()
+        tilesToSwap = [Tile]()
         tileBackgrounds = [UIView]() // putting the tile bg's into an array so as to refer to them in collision detection
         let image = UIImage(named: "tile") as UIImage?
         let bgImage = UIImage(named: "tile_bg") as UIImage?
         
         for i in 0 ..< 7 {
-
+            
             //let button   = UIButton(type: UIButtonType.Custom) as UIButton
             //TODO: move some of this stuff to init for Tile
             //TODO: use the eventual tile positions
             //lettertiles[i].letter!.position!.position
             if let tilePos = positions?[i].position {
                 let tile = Tile(frame: CGRectMake(tilePos.x, tilePos.y * CGFloat(i), 50, 50))
-            let bgView = UIImageView(image: bgImage)
-            bgView.tag = 2000 + i
-            tileBackgrounds?.append(bgView)
-            bgView.center = tilePos
-            tile.setBackgroundImage(image, forState: .Normal)
-            tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
-           
-            tile.setTitle("Q", forState: .Normal) // Q is placeholder value
-            //tile.addTarget(self, action: "addLetterToWordInProgress:", forControlEvents:.TouchUpInside)
-            tile.tag = 1000 + i
-
-            lettertiles.append(tile)
-            //tile.animator = animator // so that we can affect the animator from inside the Tile class
-            let tileTapGR = UITapGestureRecognizer(target: self, action: #selector(AtoZViewController.tileTapped(_:)))
-            tileTapGR.delegate = self
-            tile.addGestureRecognizer(tileTapGR)
-            setupPanRecognizer(tile)
-            view.addSubview(bgView)
-            view.addSubview(tile)
+                let bgView = UIImageView(image: bgImage)
+                bgView.tag = 2000 + i
+                tileBackgrounds?.append(bgView)
+                bgView.center = tilePos
+                tile.setBackgroundImage(image, forState: .Normal)
+                tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
+                
+                tile.setTitle("Q", forState: .Normal) // Q is placeholder value
+                //tile.addTarget(self, action: "addLetterToWordInProgress:", forControlEvents:.TouchUpInside)
+                tile.tag = 1000 + i
+                
+                lettertiles.append(tile)
+                setupGestureRecognizers(tile)
+                view.addSubview(bgView)
+                view.addSubview(tile)
             }
         }
         let upperPositionsBg = UIImage(named: "upper_positions_bg") as UIImage?
@@ -513,15 +512,15 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //TODO: check for memory leak here
         // create an array to populate the buttons that hold the letters
         
-
+        
         checkForExistingLetters()
         updateTiles()
         generateWordList()
         startNewList.alpha = 0
         startNewList.hidden = true
-//        for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
-//            lettertiles[i].letter!.position = positions![i]
-//            print(positions![i].position)
+        //        for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
+        //            lettertiles[i].letter!.position = positions![i]
+        //            print(positions![i].position)
 //            lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].position!)
 //            lettertiles[i].snapBehavior?.damping = 0.75
 //            animator.addBehavior(lettertiles[i].snapBehavior!)
@@ -660,7 +659,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // Each letter should have a position
     func swapTile(tile: Tile) {
-        print("in swapTile")
         
         animator.removeAllBehaviors()
         for anyTile in lettertiles {
@@ -669,7 +667,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // add slight delay to give time for the positions to be updated and saved to context
         // TODO: use completion handler instead of a delay every single time
-        delay(0.15) { // still sometimes moves to a lower pos when an upper is open, and should be moved to
+        //delay(0.15) { // still sometimes moves to a lower pos when an upper is open, and should be moved to
             let newPosition = self.findVacancy(tile)
             
             
@@ -690,8 +688,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 self.saveContext() { success in
                     if success {
-                        print("successful save")
-                    }
+                       // print("successful save")
+                    //}
                 
                     tile.snapBehavior?.snapPoint = (newPosition?.position)!
 
@@ -701,6 +699,62 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    
+    func swapTile() {
+        print("In NEW SWAP TILE")
+        let tile = tilesToSwap![0]
+        tilesToSwap?.removeFirst()
+        
+        animator.removeAllBehaviors()
+        for anyTile in lettertiles {
+            animator.addBehavior(anyTile.snapBehavior!)
+        }
+        
+        
+            let newPosition = self.findVacancy(tile)
+            
+        
+        if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
+            
+            
+            // update the Positions
+            let previousPosition = tile.letter?.position
+            
+            previousPosition?.letter = nil // the previous position is now vacant
+            
+            tile.letter?.position = newPosition
+            
+            // Tiles drop slightly from gravity unless it's removed here. Gravity is added each time the tiles are jumbled anyway.
+            self.animator.removeBehavior(self.gravity)
+            
+            //self.saveContext() // safest to save the context here, after every letter swap
+            
+            self.saveContext() { success in
+                if success {
+
+                    tile.snapBehavior?.snapPoint = (newPosition?.position)!
+                    
+                    self.checkUpperPositionsForWord()
+                    if self.tilesToSwap?.count > self.maxTilesToSwap {
+                        self.maxTilesToSwap = (self.tilesToSwap?.count)!
+                    }
+                    print("maxTilesToSwap: \(self.maxTilesToSwap)")
+                    // in case another tile is in the Q to swap, run this func again
+                    //TODO:- check whether this is ever called
+                    if self.tilesToSwap?.count > 0 {
+
+                        self.swapTile()
+                    }
+                }
+            }
+        }
+        
+    }
+
+    
+    
+    
+    //TODO: refactor the 3 swap tile funcs to not repeat code
     // in the case that we already know the position
     func swapTileToKnownPosition(tile: Tile, pos: Position) {
         print("in swapTileToKnownPosition")
@@ -1174,12 +1228,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func tileTapped(gesture: UIGestureRecognizer) {
         print("in TileTapped")
         if let tile = gesture.view as? Tile {
-
+            
+            tilesToSwap?.append(tile)
+            
+            
             // add the new letter to the word in progress
             
             // if the flag that last tile has been finished is true, then:
-            swapTile(tile) // swapping whichever tile is tapped
+            //swapTile(tile) // swapping whichever tile is tapped
             // otherwise, add a very slight delay first
+            
+            swapTile()
             
             // then, check for a valid word
             // but iff 7 8 and 9 are occupado, then check for valid word
@@ -1188,41 +1247,16 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
 
-    // being replaced by tileTapped GR
-    //TODO:- remove this func if no longer being used
-    @IBAction func addLetterToWordInProgress(sender: Tile) {
-        print("in ADDLETTERTO...")
-        //NOTE: should no longer need wordInProgress, getting the text directly from the tiles
-        
-        // add the new letter to the word in progress
-        //wordInProgress.text = wordInProgress.text! + (sender.titleLabel?.text)!
-        swapTile(sender) // swapping whichever tile is tapped
-        // then, check for a valid word
-        // but iff 7 8 and 9 are occupado, then check for valid word
-        //TODO: occupied property of positions does not seem to be working right?
-        checkUpperPositionsForWord()
-        /*
-        if positions![7].letter != nil && positions![8].letter != nil && positions![9].letter != nil {
-        //if wordInProgress.text?.characters.count > 2 {
-            //_ = checkForValidWord(wordInProgress.text!)
-            let wordToCheck = (positions![7].letter?.letter)! + (positions![8].letter?.letter)! + (positions![9].letter?.letter)!
-            let wordIsValid = checkForValidWord(wordToCheck)
-            wordInProgress.text = ""
-            
-            if wordIsValid { // return the letters to the letter pool
-                // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
-                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.55 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
-                dispatch_after(time, dispatch_get_main_queue()) {
-
-                    //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
-                    // rather than checking all 7 tiles
-                    self.returnTiles()
-                }
-            } // else: word is *not* valid. Do nothing in that case. The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (or by tapping on return button)
-        }
-        */
-    }
+//    // being replaced by tileTapped GR
+//    //TODO:- remove this func if no longer being used
+//    @IBAction func addLetterToWordInProgress(sender: Tile) {
+//        swapTile(sender) // swapping whichever tile is tapped
+//        // then, check for a valid word
+//        // but iff 7 8 and 9 are occupado, then check for valid word
+//        checkUpperPositionsForWord()
+//    }
     
+ 
     // need to incorporate this into func above this one (and consolidate with checkForValidWord)
     func checkUpperPositionsForWord () {
         if positions![7].letter != nil && positions![8].letter != nil && positions![9].letter != nil {
@@ -1432,12 +1466,21 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    //MARK:- Panning for Tiles
-    func setupPanRecognizer(tile: Tile) {
-
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(AtoZViewController.panTile(_:)))
+    //MARK:- Tapping and Panning for Tiles
+    func setupGestureRecognizers(tile: Tile) {
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tileTapped(_:)))
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panTile(_:)))
+        
+        tapRecognizer.delegate = self
         panRecognizer.delegate = self
+        
+        tile.addGestureRecognizer(tapRecognizer)
         tile.addGestureRecognizer(panRecognizer)
+        
+        panRecognizer.requireGestureRecognizerToFail(tapRecognizer)
+
+        
 //        if let gestureRecognizers = tile.gestureRecognizers {
 //            for tap in gestureRecognizers {
 //                if tap.isKindOfClass(UITapGestureRecognizer) {
@@ -1452,25 +1495,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func panTile(pan: UIPanGestureRecognizer) {
         
         animator.removeAllBehaviors()
-//        animator.removeBehavior(gravity)
-//        animator.removeBehavior(collider)
         
         let t = pan.view as! Tile
-//        if let gestureRecognizers = t.gestureRecognizers {
-//            for tap in gestureRecognizers {
-//                pan.requireGestureRecognizerToFail(tap)
-//            }
-//        }
-        //let storedSnapBehavior = t.snapBehavior // TODO:-really being stored?
-        
-        //animator?.removeBehavior(t.snapBehavior!)
-        
-
-//                for behavior in animator.behaviors {
-//                    print(behavior.debugDescription)
-//                }
         let location = pan.locationInView(self.view)
-        //var hasFinishedBeganAnimation = false
+//        let startingLocation = location
+//        let sensitivity: Float = 10.0
         
         switch pan.state {
         case .Began:
@@ -1482,7 +1511,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             t.layer.shadowOpacity = 0.85
             let scale = CGAffineTransformMakeScale(1.25, 1.25)
             let move = CGAffineTransformMakeTranslation(0.0, -58.0)
-            //let move = CGAffineTransformMakeTranslation(0.0, 0.0)
+
             
             UIView.animateWithDuration(0.15, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
                 
@@ -1513,17 +1542,25 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //            itemBehavior.addLinearVelocity(velocity, forItem: t)
             
             // interesting. is Position not an optional type, but then closestOpenPosition could still be a nil?
-            // check for the nearest unoccipied position, and snap to that
+            // check for the nearest unoccupied position, and snap to that
+            
+            //TODO:- if tile is moved only very very slightly, move it back to original position
+            // but problem: no way to determine if user meant to move and let it snap back, or if user meant to tap
+            // hypothesis: if movement is tiny, user meant to tap, so should move to upper/lower position
+            // if movement is small but not tiny, indicates intention to start to pan, and then decided to stop
+            // so move back to original position
+            //if model.calculateDistance(startingLocation, p2: location) > sensitivity {
+            
             if let closestOpenPosition = model.findClosestPosition(location, positionArray: positions!) {
                 swapTileToKnownPosition(t, pos: closestOpenPosition)
                 checkUpperPositionsForWord()
-                // seemed to have extra snapping behaviors interfering, so removed all behaviors, and added back here.
-                for tile in lettertiles {
-                    animator.addBehavior(tile.snapBehavior!)
-                }
-                
             }
+            //}
             
+            // seemed to have extra snapping behaviors interfering, so removed all behaviors, and added back here.
+            for tile in lettertiles {
+                animator.addBehavior(tile.snapBehavior!)
+            }
             t.layer.shadowOpacity = 0.0
             t.transform = CGAffineTransformIdentity
             

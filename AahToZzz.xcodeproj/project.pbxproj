@@ -58,6 +58,7 @@
 		6355499A1CA0E87D00DB5167 /* status_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549971CA0E87D00DB5167 /* status_bg.png */; };
 		6355499B1CA0E87D00DB5167 /* status_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549981CA0E87D00DB5167 /* status_bg@3x.png */; };
 		6355499C1CA0E87D00DB5167 /* status_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549991CA0E87D00DB5167 /* status_bg@2x.png */; };
+		636240851E308EEE007640DC /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636240841E308EEE007640DC /* Queue.swift */; };
 		637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */; };
 		637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06A1C8236C8005A36BA /* WordnikClient.swift */; };
 		637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AF06C1C83512F005A36BA /* OptionsViewController.swift */; };
@@ -181,6 +182,7 @@
 		635549971CA0E87D00DB5167 /* status_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bg.png; sourceTree = "<group>"; };
 		635549981CA0E87D00DB5167 /* status_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@3x.png"; sourceTree = "<group>"; };
 		635549991CA0E87D00DB5167 /* status_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@2x.png"; sourceTree = "<group>"; };
+		636240841E308EEE007640DC /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefinitionPopoverVC.swift; sourceTree = "<group>"; };
 		637AF06A1C8236C8005A36BA /* WordnikClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordnikClient.swift; sourceTree = "<group>"; };
 		637AF06C1C83512F005A36BA /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				637AF06A1C8236C8005A36BA /* WordnikClient.swift */,
 				6300C6461CA4B07300E3B4D5 /* ColorCode.swift */,
 				63EA98D61D4F46DF00537F2A /* Colors.swift */,
+				636240841E308EEE007640DC /* Queue.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				63E4A2C71DC24CBA002BC4CE /* LevelTableCell.swift in Sources */,
 				63EA98D71D4F46E000537F2A /* Colors.swift in Sources */,
 				63D57BB61C8C00C80046E349 /* Position.swift in Sources */,
+				636240851E308EEE007640DC /* Queue.swift in Sources */,
 				63E4A2C51DC1AF98002BC4CE /* LevelTableViewController.swift in Sources */,
 				633727601C7EAEA4003E8447 /* Word.swift in Sources */,
 				637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */,
