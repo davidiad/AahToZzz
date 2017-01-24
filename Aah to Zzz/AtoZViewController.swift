@@ -8,13 +8,21 @@
 
 import UIKit
 import CoreData
+import Alamofire
 
 class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate, UIDynamicAnimatorDelegate {
     
+    private func testAlamoFire() {
+        print (" Alamofire version: \(AlamofireVersionNumber)")
+           }
+    
     //TODO:- LIST
-    // Fix bug that prevents tiles from enlarging and raising when dragged (used to work)
+    // use Extensions to organize code better
+    // Deal with app lifecycle - what if app goes to background, etc
+    // Fix bug that prevents tiles from enlarging and raising when dragged (used to work)- Done
+    // Enlarge and raise tiles on long press
     // Finish adding OSPD5 words, get paper copy to check for sure which are in
-    // Need to add from M on
+    // Need to check a few questionable words
     // Possible, add option to pick dictionary.
     // If multiple dictionaries, make a new game for each dictionary.
     // Allow user to have multiple games, and to name their games.
@@ -565,7 +573,19 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
 //        let scrollGesture = UIPanGestureRecognizer(target: self, action: "scrollByProxy:")
 //        scrollProxy.addGestureRecognizer(scrollGesture)
+        
+//        understandParameterName(firstString: "poop", secondSun: 8)
+//        understandParameterName(firstString: "heyhello", secondSun: 5)
+        
+        testAlamoFire()
     }
+    
+    
+    
+//    func understandParameterName(firstString firstIn: String, secondSun secondInt: Int) {
+//        print("params: \(firstIn) and \(secondInt)")
+//    }
+    
     
 //    func scrollByProxy(pan: UIPanGestureRecognizer) {
 //        let startPoint = wordTable.contentOffset
@@ -1636,5 +1656,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         )
     }
     
+    
+
 }
+
+
 
