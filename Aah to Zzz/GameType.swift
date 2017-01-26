@@ -29,3 +29,5 @@ enum GameType: Int {
 // which dictionary(s) to use (So dictionary property should be an array of Strings, corresponding to the file name for the dictionary)
 
 // unique rules for the game, such as mix of letters to use
+
+// Question: if you create a struct that goes with the game, does it need to be created just once? each time game is loaded??
