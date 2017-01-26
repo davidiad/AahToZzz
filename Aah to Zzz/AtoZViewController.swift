@@ -17,6 +17,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
            }
     
     //TODO:- LIST
+    //  Ad integration?
+    // Swype style letter selection (in v 1.1)
+    // incorporate Alamofire possibly
+    // add properties to GameData or Game object, that allow for different types of games. For instance, what letters you're searching for (e.g., X, J, Q, and Z words). How many letters (e.g. 2 letters, 3 letters, 7 letters, any size, 8 letter words, 9 letter words), what orientation (e.g., 2 or 3 letters are in portrait, 7, 8, 9 letters are in landscape). Number of positions (for 7 letter or more, might want more than 10 positions), etc
+    // adding a little switch button in top right corner(possibly) to switch between  or 3 letters, or 7 letters QXJZ, etc JZQX JXQZ JQXZ
     // use Extensions to organize code better
     // Deal with app lifecycle - what if app goes to background, etc
     // Fix bug that prevents tiles from enlarging and raising when dragged (used to work)- Done

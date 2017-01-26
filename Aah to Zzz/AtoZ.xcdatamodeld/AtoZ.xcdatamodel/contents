@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+    <entity name="Game" representedClassName=".Game" syncable="YES">
+        <attribute name="gameID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="gameType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="data" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameData" inverseName="game" inverseEntity="GameData" syncable="YES"/>
+    </entity>
     <entity name="GameData" representedClassName=".GameData" syncable="YES">
         <attribute name="currentLetterSetID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dictionaryName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="gameID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="masteryLevel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="currentLetterSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="currentGame" inverseEntity="LetterSet" syncable="YES"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="data" inverseEntity="Game" syncable="YES"/>
         <relationship name="lettersets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="game" inverseEntity="LetterSet" syncable="YES"/>
         <relationship name="positions" optional="YES" toMany="YES" maxCount="10" deletionRule="Nullify" destinationEntity="Position" inverseName="game" inverseEntity="Position" syncable="YES"/>
         <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="game" inverseEntity="Word" syncable="YES"/>
@@ -43,10 +48,11 @@
         <relationship name="letterlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="wordlist" inverseEntity="LetterSet" syncable="YES"/>
     </entity>
     <elements>
-        <element name="GameData" positionX="-171" positionY="-964" width="128" height="178"/>
-        <element name="Letter" positionX="171" positionY="-711" width="128" height="103"/>
+        <element name="GameData" positionX="-171" positionY="-964" width="128" height="163"/>
+        <element name="Letter" positionX="144" positionY="-774" width="128" height="103"/>
         <element name="LetterSet" positionX="-371" positionY="-754" width="128" height="133"/>
-        <element name="Position" positionX="169" positionY="-981" width="128" height="118"/>
+        <element name="Position" positionX="124" positionY="-1044" width="128" height="118"/>
         <element name="Word" positionX="180" positionY="-576" width="128" height="163"/>
+        <element name="Game" positionX="-182" positionY="-1125" width="128" height="103"/>
     </elements>
 </model>

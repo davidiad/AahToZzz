@@ -308,15 +308,26 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
     // get the graph height after viewDidLoad – otherwise, the views have not yet adapted to the device screen size
     // but causes a visible delay in displaying the graphs
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
         graphHeight = graphStackView.superview!.frame.size.height
         graphWidth = graphStackView.superview!.frame.size.width
         addLevelContainers()
         levelText = calculateLevel()
-        //print("Level: \(calculateLevel())")
         
     }
+    
+    //causes a delay when bar graphs load, so moved to viewWillLayoutSubviews()
+//    override func viewDidAppear(animated: Bool) {
+//        super.viewDidAppear(animated)
+//        graphHeight = graphStackView.superview!.frame.size.height
+//        graphWidth = graphStackView.superview!.frame.size.width
+//        addLevelContainers()
+//        levelText = calculateLevel()
+//        
+//    }
     
     // Add an array of container views containing the level bars
     //TODO: Set the height of the container by the relative number of words in the level

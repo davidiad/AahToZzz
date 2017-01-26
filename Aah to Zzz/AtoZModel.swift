@@ -45,7 +45,7 @@ class AtoZModel {
     
     //This prevents others from using the default '()' initializer for this class.
     private init() {
-        //TODO: Add the rest of the new words from OSPD5, from G on
+        //TODO: check the new words from OSPD5 that are in question
         positions = [Position]()
         wordsArray = [String]()
         wordsDictionary = [:] // init empty dictionary
@@ -522,7 +522,7 @@ class AtoZModel {
         do {
             let gameArray = try sharedContext.executeFetchRequest(fetchRequest) as! [GameData]
             if gameArray.count > 0 {
-                for _ in 0 ..< 10 {
+                for _ in 0 ..< 10 { // generalize to numberOfPositions var, instead of 10 
                     positions = gameArray[0].positions?.allObjects as? [Position]
                     positions!.sortInPlace {
                         ($0.index as Int16?) < ($1.index as Int16?)
@@ -535,7 +535,8 @@ class AtoZModel {
                 // create the Positions and add to game
                 for i in 0 ..< 10 {
                     // create the Positions for the tiles. There are 10 per game.
-                    // TODO: use init instead
+                    // TODO: use init instead. And use Game object, when then has a GameData object
+                    // Should Positions go with Game, or GameData??
                     let position = NSEntityDescription.insertNewObjectForEntityForName("Position", inManagedObjectContext: sharedContext) as! Position
                     position.index = Int16(i)
                     position.game = newGame
@@ -574,18 +575,8 @@ class AtoZModel {
     }
     
     
-    // might not be using thias func
-    func createGame() {
-        deleteGames() // delete all games (for now) so there is only one at a time
-        _ = NSFetchRequest(entityName: "GameData")
-        
-        
-        let game = NSEntityDescription.insertNewObjectForEntityForName("GameData", inManagedObjectContext: sharedContext) as! GameData
-        
-        game.name = "David's first game"
-        
-        saveContext()
-    }
+    // might not be using this func
+
     
     func deleteGames() {
         let fetchRequest = NSFetchRequest(entityName: "GameData")
