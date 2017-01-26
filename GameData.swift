@@ -11,7 +11,8 @@ import CoreData
 
 
 class GameData: NSManagedObject {
-
+    
+    @NSManaged var isCurrentGame: Bool
     @NSManaged var currentLetterSetID: String?
 //    @NSManaged var gameID: String?
     @NSManaged var dictionaryName: String?

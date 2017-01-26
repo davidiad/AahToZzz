@@ -518,6 +518,10 @@ class AtoZModel {
     
     // Fetch the existing game from the store, or create one if there is none
     func fetchGameData() -> GameData {
+        
+        // TODO: determine which is the current game, and load that.
+        // whereever current game is set to true, must set all others to be false
+        // and have a safeguard that allows only one currentGame at a time
         let fetchRequest = NSFetchRequest(entityName: "GameData")
         do {
             let gameArray = try sharedContext.executeFetchRequest(fetchRequest) as! [GameData]
@@ -532,6 +536,9 @@ class AtoZModel {
             } else {
                 let gameData = makeGameDataDictionary()
                 let newGame = GameData(dictionary: gameData, context: sharedContext)
+                newGame.isCurrentGame = true
+                //TODO:- Set all other game isCurrentGame to false here?
+                
                 // create the Positions and add to game
                 for i in 0 ..< 10 {
                     // create the Positions for the tiles. There are 10 per game.

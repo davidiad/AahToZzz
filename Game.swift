@@ -21,4 +21,7 @@ class Game: NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
+    //TODO: move dictionaryName property here, from GameData object
+    // and possibly move positions property here as well. Makes more sense logically, since the positions are set but once per game, but may make the code simpler to keep in GameData.
+    
 }

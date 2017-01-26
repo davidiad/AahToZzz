@@ -9,6 +9,7 @@
     <entity name="GameData" representedClassName=".GameData" syncable="YES">
         <attribute name="currentLetterSetID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dictionaryName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isCurrentGame" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="masteryLevel" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="currentLetterSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="currentGame" inverseEntity="LetterSet" syncable="YES"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="data" inverseEntity="Game" syncable="YES"/>
@@ -48,7 +49,7 @@
         <relationship name="letterlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="wordlist" inverseEntity="LetterSet" syncable="YES"/>
     </entity>
     <elements>
-        <element name="GameData" positionX="-171" positionY="-964" width="128" height="163"/>
+        <element name="GameData" positionX="-171" positionY="-964" width="128" height="178"/>
         <element name="Letter" positionX="144" positionY="-774" width="128" height="103"/>
         <element name="LetterSet" positionX="-371" positionY="-754" width="128" height="133"/>
         <element name="Position" positionX="124" positionY="-1044" width="128" height="118"/>
