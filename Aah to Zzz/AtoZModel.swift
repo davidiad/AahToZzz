@@ -19,9 +19,11 @@ class AtoZModel {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
     
+    var gameInfo: GameInfo? // holds the game info, not yet being used
+    
     // constant of what mix of characters to choose random letters from
     // adding extra vowels as they are more freqent in english words
-    let alphabetSoup = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
+    let alphabetSoup = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ" // will come from gameInfo
     
     var dictionaryName: String // which dictionary 3 letter word list to use
     // 3 different data structures to hold the 3 letter word list info, each with its own purpose
