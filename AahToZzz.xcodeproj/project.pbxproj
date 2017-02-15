@@ -36,6 +36,7 @@
 		6324A8E21DFB4AEA00261E64 /* outline_graph_double_halved@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6324A8E11DFB4AEA00261E64 /* outline_graph_double_halved@3x.png */; };
 		6324A8E61DFB501000261E64 /* outline_graph_double@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6324A8E51DFB501000261E64 /* outline_graph_double@1x.pdf */; };
 		6324A8EE1DFB796300261E64 /* outline_shadow@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6324A8ED1DFB796300261E64 /* outline_shadow@1x.pdf */; };
+		632D5B141E53D1310011F6D2 /* Aah_to_ZzzTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632D5B131E53D1310011F6D2 /* Aah_to_ZzzTests.swift */; };
 		6331F3281CA9D6CC00F98737 /* outline_image_thick.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F3271CA9D6CC00F98737 /* outline_image_thick.pdf */; };
 		6331F32C1CA9FBD700F98737 /* outline_image_thicker.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */; };
 		6331F3301CA9FE8B00F98737 /* outline_image_double.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */; };
@@ -134,6 +135,16 @@
 		76614946B8DECF7CB42C13B7 /* Pods_AahToZzz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3140650B431C0DBF9CACD06 /* Pods_AahToZzz.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		632D5B161E53D1310011F6D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63A3A1051C763F6C00F440B5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63A3A10C1C763F6C00F440B5;
+			remoteInfo = AahToZzz;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1494F3B6C1FED074495B87E3 /* Pods-AahToZzz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AahToZzz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AahToZzz/Pods-AahToZzz.debug.xcconfig"; sourceTree = "<group>"; };
 		1ECED11E1AF72A0306A2FA33 /* Pods-AahToZzz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AahToZzz.release.xcconfig"; path = "Pods/Target Support Files/Pods-AahToZzz/Pods-AahToZzz.release.xcconfig"; sourceTree = "<group>"; };
@@ -166,6 +177,9 @@
 		6324A8E11DFB4AEA00261E64 /* outline_graph_double_halved@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outline_graph_double_halved@3x.png"; sourceTree = "<group>"; };
 		6324A8E51DFB501000261E64 /* outline_graph_double@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_graph_double@1x.pdf"; sourceTree = "<group>"; };
 		6324A8ED1DFB796300261E64 /* outline_shadow@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_shadow@1x.pdf"; sourceTree = "<group>"; };
+		632D5B111E53D1310011F6D2 /* Aah to ZzzTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Aah to ZzzTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		632D5B131E53D1310011F6D2 /* Aah_to_ZzzTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aah_to_ZzzTests.swift; sourceTree = "<group>"; };
+		632D5B151E53D1310011F6D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6331F3271CA9D6CC00F98737 /* outline_image_thick.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_thick.pdf; sourceTree = "<group>"; };
 		6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_thicker.pdf; sourceTree = "<group>"; };
 		6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_double.pdf; sourceTree = "<group>"; };
@@ -267,6 +281,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		632D5B0E1E53D1310011F6D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63A3A10A1C763F6C00F440B5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -308,6 +329,15 @@
 				6324A8DD1DFA908600261E64 /* outline_graph_double.pdf */,
 			);
 			name = graph;
+			sourceTree = "<group>";
+		};
+		632D5B121E53D1310011F6D2 /* Aah to ZzzTests */ = {
+			isa = PBXGroup;
+			children = (
+				632D5B131E53D1310011F6D2 /* Aah_to_ZzzTests.swift */,
+				632D5B151E53D1310011F6D2 /* Info.plist */,
+			);
+			path = "Aah to ZzzTests";
 			sourceTree = "<group>";
 		};
 		637AF0701C83EEE9005A36BA /* Assets */ = {
@@ -361,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				63A3A10F1C763F6C00F440B5 /* AahToZzz */,
+				632D5B121E53D1310011F6D2 /* Aah to ZzzTests */,
 				63A3A10E1C763F6C00F440B5 /* Products */,
 				33BC889DF497D3AECFCBBFAC /* Pods */,
 				3D35FE0033F4A1C697F01B01 /* Frameworks */,
@@ -371,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				63A3A10D1C763F6C00F440B5 /* AahToZzz.app */,
+				632D5B111E53D1310011F6D2 /* Aah to ZzzTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -522,6 +554,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		632D5B101E53D1310011F6D2 /* Aah to ZzzTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 632D5B1A1E53D1310011F6D2 /* Build configuration list for PBXNativeTarget "Aah to ZzzTests" */;
+			buildPhases = (
+				632D5B0D1E53D1310011F6D2 /* Sources */,
+				632D5B0E1E53D1310011F6D2 /* Frameworks */,
+				632D5B0F1E53D1310011F6D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				632D5B171E53D1310011F6D2 /* PBXTargetDependency */,
+			);
+			name = "Aah to ZzzTests";
+			productName = "Aah to ZzzTests";
+			productReference = 632D5B111E53D1310011F6D2 /* Aah to ZzzTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		63A3A10C1C763F6C00F440B5 /* AahToZzz */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63A3A1221C763F6C00F440B5 /* Build configuration list for PBXNativeTarget "AahToZzz" */;
@@ -548,10 +598,14 @@
 		63A3A1051C763F6C00F440B5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "David Fierstein";
 				TargetAttributes = {
+					632D5B101E53D1310011F6D2 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 63A3A10C1C763F6C00F440B5;
+					};
 					63A3A10C1C763F6C00F440B5 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = ZG4367LV78;
@@ -572,11 +626,19 @@
 			projectRoot = "";
 			targets = (
 				63A3A10C1C763F6C00F440B5 /* AahToZzz */,
+				632D5B101E53D1310011F6D2 /* Aah to ZzzTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		632D5B0F1E53D1310011F6D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63A3A10B1C763F6C00F440B5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -727,6 +789,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		632D5B0D1E53D1310011F6D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				632D5B141E53D1310011F6D2 /* Aah_to_ZzzTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63A3A1091C763F6C00F440B5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -768,6 +838,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		632D5B171E53D1310011F6D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63A3A10C1C763F6C00F440B5 /* AahToZzz */;
+			targetProxy = 632D5B161E53D1310011F6D2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		63A3A1141C763F6C00F440B5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -788,6 +866,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		632D5B181E53D1310011F6D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = "Aah to ZzzTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aah-to-ZzzTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AahToZzz.app/AahToZzz";
+			};
+			name = Debug;
+		};
+		632D5B191E53D1310011F6D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = "Aah to ZzzTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aah-to-ZzzTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AahToZzz.app/AahToZzz";
+			};
+			name = Release;
+		};
 		63A3A1201C763F6C00F440B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -898,6 +1004,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		632D5B1A1E53D1310011F6D2 /* Build configuration list for PBXNativeTarget "Aah to ZzzTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				632D5B181E53D1310011F6D2 /* Debug */,
+				632D5B191E53D1310011F6D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		63A3A1081C763F6C00F440B5 /* Build configuration list for PBXProject "AahToZzz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

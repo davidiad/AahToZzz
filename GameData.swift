@@ -40,6 +40,10 @@ class GameData: NSManagedObject {
 //        }
         
         masteryLevel = 3 // default value
+        
+        // add the default dictionaryname for the GameType
     }
+    
+    //TODO:- add an init that accepts a dictionary name
 
 }

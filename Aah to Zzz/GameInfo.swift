@@ -16,12 +16,12 @@ enum Orientation {
 
 // add others as they are created
 enum DictionaryName: String {
-    case OSPD5_2letter = "OSPD5_2letter"
-    case OSPD5_3letter = "OSPD5_3letter"
-    case OSPD5_7letter = "OSPD5_7letter"
-    case OSPD5_8letter = "OSPD5_8letter"
-    case OSPD5_9letter = "OSPD5_9letter"
-    case OSPD5_JQXZ = "OSPD5_JQXZ"
+    case two = "OSPD5_2letter"
+    case three = "OSPD5_3letter"
+    case seven = "OSPD5_7letter"
+    case eight = "OSPD5_8letter"
+    case nine = "OSPD5_9letter"
+    case jqxz = "OSPD5_JQXZ"
     case threeletterwordlist = "3letterwordlist"
 }
 
@@ -60,49 +60,49 @@ struct GameInfo {
             numberOfTiles = 7
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
             deviceOrientation = Orientation.Portrait
-            dictionaries = [DictionaryName.OSPD5_2letter.rawValue] // need to create this wordlist
+            dictionaries = [DictionaryName.two.rawValue] // need to create this wordlist
             
         case 1 :
             lengthOfWords = 3
             numberOfTiles = 7
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
             deviceOrientation = Orientation.Portrait
-            dictionaries = [DictionaryName.OSPD5_3letter.rawValue]
+            dictionaries = [DictionaryName.three.rawValue]
             
         case 2:
             lengthOfWords = nil // variable. Should set to max length?
             numberOfTiles = 7 // may be more
             letterMix = "AAABCDEEEFGHIIIJJJKLMNOOOPQQQRSTUUUUVWXXXYZZZ" // added extra J's, Q's, U's, X's, and Z's
             deviceOrientation = Orientation.Landscape
-            dictionaries = [DictionaryName.OSPD5_JQXZ.rawValue] // need to create this wordlist
+            dictionaries = [DictionaryName.jqxz.rawValue] // need to create this wordlist
          
         case 3:
             lengthOfWords = 7
             numberOfTiles = 7 // may be more
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
             deviceOrientation = Orientation.Landscape
-            dictionaries = [DictionaryName.OSPD5_7letter.rawValue] // need to create this wordlist
+            dictionaries = [DictionaryName.seven.rawValue] // need to create this wordlist
             
         case 4:
             lengthOfWords = 8
             numberOfTiles = 8 // may be more
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
             deviceOrientation = Orientation.Landscape
-            dictionaries = [DictionaryName.OSPD5_8letter.rawValue] // need to create this wordlist
+            dictionaries = [DictionaryName.eight.rawValue] // need to create this wordlist
             
         case 5:
             lengthOfWords = 9
             numberOfTiles = 9 // may be more
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
             deviceOrientation = Orientation.Landscape
-            dictionaries = [DictionaryName.OSPD5_9letter.rawValue] // need to create this wordlist
+            dictionaries = [DictionaryName.nine.rawValue] // need to create this wordlist
             
         default :
             lengthOfWords = 3
             numberOfTiles = 7
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
             deviceOrientation = Orientation.Portrait
-            dictionaries = [DictionaryName.OSPD5_3letter.rawValue]
+            dictionaries = [DictionaryName.three.rawValue]
         }
         
         guard let lOW = lengthOfWords, nOT = numberOfTiles else { // find better var names?
