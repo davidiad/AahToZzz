@@ -6,6 +6,9 @@
 //  Copyright © 2017 David Fierstein. All rights reserved.
 //
 
+// Works with GameType. Sets the basic game info that corresponds to each type. And each
+// Game has its GameType saved in the Game managed object.
+
 import Foundation
 
 enum Orientation {

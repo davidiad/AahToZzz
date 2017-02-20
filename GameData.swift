@@ -15,13 +15,14 @@ class GameData: NSManagedObject {
     @NSManaged var isCurrentGame: Bool
     @NSManaged var currentLetterSetID: String?
 //    @NSManaged var gameID: String?
-    @NSManaged var dictionaryName: String?
+    @NSManaged var name: String? // since the name could be changed, put in GameData rather than Game
     @NSManaged var masteryLevel: Int16
 //    @NSManaged var name: String?
     @NSManaged var positions: NSSet?
     @NSManaged var lettersets: NSSet?
     @NSManaged var words: NSSet?
     @NSManaged var currentLetterSet: NSManagedObject? // alternate way of finding the current letter set, besides using the ID
+    @NSManaged var game: Game?
     
     // standard Core Data init method.
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {

@@ -19,8 +19,6 @@ class AtoZModel {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
     
-    var gameInfo: GameInfo? // holds the game info, not yet being used
-    
     // constant of what mix of characters to choose random letters from
     // adding extra vowels as they are more freqent in english words
     let alphabetSoup = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ" // will come from gameInfo
@@ -33,7 +31,8 @@ class AtoZModel {
     // update: using wordsSet in ProgressViewController
     var inactiveCount: Int?
     
-    var game: GameData? // The managed object that is at the root of the object graph
+    var game: Game? // The managed object that is at the root of the object graph
+    var gameInfo: GameInfo? // holds the game info that is dependent on the gameType
     var positions: [Position]? // array to hold the letter Positions. Needed??
     
     var anchorPoint: CGPoint? // anchor point to calculate tile and UI position. Will depend on device size. And will be adjustable by the user to some degree to what works best (hand size, left or right handed, personal preference.
@@ -69,8 +68,11 @@ class AtoZModel {
             wordsDictionary[key] = value
             wordsSet.insert(key)
         }
-        game = fetchGameData() // fetches the exisiting game if there is one, or else creates a new game
-        
+        game = fetchGame() // fetches the exisiting game if there is one, or else creates a new game
+        // gameTypeSetting maps enum to int, encapsulated in GameType
+        //gameInfo = GameInfo(
+        gameInfo?.type = game!.gameTypeSetting
+        print(gameInfo)
     }
     
     // read in the 3 letter word list with word definitions
@@ -137,7 +139,7 @@ class AtoZModel {
         saveContext()
         letterset.letterSetID = String(letterset.objectID.URIRepresentation())
         
-        game?.currentLetterSetID = letterset.letterSetID
+        game?.data?.currentLetterSetID = letterset.letterSetID
         
         // make the LetterSet the letterset property for each Letter
         for letter in letters {
@@ -210,14 +212,14 @@ class AtoZModel {
         // create a LetterSet managed object
         let letterset = NSEntityDescription.insertNewObjectForEntityForName("LetterSet", inManagedObjectContext: sharedContext) as! LetterSet
         // add the LetterSet to the GameData object
-        letterset.game = game
+        letterset.game = game?.data //TODO: rename this game relationship to gameData?
         saveContext()
         letterset.letterSetID = String(letterset.objectID.URIRepresentation())
         
-        game?.currentLetterSetID = letterset.letterSetID
+        game?.data?.currentLetterSetID = letterset.letterSetID
         // this should do the same as above, and much simpler
         // TODO: consider replacing the ID way of finding letterset
-        game?.currentLetterSet = letterset
+        game?.data?.currentLetterSet = letterset
         
         // make the LetterSet the letterset property for each Letter
         // and set the index for each letter for id'ing it later
@@ -436,9 +438,9 @@ class AtoZModel {
                 // set found to false
                 // add 1 to numTimesPlayed -- //TODO:-or add that in the VC?
                 // set the game property
-                newWord.game = game // make sure that game is not nil
+                newWord.game = game?.data // make sure that game is not nil
                 // need to find the current letterset
-                newWord.letterlist = game?.currentLetterSet as? LetterSet //TODO: need to use ID to locate letterset?
+                newWord.letterlist = game?.data?.currentLetterSet as? LetterSet //TODO: need to use ID to locate letterset?
                 newWord.inCurrentList = true
                 
                 //newWord.numTimesPlayed += 1
@@ -519,36 +521,60 @@ class AtoZModel {
     //MARK:- GameData funcs
     
     // Fetch the existing game from the store, or create one if there is none
-    func fetchGameData() -> GameData {
+    func fetchGame() -> Game {
         
         // TODO: determine which is the current game, and load that.
         // whereever current game is set to true, must set all others to be false
         // and have a safeguard that allows only one currentGame at a time
-        let fetchRequest = NSFetchRequest(entityName: "GameData")
+        let fetchRequest = NSFetchRequest(entityName: "Game")
         do {
-            let gameArray = try sharedContext.executeFetchRequest(fetchRequest) as! [GameData]
+            let gameArray = try sharedContext.executeFetchRequest(fetchRequest) as! [Game]
             if gameArray.count > 0 {
                 for _ in 0 ..< 10 { // generalize to numberOfPositions var, instead of 10 
-                    positions = gameArray[0].positions?.allObjects as? [Position]
+                    positions = gameArray[0].data?.positions?.allObjects as? [Position]
                     positions!.sortInPlace {
                         ($0.index as Int16?) < ($1.index as Int16?)
                     }
                 }
+                //TODO:- Set all other games' isCurrentGame to false here?
+                //TODO:- add a predicate to fetch just the current game
+                // A mechanism for
                 return gameArray[0]
-            } else {
-                let gameData = makeGameDataDictionary()
-                let newGame = GameData(dictionary: gameData, context: sharedContext)
-                newGame.isCurrentGame = true
-                //TODO:- Set all other game isCurrentGame to false here?
+            } else { // there are no games, so create the first one
+                //TODO: pass in dictionaryName from the GameType
                 
+                //let gameDataDictionary = makeGameDataDictionary()
+                //let gameDataDictionary = [
+               //     "name": "David Game 1",
+               //     "isCurrentGame": true
+              //  ]
+                //let newGameData = GameData(dictionary: gameDataDictionary, context: sharedContext)
+                let newGameData = NSEntityDescription.insertNewObjectForEntityForName("GameData", inManagedObjectContext: sharedContext) as! GameData
+                newGameData.name = "Game-1"
+                saveContext()
+                //newGame.isCurrentGame = true
+                
+                let gameDictionary = makeGameDictionary()
+            
+                let newGame = Game(dictionary: gameDictionary, context: sharedContext)
+                saveContext() // save the context so the URI becomes permanent, and can be used for ID
+                newGame.gameID = String(newGame.objectID.URIRepresentation())
+                newGame.data = newGameData
+                newGame.gameTypeSetting = GameType.ThreeLetterWords // default to 3 letter word game
+
+                newGameData.game = newGame
+                newGame.data?.isCurrentGame = true
+                //TODO:- Set all other game isCurrentGame to false here?
+                // TODO:= create a mechanism to add new a new game. Where?
                 // create the Positions and add to game
                 for i in 0 ..< 10 {
                     // create the Positions for the tiles. There are 10 per game.
-                    // TODO: use init instead. And use Game object, when then has a GameData object
+                    // TODO: use init instead. And use Game object, which then has a GameData object
                     // Should Positions go with Game, or GameData??
                     let position = NSEntityDescription.insertNewObjectForEntityForName("Position", inManagedObjectContext: sharedContext) as! Position
                     position.index = Int16(i)
-                    position.game = newGame
+                     print(newGameData)
+                    position.game = newGameData //store positions in Game instead?
                     positions?.append(position)
                     updateLetterPosition(i) // setting the coordinates
 //                    let pos = generateLetterPosition(i)
@@ -564,9 +590,13 @@ class AtoZModel {
         } catch let error as NSError {
             print("Error in fetchGameData(): \(error)")
             //TODO: can the catch itself generate an error?
-            //do we need to return GameDatare?
-            let defaultInfo = makeGameDataDictionary()
-            return GameData(dictionary: defaultInfo, context: sharedContext)
+            // need to return a Game -- note: not saving context
+            let defaultData = makeGameDataDictionary()
+            let newData = GameData(dictionary: defaultData, context: sharedContext)
+            let defaultGame = makeGameDictionary()
+            let newGame = Game(dictionary: defaultGame, context: sharedContext)
+            newGame.data = newData
+            return newGame
         }
     }
     
@@ -598,11 +628,25 @@ class AtoZModel {
         }
     }
     
+    // make dict for Game values
+    func makeGameDictionary() -> [String : AnyObject] {
+        
+        let gameDictionary = [
+            "gameID": 0,
+            "dictionaryName": "OSPD5_3letter",
+            "gameType": 1
+        ]
+        //TODO: get the dictionaryName from the GameType
+        
+        return gameDictionary
+    }
+    
     // make dict for Game Data values
     func makeGameDataDictionary() -> [String : AnyObject] {
         
         let gameDataDictionary = [
-            "name": "David Game 1"
+            "name": "David Game 1",
+            "isCurrentGame": true
         ]
         
         return gameDataDictionary
@@ -723,7 +767,7 @@ class AtoZModel {
   
     func numWordsFound() -> Int? {
         var numWords: Int16 = 0
-        for aWord in (game?.words)! {
+        for aWord in (game?.data?.words)! {
             let w = aWord as? Word
             numWords += w!.numTimesFound
         }
@@ -732,7 +776,7 @@ class AtoZModel {
     
     func numWordsPlayed() -> Int? {
         var numWords: Int16 = 0
-        for aWord in (game?.words)! {
+        for aWord in (game?.data?.words)! {
             let w = aWord as? Word
             numWords += w!.numTimesPlayed
         }
@@ -741,7 +785,7 @@ class AtoZModel {
     
     func numUniqueWordsFound() -> Int? {
         var numUniqueWords: Int16 = 0
-        for aWord in (game?.words)! {
+        for aWord in (game?.data?.words)! {
             let w = aWord as? Word
             if w?.numTimesFound > 0 {
                 numUniqueWords += 1
@@ -752,7 +796,7 @@ class AtoZModel {
     
     func numUniqueWordsPlayed() -> Int? {
         var numUniqueWords: Int16 = 0
-        for aWord in (game?.words)! {
+        for aWord in (game?.data?.words)! {
             let w = aWord as? Word
             if w?.numTimesPlayed > 0 {
                 numUniqueWords += 1

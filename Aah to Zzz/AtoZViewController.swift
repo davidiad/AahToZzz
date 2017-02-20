@@ -98,7 +98,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var progressLabl: UILabel!
     
-    var game: GameData?
+    var game: Game?
     var currentLetterSet: LetterSet?
     var currentWords: [Word]?
     
@@ -1368,13 +1368,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func checkForExistingLetters () {
         // if there is a saved letterset, then use that instead of a new one
-        game = model.fetchGameData()
-        if game?.currentLetterSetID == nil {
+        game = model.fetchGame()
+        if game?.data?.currentLetterSetID == nil {
             //letters = model.generateLetters()
             currentLetterSet = model.generateLetterSet()
         } else {
             // there is a currentLetterSet, so let's find it
-            let lettersetURI = NSURL(string: (game?.currentLetterSetID)!)
+            let lettersetURI = NSURL(string: (game?.data?.currentLetterSetID)!)
             let id = sharedContext.persistentStoreCoordinator?.managedObjectIDForURIRepresentation(lettersetURI!)
             do {
                 currentLetterSet = try sharedContext.existingObjectWithID(id!) as? LetterSet
