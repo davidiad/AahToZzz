@@ -32,7 +32,7 @@ class AtoZModel {
     var inactiveCount: Int?
     
     var game: Game? // The managed object that is at the root of the object graph
-    var gameInfo: GameInfo? // holds the game info that is dependent on the gameType
+    var gameTypeInfo: GameTypeInfo? // holds the game info that is dependent on the gameType
     var positions: [Position]? // array to hold the letter Positions. Needed??
     
     var anchorPoint: CGPoint? // anchor point to calculate tile and UI position. Will depend on device size. And will be adjustable by the user to some degree to what works best (hand size, left or right handed, personal preference.
@@ -69,10 +69,10 @@ class AtoZModel {
             wordsSet.insert(key)
         }
         game = fetchGame() // fetches the exisiting game if there is one, or else creates a new game
-        // gameTypeSetting maps enum to int, encapsulated in GameType
-        //gameInfo = GameInfo(
-        gameInfo?.type = game!.gameTypeSetting
-        print(gameInfo)
+        
+        // gameTypeSetting maps enum to int(for saving in Core Data, encapsulated in GameType
+        gameTypeInfo = GameTypeInfo(gameType: game!.gameTypeSet)
+        
     }
     
     // read in the 3 letter word list with word definitions
@@ -538,7 +538,7 @@ class AtoZModel {
                 }
                 //TODO:- Set all other games' isCurrentGame to false here?
                 //TODO:- add a predicate to fetch just the current game
-                // A mechanism for
+                // A mechanism for adding a game has not yet been created
                 return gameArray[0]
             } else { // there are no games, so create the first one
                 //TODO: pass in dictionaryName from the GameType
@@ -560,8 +560,8 @@ class AtoZModel {
                 saveContext() // save the context so the URI becomes permanent, and can be used for ID
                 newGame.gameID = String(newGame.objectID.URIRepresentation())
                 newGame.data = newGameData
-                newGame.gameTypeSetting = GameType.ThreeLetterWords // default to 3 letter word game
-
+                newGame.gameTypeSet = GameType.ThreeLetterWords // default to 3 letter word game
+                print ("newGame: \(newGame)")
                 newGameData.game = newGame
                 newGame.data?.isCurrentGame = true
                 //TODO:- Set all other game isCurrentGame to false here?
@@ -573,7 +573,6 @@ class AtoZModel {
                     // Should Positions go with Game, or GameData??
                     let position = NSEntityDescription.insertNewObjectForEntityForName("Position", inManagedObjectContext: sharedContext) as! Position
                     position.index = Int16(i)
-                     print(newGameData)
                     position.game = newGameData //store positions in Game instead?
                     positions?.append(position)
                     updateLetterPosition(i) // setting the coordinates

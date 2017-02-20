@@ -49,7 +49,7 @@
         <relationship name="letterlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LetterSet" inverseName="wordlist" inverseEntity="LetterSet" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Game" positionX="-243" positionY="-1125" width="128" height="103"/>
+        <element name="Game" positionX="-243" positionY="-1125" width="128" height="105"/>
         <element name="GameData" positionX="-171" positionY="-964" width="128" height="178"/>
         <element name="Letter" positionX="144" positionY="-774" width="128" height="103"/>
         <element name="LetterSet" positionX="-371" positionY="-754" width="128" height="133"/>

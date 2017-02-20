@@ -8,13 +8,13 @@
 
 import Foundation
 
-enum GameType: Int {
-    case TwoLetterWords = 0
-    case ThreeLetterWords = 1
-    case JQXZ = 2
-    case SevenLetterWords = 3
-    case EightLetterWords = 4
-    case NineLetterWords = 5
+@objc enum GameType: Int {
+    case TwoLetterWords     = 0
+    case ThreeLetterWords   = 1
+    case JQXZ               = 2
+    case SevenLetterWords   = 3
+    case EightLetterWords   = 4
+    case NineLetterWords    = 5
 }
 
 // TODO: link this enum/struct to Game managed object

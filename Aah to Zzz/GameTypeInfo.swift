@@ -1,5 +1,5 @@
 //
-//  GameInfo.swift
+//  GameTypeInfo.swift
 //  AahToZzz
 //
 //  Created by David Fierstein on 1/25/17.
@@ -28,7 +28,7 @@ enum DictionaryName: String {
     case threeletterwordlist = "3letterwordlist"
 }
 
-struct GameInfo {
+struct GameTypeInfo {
     
     var type: GameType?
     var lengthOfWords: Int?
@@ -55,9 +55,14 @@ struct GameInfo {
         
     }
     
-    init(gameType: GameType.RawValue) {
-        // use switch case
-        switch gameType {
+    init(gameType: GameType) { //GameType.RawValue) {
+        
+        self.type = gameType
+        
+        guard let typeCase = self.type?.rawValue else {
+            return
+        }
+        switch typeCase {
         case 0 :
             lengthOfWords = 2
             numberOfTiles = 7

@@ -23,7 +23,7 @@ class Game: NSManagedObject {
     @NSManaged var data: GameData?
     
     // convert enum to int value (saved in Core Data) and vice-versa
-    var gameTypeSetting: GameType {
+    var gameTypeSet: GameType {
         get {
             return GameType(rawValue: self.gameType!.integerValue)!
         }
