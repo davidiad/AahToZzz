@@ -373,7 +373,6 @@ class AtoZModel {
     
     func getWordlist(letters: [Letter]) -> [String] {
         
-        
         var allLetterPermutationsSet = Set<String>()
         var sequence: String = ""
         
@@ -464,7 +463,7 @@ class AtoZModel {
         
         inactiveCount = 0 // need the # of inactive's so the VC can find out when a list is completed
         
-        //create a array to hold the mastered words
+        //create array to hold the mastered words
         var masteredWords = [Word]()
     
         for word in words {
@@ -736,11 +735,11 @@ class AtoZModel {
     }
     
     func calculateInactiveQuota(wordlistCount: Int) -> Int {
-        let inactiveFactor = 0.1  // arbitrary amount to give reasonable limits to max # inactives
+        var inactiveFactor = 0.1  // arbitrary amount to give reasonable limits to max # inactives
         var inactiveQuota: Int = 0
         var tensPlace = Int(Double(wordlistCount) * 0.1)
         if (tensPlace > 3) { tensPlace -= 1 } // better distribution this way
-        //for var i=0; i<=tensPlace; i += 1 {
+        if (tensPlace > 2) { inactiveFactor = 0.2 } // more inactives for long word lists
         for _ in 0...tensPlace {
             inactiveQuota += (Int)(inactiveFactor * Double(wordlistCount))
         }

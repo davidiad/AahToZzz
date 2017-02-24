@@ -329,7 +329,7 @@
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Udf-GC-b5o">
-                                <rect key="frame" x="123" y="213.5" width="194" height="27"/>
+                                <rect key="frame" x="123" y="213" width="194" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="194" id="Sc4-z4-3Lm"/>
                                     <constraint firstAttribute="height" constant="27" id="ayU-SP-UJk"/>
@@ -343,6 +343,13 @@
                                     <action selector="generateNewWordlist:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BZ5-yo-YJe"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUf-Or-Qu2">
+                                <rect key="frame" x="296" y="646" width="51" height="30"/>
+                                <state key="normal" title="AutoFill"/>
+                                <connections>
+                                    <action selector="autoFillWords:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Ua-D1-my3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.50939557690000004" green="0.74680393359999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -351,6 +358,7 @@
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="107" id="CKT-X1-GIn"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="3" id="Isv-RH-R5p"/>
                             <constraint firstItem="kp7-7N-n01" firstAttribute="centerX" secondItem="P9D-OZ-Gqm" secondAttribute="centerX" id="NuU-XB-5bW"/>
+                            <constraint firstItem="4Y4-1f-2hz" firstAttribute="leading" secondItem="qUf-Or-Qu2" secondAttribute="trailing" constant="27" id="Za4-go-BpQ"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="P9D-OZ-Gqm" secondAttribute="bottom" constant="10" id="ea0-yK-Ys3"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" constant="-2" id="egx-nc-KW4"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eu5-Sw-OsY"/>
@@ -358,6 +366,7 @@
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="centerX" secondItem="ojv-Vd-35V" secondAttribute="centerX" id="h97-8e-OtW"/>
                             <constraint firstItem="Udf-GC-b5o" firstAttribute="centerY" secondItem="P9D-OZ-Gqm" secondAttribute="bottom" constant="-25" id="hL2-86-i8Z"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="135" identifier="inProgressLeading" id="hhu-6t-4DQ"/>
+                            <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="qUf-Or-Qu2" secondAttribute="bottom" constant="14" id="iVP-iz-WVU"/>
                             <constraint firstItem="kp7-7N-n01" firstAttribute="centerY" secondItem="P9D-OZ-Gqm" secondAttribute="top" constant="23" id="pgl-g8-hWy"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pot-2E-FRR"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="top" secondItem="ojv-Vd-35V" secondAttribute="bottom" constant="8" id="qde-c6-hRu"/>

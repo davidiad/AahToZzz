@@ -8,12 +8,70 @@
 
 import XCTest
 @testable import AahToZzz
+import CoreData
+
 
 class Aah_to_ZzzTests: XCTestCase {
     
+    //var atozVC: AtoZViewController?
+    
+    
+    var viewController: AtoZViewController!
+    var model = AtoZModel.sharedInstance
+    
+    class MockDataProvider: NSObject {
+        
+        
+        
+        //var addPersonGotCalled = false
+        
+//        var managedObjectContext: NSManagedObjectContext?
+//        weak var tableView: UITableView!
+//        func addPerson(personInfo: PersonInfo) { addPersonGotCalled = true }
+//        func fetch() { }
+//        func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return 1 }
+//        func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//            return UITableViewCell()
+//        }
+        
+    }
+
+    
+    
+    /*
+ func percentageFound() -> Int? {
+ guard let numWordsPlayed = numWordsPlayed() else {
+ return nil
+ }
+ guard let numWordsFound = numWordsFound() else {
+ return nil
+ }
+ if numWordsPlayed > 0 {
+ return Int(100.0 * Float(numWordsFound) / Float(numWordsPlayed))
+ } else {
+ return nil
+ }
+ }
+ */
+    
+    func testPercentageFound() {
+//        model.numWordsPlayed = 100
+//        model.numWordsFound = 50
+//        let p = model.percentageFound()
+//        
+//
+//
+//        XCTAssert(p == 50)
+    }
+ 
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        //let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        //atozVC = storyboard.instantiateInitialViewController() as? AtoZViewController
+        
+        
     }
     
     override func tearDown() {

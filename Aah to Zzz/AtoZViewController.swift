@@ -20,11 +20,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //  Ad integration?
     // Swype style letter selection (in v 1.1)
     // incorporate Alamofire possibly
-    // add properties to GameData or Game object, that allow for different types of games. For instance, what letters you're searching for (e.g., X, J, Q, and Z words). How many letters (e.g. 2 letters, 3 letters, 7 letters, any size, 8 letter words, 9 letter words), what orientation (e.g., 2 or 3 letters are in portrait, 7, 8, 9 letters are in landscape). Number of positions (for 7 letter or more, might want more than 10 positions), etc
+    // add properties to GameData or Game object, that allow for different types of games. For instance, what letters you're searching for (e.g., X, J, Q, and Z words). How many letters (e.g. 2 letters, 3 letters, 7 letters, any size, 8 letter words, 9 letter words), what orientation (e.g., 2 or 3 letters are in portrait, 7, 8, 9 letters are in landscape). Number of positions (for 7 letter or more, might want more than 10 positions), etc - Done
+    // Add ability to manage games in the options
     // adding a little switch button in top right corner(possibly) to switch between  or 3 letters, or 7 letters QXJZ, etc JZQX JXQZ JQXZ
     // use Extensions to organize code better
     // Deal with app lifecycle - what if app goes to background, etc
     // Fix bug that prevents tiles from enlarging and raising when dragged (used to work)- Done
+    // When tiles are jumbled, enlarge them to varying degrees to add the illusion that some of them are closer
     // Enlarge and raise tiles on long press
     // Finish adding OSPD5 words, get paper copy to check for sure which are in
     // Need to check a few questionable words
@@ -37,6 +39,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Show definitions only when word has been found
     // Once a level has been reached, prevent words from going below that level (?)
     // Add a speed thru feature for testing
+    // add unit tests
     // Help/tutorial
     // ghosted arrows to show you can scroll on right side. Maybe
     // they show up when touching the side area?
@@ -47,7 +50,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Tiles that snap back after jumble are off by a small amount - Fixed!
     // if possible, vary the snap back angle/direction
     // clean up UIDynamics code (some is not being used)
-    // Tapping on tiles, sometimes they get moved in the wrong sequence -- frustrating
+    // Tapping on tiles, sometimes they get moved in the wrong sequence -- frustrating -- Fixed!
     // (Need to make sure the first one is moved before the 2nd, etc)
     // Tiles sometimes get stuck at an angle -Fixed i think, needs verification
     // Make format of progress view finished and nicer (what to do with empty columns)
@@ -67,7 +70,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Fix infoViewController warning
     // words in found word list -- determine # of outline rings -- also for bar graphs
     // when tapping 2 letters, sometimes the 2nd one, instead of going to the upper positions, goes to an open lower position. So need to prioritize upper position
-    // If possible, in Progress view, get rid of the delay in the bars being displayed. Or animate them?
+    // In Progress view, get rid of the delay in the bars being displayed. - Fixed
     // Using Model Versioning and Migration for core data
     // after swapTiles, make sure the context is saved before using findVacancy again. Completion handler? Delay? Notification? Add a delay every time, but later replace with a test for the flag first, so the delay doesn't run every single time
     // add sound fx (or wait til next version)?
@@ -125,6 +128,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func fillWordList(sender: AnyObject) {
         fillInTheBlanks()
+    }
+    
+    @IBAction func autoFillWords(sender: AnyObject) {
+        // For each word in the word list, mark each one as found, etc
+        for wordObject: Word in currentWords! {
+            if wordObject.active == true {
+                wordObject.found = true
+            }
+        }
+        saveContext()
+        updateProgress("Auto Found the words")
     }
     
     lazy var collider:UICollisionBehavior = {
@@ -515,29 +529,19 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let upperPositionsView = UIImageView(image: upperPositionsBg)
         upperPositionsView.center = CGPointMake(tilesAnchorPoint.x, tilesAnchorPoint.y + 120)
         view.addSubview(upperPositionsView)
-        // TODO:-make sure all tiles have higher z index than all bg's. Also when tapped
+        // Make sure all tiles have higher z index than all bg's. Also when tapped
         for t in lettertiles {
-            //t.bringSubviewToFront(view)
             view.bringSubviewToFront(t)
         }
         // reference for memory leak bug, and fix:
         // http://stackoverflow.com/questions/34075326/swift-2-iboutlet-collection-uibutton-leaks-memory
         //TODO: check for memory leak here
-        // create an array to populate the buttons that hold the letters
-        
         
         checkForExistingLetters()
         updateTiles()
         generateWordList()
         startNewList.alpha = 0
         startNewList.hidden = true
-        //        for var i=0; i<lettertiles.count; i++ { // lettertiles is array of Tiles: [Tile]
-        //            lettertiles[i].letter!.position = positions![i]
-        //            print(positions![i].position)
-//            lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapToPoint: lettertiles[i].position!)
-//            lettertiles[i].snapBehavior?.damping = 0.75
-//            animator.addBehavior(lettertiles[i].snapBehavior!)
-//        }
         
         
         let mainGradient = model.yellowPinkBlueGreenGradient()
@@ -547,11 +551,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         mainGradient.name = "mainGradientLayer"
         view.layer.addSublayer(mainGradient)
         
-//        pushBehavior = UIPushBehavior(items: lettertiles, mode: .Instantaneous)
-//        pushBehavior.pushDirection = CGVector(dx: 3.0, dy: 3.0)
-//        pushBehavior.magnitude = 0.1//magnitude / ThrowingVelocityPadding
-//        
-//        gravityBehavior = UIGravityBehavior(items: lettertiles)
         collisionBehavior = UICollisionBehavior(items: [])
         //collisionBehavior.translatesReferenceBoundsIntoBoundary = true
         for tile in lettertiles {
@@ -560,64 +559,15 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         
-//        blackhole = UIFieldBehavior.radialGravityFieldWithPosition(CGPointMake(65, 150))
-//        blackhole.falloff = 0.01
-//        blackhole.strength = 1234.9
-        
-//        snap0 = UISnapBehavior(item: lettertiles[0], snapToPoint: CGPointMake(40, 300))
-//        snap1 = UISnapBehavior(item: lettertiles[1], snapToPoint: CGPointMake(140, 300))
-//        snap2 = UISnapBehavior(item: lettertiles[2], snapToPoint: CGPointMake(240, 300))
-        
-        //animator.addBehavior(gravityBehavior)
-        //animator.addBehavior(pushBehavior)
         animator.addBehavior(collisionBehavior)
-        //animator.addBehavior(blackhole)
-//        animator.addBehavior(snap0)
-//        animator.addBehavior(snap1)
-//        animator.addBehavior(snap2)
-        
-//        let scrollGesture = UIPanGestureRecognizer(target: self, action: "scrollByProxy:")
-//        scrollProxy.addGestureRecognizer(scrollGesture)
-        
-//        understandParameterName(firstString: "poop", secondSun: 8)
-//        understandParameterName(firstString: "heyhello", secondSun: 5)
         
         testAlamoFire()
     }
-    
-    
-    
-//    func understandParameterName(firstString firstIn: String, secondSun secondInt: Int) {
-//        print("params: \(firstIn) and \(secondInt)")
-//    }
-    
-    
-//    func scrollByProxy(pan: UIPanGestureRecognizer) {
-//        let startPoint = wordTable.contentOffset
-//        var currentPoint = startPoint
-//        var deltaY = startPoint.y - currentPoint.y
-//        switch pan.state {
-//        case .Began:
-//            print("start pan: \(wordTable.contentOffset)")
-//        case .Changed:
-//            currentPoint = pan.locationInView(self.view)
-//            deltaY = startPoint.y - currentPoint.y
-//            wordTable.setContentOffset(CGPointMake(startPoint.x, deltaY), animated: false)
-//        case .Ended:
-//            currentPoint = pan.locationInView(self.view)
-//            deltaY = startPoint.y - currentPoint.y
-//            wordTable.setContentOffset(CGPointMake(startPoint.x, deltaY), animated: true)
-//            print("end pan: \(wordTable.contentOffset)")
-//        default:
-//            break
-//        }
-//    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
     }
-    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -1052,6 +1002,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     cell.outlineShadowView.alpha = 0.2
                 }
             }
+            
             if word.found == true && word.inCurrentList == true {
                 if cell.word != nil { // may be unneeded safeguard
                     
@@ -1067,7 +1018,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 // hack for now TODO:-- single line outlines need to have a different shadow image than doubled lines
                 cell.outlineShadowView.image = UIImage(named: "outline_thick")
                 cell.outlineShadowView.alpha = 0.2
+                print("INACTIVE, in configureCell: \(cell.word.text) at level \(word.level)")
             }
+
             
         }
     }
@@ -1201,7 +1154,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
         fillingInBlanks = false // otherwise it's as if the 'cheat' button was pressed and all words appear but in red
-        //for var i=0; i<fetchedResultsController.fetchedObjects?.count; i += 1 {
+        
         //TODO:-need to unwrap .fetchedObjects safely?
         //TODO:- is this change to swift3 for loop causing a bug where one tile is not returned properly?
         for i in 0 ..< fetchedResultsController.fetchedObjects!.count {
@@ -1226,6 +1179,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         saveContext()
 
+        // Now that the results of the previous round have been saved, create a new set of letters
         currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
 
         // converting the new LetterSet to an array, for use in this class
