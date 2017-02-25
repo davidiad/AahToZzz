@@ -53,6 +53,10 @@ class Aah_to_ZzzTests: XCTestCase {
  }
  }
  */
+    func testCalculateInactiveQuota() {
+        let p = model.calculateInactiveQuota(31)  //vc.percentage(50, 50)
+        XCTAssert(p == 16)
+    }
     
     func testPercentageFound() {
 //        model.numWordsPlayed = 100

@@ -426,6 +426,7 @@ class AtoZModel {
                 if wordArray.count > 0 {
                     // a Word was returned for that String. Do not create another with the same string!
                     newWord = wordArray[0]
+
                 } else {
                     newWord = Word(wordString: wordlist[i], context: sharedContext)
                     newWord.found = false
@@ -452,15 +453,15 @@ class AtoZModel {
         }
         
         saveContext()
-        //TODO:-- check currentWords for mastered words, and set to inactive up till inactive quota limit
+        // Check currentWords for mastered words, and set to inactive up til inactive quota limit
         checkForInactiveWords(currentWords)
-        
+
         return currentWords
  
     }
     
     func checkForInactiveWords(words: [Word]) {
-        
+
         inactiveCount = 0 // need the # of inactive's so the VC can find out when a list is completed
         
         //create array to hold the mastered words
@@ -468,17 +469,16 @@ class AtoZModel {
     
         for word in words {
             if word.mastered == true {
-                word.active = false
+                //word.active = false
                 masteredWords.append(word)
             }
-            print(word.active)
 
-            if word.active == false {
-                print("::")
-                print(word.word)
-            }
+//            if word.active == false {
+//                print("::")
+//                print(word.word)
+//            }
         }
-        saveContext()
+        //saveContext()
         
         // check if # of mastered words is greater than inactive quota
         let iq = calculateInactiveQuota(words.count)
@@ -494,12 +494,20 @@ class AtoZModel {
             
             // for the sake of playability, set some of the words back to active
             // leaving the ones with the highest level (up til masteredWords[iq-1] as inactive
-            for i in iq ..< masteredWords.count {
-                masteredWords[i].active = true
+//            for i in iq ..< masteredWords.count {
+//                masteredWords[i].active = true
+//            }
+            
+            // set the words with the highest level as inactive, but only up until the inactive quotient
+            // for the sake of playability, because too many inactive words would be not challenging enough and not as fun
+            for i in 0 ..< iq {
+                masteredWords[i].active = false
             }
+
         }
         
         saveContext()
+        
         
         for word in masteredWords {
             if word.active == false {
@@ -739,7 +747,7 @@ class AtoZModel {
         var inactiveQuota: Int = 0
         var tensPlace = Int(Double(wordlistCount) * 0.1)
         if (tensPlace > 3) { tensPlace -= 1 } // better distribution this way
-        if (tensPlace > 2) { inactiveFactor = 0.2 } // more inactives for long word lists
+        if (tensPlace > 2) { inactiveFactor = 0.15 } // more inactives for long word lists
         for _ in 0...tensPlace {
             inactiveQuota += (Int)(inactiveFactor * Double(wordlistCount))
         }

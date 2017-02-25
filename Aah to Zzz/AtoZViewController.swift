@@ -34,12 +34,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // If multiple dictionaries, make a new game for each dictionary.
     // Allow user to have multiple games, and to name their games.
     // Add more dictionaries, including one that removes offensive words. Use as default?
-    // TODO:- Some words are grayed out, but are still in the list and findable
-    // Also, when fill in the blanks is used, check that words are considered missed
+    // Some words are grayed out, but are still in the list and findable - Fixed
+    // Also, when fill in the blanks is used, check that those words are counted as missed words
     // Show definitions only when word has been found
     // Once a level has been reached, prevent words from going below that level (?)
-    // Add a speed thru feature for testing
-    // add unit tests
+    // Add a speed thru feature for testing - Done
+    // Add a 10x speed thru lists feature for testing
+    // add unit tests - Started
     // Help/tutorial
     // ghosted arrows to show you can scroll on right side. Maybe
     // they show up when touching the side area?
@@ -461,6 +462,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         do {
             try fetchedResultsController.performFetch()
+            
         } catch {
             let fetchError = error as NSError
             print("\(fetchError), \(fetchError.localizedDescription)")
@@ -1010,6 +1012,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                     print("In configureCell: \(cell.word.text) at level \(word.level)")
                     
+                    
                 }
             }
             //TODO:-- Ensure that inactive words are being counted (or not counted) correctly
@@ -1019,6 +1022,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 cell.outlineShadowView.image = UIImage(named: "outline_thick")
                 cell.outlineShadowView.alpha = 0.2
                 print("INACTIVE, in configureCell: \(cell.word.text) at level \(word.level)")
+                print(word)
+                
             }
 
             
@@ -1160,6 +1165,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         for i in 0 ..< fetchedResultsController.fetchedObjects!.count {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+                
                 //TODO:-- check for active or not
                 if word.active == true {
                     word.numTimesPlayed += 1 // the # times the game has put that word into play
