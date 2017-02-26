@@ -317,6 +317,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         addLevelContainers()
         levelText = calculateLevel()
         
+        //TODO:- Need to make the ProgressInfoViewController update its info from the model at this point/
+        // otherwise, it's a turn behind, it seems
     }
     
     //causes a delay when bar graphs load, so moved to viewWillLayoutSubviews()

@@ -17,6 +17,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
            }
     
     //TODO:- LIST
+    // After Fill in Blanks, need to not allow words to be found again.
     //  Ad integration?
     // Swype style letter selection (in v 1.1)
     // incorporate Alamofire possibly
@@ -75,6 +76,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Using Model Versioning and Migration for core data
     // after swapTiles, make sure the context is saved before using findVacancy again. Completion handler? Delay? Notification? Add a delay every time, but later replace with a test for the flag first, so the delay doesn't run every single time
     // add sound fx (or wait til next version)?
+    // Note: in Progress view, the numbers in ProgressInfoVC (above) don't include Words that have been created, but not yet tallied. So the number of words played is a turn behind the level bar graphs (below). Make constitent?
     
     // MARK: - Unwind segue from Progress view
     @IBAction func cancelToProgressViewController(segue:UIStoryboardSegue) {
@@ -132,14 +134,16 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func autoFillWords(sender: AnyObject) {
-        // For each word in the word list, mark each one as found, etc
-        for wordObject: Word in currentWords! {
-            if wordObject.active == true {
-                wordObject.found = true
+        if fillingInBlanks == false {
+            // For each word in the word list, mark each one as found, etc
+            for wordObject: Word in currentWords! {
+                if wordObject.active == true {
+                    wordObject.found = true
+                }
             }
+            saveContext()
+            updateProgress("Auto Found the words")
         }
-        saveContext()
-        updateProgress("Auto Found the words")
     }
     
     lazy var collider:UICollisionBehavior = {
@@ -1158,7 +1162,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         returnTiles() // if any tiles are in the upper positions, return them
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
-        fillingInBlanks = false // otherwise it's as if the 'cheat' button was pressed and all words appear but in red
+        
+        //fillingInBlanks = false // otherwise it's as if the 'cheat' button was pressed and all words appear but in red
         
         //TODO:-need to unwrap .fetchedObjects safely?
         //TODO:- is this change to swift3 for loop causing a bug where one tile is not returned properly?
@@ -1166,12 +1171,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
                 
-                //TODO:-- check for active or not
+                // check for active or not
                 if word.active == true {
                     word.numTimesPlayed += 1 // the # times the game has put that word into play
-                    if word.found == true {
+                    if word.found == true { // should work whether or no fillingInBlanks
                         word.numTimesFound += 1
-                        print("Word Level for \(word.word!): \(word.level)")
                     }
                 } else { // Word was inactive for this round
                     print("Word was inactive: Level for \(word.word!): \(word.level)")
@@ -1184,6 +1188,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         saveContext()
+        
+        fillingInBlanks = false // reset to false
 
         // Now that the results of the previous round have been saved, create a new set of letters
         currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
@@ -1244,22 +1250,24 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
  
     // need to incorporate this into func above this one (and consolidate with checkForValidWord)
     func checkUpperPositionsForWord () {
-        if positions![7].letter != nil && positions![8].letter != nil && positions![9].letter != nil {
-            let wordToCheck = (positions![7].letter?.letter)! + (positions![8].letter?.letter)! + (positions![9].letter?.letter)!
-            let wordIsValid = checkForValidWord(wordToCheck)
-            
-            if wordIsValid { // return the letters to the letter pool
-                //print("\(wordToCheck): at level \(wordToCheck.level)")
-                // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
-                let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.35 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
-                dispatch_after(time, dispatch_get_main_queue()) {
-                    //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
-                    // rather than checking all 7 tiles
-                    self.returnTiles()
+        if fillingInBlanks == false { // Check if the user has tapped Fill in the Blanks button
+            if positions![7].letter != nil && positions![8].letter != nil && positions![9].letter != nil {
+                let wordToCheck = (positions![7].letter?.letter)! + (positions![8].letter?.letter)! + (positions![9].letter?.letter)!
+                let wordIsValid = checkForValidWord(wordToCheck)
+                
+                if wordIsValid { // return the letters to the letter pool
+                    //print("\(wordToCheck): at level \(wordToCheck.level)")
+                    // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
+                    let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), Int64(0.35 * Double(NSEC_PER_SEC))) //Int64(NSEC_PER_SEC))
+                    dispatch_after(time, dispatch_get_main_queue()) {
+                        //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
+                        // rather than checking all 7 tiles
+                        self.returnTiles()
+                    }
+                } else {
+                    //word is *not* valid. Do nothing in that case (except show a message). The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
+                    updateProgress("That's not a word!")
                 }
-            } else {
-            //word is *not* valid. Do nothing in that case (except show a message). The penalty to the user for playing an invalid word is that the flow of their game is interupted. They will have to return the letters manually (by tapping on a button)
-                updateProgress("That's not a word!")
             }
         }
     }
@@ -1384,16 +1392,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         for i in 0 ..< currentNumberOfWords! { //TODO: unwrap currentNumberOfWords safely
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
-
-                if aValidWord.found == false {
-                    // fill in the word with red tiles
-                    
-                    aValidWord.found = true // need to switch this to something else that will trigger configureCell
-                    aValidWord.found = false
-                    
-                    
-                    
-                }
+            
+            if aValidWord.found == false {
+                // fill in the word with red tiles
+                aValidWord.found = true // need to switch this to something else that will trigger configureCell
+                aValidWord.found = false
+            } else {
+                
+            }
 //                let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
 //                currentWord.found = true
                 saveContext()
