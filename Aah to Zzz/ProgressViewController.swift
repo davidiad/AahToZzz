@@ -28,6 +28,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     var unplayedWordsArray = [String]()
     var levelText: String?
     
+    // addLevelsContainers() is called in viewWillLayoutSubviews, so that the info needed for it, has first been obtained (inViewDidLoad). However, viewWillLayoutSubviews may be called multiple times. Therefore, adding a flag to ensure that addLevelsContainers is called only once.
+    var viewWillLayoutSubviewsHasBeenCalled: Bool = false
+    
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
         CoreDataStackManager.sharedInstance().managedObjectContext
@@ -310,15 +313,17 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // but causes a visible delay in displaying the graphs
     
     override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+        //super.viewWillLayoutSubviews() //needed?
         
-        graphHeight = graphStackView.superview!.frame.size.height
-        graphWidth = graphStackView.superview!.frame.size.width
-        addLevelContainers()
-        levelText = calculateLevel()
+        // only call the first time viewWillLayoutSubviews() is called
+        if viewWillLayoutSubviewsHasBeenCalled == false {
+            graphHeight = graphStackView.superview!.frame.size.height
+            graphWidth = graphStackView.superview!.frame.size.width
+            addLevelContainers()
+            levelText = calculateLevel()
+        }
+        viewWillLayoutSubviewsHasBeenCalled = true
         
-        //TODO:- Need to make the ProgressInfoViewController update its info from the model at this point/
-        // otherwise, it's a turn behind, it seems
     }
     
     //causes a delay when bar graphs load, so moved to viewWillLayoutSubviews()
@@ -334,12 +339,13 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // Add an array of container views containing the level bars
     //TODO: Set the height of the container by the relative number of words in the level
     func addLevelContainers() {
-        
+
         // offset bars to the right to make room for the unplayed words bar – if it exists
         let shiftRight: CGFloat = unplayedWordsExist ? 40.0 : 0.0
         let leftLeading: CGFloat = graphWidth * 0.5 - 133.0
         
         // var containerArray = [UIView]()
+
         for i in -1 ..< levelArrays.count {
             if unplayedWordsExist || i >= 0 { // Don't allow the case where i = -1, but there are no unplayed words
                 // (-1 is being used for the unplayed words array, which sometimes exists and sometimes not)
@@ -413,8 +419,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     }
                 }
                 
-                //if controller.wordsInLevel.count > 0 {
-                    addChildViewController(controller)
+
+                    //addChildViewController(controller) // Was this line neccesary?
                     controller.view.translatesAutoresizingMaskIntoConstraints = false
                     containerView.addSubview(controller.view)
                     
