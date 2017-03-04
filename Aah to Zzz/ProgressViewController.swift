@@ -355,8 +355,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 bg_image!.resizableImageWithCapInsets(insets, resizingMode: .Tile)
                 
                 containerView.backgroundColor = UIColor(patternImage: bg_image!)
-                //containerView.backgroundColor = UIColor.colorWithPatternImage(UIImage(named:"merged_small_tiles.png")!)
-                //containerView.backgroundColor = colorCode.tint
+
                 graphStackView.translatesAutoresizingMaskIntoConstraints = false
                 graphStackView.addSubview(containerView)
                 
@@ -369,7 +368,13 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 // top constraint measures from top of screen,
                 // bottom constraint from bottom
                 // graphStackView.leadingAnchor
-                let height = graphHeight * CGFloat((numWordsInLevel / findMaxLevelCount()))
+                var height = graphHeight * CGFloat((numWordsInLevel / findMaxLevelCount()))
+                
+                // if there are no words in the level, adjust height so that just a thin colored bar appears at the bottom
+                if height == 0 {
+                    height = 18
+                }
+                
                 print("height: \(height)")
                 NSLayoutConstraint.activateConstraints([
                     
@@ -408,78 +413,84 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     }
                 }
                 
-                addChildViewController(controller)
-                controller.view.translatesAutoresizingMaskIntoConstraints = false
-                containerView.addSubview(controller.view)
+                //if controller.wordsInLevel.count > 0 {
+                    addChildViewController(controller)
+                    controller.view.translatesAutoresizingMaskIntoConstraints = false
+                    containerView.addSubview(controller.view)
+                    
+                    NSLayoutConstraint.activateConstraints([
+                        controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
+                        controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
+                        controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
+                        controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
+                        ])
+                    
+                    controller.didMoveToParentViewController(self)
+                    
+                    // create mask to round the corners of the graph bar
+                    let rect: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
+                    let mask: UIView = UIView(frame: rect)
+                    mask.backgroundColor = UIColor.whiteColor()
+                    mask.layer.cornerRadius = 6
+                    containerView.maskView = mask
+                    
+                    // Add the outline image on top of the level bar table controller
+                    // first, the shadow image beneath to help the outline stand out
+                    let outlineShadowImage = UIImage(named: "outline_shadow")
+                    let outlineShadowView = UIImageView(image: outlineShadowImage)
+                    outlineShadowView.alpha = 0.5
+                    outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(CGFloat(height - 20)))
+                    
+                    // create the outline view
+                    //TODO: seems like the outline image is being scaled up
+                    let outlineImage = UIImage(named: "outline_double")
+                    let outlineView = UIImageView(image: outlineImage)
+                    outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height - 20))
+                    outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                    // set the outlineView tintcolor per level
+                    outlineView.tintColor = colorCode.tint
+                    
+                    containerView.addSubview(outlineShadowView)
+                    containerView.addSubview(outlineView)
+                    
+                    // Create a text label for the number of words that floats above the container
+                    let topLabel = UILabel()
+                    topLabel.textColor = colorCode.tint
+                    topLabel.font = UIFont.systemFontOfSize(9)
+                    topLabel.text = String(controller.wordsInLevel.count)
+                    view.addSubview(topLabel)
+                print("Number of words")
+                print(topLabel.text)
+                    
+                    topLabel.translatesAutoresizingMaskIntoConstraints = false
+                //TODO:- topLabel is appearing twice, doubled, and distance from bar is inconsistent
+                    topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor, constant: -5.0).active = true
+                    //topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
+                    topLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
                 
-                NSLayoutConstraint.activateConstraints([
-                    controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
-                    controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
-                    controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
-                    controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
-                    ])
-                
-                controller.didMoveToParentViewController(self)
-                
-                // create mask to round the corners of the graph bar
-                let rect: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
-                let mask: UIView = UIView(frame: rect)
-                mask.backgroundColor = UIColor.whiteColor()
-                mask.layer.cornerRadius = 6
-                containerView.maskView = mask
-                
-                // Add the outline image on top of the level bar table controller
-                // first, the shadow image beneath to help the outline stand out
-                let outlineShadowImage = UIImage(named: "outline_shadow")
-                let outlineShadowView = UIImageView(image: outlineShadowImage)
-                outlineShadowView.alpha = 0.5
-                outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(CGFloat(height - 20)))
-                
-                // create the outline view
-                //TODO: seems like the outline image is being scaled up
-                let outlineImage = UIImage(named: "outline_double")
-                let outlineView = UIImageView(image: outlineImage)
-                outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height - 20))
-                outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                // set the outlineView tintcolor per level
-                outlineView.tintColor = colorCode.tint
-                
-                containerView.addSubview(outlineShadowView)
-                containerView.addSubview(outlineView)
-                
-                // Create a text label for the number of words that floats above the container
-                let topLabel = UILabel()
-                topLabel.textColor = colorCode.tint
-                topLabel.font = UIFont.systemFontOfSize(9)
-                topLabel.text = String(controller.wordsInLevel.count)
-                view.addSubview(topLabel)
-                
-                topLabel.translatesAutoresizingMaskIntoConstraints = false
-                topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
-                topLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
-                
-                // Create a text label for the word level that floats below the container
-                let bottomLabel = UILabel()
-                bottomLabel.textColor = colorCode.tint
-                bottomLabel.font = UIFont.systemFontOfSize(11)
-                
-                if i < 0 {
-                    bottomLabel.text = "Words not yet played"
-                    bottomLabel.lineBreakMode = .ByWordWrapping
-                    bottomLabel.numberOfLines = 4
-                    bottomLabel.textAlignment = .Center
-                    bottomLabel.widthAnchor.constraintEqualToConstant(40).active = true
-
-                } else {
-                    bottomLabel.text = String(controller.level!)
+                    // Create a text label for the word level that floats below the container
+                    let bottomLabel = UILabel()
+                    bottomLabel.textColor = colorCode.tint
+                    bottomLabel.font = UIFont.systemFontOfSize(11)
+                    
+                    if i < 0 {
+                        bottomLabel.text = "Words not yet played"
+                        bottomLabel.lineBreakMode = .ByWordWrapping
+                        bottomLabel.numberOfLines = 4
+                        bottomLabel.textAlignment = .Center
+                        bottomLabel.widthAnchor.constraintEqualToConstant(40).active = true
+                        
+                    } else {
+                        bottomLabel.text = String(controller.level!)
+                    }
+                    view.addSubview(bottomLabel)
+                    
+                    bottomLabel.translatesAutoresizingMaskIntoConstraints = false
+                    bottomLabel.topAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 9.0).active = true
+                    bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
                 }
-                view.addSubview(bottomLabel)
-                
-                bottomLabel.translatesAutoresizingMaskIntoConstraints = false
-                bottomLabel.topAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 9.0).active = true
-                bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
             }
-        }
+        //}
     }
     
     // MARK: - Navigation

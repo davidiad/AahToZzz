@@ -1275,8 +1275,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func checkForValidWord(wordToCheck: String) -> Bool {
         
         var wordIsNew = false
-        //TODO: unwrap currentNumOfWords safely?
-        for i in 0 ..< currentNumberOfWords! {
+        guard let numberOfWords = currentNumberOfWords else {
+            return false
+        }
+        for i in 0 ..< numberOfWords {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             let aValidWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
             if wordToCheck == aValidWord.word {

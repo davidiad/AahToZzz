@@ -16,7 +16,7 @@ class Aah_to_ZzzTests: XCTestCase {
     //var atozVC: AtoZViewController?
     
     
-    var viewController: AtoZViewController!
+    //var viewController: AtoZViewController
     var model = AtoZModel.sharedInstance
     
     class MockDataProvider: NSObject {
@@ -67,13 +67,21 @@ class Aah_to_ZzzTests: XCTestCase {
 //
 //        XCTAssert(p == 50)
     }
+    
+    func testCheckForValidWord() {
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let atozVC = storyboard.instantiateInitialViewController() as! AtoZViewController
+        let wordToCheck = "AAS"
+        // seems like tests are run before the whole setup, so test fails
+        XCTAssert(atozVC.checkForValidWord(wordToCheck))
+
+    }
  
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
-        //let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        //atozVC = storyboard.instantiateInitialViewController() as? AtoZViewController
+
         
         
     }
