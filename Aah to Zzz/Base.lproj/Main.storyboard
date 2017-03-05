@@ -495,7 +495,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOt-2M-HXm">
                                         <rect key="frame" x="60" y="200" width="334" height="426"/>
                                         <subviews>
-                                            <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Bqh-No-vDe">
+                                            <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Bqh-No-vDe">
                                                 <rect key="frame" x="0.0" y="0.0" width="334" height="426"/>
                                             </stackView>
                                         </subviews>

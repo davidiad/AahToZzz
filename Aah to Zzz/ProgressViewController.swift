@@ -24,7 +24,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
 //    var levelArrays: [[Word]?] = [[Word]?]()
     var levelArrays: [[String]?] = [[String]?]()
-    var highestLevel: Int = 6 // the highest level that will be in the graph. Min set here to 6, could be higher.
+    var highestLevel: Int = 8 // the highest level that will be in the graph. Min set here to 6, could be higher.
     var tableHt: Int = 0
     var unplayedWordsExist: Bool = false
     var unplayedWordsArray = [String]()
@@ -342,11 +342,11 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     //TODO: Set the height of the container by the relative number of words in the level
     func addLevelContainers() {
 
-        graphStackView.axis = .Horizontal
-        graphStackView.distribution = .FillEqually
-        graphStackView.alignment = .Center
-        graphStackView.spacing = 5
-        graphStackView.translatesAutoresizingMaskIntoConstraints = false
+        //graphStackView.axis = .Horizontal
+        //graphStackView.distribution = .EqualCentering
+        //graphStackView.alignment = .Center
+        //graphStackView.spacing = 5
+        //graphStackView.translatesAutoresizingMaskIntoConstraints = false
         // rotate the graph label
         numberOfWordsLabel.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
         numberOfWordsLabel.frame = CGRect(x: 0, y: 0, width: 30, height: 230)
