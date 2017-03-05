@@ -374,21 +374,23 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 // top constraint measures from top of screen,
                 // bottom constraint from bottom
                 // graphStackView.leadingAnchor
-                var height = graphHeight * CGFloat((numWordsInLevel / findMaxLevelCount()))
+                // Adding 22 to height to account for bottom starting from -20, and having a thin bar of 2 even where there are 0 words
+                let height = graphHeight * CGFloat((numWordsInLevel / findMaxLevelCount())) + 22
                 
                 // if there are no words in the level, adjust height so that just a thin colored bar appears at the bottom
-                if height == 0 {
-                    height = 18
-                }
+                // height needs to be at least 22 so that the top is never lower than the bottom
+//                if height < 22 {
+//                    height += 22
+//                }
                 
-                print("height: \(height)")
+                // move bottom constraint down by 20 to be even with bottom(because margin?)
                 NSLayoutConstraint.activateConstraints([
                     
                     containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + leftLeading + shiftRight),
                     containerView.widthAnchor.constraintEqualToConstant(32.0),
                     
-                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height + 20)  ),
-                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(0)),
+                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
+                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
                     ])
                 
                 //was working, but not with stack view
@@ -420,7 +422,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 }
                 
 
-                    //addChildViewController(controller) // Was this line neccesary?
+                    addChildViewController(controller) // Was this line neccesary?
                     controller.view.translatesAutoresizingMaskIntoConstraints = false
                     containerView.addSubview(controller.view)
                     
@@ -470,7 +472,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     
                     topLabel.translatesAutoresizingMaskIntoConstraints = false
                 //TODO:- topLabel is appearing twice, doubled, and distance from bar is inconsistent
-                    topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor, constant: -5.0).active = true
+                    topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor, constant: -3.0).active = true
                     //topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
                     topLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
                 
@@ -496,20 +498,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
                 }
             }
-        //}
+        
     }
     
-    // MARK: - Navigation
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let infoViewController = segue.destinationViewController as? ProgressInfoViewController {
-            //calculateLevel() not working - guessing because the segue happens before the levels are created
-            //infoViewController.levelByTenths = calculateLevel()
-
-        } else {
-            print("segue to CollectionViewController fail")
-        }
-    }
     
         //let stackView = UIStackView(arrangedSubviews: containerArray)
         //stackView.axis = .Horizontal
@@ -529,172 +520,4 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         //                cv.bottomAnchor.constraintEqualToAnchor(graphStackView.bottomAnchor, constant: CGFloat(-10)),
         //                ])
         //        }
-    
-    
-//    // to add a bar for the unplayed words // Not needed, cover by the above
-//    func addUnplayedLevel() {
-//        
-//        let shiftRight: CGFloat = unplayedWordsExist ? 40.0 : 0.0
-//        // if there are unplayed words, then start with
-//        var startingIndex: Int
-//        startingIndex = 0
-//        // var containerArray = [UIView]()
-//        for i in startingIndex ..< levelArrays.count {
-//            var colorCode = ColorCode(code: i)
-//            let containerView = UIView()
-//            
-//            containerView.translatesAutoresizingMaskIntoConstraints = false
-//            // set the background color per level
-//            containerView.backgroundColor = colorCode.tint
-//            graphStackView.translatesAutoresizingMaskIntoConstraints = false
-//            graphStackView.addSubview(containerView)
-//            
-//            
-//            // for now, hardcoding in a value of 640 for screen size (iPhone 6 plus size of 1920 / by 3x retina resolution)
-//            // top constraint measures from top of screen,
-//            // bottom constraint from bottom
-//            let height = Float(graphHeight) * ( Float(levelArrays[i]!.count)  / findMaxLevelCount()  )
-//            print("height: \(height * graphHeight)")
-//            NSLayoutConstraint.activateConstraints([
-//                containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + 10.0 + shiftRight),
-//                containerView.widthAnchor.constraintEqualToConstant(36.0),
-//                
-//                containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(340 - (3 * height) )  ),
-//                containerView.bottomAnchor.constraintEqualToAnchor(graphBgView.bottomAnchor, constant: CGFloat(-10)),
-//                ])
-//            
-//            //was working, but not with stack view
-//            /*
-//             containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(522 - ( 3 * height) )  ),
-//             */
-//            // add child view controller view to container
-//            
-//            let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
-//            controller.level = i
-//            
-//            for result in fetchedResultsController.fetchedObjects! {
-//                if let word = result as? Word {
-//                    
-//                    if word.level == controller.level {
-//                        controller.wordsInLevel.append(word)
-//                    }
-//                }
-//            }
-//            
-//            addChildViewController(controller)
-//            controller.view.translatesAutoresizingMaskIntoConstraints = false
-//            containerView.addSubview(controller.view)
-//            
-//            NSLayoutConstraint.activateConstraints([
-//                controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
-//                controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
-//                controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
-//                controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
-//                ])
-//            
-//            controller.didMoveToParentViewController(self)
-//            
-//            // create mask to round the corners of the graph bar
-//            let rect: CGRect = CGRectMake(0, 0, 32, CGFloat((3 * height) + 10) )
-//            let mask: UIView = UIView(frame: rect)
-//            mask.backgroundColor = UIColor.whiteColor()
-//            mask.layer.cornerRadius = 6
-//            containerView.maskView = mask
-//            
-//            // Add the outline image on top of the level bar table controller
-//            // first, the shadow image beneath to help the outline stand out
-//            let outlineShadowImage = UIImage(named: "outline_shadow")
-//            let outlineShadowView = UIImageView(image: outlineShadowImage)
-//            outlineShadowView.alpha = 0.65
-//            outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
-//            
-//            // create the outline view
-//            //TODO: seems like the outline image is being scaled up
-//            let outlineImage = UIImage(named: "outline_double")
-//            let outlineView = UIImageView(image: outlineImage)
-//            outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(3 * height + 10.0))
-//            outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-//            // set the outlineView tintcolor per level
-//            outlineView.tintColor = colorCode.tint
-//            
-//            containerView.addSubview(outlineShadowView)
-//            containerView.addSubview(outlineView)
-//            //containerArray.append(containerView)
-//            numWordsLabel.text = String(Int(findMaxLevelCount()))
-//        }
-//    }
-
-    
-    //MARK:- Table View stuff (hidden saved for example)
-    /*
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.backgroundColor = UIColor.clearColor()
-    }
-    
-
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if let _ = fetchedResultsController.sections {
-            return 1
-        }
-        
-        return 0
-    }
-    
-    // set height for cells
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 10.0;
-    }
-//    Swift 3 version
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-//    {
-//        return 10.0;//Choose your custom row height
-//    }
-
-    func tableView(tableView:UITableView, numberOfRowsInSection section:Int) -> Int {
-//        guard let numRows = fetchedResultsController.fetchedObjects?.count else {
-//            return 20
-//        }
-//        print("NUM: \(numRows)")
-        for result in fetchedResultsController.fetchedObjects! {
-            if let word = result as? Word {
-                
-//                print("\(word.word): level is: \(word.level)")
-                if word.level == 0 {
-                    tableHt += 1
-                }
-            }
-        }
-        //TODO:being called multiple times. put somewhere else?
-        print("TH: \(tableHt)")
-        return tableHt
-    }
-    
-    //TODO:-- The tables will be populated by the words found at each level. There will be a table for each level (up to a reasonable limit, like 10 or 20 for now)
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    {
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("level0", forIndexPath: indexPath) as? ProgressTableCell
-        
-        if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
-            cell?.label.font = UIFont(name: "Courier", size: 9)
-            cell?.label.text = word.word
-            cell?.label.textColor = UIColor.blueColor()
-           
-            cell?.backgroundView?.backgroundColor = UIColor.clearColor()
-            cell?.layoutMargins = UIEdgeInsetsZero;
-            cell?.preservesSuperviewLayoutMargins = false;
-        }
-        
-        
-        return cell!
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
-        print("in PFS")
-    }
-    */
 }

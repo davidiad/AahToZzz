@@ -17,10 +17,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
            }
     
     //TODO:- LIST
-    // After Fill in Blanks, need to not allow words to be found again.
+    // After Fill in Blanks, need to not allow words to be found again. -Done
     //  Ad integration?
     // Swype style letter selection (in v 1.1)
-    // incorporate Alamofire possibly
+    // incorporate Alamofire possibly - installed, but not being used yet
     // add properties to GameData or Game object, that allow for different types of games. For instance, what letters you're searching for (e.g., X, J, Q, and Z words). How many letters (e.g. 2 letters, 3 letters, 7 letters, any size, 8 letter words, 9 letter words), what orientation (e.g., 2 or 3 letters are in portrait, 7, 8, 9 letters are in landscape). Number of positions (for 7 letter or more, might want more than 10 positions), etc - Done
     // Add ability to manage games in the options
     // adding a little switch button in top right corner(possibly) to switch between  or 3 letters, or 7 letters QXJZ, etc JZQX JXQZ JQXZ
@@ -47,7 +47,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // they show up when touching the side area?
     // Figure out where to add 2 letter word games, and other games
     // Add Game center and leaderboards. 
-    // Challenges: Play all words once (missed or not). Find all words once. etc.
+    // Challenges: Play all words once (missed or not). Find all words once. etc. Find all permutations of E, R, A. of T, E, A. Find all the Q words. All the Z words. All the X words.
     // Check -- are word levels updating correctly?
     // Tiles that snap back after jumble are off by a small amount - Fixed!
     // if possible, vary the snap back angle/direction
@@ -55,8 +55,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Tapping on tiles, sometimes they get moved in the wrong sequence -- frustrating -- Fixed!
     // (Need to make sure the first one is moved before the 2nd, etc)
     // Tiles sometimes get stuck at an angle -Fixed i think, needs verification
-    // Make format of progress view finished and nicer (what to do with empty columns)
-    // fix autolayout bug with Progress View
+    // Make format of progress view finished and nicer (what to do with empty columns) - Better
+    // Add more or less level columns as number of levels being used goes up, and account for different device sizes
+    // fix autolayout bug with Progress View -Fixed
     // If possible, add a mini progress viewer that appears on the main page
     // Word definitions: find a better picture source.
     // Cache visual dictionary (download in background after word list is generated)
@@ -76,7 +77,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Using Model Versioning and Migration for core data
     // after swapTiles, make sure the context is saved before using findVacancy again. Completion handler? Delay? Notification? Add a delay every time, but later replace with a test for the flag first, so the delay doesn't run every single time
     // add sound fx (or wait til next version)?
-    // Note: in Progress view, the numbers in ProgressInfoVC (above) don't include Words that have been created, but not yet tallied. So the number of words played is a turn behind the level bar graphs (below). Make constitent?
+    // Note: in Progress view, the numbers in ProgressInfoVC (above) don't include Words that have been created, but not yet tallied. So the number of words played is a turn behind the level bar graphs (below). Make consistent?
+    // Add Level (figured to tenths place, to Progress info
+    // Think of a way to add motivation to keep playing with such a large jump between levels
     
     // MARK: - Unwind segue from Progress view
     @IBAction func cancelToProgressViewController(segue:UIStoryboardSegue) {

@@ -493,10 +493,10 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOt-2M-HXm">
-                                        <rect key="frame" x="20" y="180" width="374" height="446"/>
+                                        <rect key="frame" x="20" y="200" width="374" height="426"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Bqh-No-vDe">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="446"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="426"/>
                                             </stackView>
                                         </subviews>
                                         <constraints>
@@ -554,9 +554,9 @@
                                     <constraint firstAttribute="trailing" secondItem="QVU-VO-sla" secondAttribute="trailing" constant="15" id="Q0O-sT-9jR"/>
                                     <constraint firstAttribute="bottom" secondItem="jOt-2M-HXm" secondAttribute="bottom" constant="90" id="SE9-f5-bj7"/>
                                     <constraint firstItem="ch9-vl-b53" firstAttribute="centerX" secondItem="rIs-4h-gJe" secondAttribute="centerX" id="URP-Yy-KjO"/>
-                                    <constraint firstItem="Bqh-No-vDe" firstAttribute="top" secondItem="oWr-4a-vmb" secondAttribute="bottom" constant="2" id="YZd-2m-qhd"/>
+                                    <constraint firstItem="Bqh-No-vDe" firstAttribute="top" secondItem="oWr-4a-vmb" secondAttribute="bottom" constant="22" id="YZd-2m-qhd"/>
                                     <constraint firstItem="oWr-4a-vmb" firstAttribute="centerX" secondItem="Bqh-No-vDe" secondAttribute="centerX" id="fSl-lU-1Gi"/>
-                                    <constraint firstItem="jOt-2M-HXm" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" constant="180" id="iO6-Cq-hfw"/>
+                                    <constraint firstItem="jOt-2M-HXm" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" constant="200" id="iO6-Cq-hfw"/>
                                     <constraint firstAttribute="trailing" secondItem="aRj-jz-wT8" secondAttribute="trailing" constant="20" id="rQL-RL-mME"/>
                                     <constraint firstItem="oWr-4a-vmb" firstAttribute="top" secondItem="aRj-jz-wT8" secondAttribute="bottom" constant="8" id="wJP-qn-1x9"/>
                                 </constraints>
