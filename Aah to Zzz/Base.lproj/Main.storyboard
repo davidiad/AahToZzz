@@ -493,10 +493,10 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOt-2M-HXm">
-                                        <rect key="frame" x="20" y="200" width="374" height="426"/>
+                                        <rect key="frame" x="60" y="200" width="334" height="426"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Bqh-No-vDe">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="426"/>
+                                            <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Bqh-No-vDe">
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="426"/>
                                             </stackView>
                                         </subviews>
                                         <constraints>
@@ -506,20 +506,14 @@
                                             <constraint firstAttribute="bottom" secondItem="Bqh-No-vDe" secondAttribute="bottom" id="zEn-uQ-dna"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of words" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWr-4a-vmb">
-                                        <rect key="frame" x="149" y="161" width="116.5" height="17"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                        <color key="textColor" red="0.99747711419999996" green="0.8684134483" blue="0.038625180719999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="highlightedColor" red="0.97480279209999998" green="0.97457337379999998" blue="0.97466939689999998" alpha="1" colorSpace="calibratedRGB"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ch9-vl-b53">
-                                        <rect key="frame" x="174" y="670" width="65" height="14.5"/>
+                                        <rect key="frame" x="174" y="662" width="65" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(number of times a word was found, minus number of times missed)" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGl-BQ-Bw0">
-                                        <rect key="frame" x="43" y="685" width="327" height="12"/>
+                                        <rect key="frame" x="43" y="677" width="327" height="12"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -540,25 +534,31 @@
                                             <segue destination="UBr-YI-ixs" kind="embed" id="HKA-68-40k"/>
                                         </connections>
                                     </containerView>
+                                    <label autoresizesSubviews="NO" opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Number of words" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWr-4a-vmb">
+                                        <rect key="frame" x="-16" y="351" width="101.5" height="14"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                        <color key="textColor" red="0.97480279209999998" green="0.97457337379999998" blue="0.97466939689999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="highlightedColor" red="0.97480279209999998" green="0.97457337379999998" blue="0.97466939689999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="aRj-jz-wT8" firstAttribute="leading" secondItem="rIs-4h-gJe" secondAttribute="leading" constant="20" id="4mn-Je-9jn"/>
-                                    <constraint firstItem="ch9-vl-b53" firstAttribute="top" secondItem="jOt-2M-HXm" secondAttribute="bottom" constant="44" id="Ah1-X1-5Rx"/>
+                                    <constraint firstItem="ch9-vl-b53" firstAttribute="top" secondItem="jOt-2M-HXm" secondAttribute="bottom" constant="36" id="Ah1-X1-5Rx"/>
                                     <constraint firstAttribute="trailing" secondItem="jOt-2M-HXm" secondAttribute="trailing" constant="20" id="BJa-kW-Ea0"/>
                                     <constraint firstItem="NGl-BQ-Bw0" firstAttribute="top" secondItem="ch9-vl-b53" secondAttribute="bottom" constant="1" id="BSF-5i-ZGQ"/>
                                     <constraint firstItem="aRj-jz-wT8" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" constant="38" id="JnB-1T-Oqs"/>
-                                    <constraint firstItem="jOt-2M-HXm" firstAttribute="leading" secondItem="rIs-4h-gJe" secondAttribute="leading" constant="20" id="Jxa-rH-KbC"/>
                                     <constraint firstItem="QVU-VO-sla" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" id="M5a-oT-oQO"/>
+                                    <constraint firstItem="jOt-2M-HXm" firstAttribute="top" secondItem="aRj-jz-wT8" secondAttribute="bottom" constant="47" id="OI3-NE-sBv"/>
                                     <constraint firstItem="NGl-BQ-Bw0" firstAttribute="centerX" secondItem="ch9-vl-b53" secondAttribute="centerX" id="OJc-f6-sLD"/>
                                     <constraint firstAttribute="trailing" secondItem="QVU-VO-sla" secondAttribute="trailing" constant="15" id="Q0O-sT-9jR"/>
                                     <constraint firstAttribute="bottom" secondItem="jOt-2M-HXm" secondAttribute="bottom" constant="90" id="SE9-f5-bj7"/>
+                                    <constraint firstItem="jOt-2M-HXm" firstAttribute="leading" secondItem="rIs-4h-gJe" secondAttribute="leading" constant="60" id="UPm-pn-QKo"/>
                                     <constraint firstItem="ch9-vl-b53" firstAttribute="centerX" secondItem="rIs-4h-gJe" secondAttribute="centerX" id="URP-Yy-KjO"/>
-                                    <constraint firstItem="Bqh-No-vDe" firstAttribute="top" secondItem="oWr-4a-vmb" secondAttribute="bottom" constant="22" id="YZd-2m-qhd"/>
-                                    <constraint firstItem="oWr-4a-vmb" firstAttribute="centerX" secondItem="Bqh-No-vDe" secondAttribute="centerX" id="fSl-lU-1Gi"/>
+                                    <constraint firstItem="oWr-4a-vmb" firstAttribute="centerY" secondItem="rIs-4h-gJe" secondAttribute="centerY" id="e6o-rU-m32"/>
                                     <constraint firstItem="jOt-2M-HXm" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" constant="200" id="iO6-Cq-hfw"/>
+                                    <constraint firstItem="oWr-4a-vmb" firstAttribute="leading" secondItem="rIs-4h-gJe" secondAttribute="leading" constant="-16" id="pwp-cw-nn8"/>
                                     <constraint firstAttribute="trailing" secondItem="aRj-jz-wT8" secondAttribute="trailing" constant="20" id="rQL-RL-mME"/>
-                                    <constraint firstItem="oWr-4a-vmb" firstAttribute="top" secondItem="aRj-jz-wT8" secondAttribute="bottom" constant="8" id="wJP-qn-1x9"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -573,6 +573,7 @@
                     <connections>
                         <outlet property="graphBgView" destination="rIs-4h-gJe" id="xkl-Cq-bhB"/>
                         <outlet property="graphStackView" destination="Bqh-No-vDe" id="Ej7-Up-NKc"/>
+                        <outlet property="numberOfWordsLabel" destination="oWr-4a-vmb" id="BPS-H4-Z4i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jox-Sd-kb8" userLabel="First Responder" sceneMemberID="firstResponder"/>

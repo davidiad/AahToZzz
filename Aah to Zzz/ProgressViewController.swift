@@ -16,6 +16,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     @IBOutlet weak var graphBgView: UIView!
     @IBOutlet weak var graphStackView: UIStackView! // not working to add bars to stack view, so remove if can't get to work
     
+    @IBOutlet weak var numberOfWordsLabel: UILabel!
+    
     let model = AtoZModel.sharedInstance
     var graphHeight: CGFloat = 100.0
     var graphWidth: CGFloat = 100.0
@@ -340,6 +342,18 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     //TODO: Set the height of the container by the relative number of words in the level
     func addLevelContainers() {
 
+        graphStackView.axis = .Horizontal
+        graphStackView.distribution = .FillEqually
+        graphStackView.alignment = .Center
+        graphStackView.spacing = 5
+        graphStackView.translatesAutoresizingMaskIntoConstraints = false
+        // rotate the graph label
+        numberOfWordsLabel.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+        numberOfWordsLabel.frame = CGRect(x: 0, y: 0, width: 30, height: 230)
+        
+        
+        //graphStackView.addArrangedSubview(numberOfWordsLabel)
+        
         // offset bars to the right to make room for the unplayed words bar – if it exists
         let shiftRight: CGFloat = unplayedWordsExist ? 40.0 : 0.0
         let leftLeading: CGFloat = graphWidth * 0.5 - 133.0
@@ -361,9 +375,10 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 bg_image!.resizableImageWithCapInsets(insets, resizingMode: .Tile)
                 
                 containerView.backgroundColor = UIColor(patternImage: bg_image!)
+                
 
-                graphStackView.translatesAutoresizingMaskIntoConstraints = false
-                graphStackView.addSubview(containerView)
+                //graphStackView.addSubview(containerView)
+                graphStackView.addArrangedSubview(containerView)
                 
                 if i < 0 {
                     numWordsInLevel = Float(unplayedWordsArray.count)
@@ -386,12 +401,19 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 // move bottom constraint down by 20 to be even with bottom(because margin?)
                 NSLayoutConstraint.activateConstraints([
                     
-                    containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + leftLeading + shiftRight),
                     containerView.widthAnchor.constraintEqualToConstant(32.0),
                     
                     containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
                     containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
                     ])
+//                NSLayoutConstraint.activateConstraints([
+//                    
+//                    containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + leftLeading + shiftRight),
+//                    containerView.widthAnchor.constraintEqualToConstant(32.0),
+//                    
+//                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
+//                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
+//                    ])
                 
                 //was working, but not with stack view
                 /*

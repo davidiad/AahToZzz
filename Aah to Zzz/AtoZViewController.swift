@@ -79,6 +79,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // add sound fx (or wait til next version)?
     // Note: in Progress view, the numbers in ProgressInfoVC (above) don't include Words that have been created, but not yet tallied. So the number of words played is a turn behind the level bar graphs (below). Make consistent?
     // Add Level (figured to tenths place, to Progress info
+    // and make percentage work
+    // Move numbeer of Words to left side of graph and possibly turn sideways
+    // Add a gradient line separating Progress Info from graph
     // Think of a way to add motivation to keep playing with such a large jump between levels
     
     // MARK: - Unwind segue from Progress view
