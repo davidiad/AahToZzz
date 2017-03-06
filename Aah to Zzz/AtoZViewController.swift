@@ -82,6 +82,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // and make percentage work
     // Move numbeer of Words to left side of graph and possibly turn sideways
     // Add a gradient line separating Progress Info from graph
+    // Calculate # of level bars for the device size
+    // Don't show lowest empty level bars if the number of bars that fit is less than the number of bars.
+    // Make height of level bars adjust for device size
+    // Center Number of Words label vertically, per device size.
     // Think of a way to add motivation to keep playing with such a large jump between levels
     
     // MARK: - Unwind segue from Progress view
