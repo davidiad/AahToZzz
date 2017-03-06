@@ -22,8 +22,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
     // Constants for graph layout
     let BAR_WIDTH: CGFloat = 32.0
-    let SIDE_PADDING: CGFloat = 80.0
-    let MIN_BAR_PADDING: CGFloat = 4.0
+    let SIDE_PADDING: CGFloat = 100.0
+    let MIN_BAR_PADDING: CGFloat = 3.0
+    let VERTICAL_PADDING: CGFloat = 300.0
     
     var graphHeight: CGFloat = 100.0
     var graphWidth: CGFloat = 100.0
@@ -214,7 +215,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         if unplayedWordsExist {
             highestLevel -= 1
         }
-        print(highestLevel)
+        print("highestLevel: \(highestLevel)")
+        print("viewWidth: \(viewWidth)")
     }
     
     override func viewDidLoad() {
@@ -345,7 +347,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         
         // only call the first time viewWillLayoutSubviews() is called
         if viewWillLayoutSubviewsHasBeenCalled == false {
-            graphHeight = graphStackView.superview!.frame.size.height
+            //graphHeight = graphStackView.superview!.frame.size.height
+            graphHeight = view.bounds.height - VERTICAL_PADDING
             graphWidth = graphStackView.superview!.frame.size.width
             addLevelContainers()
             levelText = calculateLevel()
@@ -514,19 +517,16 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 containerView.addSubview(outlineView)
                 
                 // Create a text label for the number of words that floats above the container
-                let topLabel = UILabel()
-                topLabel.textColor = colorCode.tint
-                topLabel.font = UIFont.systemFontOfSize(9)
-                topLabel.text = String(controller.wordsInLevel.count)
-                view.addSubview(topLabel)
-                print("Number of words")
-                print(topLabel.text)
-                
-                topLabel.translatesAutoresizingMaskIntoConstraints = false
-                //TODO:- topLabel is appearing twice, doubled, and distance from bar is inconsistent
-                topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor, constant: -3.0).active = true
-                //topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
-                topLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
+                if numWordsInLevel > 0 { // don't add the label for empty levels
+                    let topLabel = UILabel()
+                    topLabel.textColor = colorCode.tint
+                    topLabel.font = UIFont.systemFontOfSize(9)
+                    topLabel.text = String(controller.wordsInLevel.count)
+                    view.addSubview(topLabel)
+                    topLabel.translatesAutoresizingMaskIntoConstraints = false
+                    topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor, constant: -3.0).active = true
+                    topLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
+                }
                 
                 // Create a text label for the word level that floats below the container
                 let bottomLabel = UILabel()

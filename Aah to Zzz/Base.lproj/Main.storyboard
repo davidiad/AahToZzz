@@ -493,7 +493,7 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOt-2M-HXm">
-                                        <rect key="frame" x="60" y="200" width="334" height="426"/>
+                                        <rect key="frame" x="50" y="200" width="334" height="426"/>
                                         <subviews>
                                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="800" distribution="equalCentering" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Bqh-No-vDe">
                                                 <rect key="frame" x="0.0" y="0.0" width="334" height="426"/>
@@ -535,7 +535,7 @@
                                         </connections>
                                     </containerView>
                                     <label autoresizesSubviews="NO" opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Number of words" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWr-4a-vmb">
-                                        <rect key="frame" x="-16" y="351" width="101.5" height="14"/>
+                                        <rect key="frame" x="-16" y="388" width="101.5" height="14"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                         <color key="textColor" red="0.97480279209999998" green="0.97457337379999998" blue="0.97466939689999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="highlightedColor" red="0.97480279209999998" green="0.97457337379999998" blue="0.97466939689999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -545,7 +545,7 @@
                                 <constraints>
                                     <constraint firstItem="aRj-jz-wT8" firstAttribute="leading" secondItem="rIs-4h-gJe" secondAttribute="leading" constant="20" id="4mn-Je-9jn"/>
                                     <constraint firstItem="ch9-vl-b53" firstAttribute="top" secondItem="jOt-2M-HXm" secondAttribute="bottom" constant="36" id="Ah1-X1-5Rx"/>
-                                    <constraint firstAttribute="trailing" secondItem="jOt-2M-HXm" secondAttribute="trailing" constant="20" id="BJa-kW-Ea0"/>
+                                    <constraint firstAttribute="trailing" secondItem="jOt-2M-HXm" secondAttribute="trailing" constant="30" id="BJa-kW-Ea0"/>
                                     <constraint firstItem="NGl-BQ-Bw0" firstAttribute="top" secondItem="ch9-vl-b53" secondAttribute="bottom" constant="1" id="BSF-5i-ZGQ"/>
                                     <constraint firstItem="aRj-jz-wT8" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" constant="38" id="JnB-1T-Oqs"/>
                                     <constraint firstItem="QVU-VO-sla" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" id="M5a-oT-oQO"/>
@@ -553,13 +553,19 @@
                                     <constraint firstItem="NGl-BQ-Bw0" firstAttribute="centerX" secondItem="ch9-vl-b53" secondAttribute="centerX" id="OJc-f6-sLD"/>
                                     <constraint firstAttribute="trailing" secondItem="QVU-VO-sla" secondAttribute="trailing" constant="15" id="Q0O-sT-9jR"/>
                                     <constraint firstAttribute="bottom" secondItem="jOt-2M-HXm" secondAttribute="bottom" constant="90" id="SE9-f5-bj7"/>
-                                    <constraint firstItem="jOt-2M-HXm" firstAttribute="leading" secondItem="rIs-4h-gJe" secondAttribute="leading" constant="60" id="UPm-pn-QKo"/>
+                                    <constraint firstItem="jOt-2M-HXm" firstAttribute="leading" secondItem="rIs-4h-gJe" secondAttribute="leading" constant="50" id="UPm-pn-QKo"/>
                                     <constraint firstItem="ch9-vl-b53" firstAttribute="centerX" secondItem="rIs-4h-gJe" secondAttribute="centerX" id="URP-Yy-KjO"/>
-                                    <constraint firstItem="oWr-4a-vmb" firstAttribute="centerY" secondItem="rIs-4h-gJe" secondAttribute="centerY" id="e6o-rU-m32"/>
+                                    <constraint firstItem="oWr-4a-vmb" firstAttribute="centerY" secondItem="jOt-2M-HXm" secondAttribute="centerY" constant="-18" id="b7a-LC-BHT"/>
+                                    <constraint firstItem="oWr-4a-vmb" firstAttribute="centerY" secondItem="rIs-4h-gJe" secondAttribute="centerY" constant="36" id="e6o-rU-m32"/>
                                     <constraint firstItem="jOt-2M-HXm" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" constant="200" id="iO6-Cq-hfw"/>
                                     <constraint firstItem="oWr-4a-vmb" firstAttribute="leading" secondItem="rIs-4h-gJe" secondAttribute="leading" constant="-16" id="pwp-cw-nn8"/>
                                     <constraint firstAttribute="trailing" secondItem="aRj-jz-wT8" secondAttribute="trailing" constant="20" id="rQL-RL-mME"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="e6o-rU-m32"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
