@@ -172,8 +172,6 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 // TODO: find a way to do this using just strings instead of Word objects
             }
         }
-        
-        printLevelArrays()
     }
     
     // helper/diagnostic to view the number of words in each level
@@ -393,7 +391,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             if unplayedWordsExist || i >= 0 { // Don't allow the case where i = -1, but there are no unplayed words
                 // (-1 is being used for the unplayed words array, which sometimes exists and sometimes not)
                 let containerView = UIView()
-                var numWordsInLevel: Float = 0.0
+                var numWordsInLevel: Int = 0
                 var colorCode = ColorCode(code: i)
                 
                 containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -410,16 +408,16 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 graphStackView.addArrangedSubview(containerView)
                 
                 if i < 0 {
-                    numWordsInLevel = Float(unplayedWordsArray.count)
+                    numWordsInLevel = unplayedWordsArray.count
                 } else {
-                    numWordsInLevel = Float(levelArrays[i]!.count)
+                    numWordsInLevel = levelArrays[i]!.count
                 }
                 
                 // top constraint measures from top of screen,
                 // bottom constraint from bottom
                 // graphStackView.leadingAnchor
                 // Adding 22 to height to account for bottom starting from -20, and having a thin bar of 2 even where there are 0 words
-                let height = graphHeight * CGFloat((numWordsInLevel / findMaxLevelCount())) + 22
+                let height = graphHeight * CGFloat((Float(numWordsInLevel) / findMaxLevelCount())) + 22
                 
                 // if there are no words in the level, adjust height so that just a thin colored bar appears at the bottom
                 // height needs to be at least 22 so that the top is never lower than the bottom
@@ -473,7 +471,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 }
                 
                 
-                addChildViewController(controller) // Was this line neccesary?
+                addChildViewController(controller) // Was this line necessary?
                 controller.view.translatesAutoresizingMaskIntoConstraints = false
                 containerView.addSubview(controller.view)
                 
@@ -487,9 +485,10 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 controller.didMoveToParentViewController(self)
                 
                 // create mask to round the corners of the graph bar
-                let rect: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
-                let mask: UIView = UIView(frame: rect)
-                let maskImageView = UIImageView(frame: rect)
+                let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
+                //TODO: reuse rect below
+                let mask: UIView = UIView(frame: barFrame)
+                let maskImageView = UIImageView(frame: barFrame)
                 maskImageView.image = UIImage(named: "bar_graph_mask")
                 mask.addSubview(maskImageView)
                 
@@ -502,13 +501,25 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 let outlineShadowImage = UIImage(named: "outline_shadow")
                 let outlineShadowView = UIImageView(image: outlineShadowImage)
                 outlineShadowView.alpha = 0.5
-                outlineShadowView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(CGFloat(height - 20)))
+                outlineShadowView.frame = barFrame
+                    //CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(CGFloat(height - 20)))
                 
                 // create the outline view
                 //TODO: seems like the outline image is being scaled up
-                let outlineImage = UIImage(named: "outline_double_flatbottom")
-                let outlineView = UIImageView(image: outlineImage)
-                outlineView.frame = CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height - 20))
+                //  Q1`let outlineImage = UIImage(named: "outline_double_flatbottom")
+                let outlineView = UIImageView(frame: barFrame)//UIImageView(image: outlineImage)
+                
+                // TODO:- specify cases more clearly. 0 words vs. height is small enough that the rounded top doesn't fit without squishing
+                if height < 22.0 || numWordsInLevel == 0 {
+                    outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+                    //outlineView.image!.resizableImageWithCapInsets(insets, resizingMode: .Stretch)
+                    outlineView.contentMode = .BottomLeft
+                } else {
+                    outlineView.image = UIImage(named: "outline_double_flatbottom")
+                }
+                
+                outlineView.frame = barFrame
+                    //CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height - 20))
                 outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
                 // set the outlineView tintcolor per level
                 outlineView.tintColor = colorCode.tint
