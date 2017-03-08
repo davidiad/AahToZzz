@@ -128,6 +128,10 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         var levelString = "0"
         
         // skip 0, because we start by looking at the # of words found once (not the # found 0 times)
+        
+        // need to find the *first* level that has not been filled
+        // need a stopping condition, when we find that
+        
         for i in 1 ..< levelArrays.count {
             guard let currentLevelArray = levelArrays[i] else {
                 return levelString
@@ -135,16 +139,28 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             // if 0 words in level, then that level is finished (or else not started)
             // so don't do anything with it, just go on to the next
             if currentLevelArray.count > 0 {
-                let levelFloat = Float(i - 1) + Float(currentLevelArray.count) / Float(model.wordsDictionary.count)
-                // To avoid rounding x.5 and greater numbers up to the next level,
-                // Convert to Int and back to Float
-                let levelInt = Int(10 * levelFloat) // Drop (floor) all digits past the tenths by converting to Int
-                let level = Float(levelInt)/10.0 // Convert back to a Float with a tenths place
-                // Will display level in tenth point increments
-                levelString = String(format: "%.1f", level)
-                return levelString // the level is the first one with some words, so return here
-                // (you don't move to the next level until all are found)
+                // What if there are some words in level 0?
+                // Need to count all the words in this level and above
+                var levelWordCount = 0
+                for j in i ..< levelArrays.count {
+                    levelWordCount += levelArrays[j]!.count
+                }
+                
+                if levelWordCount < model.wordsDictionary.count {
+                    
+                    let levelFloat = Float(i - 1) + Float(levelWordCount) / Float(model.wordsDictionary.count)
+                    // To avoid rounding x.5 and greater numbers up to the next level,
+                    // Convert to Int and back to Float
+                    let levelInt = Int(10 * levelFloat) // Drop (floor) all digits past the tenths by converting to Int
+                    let level = Float(levelInt)/10.0 // Convert back to a Float with a tenths place
+                    // Will display level in tenth point increments
+                    levelString = String(format: "%.1f", level)
+                    print ("Level Word Count : \(i) : \(levelWordCount)")
+                    return levelString // the level is the first one with some words, so return here
+                    // (you don't move to the next level until all are found)
+                }
             }
+            //TODO: Why does levelString get returned twice?
         }
         // no levels had any words so return 0
         return levelString
