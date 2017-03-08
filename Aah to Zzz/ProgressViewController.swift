@@ -399,7 +399,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // Add an array of container views containing the level bars
     //TODO: Set the height of the container by the relative number of words in the level
     func addLevelContainers() {
-        
+        var levelContainingWordsHasBeenFound = false
         //graphStackView.axis = .Horizontal
         //graphStackView.distribution = .EqualCentering
         //graphStackView.alignment = .Center
@@ -444,152 +444,155 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     numWordsInLevel = levelArrays[i]!.count
                 }
                 
-                // top constraint measures from top of screen,
-                // bottom constraint from bottom
-                // graphStackView.leadingAnchor
-                // Adding 22 to height to account for bottom starting from -20, and having a thin bar of 2 even where there are 0 words
-                let height = graphHeight * CGFloat((Float(numWordsInLevel) / findMaxLevelCount())) + 22
-                
-                // if there are no words in the level, adjust height so that just a thin colored bar appears at the bottom
-                // height needs to be at least 22 so that the top is never lower than the bottom
-                //                if height < 22 {
-                //                    height += 22
-                //                }
-                
-                // move bottom constraint down by 20 to be even with bottom(because margin?)
-                NSLayoutConstraint.activateConstraints([
+                if numWordsInLevel > 0 || levelContainingWordsHasBeenFound == true { // don't add the bar if it has no words in it -- unless it's to the right of a populated level
+                    levelContainingWordsHasBeenFound = true
+                    // to be modified to only remove bars with 0 on the left, not in the middle or on the right
+                    // top constraint measures from top of screen,
+                    // bottom constraint from bottom
+                    // graphStackView.leadingAnchor
+                    // Adding 22 to height to account for bottom starting from -20, and having a thin bar of 2 even where there are 0 words
+                    let height = graphHeight * CGFloat((Float(numWordsInLevel) / findMaxLevelCount())) + 22
                     
-                    containerView.widthAnchor.constraintEqualToConstant(BAR_WIDTH),
+                    // if there are no words in the level, adjust height so that just a thin colored bar appears at the bottom
+                    // height needs to be at least 22 so that the top is never lower than the bottom
+                    //                if height < 22 {
+                    //                    height += 22
+                    //                }
                     
-                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
-                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
-                    ])
-                //                NSLayoutConstraint.activateConstraints([
-                //
-                //                    containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + leftLeading + shiftRight),
-                //                    containerView.widthAnchor.constraintEqualToConstant(32.0),
-                //
-                //                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
-                //                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
-                //                    ])
-                
-                //was working, but not with stack view
-                /*
-                 containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(522 - ( 3 * height) )  ),
-                 */
-                // add child view controller view to container
-                
-                let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
-                controller.level = i
-                if i < 0 {
-                    // handle the case of -1, the unplayed words
-                    for word in unplayedWordsArray {
-                        controller.wordsInLevel.append(word)
-                    }
-                } else {
-                    /* // Why go thru the entire result each loop? The Words are already put into their levels
-                     for result in fetchedResultsController.fetchedObjects! {
-                     if let word = result as? Word {
-                     if word.level == controller.level {
-                     controller.wordsInLevel.append(word)
-                     }
-                     }
-                     }
+                    // move bottom constraint down by 20 to be even with bottom(because margin?)
+                    NSLayoutConstraint.activateConstraints([
+                        
+                        containerView.widthAnchor.constraintEqualToConstant(BAR_WIDTH),
+                        
+                        containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
+                        containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
+                        ])
+                    //                NSLayoutConstraint.activateConstraints([
+                    //
+                    //                    containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + leftLeading + shiftRight),
+                    //                    containerView.widthAnchor.constraintEqualToConstant(32.0),
+                    //
+                    //                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
+                    //                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
+                    //                    ])
+                    
+                    //was working, but not with stack view
+                    /*
+                     containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(522 - ( 3 * height) )  ),
                      */
-                    for word in levelArrays[i]! { // forced unwrap. OK cause we know there will be a levelArrays[i]?
-                        controller.wordsInLevel.append(word)
-                    }
-                }
-                
-                
-                addChildViewController(controller) // Was this line necessary?
-                controller.view.translatesAutoresizingMaskIntoConstraints = false
-                containerView.addSubview(controller.view)
-                
-                NSLayoutConstraint.activateConstraints([
-                    controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
-                    controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
-                    controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
-                    controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
-                    ])
-                
-                controller.didMoveToParentViewController(self)
-                
-                // create mask to round the corners of the graph bar
-                let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
-                //TODO: reuse rect below
-                let mask: UIView = UIView(frame: barFrame)
-                let maskImageView = UIImageView(frame: barFrame)
-                maskImageView.image = UIImage(named: "bar_graph_mask")
-                mask.addSubview(maskImageView)
-                
-                //mask.layer.cornerRadius = 0 //6
-                containerView.maskView = mask
-                
-                
-                // Add the outline image on top of the level bar table controller
-                // first, the shadow image beneath to help the outline stand out
-                let outlineShadowImage = UIImage(named: "outline_shadow")
-                let outlineShadowView = UIImageView(image: outlineShadowImage)
-                outlineShadowView.alpha = 0.5
-                outlineShadowView.frame = barFrame
-                    //CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(CGFloat(height - 20)))
-                
-                // create the outline view
-                //TODO: seems like the outline image is being scaled up
-                //  Q1`let outlineImage = UIImage(named: "outline_double_flatbottom")
-                let outlineView = UIImageView(frame: barFrame)//UIImageView(image: outlineImage)
-                
-                // TODO:- specify cases more clearly. 0 words vs. height is small enough that the rounded top doesn't fit without squishing
-                if height < 22.0 || numWordsInLevel == 0 {
-                    outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                    //outlineView.image!.resizableImageWithCapInsets(insets, resizingMode: .Stretch)
-                    outlineView.contentMode = .BottomLeft
-                } else {
-                    outlineView.image = UIImage(named: "outline_double_flatbottom")
-                }
-                
-                outlineView.frame = barFrame
-                    //CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height - 20))
-                outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                // set the outlineView tintcolor per level
-                outlineView.tintColor = colorCode.tint
-                
-                containerView.addSubview(outlineShadowView)
-                containerView.addSubview(outlineView)
-                
-                // Create a text label for the number of words that floats above the container
-                if numWordsInLevel > 0 { // don't add the label for empty levels
-                    let topLabel = UILabel()
-                    topLabel.textColor = colorCode.tint
-                    topLabel.font = UIFont.systemFontOfSize(9)
-                    topLabel.text = String(controller.wordsInLevel.count)
-                    view.addSubview(topLabel)
-                    topLabel.translatesAutoresizingMaskIntoConstraints = false
-                    topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor, constant: -3.0).active = true
-                    topLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
-                }
-                
-                // Create a text label for the word level that floats below the container
-                let bottomLabel = UILabel()
-                bottomLabel.textColor = colorCode.tint
-                bottomLabel.font = UIFont.systemFontOfSize(11)
-                
-                if i < 0 {
-                    bottomLabel.text = "Words not yet played"
-                    bottomLabel.lineBreakMode = .ByWordWrapping
-                    bottomLabel.numberOfLines = 4
-                    bottomLabel.textAlignment = .Center
-                    bottomLabel.widthAnchor.constraintEqualToConstant(40).active = true
+                    // add child view controller view to container
                     
-                } else {
-                    bottomLabel.text = String(controller.level!)
+                    let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
+                    controller.level = i
+                    if i < 0 {
+                        // handle the case of -1, the unplayed words
+                        for word in unplayedWordsArray {
+                            controller.wordsInLevel.append(word)
+                        }
+                    } else {
+                        /* // Why go thru the entire result each loop? The Words are already put into their levels
+                         for result in fetchedResultsController.fetchedObjects! {
+                         if let word = result as? Word {
+                         if word.level == controller.level {
+                         controller.wordsInLevel.append(word)
+                         }
+                         }
+                         }
+                         */
+                        for word in levelArrays[i]! { // forced unwrap. OK cause we know there will be a levelArrays[i]?
+                            controller.wordsInLevel.append(word)
+                        }
+                    }
+                    
+                    
+                    addChildViewController(controller) // Was this line necessary?
+                    controller.view.translatesAutoresizingMaskIntoConstraints = false
+                    containerView.addSubview(controller.view)
+                    
+                    NSLayoutConstraint.activateConstraints([
+                        controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
+                        controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
+                        controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
+                        controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
+                        ])
+                    
+                    controller.didMoveToParentViewController(self)
+                    
+                    // create mask to round the corners of the graph bar
+                    let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
+                    let mask: UIView = UIView(frame: barFrame)
+                    let maskImageView = UIImageView(frame: barFrame)
+                    maskImageView.image = UIImage(named: "bar_graph_mask")
+                    mask.addSubview(maskImageView)
+                    
+                    //mask.layer.cornerRadius = 0 //6
+                    containerView.maskView = mask
+                    
+                    
+                    // Add the outline image on top of the level bar table controller
+                    // first, the shadow image beneath to help the outline stand out
+                    let outlineShadowImage = UIImage(named: "outline_shadow")
+                    let outlineShadowView = UIImageView(image: outlineShadowImage)
+                    outlineShadowView.alpha = 0.5
+                    outlineShadowView.frame = barFrame
+                    //CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(CGFloat(height - 20)))
+                    
+                    // create the outline view
+                    //TODO: seems like the outline image is being scaled up
+                    //  Q1`let outlineImage = UIImage(named: "outline_double_flatbottom")
+                    let outlineView = UIImageView(frame: barFrame)//UIImageView(image: outlineImage)
+                    
+                    // TODO:- specify cases more clearly. 0 words vs. height is small enough that the rounded top doesn't fit without squishing
+                    if height < 22.0 || numWordsInLevel == 0 {
+                        outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+                        //outlineView.image!.resizableImageWithCapInsets(insets, resizingMode: .Stretch)
+                        outlineView.contentMode = .BottomLeft
+                    } else {
+                        outlineView.image = UIImage(named: "outline_double_flatbottom")
+                    }
+                    
+                    outlineView.frame = barFrame
+                    //CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height - 20))
+                    outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                    // set the outlineView tintcolor per level
+                    outlineView.tintColor = colorCode.tint
+                    
+                    containerView.addSubview(outlineShadowView)
+                    containerView.addSubview(outlineView)
+                    
+                    // Create a text label for the number of words that floats above the container
+                    if numWordsInLevel > 0 { // don't add the label for empty levels
+                        let topLabel = UILabel()
+                        topLabel.textColor = colorCode.tint
+                        topLabel.font = UIFont.systemFontOfSize(9)
+                        topLabel.text = String(controller.wordsInLevel.count)
+                        view.addSubview(topLabel)
+                        topLabel.translatesAutoresizingMaskIntoConstraints = false
+                        topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor, constant: -3.0).active = true
+                        topLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
+                    }
+                    
+                    // Create a text label for the word level that floats below the container
+                    let bottomLabel = UILabel()
+                    bottomLabel.textColor = colorCode.tint
+                    bottomLabel.font = UIFont.systemFontOfSize(11)
+                    
+                    if i < 0 {
+                        bottomLabel.text = "Words not yet played"
+                        bottomLabel.lineBreakMode = .ByWordWrapping
+                        bottomLabel.numberOfLines = 4
+                        bottomLabel.textAlignment = .Center
+                        bottomLabel.widthAnchor.constraintEqualToConstant(40).active = true
+                        
+                    } else {
+                        bottomLabel.text = String(controller.level!)
+                    }
+                    view.addSubview(bottomLabel)
+                    
+                    bottomLabel.translatesAutoresizingMaskIntoConstraints = false
+                    bottomLabel.topAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 9.0).active = true
+                    bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
                 }
-                view.addSubview(bottomLabel)
-                
-                bottomLabel.translatesAutoresizingMaskIntoConstraints = false
-                bottomLabel.topAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 9.0).active = true
-                bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
             }
         }
         
