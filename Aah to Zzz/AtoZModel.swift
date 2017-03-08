@@ -770,6 +770,11 @@ class AtoZModel {
 //    }
     
     //MARK:- Stats calculations
+    
+//    func calculateLevel() -> Float {
+//        var currentLevel: Float = 0.0
+//        return currentLevel
+//    }
   
     func numWordsFound() -> Int? {
         var numWords: Int16 = 0

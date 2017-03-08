@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "outline_shadow@1x.pdf",
+      "filename" : "graph_shadow@1x.pdf",
       "resizing" : {
         "mode" : "9-part",
         "center" : {
@@ -11,10 +11,10 @@
           "height" : 1
         },
         "cap-insets" : {
-          "bottom" : 7,
-          "top" : 7,
-          "right" : 7,
-          "left" : 7
+          "bottom" : 8,
+          "top" : 8,
+          "right" : 8,
+          "left" : 8
         }
       }
     }

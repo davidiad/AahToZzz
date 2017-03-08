@@ -57,13 +57,20 @@ class ProgressInfoViewController: UIViewController {
             percentageLabel.text = "Your percentage: \(percentageFound)%"
         }
         
-        guard let levelText = levelByTenths else {
-            return
-        }
-        levelLabel.text = levelText
         
     }
 
+    override func viewWillAppear(animated: Bool) {
+        guard let parentVC = parentViewController as? ProgressViewController else {
+            return
+        }
+        levelByTenths = parentVC.calculateLevel()
+        guard let levelText = levelByTenths else {
+            return
+        }
+        levelLabel.text = "Your Level: " + levelText
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

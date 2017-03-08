@@ -122,9 +122,12 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // Should a word keep it's mastered status, even if it is missed later?
     // Increase the percentage of mastered words that are grayed out?
     // TODO: consider whether this should be a calculated, or lazy var, instead of a func
+    
+    // TODO:- Determine of to differentiate between level 1 count going up, and level 1 count going down because now adding to level 2, and so forth
     func calculateLevel() -> String {
         var levelString = "0"
         
+        // skip 0, because we start by looking at the # of words found once (not the # found 0 times)
         for i in 1 ..< levelArrays.count {
             guard let currentLevelArray = levelArrays[i] else {
                 return levelString
@@ -132,7 +135,11 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             // if 0 words in level, then that level is finished (or else not started)
             // so don't do anything with it, just go on to the next
             if currentLevelArray.count > 0 {
-                let level = Float(i - 1) + Float(currentLevelArray.count) / Float(model.wordsDictionary.count)
+                let levelFloat = Float(i - 1) + Float(currentLevelArray.count) / Float(model.wordsDictionary.count)
+                // To avoid rounding x.5 and greater numbers up to the next level,
+                // Convert to Int and back to Float
+                let levelInt = Int(10 * levelFloat) // Drop (floor) all digits past the tenths by converting to Int
+                let level = Float(levelInt)/10.0 // Convert back to a Float with a tenths place
                 // Will display level in tenth point increments
                 levelString = String(format: "%.1f", level)
                 return levelString // the level is the first one with some words, so return here
@@ -203,6 +210,14 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
     
     //MARK:- View Lifecycle
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "segueToInfo" {
+//            if let infoVC = segue.destinationViewController as? ProgressInfoViewController {
+//                infoVC.levelByTenths = calculateLevel()
+//            }
+//        }
+//    }
     
     // helper for view layout
     func calculateHighestLevel(viewWidth: CGFloat) {

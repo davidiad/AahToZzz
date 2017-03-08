@@ -531,7 +531,7 @@
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aRj-jz-wT8">
                                         <rect key="frame" x="20" y="38" width="374" height="115"/>
                                         <connections>
-                                            <segue destination="UBr-YI-ixs" kind="embed" id="HKA-68-40k"/>
+                                            <segue destination="UBr-YI-ixs" kind="embed" identifier="segueToInfo" id="HKA-68-40k"/>
                                         </connections>
                                     </containerView>
                                     <label autoresizesSubviews="NO" opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Number of words" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWr-4a-vmb">
