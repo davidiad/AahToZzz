@@ -281,7 +281,9 @@ class AtoZModel {
     
     // get the 2 words used to get 6 of the 7 letters for a letterset
     // TODO: return one string of 6 letters instead of an array
-    func getWordsForLetters () -> String {
+    // TODO: refactor so it's all one switch statement, not one nested in another
+    // TODO: debug why only 1 or 0 words are chosen from the lowest level. Should always be 2 drawn from lowest.
+    func getWordsForLetters() -> String {
         var wordsForLetters: String = ""
         var firstWordIndex: Int
         var secondWordIndex: Int
@@ -304,33 +306,73 @@ class AtoZModel {
                 
                 
             case wordsArray.count: // all words have been saved
+                
                 // need to pick from unmastered words
-                var unmasteredWordsArray = [String]()
+                //var unmasteredWordsArray = [String]()
                 
-                for word in fetchedWords {
-                    if word.mastered == false {
-                        unmasteredWordsArray.append(word.word!)
+                
+//                for word in fetchedWords {
+//                    if word.mastered == false {
+//                        unmasteredWordsArray.append(word.word!)
+//                    }
+//                }
+                
+                //pick from the lowest levels possible
+                let numLevels: Int = 23 // arbitrary -- need to find the number of levels
+                var foundTwoWords: Bool = false
+                
+                for i in 0 ..< numLevels {
+                    if foundTwoWords == false {
+                        print("wordsArray.count: \(wordsArray.count)")
+                        var wordsToChooseFrom = [String]()
+                        
+                        for word in fetchedWords {
+                            if word.level == i {
+                                wordsToChooseFrom.append(word.word!)
+                            }
+                            switch wordsToChooseFrom.count {
+                            case 0:
+                                foundTwoWords = false
+                            case 1:
+                                firstWordIndex = 0
+                                // still need a 2nd word, choose one at random from entire array
+                                // (ideally, the 2nd word would come from the next lowest index)
+                                secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+                                foundTwoWords = true
+                            case 2:
+                                firstWordIndex = 0
+                                secondWordIndex = 1
+                                wordsForLetters = wordsToChooseFrom[firstWordIndex] + wordsToChooseFrom[secondWordIndex]
+                                foundTwoWords = true
+                            default: // 2 or greater
+                                firstWordIndex = Int(arc4random_uniform(UInt32(wordsToChooseFrom.count)))
+                                secondWordIndex = Int(arc4random_uniform(UInt32(wordsToChooseFrom.count)))
+                                wordsForLetters = wordsToChooseFrom[firstWordIndex] + wordsToChooseFrom[secondWordIndex]
+                                foundTwoWords = true
+                            }
+                        }
                     }
+                    
                 }
                 
-                switch unmasteredWordsArray.count {
-                    
-                case 0: // note -- repeating code under case 0 above
-                    // pick 2 random words from wordsArray
-                    firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
-                    secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
-                    wordsForLetters = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
-                case 1:
-                    firstWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
-                    secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
-                    wordsForLetters = unmasteredWordsArray[firstWordIndex] + wordsArray[secondWordIndex]
-                default: // 2 or more
-                    // pick 2 random words from unmasteredWordsArray
-                    firstWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
-                    secondWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
-                    wordsForLetters = unmasteredWordsArray[firstWordIndex] + unmasteredWordsArray[secondWordIndex]
-                    
-                }
+//                switch unmasteredWordsArray.count {
+//                    
+//                case 0: // note -- repeating code under case 0 above
+//                    // pick 2 random words from wordsArray
+//                    firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+//                    secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+//                    wordsForLetters = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
+//                case 1:
+//                    firstWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
+//                    secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+//                    wordsForLetters = unmasteredWordsArray[firstWordIndex] + wordsArray[secondWordIndex]
+//                default: // 2 or more
+//                    // pick 2 random words from unmasteredWordsArray
+//                    firstWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
+//                    secondWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
+//                    wordsForLetters = unmasteredWordsArray[firstWordIndex] + unmasteredWordsArray[secondWordIndex]
+//                    
+//                }
 //            case _ where numUnsavedWords == 1: // get the 1 unsaved word, and then find another word
 
             default:
