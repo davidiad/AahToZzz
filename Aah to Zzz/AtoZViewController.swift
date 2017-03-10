@@ -18,7 +18,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //TODO:- LIST
     // After Fill in Blanks, need to not allow words to be found again. -Done
-    //  Ad integration?
+    // Ad integration?
     // Swype style letter selection (in v 1.1)
     // incorporate Alamofire possibly - installed, but not being used yet
     // add properties to GameData or Game object, that allow for different types of games. For instance, what letters you're searching for (e.g., X, J, Q, and Z words). How many letters (e.g. 2 letters, 3 letters, 7 letters, any size, 8 letter words, 9 letter words), what orientation (e.g., 2 or 3 letters are in portrait, 7, 8, 9 letters are in landscape). Number of positions (for 7 letter or more, might want more than 10 positions), etc - Done
@@ -470,7 +470,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //proxyTable.registerClass(ProxyTableCell.self, forCellReuseIdentifier: "proxycell")
         //wordTable.registerClass(WordListCell.self, forCellReuseIdentifier: "cell")
         
@@ -1372,10 +1371,15 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func updateTiles () {
-        
         // convert the LetterSet into an array
         letters = currentLetterSet?.letters?.allObjects as! [Letter]
         
+        // Safeguard in case the correct number of letters has not been saved properly
+        if letters.count != lettertiles.count {
+            currentLetterSet = model.generateLetterSet()
+            saveContext()
+            letters = currentLetterSet?.letters?.allObjects as! [Letter]
+        }
         for i in 0 ..< lettertiles.count {
             lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
             lettertiles[i].letter = letters[i]

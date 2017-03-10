@@ -205,6 +205,7 @@ class AtoZModel {
         // Add the 6 letters from 2 random words to the letterset, for a total of 7 letters
         //let sixLettersFromWords = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
         let sixLettersFromWords = getWordsForLetters()
+        print("The 6: \(sixLettersFromWords)")
         for char in sixLettersFromWords.characters {
             letters.append(createLetter(String(char)))
         }
@@ -283,11 +284,15 @@ class AtoZModel {
     // TODO: return one string of 6 letters instead of an array
     // TODO: refactor so it's all one switch statement, not one nested in another
     // TODO: debug why only 1 or 0 words are chosen from the lowest level. Should always be 2 drawn from lowest.
+    // TODO:- find bug that happened when found all of 0 and most of 1, then missed a bunch so 0 appeared again, then found words until 0 disappeared again -- except quit and has white screen of death.
+    //2017-03-08 21:18:12.240 AahToZzz[2501:643552] *** Terminating app due to uncaught exception 'NSRangeException', reason: '*** -[__NSArrayI objectAtIndex:]: index 1 beyond bounds [0 .. 0]'
+    // Determined that there is a bug where sometimes no letters are returned from this func
+    // Fixed that bug, but something is still wrong because
     func getWordsForLetters() -> String {
+        //TODO: add unit test to check that a 6 letter string is returned
         var wordsForLetters: String = ""
         var firstWordIndex: Int
         var secondWordIndex: Int
-
         
         let fetchRequest = NSFetchRequest(entityName: "Word")
         
@@ -318,7 +323,7 @@ class AtoZModel {
 //                }
                 
                 //pick from the lowest levels possible
-                let numLevels: Int = 23 // arbitrary -- need to find the number of levels
+                let numLevels: Int = 20 // arbitrary -- TODO:-need to find the number of levels
                 var foundTwoWords: Bool = false
                 
                 for i in 0 ..< numLevels {
@@ -327,24 +332,30 @@ class AtoZModel {
                         var wordsToChooseFrom = [String]()
                         
                         for word in fetchedWords {
+                            // Would it be more efficient to do a new fetch with the current level as predicate?
                             if word.level == i {
                                 wordsToChooseFrom.append(word.word!)
                             }
                             switch wordsToChooseFrom.count {
                             case 0:
-                                foundTwoWords = false
+                                print("CASE 0")
+                                //foundTwoWords = false
                             case 1:
                                 firstWordIndex = 0
+                                print("CASE 1")
                                 // still need a 2nd word, choose one at random from entire array
                                 // (ideally, the 2nd word would come from the next lowest index)
                                 secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+                                wordsForLetters = wordsToChooseFrom[firstWordIndex] + wordsArray[secondWordIndex]
                                 foundTwoWords = true
                             case 2:
+                                print("CASE 2")
                                 firstWordIndex = 0
                                 secondWordIndex = 1
                                 wordsForLetters = wordsToChooseFrom[firstWordIndex] + wordsToChooseFrom[secondWordIndex]
                                 foundTwoWords = true
                             default: // 2 or greater
+                                print("CASE DEFAULT")
                                 firstWordIndex = Int(arc4random_uniform(UInt32(wordsToChooseFrom.count)))
                                 secondWordIndex = Int(arc4random_uniform(UInt32(wordsToChooseFrom.count)))
                                 wordsForLetters = wordsToChooseFrom[firstWordIndex] + wordsToChooseFrom[secondWordIndex]
