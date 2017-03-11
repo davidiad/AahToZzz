@@ -283,11 +283,8 @@ class AtoZModel {
     // get the 2 words used to get 6 of the 7 letters for a letterset
     // TODO: return one string of 6 letters instead of an array
     // TODO: refactor so it's all one switch statement, not one nested in another
-    // TODO: debug why only 1 or 0 words are chosen from the lowest level. Should always be 2 drawn from lowest.
-    // TODO:- find bug that happened when found all of 0 and most of 1, then missed a bunch so 0 appeared again, then found words until 0 disappeared again -- except quit and has white screen of death.
-    //2017-03-08 21:18:12.240 AahToZzz[2501:643552] *** Terminating app due to uncaught exception 'NSRangeException', reason: '*** -[__NSArrayI objectAtIndex:]: index 1 beyond bounds [0 .. 0]'
-    // Determined that there is a bug where sometimes no letters are returned from this func
-    // Fixed that bug, but something is still wrong because
+
+    
     func getWordsForLetters() -> String {
         //TODO: add unit test to check that a 6 letter string is returned
         var wordsForLetters: String = ""
@@ -333,6 +330,7 @@ class AtoZModel {
                         
                         for word in fetchedWords {
                             // Would it be more efficient to do a new fetch with the current level as predicate?
+                            // even better: TODO: - combine with analayzeWords() from ProgressViewController
                             if word.level == i {
                                 wordsToChooseFrom.append(word.word!)
                             }

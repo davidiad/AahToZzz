@@ -103,6 +103,32 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 
             }
         }
+        // Now that we've added the words to the levels,
+        // check for empty levels on the left
+        // each empty level on left won't be added, so add one more to the right so the graph is full
+        // only if there are no unplayed words to add to a left-most bar,
+        // check to see if there are any levels with 0 words on the left, to replace with new levels on the right
+        if unplayedWordsExist == false { // unplayed words adds a column on left, so don't remove empties to right
+            var foundNotEmptyLevel = false
+            if levelArrays.count > 0 {
+                for i in 0 ..< highestLevel {
+                    if foundNotEmptyLevel == false {
+                        print(levelArrays.count)
+                        guard let level = levelArrays[i] else { // will still crash if levelsArray is empty
+                            return
+                        }
+                        if level.count == 0 {
+                            //highestLevel += 1 // add a level to the right. It can be empty of words.
+                            addLevelArray()
+                        } else {
+                            foundNotEmptyLevel = true // need to escape from this loop. Because will keep empty levels if they are in the middle of the graph. Will only remove the empties on the left.
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
         
         //TODO:- Add all the not yet played words to Level 0
         // Get a set of all the dictionary words
@@ -236,6 +262,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
 //    }
     
     // helper for view layout
+    //TODO:- first also find the lowest level with words, so that for each empty level on the level, we add a level on the right
     func calculateHighestLevel(viewWidth: CGFloat) {
         // subtract 1 because the levels are counted from 0
         highestLevel = Int((viewWidth - SIDE_PADDING) / (BAR_WIDTH + MIN_BAR_PADDING)) - 1
@@ -244,8 +271,6 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         if unplayedWordsExist {
             highestLevel -= 1
         }
-        print("highestLevel: \(highestLevel)")
-        print("viewWidth: \(viewWidth)")
     }
     
     override func viewDidLoad() {
@@ -413,8 +438,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         //graphStackView.addArrangedSubview(numberOfWordsLabel)
         
         // offset bars to the right to make room for the unplayed words bar – if it exists
-        let shiftRight: CGFloat = unplayedWordsExist ? 40.0 : 0.0
-        let leftLeading: CGFloat = graphWidth * 0.5 - 133.0
+//        let shiftRight: CGFloat = unplayedWordsExist ? 40.0 : 0.0
+//        let leftLeading: CGFloat = graphWidth * 0.5 - 133.0
         
         // var containerArray = [UIView]()
         
@@ -436,7 +461,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 
                 
                 //graphStackView.addSubview(containerView)
-                graphStackView.addArrangedSubview(containerView)
+                
                 
                 if i < 0 {
                     numWordsInLevel = unplayedWordsArray.count
@@ -445,6 +470,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 }
                 
                 if numWordsInLevel > 0 || levelContainingWordsHasBeenFound == true { // don't add the bar if it has no words in it -- unless it's to the right of a populated level
+                    
+                    graphStackView.addArrangedSubview(containerView)
+                    
                     levelContainingWordsHasBeenFound = true
                     // to be modified to only remove bars with 0 on the left, not in the middle or on the right
                     // top constraint measures from top of screen,
@@ -595,6 +623,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 }
             }
         }
+        
+        graphStackView.setNeedsLayout()
         
     }
     
