@@ -44,12 +44,20 @@ class ProgressInfoViewController: UIViewController {
             playedWordsLabel.text = "You found \(numWordsFound) word" + pluralize + " out of \(numWordsPlayed) words played"
         }
         
-        if let numUniqueWordsPlayed = model.numUniqueWordsPlayed(), numUniqueWordsFound = model.numUniqueWordsFound() {
+        if let numUniqueWordsFound = model.numUniqueWordsFound() {
+            guard let currentGame = model.game else {
+                return
+            }
+            guard let currentData = currentGame.data else {
+                return
+            }
             var pluralize = ""
-            if numUniqueWordsFound > 1 {
+            
+            if currentData.level > 1 {
                 pluralize = "s"
             }
-            uniqueWordsLabel.text = "You found \(numUniqueWordsFound) unique word" + pluralize + " out of the \(numUniqueWordsPlayed) unique words played from a dictionary of \(model.wordsArray.count) three letter words"
+            //uniqueWordsLabel.text = "You found \(numUniqueWordsFound) out of the \(numUniqueWordsPlayed) unique words played from a dictionary of \(model.wordsArray.count) three letter words"
+            uniqueWordsLabel.text = "Found \(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary at least \(currentData.level) time\(pluralize) each"
         }
         
         

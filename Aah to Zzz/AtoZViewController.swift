@@ -26,7 +26,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // adding a little switch button in top right corner(possibly) to switch between  or 3 letters, or 7 letters QXJZ, etc JZQX JXQZ JQXZ
     // use Extensions to organize code better
     // Deal with app lifecycle - what if app goes to background, etc
-    // Fix bug that prevents tiles from enlarging and raising when dragged (used to work)- Done
+    // Fix bug that prevents tiles from enlarging and raising when dragged (used to work) -Done
     // When tiles are jumbled, enlarge them to varying degrees to add the illusion that some of them are closer
     // Enlarge and raise tiles on long press
     // Finish adding OSPD5 words, get paper copy to check for sure which are in
@@ -36,11 +36,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Allow user to have multiple games, and to name their games.
     // Add more dictionaries, including one that removes offensive words. Use as default?
     // Some words are grayed out, but are still in the list and findable - Fixed
-    // Also, when fill in the blanks is used, check that those words are counted as missed words
+    // Also, when fill in the blanks is used, check that those words are counted as missed words - Done
     // Show definitions only when word has been found
-    // Once a level has been reached, prevent words from going below that level (?)
+    // Once a level has been reached, prevent words from going below that level - Done
     // Add a speed thru feature for testing - Done
-    // Add a 10x speed thru lists feature for testing
+    // Add a 10x speed thru lists feature for testing - Done
     // add unit tests - Started
     // Help/tutorial
     // ghosted arrows to show you can scroll on right side. Maybe
@@ -55,10 +55,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Tapping on tiles, sometimes they get moved in the wrong sequence -- frustrating -- Fixed!
     // (Need to make sure the first one is moved before the 2nd, etc)
     // Tiles sometimes get stuck at an angle -Fixed i think, needs verification
-    // Make format of progress view finished and nicer (what to do with empty columns) - Better
-    // Add more or less level columns as number of levels being used goes up, and account for different device sizes
+    // Make format of progress view finished and nicer (what to do with empty columns) - Better - Empties handled
+    // Add more or less level columns as number of levels being used goes up, and account for different device sizes - Done
     // fix autolayout bug with Progress View -Fixed
-    // If possible, add a mini progress viewer that appears on the main page
+    // If possible, add a mini progress viewer that appears on the main page (v 1.1?)
     // Word definitions: find a better picture source.
     // Cache visual dictionary (download in background after word list is generated)
     // Upgrade to Xcode 8 and test with iOS10
@@ -78,14 +78,15 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // after swapTiles, make sure the context is saved before using findVacancy again. Completion handler? Delay? Notification? Add a delay every time, but later replace with a test for the flag first, so the delay doesn't run every single time
     // add sound fx (or wait til next version)?
     // Note: in Progress view, the numbers in ProgressInfoVC (above) don't include Words that have been created, but not yet tallied. So the number of words played is a turn behind the level bar graphs (below). Make consistent?
-    // Add Level (figured to tenths place, to Progress info
-    // and make percentage work
-    // Move numbeer of Words to left side of graph and possibly turn sideways
+    // Add Level (figured to tenths place, to Progress info - Done
+    // Format level in Progress info to show fractions instead of decimals
+    // and make percentage work - Done
+    // Move number of Words to left side of graph and possibly turn sideways - Done
     // Add a gradient line separating Progress Info from graph
-    // Calculate # of level bars for the device size
-    // Don't show lowest empty level bars if the number of bars that fit is less than the number of bars.
-    // Make height of level bars adjust for device size
-    // Center Number of Words label vertically, per device size.
+    // Calculate # of level bars for the device size - Done
+    // Don't show lowest empty level bars if the number of bars that fit is less than the number of bars. - Done
+    // Make height of level bars adjust for device size - Done
+    // Center Number of Words label vertically, per device size. - Done
     // Think of a way to add motivation to keep playing with such a large jump between levels
     
     // MARK: - Unwind segue from Progress view
