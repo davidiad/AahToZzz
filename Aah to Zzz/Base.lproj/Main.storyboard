@@ -350,13 +350,22 @@
                                     <action selector="autoFillWords:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Ua-D1-my3"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3tH-ng-G60">
+                                <rect key="frame" x="183" y="646" width="74" height="30"/>
+                                <state key="normal" title="AutoFill * x"/>
+                                <connections>
+                                    <action selector="autoFillMultiple:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tyJ-ll-b3K"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.50939557690000004" green="0.74680393359999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="bottom" secondItem="jOe-Nl-wN2" secondAttribute="bottom" constant="3" id="22w-TA-8ZC"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="46A-Cs-V45"/>
+                            <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="3tH-ng-G60" secondAttribute="bottom" constant="14" id="AqJ-A3-BDe"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="107" id="CKT-X1-GIn"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="3" id="Isv-RH-R5p"/>
+                            <constraint firstItem="qUf-Or-Qu2" firstAttribute="leading" secondItem="3tH-ng-G60" secondAttribute="trailing" constant="39" id="MaN-X9-Zam"/>
                             <constraint firstItem="kp7-7N-n01" firstAttribute="centerX" secondItem="P9D-OZ-Gqm" secondAttribute="centerX" id="NuU-XB-5bW"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="leading" secondItem="qUf-Or-Qu2" secondAttribute="trailing" constant="27" id="Za4-go-BpQ"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="P9D-OZ-Gqm" secondAttribute="bottom" constant="10" id="ea0-yK-Ys3"/>

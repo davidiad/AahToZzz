@@ -144,6 +144,18 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func autoFillWords(sender: AnyObject) {
+        fillInWords("Auto Found the words")
+    }
+    
+    @IBAction func autoFillMultiple(sender: AnyObject) {
+        for i in 0 ..< 100 {
+            fillInWords("AutoFind x \(i+1)")
+            generateNewWordlist()
+        }
+    }
+    
+    // helper for autoFill
+    func fillInWords(message: String) {
         if fillingInBlanks == false {
             // For each word in the word list, mark each one as found, etc
             for wordObject: Word in currentWords! {
@@ -155,7 +167,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             updateProgress("Auto Found the words")
         }
     }
-    
+
     lazy var collider:UICollisionBehavior = {
         let lazyCollider = UICollisionBehavior()
         lazyCollider.collisionDelegate = self
@@ -1165,17 +1177,65 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // This is where stats for a word are tracked (numTimesFound, numTimesPlayed)
     //TODO:-- move tracking to separate func?
     @IBAction func generateNewWordlist(sender: AnyObject) {
+        generateNewWordlist()
+//        startNewList.alpha = 0
+//        startNewList.hidden = true
+//        //printTileDiagram()
+//        returnTiles() // if any tiles are in the upper positions, return them
+//        // Generating a new list, so first, set all the previous Words 'found' property to false
+//        // and, if the found property is true, first add 1 to the numTimesFound property
+//        
+//        //fillingInBlanks = false // otherwise it's as if the 'cheat' button was pressed and all words appear but in red
+//        
+//        //TODO:-need to unwrap .fetchedObjects safely?
+//        //TODO:- is this change to swift3 for loop causing a bug where one tile is not returned properly?
+//        for i in 0 ..< fetchedResultsController.fetchedObjects!.count {
+//            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+//            if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
+//                
+//                // check for active or not
+//                if word.active == true {
+//                    word.numTimesPlayed += 1 // the # times the game has put that word into play
+//                    if word.found == true { // should work whether or no fillingInBlanks
+//                        word.numTimesFound += 1
+//                    }
+//                } else { // Word was inactive for this round
+//                    print("Word was inactive: Level for \(word.word!): \(word.level)")
+//                    // Inactive words add to neither numTimesPlayed nor numTimesFound
+//                    word.active = true // reset all inactive words to inactive -- changes with each round
+//                }
+//                // reset values as the previous words are removed from the current list
+//                word.found = false
+//                word.inCurrentList = false
+//            }
+//        }
+//        saveContext()
+//        
+//        fillingInBlanks = false // reset to false
+//
+//        // Now that the results of the previous round have been saved, create a new set of letters
+//        currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
+//
+//        // converting the new LetterSet to an array, for use in this class
+//        letters = currentLetterSet?.letters?.allObjects as! [Letter]
+//        updateTiles()
+//        //printTileDiagram()
+//        currentWords = model.generateWords(letters)
+//        // save the current # of words for use later in checkForValidWord
+//        currentNumberOfWords = currentWords?.count
+//        updateProgress(nil)
+//        animateStatusHeight(52.0)
+    }
+    
+    // This is where stats for a word are tracked (numTimesFound, numTimesPlayed)
+    //TODO:-- move tracking to separate func?
+    func generateNewWordlist() {
         startNewList.alpha = 0
         startNewList.hidden = true
-        //printTileDiagram()
         returnTiles() // if any tiles are in the upper positions, return them
         // Generating a new list, so first, set all the previous Words 'found' property to false
         // and, if the found property is true, first add 1 to the numTimesFound property
         
-        //fillingInBlanks = false // otherwise it's as if the 'cheat' button was pressed and all words appear but in red
-        
-        //TODO:-need to unwrap .fetchedObjects safely?
-        //TODO:- is this change to swift3 for loop causing a bug where one tile is not returned properly?
         for i in 0 ..< fetchedResultsController.fetchedObjects!.count {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
@@ -1199,10 +1259,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         saveContext()
         
         fillingInBlanks = false // reset to false
-
+        
         // Now that the results of the previous round have been saved, create a new set of letters
         currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
-
+        
         // converting the new LetterSet to an array, for use in this class
         letters = currentLetterSet?.letters?.allObjects as! [Letter]
         updateTiles()
@@ -1212,8 +1272,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         currentNumberOfWords = currentWords?.count
         updateProgress(nil)
         animateStatusHeight(52.0)
-        model.printStats()
     }
+
     
 //    func requireGestureRecognizerToFail(otherGR: UIGestureRecognizer) {
 //        
