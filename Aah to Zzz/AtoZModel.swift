@@ -320,7 +320,7 @@ class AtoZModel {
 //                }
                 
                 //pick from the lowest levels possible
-                let numLevels: Int = 20 // arbitrary -- TODO:-need to find the number of levels
+                let numLevels: Int = 40 // arbitrary -- TODO:-need to find the number of levels
                 var foundTwoWords: Bool = false
                 
                 for i in 0 ..< numLevels {

@@ -33,7 +33,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
 //    var levelArrays: [[Word]?] = [[Word]?]()
     var levelArrays: [[String]?] = [[String]?]()
-    var highestLevel: Int = 3 // the highest level that will be in the graph. Min set here to 4, could be higher. Up to 8 will fit in iPhone 6 and 6s, about 5 in iPhone 5.
+    var highestLevel: Int = 4 // the highest level that will be in the graph. Min set here to 4, could be higher. Up to 8 will fit in iPhone 6 and 6s, about 5 in iPhone 5.
+    var maxNumberOfBars: Int = 4
+    var numberOfBars: Int = 0 // used to check when the maxNumberOfBars has been reached
     var tableHt: Int = 0
     var unplayedWordsExist: Bool = false
     var unplayedWordsArray = [String]()
@@ -73,6 +75,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     func addLevelArray() {
         let newLevelArray = [String]()
         levelArrays.append(newLevelArray)
+        
+        print("NUMBER OF BARS: \(numberOfBars) MAX NUMBER OF BARS: \(maxNumberOfBars)")
     }
     
     // Go thru the fetched results and and put each Word into its level array
@@ -81,6 +85,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         // Init the minimum, default # of level arrays
         for _ in 0 ... highestLevel {
             addLevelArray()
+            numberOfBars += 1 // tracking the number of bars we have so far
         }
         
         for result in fetchedResultsController.fetchedObjects! {
@@ -92,7 +97,10 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 if level >= levelArrays.count {
                     // go thru each possible level, because a level could be lower than this one, and not yet be init'd
                     for _ in levelArrays.count ... level {
-                        addLevelArray()
+                            //TODO: what to do in the case that more bars are added than fit here?
+                            //Once a level is reached, don't allow words to go below that level, would eliminate the likelihood of a lot of not quite empties on the left
+                            numberOfBars += 1 // tracking the number of bars we have so far
+                            addLevelArray()
                     }
                     // Check if we need to increase the highest level to include in the graph
                     if level > highestLevel { highestLevel = level }
@@ -111,20 +119,23 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         if unplayedWordsExist == false { // unplayed words adds a column on left, so don't remove empties to right
             var foundNotEmptyLevel = false
             if levelArrays.count > 0 {
-                for i in 0 ..< highestLevel {
+                let highestBar = highestLevel
+                for i in 0 ..< highestBar {
                     if foundNotEmptyLevel == false {
-                        print(levelArrays.count)
+                        
                         guard let level = levelArrays[i] else { // will still crash if levelsArray is empty
                             return
                         }
                         if level.count == 0 {
-                            //highestLevel += 1 // add a level to the right. It can be empty of words.
-                            addLevelArray()
+                            highestLevel += 1 // not using highestLevel again, but to keep it accurate
+                            numberOfBars -= 1 // removing the empty bar
+                            if numberOfBars < maxNumberOfBars {
+                                addLevelArray() // add an empty level to the right to fill out the graph
+                            }
                         } else {
-                            foundNotEmptyLevel = true // need to escape from this loop. Because will keep empty levels if they are in the middle of the graph. Will only remove the empties on the left.
+                            foundNotEmptyLevel = true // flag to escape from this loop. Because we keep empty levels if they are in the middle of the graph, and only remove the empties if they're on the left
                         }
                     }
-                    
                 }
             }
         }
@@ -261,16 +272,20 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
 //        }
 //    }
     
-    // helper for view layout
-    //TODO:- first also find the lowest level with words, so that for each empty level on the level, we add a level on the right
+    // helper for view layout – determines how many bars to add to the graph initially
+    // calculating the initial highest level, and the number of bars to add to the graph
     func calculateHighestLevel(viewWidth: CGFloat) {
+        
+        maxNumberOfBars = Int((viewWidth - SIDE_PADDING) / (BAR_WIDTH + MIN_BAR_PADDING))
+        
         // subtract 1 because the levels are counted from 0
-        highestLevel = Int((viewWidth - SIDE_PADDING) / (BAR_WIDTH + MIN_BAR_PADDING)) - 1
-    
+        highestLevel = maxNumberOfBars - 1
+        
         // the unplayed words need a bar, so reduce the number of level bars by 1 to make room
         if unplayedWordsExist {
             highestLevel -= 1
         }
+        print("CALCULATE HIGH LEVEL: \(highestLevel)")
     }
     
     override func viewDidLoad() {
@@ -295,101 +310,6 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         
         calculateHighestLevel(view.bounds.width)
         analyzeWords()
-        
-        
-        
-        //TODO:- 
-        // 1. Go thru fetched objects and determine how many levels will need a bar. And their relative heights
-        // 2. refactor the container code to create an array of containers with level bars
-        // 3. Cont. with customizing the look of the bars
-        // 4. Add text labels to the layout
-        
-        //Swift add container view in code
-        // add container
-        
-//        let containerView = UIView()
-//        containerView.translatesAutoresizingMaskIntoConstraints = false
-//        containerView.backgroundColor = Colors.orange
-//        view.addSubview(containerView)
-//        NSLayoutConstraint.activateConstraints([
-//            containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 100),
-//            containerView.widthAnchor.constraintEqualToConstant(30.0),
-//            
-//            containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 100),
-//            containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
-//            ])
-//        //myView.widthAnchor.constraintEqualToConstant(50.0).active = true
-//        //containerView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: -200),
-//        
-//        // add child view controller view to container
-//        
-//        let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
-//        controller.level = 1
-//        
-//        for result in fetchedResultsController.fetchedObjects! {
-//            if let word = result as? Word {
-//                
-//                if word.level == controller.level {
-//                    controller.wordsInLevel.append(word)
-//                }
-//            }
-//        }
-//        
-//        addChildViewController(controller)
-//        controller.view.translatesAutoresizingMaskIntoConstraints = false
-//        containerView.addSubview(controller.view)
-//        
-//        NSLayoutConstraint.activateConstraints([
-//            controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
-//            controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
-//            controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
-//            controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
-//            ])
-//        
-//        controller.didMoveToParentViewController(self)
-//        
-//
-//        // Add another container view
-//        let containerView2 = UIView()
-//        containerView2.translatesAutoresizingMaskIntoConstraints = false
-//
-//        view.addSubview(containerView2)
-//        NSLayoutConstraint.activateConstraints([
-//            containerView2.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 200),
-//            containerView2.widthAnchor.constraintEqualToConstant(30.0),
-//            containerView2.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 140),
-//            containerView2.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: -100),
-//            ])
-//        
-//        // add child view controller view to container
-//        
-//        let controller2 = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
-//        addChildViewController(controller2)
-//        
-//        // pass the data
-//        controller2.level = 0
-//        for result in fetchedResultsController.fetchedObjects! {
-//            if let word = result as? Word {
-//                
-//                if word.level == controller2.level {
-//                    controller2.wordsInLevel.append(word)
-//                }
-//            }
-//        }
-//        
-//        
-//        
-//        controller2.view.translatesAutoresizingMaskIntoConstraints = false
-//        containerView2.addSubview(controller2.view)
-//        
-//        NSLayoutConstraint.activateConstraints([
-//            controller2.view.leadingAnchor.constraintEqualToAnchor(containerView2.leadingAnchor),
-//            controller2.view.trailingAnchor.constraintEqualToAnchor(containerView2.trailingAnchor),
-//            controller2.view.topAnchor.constraintEqualToAnchor(containerView2.topAnchor),
-//            controller2.view.bottomAnchor.constraintEqualToAnchor(containerView2.bottomAnchor)
-//            ])
-//        
-//        controller2.didMoveToParentViewController(self)
         
     }
     
