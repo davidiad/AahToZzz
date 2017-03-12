@@ -23,7 +23,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // Constants for graph layout
     let BAR_WIDTH: CGFloat = 32.0
     let SIDE_PADDING: CGFloat = 100.0
-    let MIN_BAR_PADDING: CGFloat = 3.0
+    let MIN_BAR_PADDING: CGFloat = 2.0
     let VERTICAL_PADDING: CGFloat = 300.0
     
     var graphHeight: CGFloat = 100.0
@@ -191,6 +191,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     let levelInt = Int(10 * levelFloat) // Drop (floor) all digits past the tenths by converting to Int
                     let level = Float(levelInt)/10.0 // Convert back to a Float with a tenths place
                     // Will display level in tenth point increments
+                    // TODO: display as fraction 3 7/10 etc
                     levelString = String(format: "%.1f", level)
                     print ("Level Word Count : \(i) : \(levelWordCount)")
                     return levelString // the level is the first one with some words, so return here
@@ -202,6 +203,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         // no levels had any words so return 0
         return levelString
     }
+    
     
     //TODO: Save how many rounds have been played (In game managed object). Make sure dictionary can be switched (requires new game). Possibly save details needed to show an animation of progress. Calculate levels to tenth digit, eg, Level 0.3, level 2.1, to give more of a sense of progress.
     // Add tips, e.g., if you miss a word, or fill in the blanks, you will go down a level for that/those word(s)

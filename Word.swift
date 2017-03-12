@@ -23,15 +23,21 @@ class Word: NSManagedObject {
     
     //TODO: don't let diff between times found and times played to get too negative
     
-    //TODO:- add mastered var, based on numTimesFound. Add masteryLevel(Int) to GameData, which can be changed automatically, or as an option, later, the player can set.
+    var gameLevel: Int {
+        get {
+            return Int((game?.level)!)
+        }
+    }
     
+    
+    //TODO:- add mastered var, based on numTimesFound. Add masteryLevel(Int) to GameData, which can be changed automatically, or as an option, later, the player can set.
     var level: Int {
         get {
             let checkLevel = 2 * Int(numTimesFound) - Int(numTimesPlayed)
-            if checkLevel > 0 {
+            if checkLevel > gameLevel { // should keep the words level from ever going below the games level
                 return checkLevel
             } else {
-                return 0
+                return gameLevel
             }
         }
     }

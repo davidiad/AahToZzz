@@ -578,6 +578,28 @@ class AtoZModel {
     
     //MARK:- GameData funcs
     
+    // Better to do a new fetch? probably better to return a float, and use tenths place
+    func findGameLevel() {
+        if let currentGame = game {
+            if let currentData = currentGame.data {
+                // if all words have been played at least once
+                if currentData.words?.count == wordsDictionary.count {
+                    // the minimum word level is the game level
+                    var level = currentData.words?.anyObject()?.level
+                    for word in currentData.words! {
+                        if word.level < level {
+                            level = word.level
+                        }
+                    }
+                    model.game?.data?.level = Int16(level!)
+                    saveContext()
+                }
+            }
+        }
+    }
+
+
+
     // Fetch the existing game from the store, or create one if there is none
     func fetchGame() -> Game {
         
@@ -622,6 +644,7 @@ class AtoZModel {
                 print ("newGame: \(newGame)")
                 newGameData.game = newGame
                 newGame.data?.isCurrentGame = true
+                newGame.data?.level = 0
                 //TODO:- Set all other game isCurrentGame to false here?
                 // TODO:= create a mechanism to add new a new game. Where?
                 // create the Positions and add to game

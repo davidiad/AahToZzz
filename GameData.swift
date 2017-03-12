@@ -16,6 +16,7 @@ class GameData: NSManagedObject {
     @NSManaged var currentLetterSetID: String?
 //    @NSManaged var gameID: String?
     @NSManaged var name: String? // since the name could be changed, put in GameData rather than Game
+    @NSManaged var level: Int16
     @NSManaged var masteryLevel: Int16
 //    @NSManaged var name: String?
     @NSManaged var positions: NSSet?
