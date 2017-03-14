@@ -15,6 +15,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // hidden but saved for example @IBOutlet weak var table_00: UITableView!
     @IBOutlet weak var graphBgView: UIView!
     @IBOutlet weak var graphStackView: UIStackView! // not working to add bars to stack view, so remove if can't get to work
+    @IBOutlet weak var sideBar: UIImageView!
     
     @IBOutlet weak var numberOfWordsLabel: UILabel!
     
@@ -304,14 +305,11 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         
         automaticallyAdjustsScrollViewInsets = false
         
-        // hiding table_00 
-        /*
-        table_00.backgroundColor = UIColor.yellowColor()
-        table_00.layoutMargins = UIEdgeInsets.init(top: 1, left: 0, bottom: 1, right: 0)
-        */
         
         calculateHighestLevel(view.bounds.width)
         analyzeWords()
+        
+        addGradientBar()
         
     }
     
@@ -547,6 +545,16 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         }
         
         graphStackView.setNeedsLayout()
+        
+    }
+    
+    func addGradientBar() {
+        
+        let gradient = model.yellowPinkBlueGreenGradient()
+        //gradient.frame = sideBar.bounds
+        gradient.frame = CGRectMake(0, 0, 3, view.bounds.height)
+        sideBar.layer.addSublayer(gradient)
+        
         
     }
     
