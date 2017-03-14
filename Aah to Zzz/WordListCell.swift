@@ -59,10 +59,15 @@ class WordListCell: UITableViewCell {
                     outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
                     //TODO: SHOULD BE SET IN COLORCODE
                     outlineView.tintColor = colorCode?.tint
-                    outlineShadowView.image = UIImage(named: "outline_shadow_unstretched")
-                    outlineShadowView.alpha = 0.45
+//                    outlineShadowView.image = UIImage(named: "outline_shadow_unstretched")
+//                    outlineShadowView.alpha = 0.45
                 }
             }
+            guard let shadow = colorCode?.shadow else {
+                return
+            }
+            outlineShadowView.image = shadow
+            outlineShadowView.alpha = 0.45
         }
         
     }

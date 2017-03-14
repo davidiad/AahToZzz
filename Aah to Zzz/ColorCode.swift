@@ -38,33 +38,8 @@ struct ColorCode {
         var image = UIImage()
         
         if let colorCode = self.colorCode {
-            
-//            if colorCode < 0 {
-//                switch colorCode {
-//                    
-//                case -1:
-//                    image = UIImage(named: "small_tile_red")!
-//                case -2:
-//                    image = UIImage(named: "small_tile_gray")!
-//                default:
-//                    image = UIImage(named: "small_tile_yellow")!
-//                    break
-//                }
-//                
-//                //            }
-//                //            if colorCode == -1 {
-//                //                image = UIImage(named: "small_tile_red")!
-//                //            } else if colorCode == -2 {
-//                //                image = UIImage(named: "small_tile_gray")!
-//                //            }
-//                
-//            } else {
-//                var tintLevel = colorCode
-//                if colorCode >= 0 {
-//                    tintLevel = colorCode % 4
-//                }
                 
-                let tintLevel = colorCode % 4
+                let tintLevel = colorCode % 6
                 
                 switch tintLevel {
                 case -2:
@@ -85,7 +60,6 @@ struct ColorCode {
                     image = UIImage(named: "small_tile_purple")!
                 default:
                     image = UIImage(named: "small_tile_yellow")!
-                    print("hit default: \(self.colorCode)")
                     break
                 }
             }
@@ -133,16 +107,37 @@ struct ColorCode {
 
         if self.colorCode != nil {
             switch self.colorCode! {
-            case 0:
-                image = UIImage(named: "outline_double_unstretched")!
+            case 0...5:
+                image = UIImage(named: "outline_thick")!
                 //return nil
-                
-            case 1:
+            case 6...10:
                 image = UIImage(named: "outline_double_unstretched")!
+            case 11...15:
+                image = UIImage(named: "outline_thicker")!
             //TODO: Implement tripled lines (tripled lines too close)
             default:
-                //image = UIImage(named: "outline_yellow")! // thin outline, can be tinted other colors
-                image = UIImage(named: "outline_double_unstretched")!
+                image = UIImage(named: "outline_thick")!
+            }
+        }
+        return image
+    }()
+    
+    // set which image to use for outline
+    lazy var shadow: UIImage? = {
+        var image = UIImage()
+        
+        if self.colorCode != nil {
+            switch self.colorCode! {
+            case 0...5:
+                image = UIImage(named: "outline_yellow")!
+            //return nil
+            case 6...10:
+                image = UIImage(named: "outline_shadow_unstretched")!
+            case 11...15:
+                image = UIImage(named: "outline_shadow_unstretched")!
+            //TODO: Implement tripled lines (tripled lines too close) - Use Double line with colored center
+            default:
+                image = UIImage(named: "outline_yellow")! // thin outline, can be tinted other colors
             }
         }
         return image
