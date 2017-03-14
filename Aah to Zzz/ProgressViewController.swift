@@ -22,7 +22,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
     // Constants for graph layout
     let BAR_WIDTH: CGFloat = 32.0
-    let SIDE_PADDING: CGFloat = 100.0
+    let SIDE_PADDING: CGFloat = 110.0
     let MIN_BAR_PADDING: CGFloat = 2.0
     let VERTICAL_PADDING: CGFloat = 300.0
     

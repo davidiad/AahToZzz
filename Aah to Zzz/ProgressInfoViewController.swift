@@ -34,6 +34,9 @@ class ProgressInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.layer.cornerRadius = 12.0
+        //view.layer.mask?.cornerRadius = 12.0
+        view.layer.masksToBounds = true
         //TODO: add in init?
         
         if let numWordsPlayed = model.numWordsPlayed(), numWordsFound = model.numWordsFound() {
@@ -41,7 +44,7 @@ class ProgressInfoViewController: UIViewController {
             if numWordsFound > 1 {
                 pluralize = "s"
             }
-            playedWordsLabel.text = "You found \(numWordsFound) word" + pluralize + " out of \(numWordsPlayed) words played"
+            playedWordsLabel.text = "\(numWordsFound) word" + pluralize + " out of \(numWordsPlayed) words played"
         }
         
         if let numUniqueWordsFound = model.numUniqueWordsFound() {
@@ -51,13 +54,13 @@ class ProgressInfoViewController: UIViewController {
             guard let currentData = currentGame.data else {
                 return
             }
-            var pluralize = ""
-            
-            if currentData.level > 1 {
-                pluralize = "s"
-            }
+//            var pluralize = ""
+//            
+//            if currentData.level > 1 {
+//                pluralize = "s"
+//            }
             //uniqueWordsLabel.text = "You found \(numUniqueWordsFound) out of the \(numUniqueWordsPlayed) unique words played from a dictionary of \(model.wordsArray.count) three letter words"
-            uniqueWordsLabel.text = "Found \(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary at least \(currentData.level) time\(pluralize) each"
+            uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary \(currentData.level) or more times"
         }
         
         
