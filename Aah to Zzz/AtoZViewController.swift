@@ -69,7 +69,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // If possible, add a mini progress viewer that appears on the main page (v 1.1?)
     // Word definitions: find a better picture source.
     // Cache visual dictionary (download in background after word list is generated)
+    // Consider eliminating the visual dictionary until v. 1.1
+    // In definition pop-up, make sure it only takes one tap, or preferably, a roll-over. And make the arrow that points to the word be the same color as the rest of the pop-up. (currently white)
     // Upgrade to Xcode 8 and test with iOS10
+    // Separate out parts of the main storyboard to their own storyboard, to mitigate the super slow down of working with the main.storyboard file
     // Possible: refactor to MVVM
     // Need app icons
     // Change name to "AA to ZZZ"
