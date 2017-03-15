@@ -76,7 +76,10 @@ class DefinitionPopoverVC: UIViewController {
                     }
                 }
             }
-            flickr.getFlickrImagesForWord(sometext!) {ius, success, error in
+        
+        let searchDefinition = ("\(sometext!)  \(model.getDefinition(sometext!))")
+            print(searchDefinition)
+            flickr.getFlickrImagesForWord(searchDefinition) {ius, success, error in
                 if success {
                     _ = self.flickr.taskForImage(ius!) { data, error in
                         if let error = error {
