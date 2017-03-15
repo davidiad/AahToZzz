@@ -368,7 +368,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 // (-1 is being used for the unplayed words array, which sometimes exists and sometimes not)
                 let containerView = UIView()
                 var numWordsInLevel: Int = 0
-                var colorCode = ColorCode(code: i)
+                var colorCode = ColorCode(code: i - 1)
                 
                 containerView.translatesAutoresizingMaskIntoConstraints = false
                 
@@ -475,6 +475,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     
                     //mask.layer.cornerRadius = 0 //6
                     containerView.maskView = mask
+                    let barTint = colorCode.tint
                     
                     
                     // Add the outline image on top of the level bar table controller

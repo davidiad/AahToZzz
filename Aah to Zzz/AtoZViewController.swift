@@ -17,6 +17,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
            }
     
     //TODO:- LIST
+    // colors really should be moved up by 1 -- yellow is 1 time found(not 0), etc
+    // In order to match the level bars they'll be added to
+    // Because 0 words would never show up in the word list.
+    // So the 0 graph bar should be some other color. Gray? or unplayed gray? and
+    // 0 could be red(ish)? Or unplayed and 0 both gray???
+    // except that::: 0 words *do* show up in the word list, they just haven't been counted yet. So it's a conundrum. Show the what the color *should* be, or what it actually is, since words shown in list have not been counted yet.
+    // Conclusion: move the color in the bars up by 1: that way they match the color shown in the word list. Even though it's not technically correct, and it means that the colorcode of the bars will be 1 off from the colorcode of the words.
+    // After Fill in Blanks, show "Start New List?" with appropriate message.
     // After Fill in Blanks, need to not allow words to be found again. -Done
     // Ad integration?
     // Swype style letter selection (in v 1.1)
