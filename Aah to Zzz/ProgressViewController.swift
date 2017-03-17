@@ -473,38 +473,81 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     maskImageView.image = UIImage(named: "bar_graph_mask")
                     mask.addSubview(maskImageView)
                     
-                    //mask.layer.cornerRadius = 0 //6
                     containerView.maskView = mask
                     let barTint = colorCode.tint
                     
                     
-                    // Add the outline image on top of the level bar table controller
-                    // first, the shadow image beneath to help the outline stand out
-                    let outlineShadowImage = UIImage(named: "outline_shadow")
-                    let outlineShadowView = UIImageView(image: outlineShadowImage)
-                    outlineShadowView.alpha = 0.5
-                    outlineShadowView.frame = barFrame
-                    //CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(CGFloat(height - 20)))
+                    //TODO:- move code that sets the outline and shadow to the LevelTableViewController class
+                    
                     
                     // create the outline view
-                    //TODO: seems like the outline image is being scaled up
-                    //  Q1`let outlineImage = UIImage(named: "outline_double_flatbottom")
                     let outlineView = UIImageView(frame: barFrame)//UIImageView(image: outlineImage)
+                    let outlineShadowImageSingle = UIImage(named: "outline_shadow_single")
+                    let outlineShadowImageDouble = UIImage(named: "outline_shadow")
+                    let outlineShadowView: UIImageView = UIImageView()// = UIImageView(image: outlineShadowImage)
+                    // Add the outline image on top of the level bar table controller
+                    // first, the shadow image beneath to help the outline stand out
+                    // let outlineShadowImage = UIImage(named: "outline_shadow_single")
+                    
+                    outlineShadowView.alpha = 0.5
+                    outlineShadowView.frame = barFrame
                     
                     // TODO:- specify cases more clearly. 0 words vs. height is small enough that the rounded top doesn't fit without squishing
-                    if height < 22.0 || numWordsInLevel == 0 {
-                        outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                        //outlineView.image!.resizableImageWithCapInsets(insets, resizingMode: .Stretch)
-                        outlineView.contentMode = .BottomLeft
-                    } else {
-                        outlineView.image = UIImage(named: "outline_double_flatbottom")
-                    }
                     
+                    switch i {
+                    case -1...5:
+                        
+                        if height < 22.0 || numWordsInLevel == 0 {
+                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+                            outlineView.contentMode = .BottomLeft
+                        } else {
+                            outlineView.image = UIImage(named: "outline_single_flatbottom")
+                            outlineShadowView.image = outlineShadowImageSingle
+                        }
+                    case 6...10:
+                        
+                        if height < 22.0 || numWordsInLevel == 0 {
+                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+                            outlineView.contentMode = .BottomLeft
+                        } else {
+                            outlineView.image = UIImage(named: "outline_double_flatbottom")
+                            outlineShadowView.image = outlineShadowImageDouble
+                        }
+                    case 11...15:
+                        
+                        if height < 22.0 || numWordsInLevel == 0 {
+                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+                            outlineView.contentMode = .BottomLeft
+                        } else {
+                            outlineView.image = UIImage(named: "outline_double_flatbottom")
+                            outlineShadowView.image = outlineShadowImageDouble
+                        }
+                    case 16...20:
+                        
+                        if height < 22.0 || numWordsInLevel == 0 {
+                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+                            outlineView.contentMode = .BottomLeft
+                        } else {
+                            outlineView.image = UIImage(named: "outline_double_flatbottom")
+                            outlineShadowView.image = outlineShadowImageDouble
+                        }
+                    default:
+                        
+                        if height < 22.0 || numWordsInLevel == 0 {
+                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+                            outlineView.contentMode = .BottomLeft
+                        } else {
+                            outlineView.image = UIImage(named: "outline_single_flatbottom")
+                            outlineShadowView.image = outlineShadowImageDouble
+                        }
+                        
+                    }
                     outlineView.frame = barFrame
-                    //CGRect(x: 0.0, y: 0.0, width: 32.0, height: Double(height - 20))
                     outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
                     // set the outlineView tintcolor per level
                     outlineView.tintColor = colorCode.tint
+                    
+
                     
                     containerView.addSubview(outlineShadowView)
                     containerView.addSubview(outlineView)

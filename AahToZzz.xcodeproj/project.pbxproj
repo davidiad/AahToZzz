@@ -42,6 +42,8 @@
 		6331F3301CA9FE8B00F98737 /* outline_image_double.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */; };
 		633727601C7EAEA4003E8447 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6337275E1C7EAEA4003E8447 /* Word.swift */; };
 		633C5BE71E79F8DC008E5A43 /* Options.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BE51E79F8DC008E5A43 /* Options.storyboard */; };
+		633C5BE91E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BE81E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf */; };
+		633C5BEB1E7B6819008E5A43 /* graph_shadow_single@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BEA1E7B6819008E5A43 /* graph_shadow_single@1x.pdf */; };
 		633C7B071DB46A060055CD83 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C7B061DB46A060055CD83 /* ProgressViewController.swift */; };
 		633C7B0B1DB46A9C0055CD83 /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */; };
 		634E76FA1D41E52800F9FC52 /* small_tile_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 634E76F71D41E52800F9FC52 /* small_tile_red.png */; };
@@ -200,6 +202,8 @@
 		6331F32F1CA9FE8B00F98737 /* outline_image_double.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image_double.pdf; sourceTree = "<group>"; };
 		6337275E1C7EAEA4003E8447 /* Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		633C5BE61E79F8DC008E5A43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Options.storyboard; sourceTree = "<group>"; };
+		633C5BE81E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_single_flatbottom@1x.pdf"; sourceTree = "<group>"; };
+		633C5BEA1E7B6819008E5A43 /* graph_shadow_single@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_shadow_single@1x.pdf"; sourceTree = "<group>"; };
 		633C7B061DB46A060055CD83 /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
 		634E76F71D41E52800F9FC52 /* small_tile_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_red.png; sourceTree = "<group>"; };
@@ -349,6 +353,8 @@
 		6324A8DC1DFA907500261E64 /* graph */ = {
 			isa = PBXGroup;
 			children = (
+				633C5BEA1E7B6819008E5A43 /* graph_shadow_single@1x.pdf */,
+				633C5BE81E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf */,
 				6377ED5A1E6FBDBC0001C080 /* graph_shadow@1x.pdf */,
 				6377ED581E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf */,
 				6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */,
@@ -701,6 +707,7 @@
 				6377ED571E6F4C800001C080 /* graph_double_flatbottom@1x.pdf in Resources */,
 				6377ED5B1E6FBDBC0001C080 /* graph_shadow@1x.pdf in Resources */,
 				6300C6661CA6224000E3B4D5 /* small_tile_orange.png in Resources */,
+				633C5BEB1E7B6819008E5A43 /* graph_shadow_single@1x.pdf in Resources */,
 				63A3A1281C76520500F440B5 /* 3letterwordlist.txt in Resources */,
 				63C4495E1C98D8440053BE77 /* shadow_down.png in Resources */,
 				63C4495F1C98D8440053BE77 /* shadow_down@2x.png in Resources */,
@@ -789,6 +796,7 @@
 				63FE47A01E77631600BC4D95 /* progress_info_bg.pdf in Resources */,
 				63A3A11E1C763F6C00F440B5 /* LaunchScreen.storyboard in Resources */,
 				63B5C5381E6E4E6A0031576E /* outline_graph_double_flatbottom3@1x.pdf in Resources */,
+				633C5BE91E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf in Resources */,
 				635549941CA0C6DC00DB5167 /* down_arrow_h.png in Resources */,
 				63C449631C98D8440053BE77 /* shadow_up@3x.png in Resources */,
 				63A3A11B1C763F6C00F440B5 /* Assets.xcassets in Resources */,

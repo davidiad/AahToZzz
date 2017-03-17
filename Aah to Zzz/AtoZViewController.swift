@@ -17,13 +17,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
            }
     
     //TODO:- LIST
+    // Settle on conventions for outlines per level, e.g; single line, then double line, then double line with inner color (making a tripled line), then thicker line. Make the graph level bars match the word cells in this regard. Make new graphics as needed. The inner colored tripling line should probably be a separate image overlaid, so that its color can be adjusted in code to be a color code level a fix amount from the main color
+    // Consider fixing the options so that the gradient can still be adjusted by user, but maybe not rotated vertical slider bars. Is there a custom slider bar with 4 sliders that can be adopted? 
+    // Consider removing the gradient adjust options altogether, and wait til 1.1 to add back in.
+    // size classes for iPad
     // colors really should be moved up by 1 -- yellow is 1 time found(not 0), etc
     // In order to match the level bars they'll be added to
     // Because 0 words would never show up in the word list.
     // So the 0 graph bar should be some other color. Gray? or unplayed gray? and
     // 0 could be red(ish)? Or unplayed and 0 both gray???
     // except that::: 0 words *do* show up in the word list, they just haven't been counted yet. So it's a conundrum. Show the what the color *should* be, or what it actually is, since words shown in list have not been counted yet.
-    // Conclusion: move the color in the bars up by 1: that way they match the color shown in the word list. Even though it's not technically correct, and it means that the colorcode of the bars will be 1 off from the colorcode of the words. -Done
+    // Conclusion: move the color in the bars up by 1: that way they match the color shown in the word list. Even though it's not technically correct, and it means that the colorcode of the bars will be 1 off from the colorcode of the words. -Done -- but still not right -- or maybe it is. When we take words out of the lowest level, we don't see that color, because we've just found them again, so they're added to the next level. In other words, we might take 2 off of yellow, but when we find them, they are moving up one from yellow to magenta. So we see magenta, not their old color of yellow.
     // After Fill in Blanks, show "Start New List?" with appropriate message. -Done
     // After Fill in Blanks, need to not allow words to be found again. -Done
     // Ad integration?
@@ -48,7 +52,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Show definitions only when word has been found
     // Once a level has been reached, prevent words from going below that level - Done
     // Add a speed thru feature for testing - Done
-    // Add a 10x speed thru lists feature for testing - Done
+    // Add a 100x speed thru lists feature for testing - Done
     // add unit tests - Started
     // Help/tutorial
     // ghosted arrows to show you can scroll on right side. Maybe
@@ -72,7 +76,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // Consider eliminating the visual dictionary until v. 1.1
     // In definition pop-up, make sure it only takes one tap, or preferably, a roll-over. And make the arrow that points to the word be the same color as the rest of the pop-up. (currently white)
     // Upgrade to Xcode 8 and test with iOS10
-    // Separate out parts of the main storyboard to their own storyboard, to mitigate the super slow down of working with the main.storyboard file
+    // Separate out parts of the main storyboard to their own storyboard, to mitigate the super slow down of working with the main.storyboard file - Done
     // Possible: refactor to MVVM
     // Need app icons
     // Change name to "AA to ZZZ"

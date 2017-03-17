@@ -1,0 +1,26 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "graph_shadow_single@1x.pdf",
+      "resizing" : {
+        "mode" : "9-part",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1,
+          "height" : 59
+        },
+        "cap-insets" : {
+          "bottom" : 8,
+          "top" : 8,
+          "right" : 8,
+          "left" : 8
+        }
+      }
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

@@ -39,7 +39,7 @@ struct ColorCode {
         
         if let colorCode = self.colorCode {
                 
-                let tintLevel = colorCode % 6
+                let tintLevel = colorCode % 5
                 
                 switch tintLevel {
                 case -2:
@@ -75,7 +75,7 @@ struct ColorCode {
 //                return Colors.whitish_red
 //            }
             
-            let tintLevel = colorCode % 6
+            let tintLevel = colorCode % 5
             
             switch tintLevel {
             case -2:
@@ -107,12 +107,12 @@ struct ColorCode {
 
         if self.colorCode != nil {
             switch self.colorCode! {
-            case 0...5:
+            case 0...4:
                 image = UIImage(named: "outline_thick")!
                 //return nil
-            case 6...10:
+            case 5...9:
                 image = UIImage(named: "outline_double_unstretched")!
-            case 11...15:
+            case 10...14:
                 image = UIImage(named: "outline_thicker")!
             //TODO: Implement tripled lines (tripled lines too close)
             default:
@@ -128,12 +128,12 @@ struct ColorCode {
         
         if self.colorCode != nil {
             switch self.colorCode! {
-            case 0...5:
+            case 0...4:
                 image = UIImage(named: "outline_yellow")!
             //return nil
-            case 6...10:
+            case 5...9:
                 image = UIImage(named: "outline_shadow_unstretched")!
-            case 11...15:
+            case 10...14:
                 image = UIImage(named: "outline_shadow_unstretched")!
             //TODO: Implement tripled lines (tripled lines too close) - Use Double line with colored center
             default:
