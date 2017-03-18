@@ -309,6 +309,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         calculateHighestLevel(view.bounds.width)
         analyzeWords()
         
+        // rotate the graph label at left
+        numberOfWordsLabel.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+        numberOfWordsLabel.frame = CGRect(x: 0, y: 0, width: 30, height: 230)
         addGradientBar()
         
     }
@@ -350,9 +353,11 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         //graphStackView.alignment = .Center
         //graphStackView.spacing = 5
         //graphStackView.translatesAutoresizingMaskIntoConstraints = false
-        // rotate the graph label
-        numberOfWordsLabel.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
-        numberOfWordsLabel.frame = CGRect(x: 0, y: 0, width: 30, height: 230)
+        
+//        //TODO:- move label rotation to a better place, like ViewWillAppear
+//        // rotate the graph label
+//        numberOfWordsLabel.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+//        numberOfWordsLabel.frame = CGRect(x: 0, y: 0, width: 30, height: 230)
         
         
         //graphStackView.addArrangedSubview(numberOfWordsLabel)
@@ -367,6 +372,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             if unplayedWordsExist || i >= 0 { // Don't allow the case where i = -1, but there are no unplayed words
                 // (-1 is being used for the unplayed words array, which sometimes exists and sometimes not)
                 let containerView = UIView()
+//                let barContainer = GraphBarView()
                 var numWordsInLevel: Int = 0
                 var colorCode = ColorCode(code: i - 1)
                 
@@ -401,6 +407,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     // Adding 22 to height to account for bottom starting from -20, and having a thin bar of 2 even where there are 0 words
                     let height = graphHeight * CGFloat((Float(numWordsInLevel) / findMaxLevelCount())) + 22
                     
+                    let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
+                    let barContainer = GraphBarView(frame: barFrame, level: i, graphHeight: height)
                     // if there are no words in the level, adjust height so that just a thin colored bar appears at the bottom
                     // height needs to be at least 22 so that the top is never lower than the bottom
                     //                if height < 22 {
@@ -415,19 +423,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                         containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
                         containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
                         ])
-                    //                NSLayoutConstraint.activateConstraints([
-                    //
-                    //                    containerView.leadingAnchor.constraintEqualToAnchor(graphStackView.leadingAnchor, constant: 40 * CGFloat(i) + leftLeading + shiftRight),
-                    //                    containerView.widthAnchor.constraintEqualToConstant(32.0),
-                    //
-                    //                    containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
-                    //                    containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
-                    //                    ])
-                    
-                    //was working, but not with stack view
-                    /*
-                     containerView.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(522 - ( 3 * height) )  ),
-                     */
+
                     // add child view controller view to container
                     
                     let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
@@ -438,20 +434,10 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                             controller.wordsInLevel.append(word)
                         }
                     } else {
-                        /* // Why go thru the entire result each loop? The Words are already put into their levels
-                         for result in fetchedResultsController.fetchedObjects! {
-                         if let word = result as? Word {
-                         if word.level == controller.level {
-                         controller.wordsInLevel.append(word)
-                         }
-                         }
-                         }
-                         */
                         for word in levelArrays[i]! { // forced unwrap. OK cause we know there will be a levelArrays[i]?
                             controller.wordsInLevel.append(word)
                         }
                     }
-                    
                     
                     addChildViewController(controller) // Was this line necessary?
                     controller.view.translatesAutoresizingMaskIntoConstraints = false
@@ -467,13 +453,14 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     controller.didMoveToParentViewController(self)
                     
                     // create mask to round the corners of the graph bar
-                    let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
+//                    let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
                     let mask: UIView = UIView(frame: barFrame)
                     let maskImageView = UIImageView(frame: barFrame)
                     maskImageView.image = UIImage(named: "bar_graph_mask")
                     mask.addSubview(maskImageView)
                     
                     containerView.maskView = mask
+                    
                     let barTint = colorCode.tint
                     
                     

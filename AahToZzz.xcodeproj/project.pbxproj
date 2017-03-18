@@ -44,6 +44,7 @@
 		633C5BE71E79F8DC008E5A43 /* Options.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BE51E79F8DC008E5A43 /* Options.storyboard */; };
 		633C5BE91E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BE81E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf */; };
 		633C5BEB1E7B6819008E5A43 /* graph_shadow_single@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BEA1E7B6819008E5A43 /* graph_shadow_single@1x.pdf */; };
+		633C5BED1E7C9D87008E5A43 /* GraphBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C5BEC1E7C9D87008E5A43 /* GraphBarView.swift */; };
 		633C7B071DB46A060055CD83 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C7B061DB46A060055CD83 /* ProgressViewController.swift */; };
 		633C7B0B1DB46A9C0055CD83 /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */; };
 		634E76FA1D41E52800F9FC52 /* small_tile_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 634E76F71D41E52800F9FC52 /* small_tile_red.png */; };
@@ -204,6 +205,7 @@
 		633C5BE61E79F8DC008E5A43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Options.storyboard; sourceTree = "<group>"; };
 		633C5BE81E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_single_flatbottom@1x.pdf"; sourceTree = "<group>"; };
 		633C5BEA1E7B6819008E5A43 /* graph_shadow_single@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_shadow_single@1x.pdf"; sourceTree = "<group>"; };
+		633C5BEC1E7C9D87008E5A43 /* GraphBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphBarView.swift; sourceTree = "<group>"; };
 		633C7B061DB46A060055CD83 /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
 		634E76F71D41E52800F9FC52 /* small_tile_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_red.png; sourceTree = "<group>"; };
@@ -586,6 +588,7 @@
 				63E4A2C21DC17498002BC4CE /* TestViewController.swift */,
 				63E4A2C41DC1AF98002BC4CE /* LevelTableViewController.swift */,
 				63E4A2C61DC24CBA002BC4CE /* LevelTableCell.swift */,
+				633C5BEC1E7C9D87008E5A43 /* GraphBarView.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -893,6 +896,7 @@
 				633C7B0B1DB46A9C0055CD83 /* ExampleTableViewController.swift in Sources */,
 				63E4A2C71DC24CBA002BC4CE /* LevelTableCell.swift in Sources */,
 				6317546C1E39E059008B359D /* GameTypeInfo.swift in Sources */,
+				633C5BED1E7C9D87008E5A43 /* GraphBarView.swift in Sources */,
 				63EA98D71D4F46E000537F2A /* Colors.swift in Sources */,
 				63D57BB61C8C00C80046E349 /* Position.swift in Sources */,
 				636240851E308EEE007640DC /* Queue.swift in Sources */,
