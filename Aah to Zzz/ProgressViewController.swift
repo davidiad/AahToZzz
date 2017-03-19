@@ -334,59 +334,31 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         
     }
     
-    //causes a delay when bar graphs load, so moved to viewWillLayoutSubviews()
-//    override func viewDidAppear(animated: Bool) {
-//        super.viewDidAppear(animated)
-//        graphHeight = graphStackView.superview!.frame.size.height
-//        graphWidth = graphStackView.superview!.frame.size.width
-//        addLevelContainers()
-//        levelText = calculateLevel()
-//        
-//    }
     
     // Add an array of container views containing the level bars
-    //TODO: Set the height of the container by the relative number of words in the level
     func addLevelContainers() {
         var levelContainingWordsHasBeenFound = false
-        //graphStackView.axis = .Horizontal
-        //graphStackView.distribution = .EqualCentering
-        //graphStackView.alignment = .Center
-        //graphStackView.spacing = 5
-        //graphStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        //TODO:- move label rotation to a better place, like ViewWillAppear
-//        // rotate the graph label
-//        numberOfWordsLabel.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
-//        numberOfWordsLabel.frame = CGRect(x: 0, y: 0, width: 30, height: 230)
-        
-        
-        //graphStackView.addArrangedSubview(numberOfWordsLabel)
-        
-        // offset bars to the right to make room for the unplayed words bar – if it exists
-//        let shiftRight: CGFloat = unplayedWordsExist ? 40.0 : 0.0
-//        let leftLeading: CGFloat = graphWidth * 0.5 - 133.0
-        
-        // var containerArray = [UIView]()
+
         
         for i in -1 ..< levelArrays.count {
             if unplayedWordsExist || i >= 0 { // Don't allow the case where i = -1, but there are no unplayed words
                 // (-1 is being used for the unplayed words array, which sometimes exists and sometimes not)
-                let containerView = UIView()
-                //let barContainer = GraphBarView()
+//                let containerView = UIView()
+//                //let barContainer = GraphBarView()
                 var numWordsInLevel: Int = 0
                 var colorCode = ColorCode(code: i - 1)
                 
-                containerView.translatesAutoresizingMaskIntoConstraints = false
-                
-                // set the background color per level
-                let bg_image = UIImage(named:"graph_bg")
-                let insets = UIEdgeInsets(top: 0,left: 0,bottom: 0,right: 0)
-                bg_image!.resizableImageWithCapInsets(insets, resizingMode: .Tile)
-                
-                containerView.backgroundColor = UIColor(patternImage: bg_image!)
-                
-                
-                //graphStackView.addSubview(containerView)
+//                containerView.translatesAutoresizingMaskIntoConstraints = false
+//                
+//                // set the background color per level
+//                let bg_image = UIImage(named:"graph_bg")
+//                let insets = UIEdgeInsets(top: 0,left: 0,bottom: 0,right: 0)
+//                bg_image!.resizableImageWithCapInsets(insets, resizingMode: .Tile)
+//                
+//                containerView.backgroundColor = UIColor(patternImage: bg_image!)
+//                
+//                
+//                //graphStackView.addSubview(containerView)
                 
                 
                 if i < 0 {
@@ -430,115 +402,115 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
 
                     // add child view controller view to container
                     
-                    let controller = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
-                    controller.level = i
+                    let levelTableController = storyboard!.instantiateViewControllerWithIdentifier("level") as! LevelTableViewController
+                    levelTableController.level = i
                     if i < 0 {
                         // handle the case of -1, the unplayed words
                         for word in unplayedWordsArray {
-                            controller.wordsInLevel.append(word)
+                            levelTableController.wordsInLevel.append(word)
                         }
                     } else {
                         for word in levelArrays[i]! { // forced unwrap. OK cause we know there will be a levelArrays[i]?
-                            controller.wordsInLevel.append(word)
+                            levelTableController.wordsInLevel.append(word)
                         }
                     }
                     
-                    addChildViewController(controller) // Was this line necessary?
-                    controller.view.translatesAutoresizingMaskIntoConstraints = false
+                    addChildViewController(levelTableController) // Was this line necessary?
+                    levelTableController.view.translatesAutoresizingMaskIntoConstraints = false
 //                    containerView.addSubview(controller.view)
-                    barContainerView.addSubview(controller.view)
+                    barContainerView.addSubview(levelTableController.view)
                     //TODO: set Z order so table is in back
                     
                     NSLayoutConstraint.activateConstraints([
-                        controller.view.leadingAnchor.constraintEqualToAnchor(barContainerView.leadingAnchor),
-                        controller.view.trailingAnchor.constraintEqualToAnchor(barContainerView.trailingAnchor),
-                        controller.view.topAnchor.constraintEqualToAnchor(barContainerView.topAnchor),
-                        controller.view.bottomAnchor.constraintEqualToAnchor(barContainerView.bottomAnchor)
+                        levelTableController.view.leadingAnchor.constraintEqualToAnchor(barContainerView.leadingAnchor),
+                        levelTableController.view.trailingAnchor.constraintEqualToAnchor(barContainerView.trailingAnchor),
+                        levelTableController.view.topAnchor.constraintEqualToAnchor(barContainerView.topAnchor),
+                        levelTableController.view.bottomAnchor.constraintEqualToAnchor(barContainerView.bottomAnchor)
                         ])
                     
-                    controller.didMoveToParentViewController(self)
+                    levelTableController.didMoveToParentViewController(self)
                     
-                    // create mask to round the corners of the graph bar
-//                    let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
-                    let mask: UIView = UIView(frame: barFrame)
-                    let maskImageView = UIImageView(frame: barFrame)
-                    maskImageView.image = UIImage(named: "bar_graph_mask")
-                    mask.addSubview(maskImageView)
-                    
-                    containerView.maskView = mask
-                    
-                    let barTint = colorCode.tint
+//                    // create mask to round the corners of the graph bar
+////                    let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
+//                    let mask: UIView = UIView(frame: barFrame)
+//                    let maskImageView = UIImageView(frame: barFrame)
+//                    maskImageView.image = UIImage(named: "bar_graph_mask")
+//                    mask.addSubview(maskImageView)
+//                    
+//                    containerView.maskView = mask
+//                    
+//                    let barTint = colorCode.tint
                     
                     
                     //TODO:- move code that sets the outline and shadow to the LevelTableViewController class
                     
                     
-                    // create the outline view
-                    let outlineView = UIImageView(frame: barFrame)//UIImageView(image: outlineImage)
-                    let outlineShadowImageSingle = UIImage(named: "outline_shadow_single")
-                    let outlineShadowImageDouble = UIImage(named: "outline_shadow")
-                    let outlineShadowView: UIImageView = UIImageView()// = UIImageView(image: outlineShadowImage)
-                    // Add the outline image on top of the level bar table controller
-                    // first, the shadow image beneath to help the outline stand out
-                    // let outlineShadowImage = UIImage(named: "outline_shadow_single")
-                    
-                    outlineShadowView.alpha = 0.5
-                    outlineShadowView.frame = barFrame
+//                    // create the outline view
+//                    let outlineView = UIImageView(frame: barFrame)//UIImageView(image: outlineImage)
+//                    let outlineShadowImageSingle = UIImage(named: "outline_shadow_single")
+//                    let outlineShadowImageDouble = UIImage(named: "outline_shadow")
+//                    let outlineShadowView: UIImageView = UIImageView()// = UIImageView(image: outlineShadowImage)
+//                    // Add the outline image on top of the level bar table controller
+//                    // first, the shadow image beneath to help the outline stand out
+//                    // let outlineShadowImage = UIImage(named: "outline_shadow_single")
+//                    
+//                    outlineShadowView.alpha = 0.5
+//                    outlineShadowView.frame = barFrame
                     
                     // TODO:- specify cases more clearly. 0 words vs. height is small enough that the rounded top doesn't fit without squishing
                     
-                    switch i {
-                    case -1...5:
-                        
-                        if height < 22.0 || numWordsInLevel == 0 {
-                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                            outlineView.contentMode = .BottomLeft
-                        } else {
-                            outlineView.image = UIImage(named: "outline_single_flatbottom")
-                            outlineShadowView.image = outlineShadowImageSingle
-                        }
-                    case 6...10:
-                        
-                        if height < 22.0 || numWordsInLevel == 0 {
-                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                            outlineView.contentMode = .BottomLeft
-                        } else {
-                            outlineView.image = UIImage(named: "outline_double_flatbottom")
-                            outlineShadowView.image = outlineShadowImageDouble
-                        }
-                    case 11...15:
-                        
-                        if height < 22.0 || numWordsInLevel == 0 {
-                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                            outlineView.contentMode = .BottomLeft
-                        } else {
-                            outlineView.image = UIImage(named: "outline_double_flatbottom")
-                            outlineShadowView.image = outlineShadowImageDouble
-                        }
-                    case 16...20:
-                        
-                        if height < 22.0 || numWordsInLevel == 0 {
-                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                            outlineView.contentMode = .BottomLeft
-                        } else {
-                            outlineView.image = UIImage(named: "outline_double_flatbottom")
-                            outlineShadowView.image = outlineShadowImageDouble
-                        }
-                    default:
-                        
-                        if height < 22.0 || numWordsInLevel == 0 {
-                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                            outlineView.contentMode = .BottomLeft
-                        } else {
-                            outlineView.image = UIImage(named: "outline_single_flatbottom")
-                            outlineShadowView.image = outlineShadowImageDouble
-                        }
-                        
-                    }
-                    outlineView.frame = barFrame
-                    outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                    // set the outlineView tintcolor per level
-                    outlineView.tintColor = colorCode.tint
+//                    switch i {
+//                    case -1...5:
+//                        
+//                        if height < 22.0 || numWordsInLevel == 0 {
+//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+//                            outlineView.contentMode = .BottomLeft
+//                        } else {
+//                            outlineView.image = UIImage(named: "outline_single_flatbottom")
+//                            outlineShadowView.image = outlineShadowImageSingle
+//                        }
+//                    case 6...10:
+//                        
+//                        if height < 22.0 || numWordsInLevel == 0 {
+//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+//                            outlineView.contentMode = .BottomLeft
+//                        } else {
+//                            outlineView.image = UIImage(named: "outline_double_flatbottom")
+//                            outlineShadowView.image = outlineShadowImageDouble
+//                        }
+//                    case 11...15:
+//                        
+//                        if height < 22.0 || numWordsInLevel == 0 {
+//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+//                            outlineView.contentMode = .BottomLeft
+//                        } else {
+//                            outlineView.image = UIImage(named: "outline_double_flatbottom")
+//                            outlineShadowView.image = outlineShadowImageDouble
+//                        }
+//                    case 16...20:
+//                        
+//                        if height < 22.0 || numWordsInLevel == 0 {
+//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+//                            outlineView.contentMode = .BottomLeft
+//                        } else {
+//                            outlineView.image = UIImage(named: "outline_double_flatbottom")
+//                            outlineShadowView.image = outlineShadowImageDouble
+//                        }
+//                    default:
+//                        
+//                        if height < 22.0 || numWordsInLevel == 0 {
+//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+//                            outlineView.contentMode = .BottomLeft
+//                        } else {
+//                            outlineView.image = UIImage(named: "outline_single_flatbottom")
+//                            outlineShadowView.image = outlineShadowImageDouble
+//                        }
+//                        
+//                    }
+//                    outlineView.frame = barFrame
+//                    outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+//                    // set the outlineView tintcolor per level
+//                    outlineView.tintColor = colorCode.tint
                     
 
                     
@@ -550,7 +522,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                         let topLabel = UILabel()
                         topLabel.textColor = colorCode.tint
                         topLabel.font = UIFont.systemFontOfSize(9)
-                        topLabel.text = String(controller.wordsInLevel.count)
+                        topLabel.text = String(levelTableController.wordsInLevel.count)
                         view.addSubview(topLabel)
                         topLabel.translatesAutoresizingMaskIntoConstraints = false
                         topLabel.bottomAnchor.constraintEqualToAnchor(barContainerView.topAnchor, constant: -3.0).active = true
@@ -570,7 +542,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                         bottomLabel.widthAnchor.constraintEqualToConstant(40).active = true
                         
                     } else {
-                        bottomLabel.text = String(controller.level!)
+                        bottomLabel.text = String(levelTableController.level!)
                     }
                     view.addSubview(bottomLabel)
                     
@@ -594,24 +566,4 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         
         
     }
-    
-    
-        //let stackView = UIStackView(arrangedSubviews: containerArray)
-        //stackView.axis = .Horizontal
-        //stackView.distribution = .FillEqually
-        //stackView.alignment = .Fill
-        //stackView.spacing = 5
-        //stackView.translatesAutoresizingMaskIntoConstraints = false
-        //graphBgView.addSubview(stackView)
-        
-        //        for cv in containerArray {
-        //            graphStackView.addSubview(cv)
-        //            NSLayoutConstraint.activateConstraints([
-        //                //containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 40 * CGFloat(i) + 120.0),
-        //                cv.widthAnchor.constraintEqualToConstant(36.0),
-        //                
-        //                cv.topAnchor.constraintEqualToAnchor(graphStackView.topAnchor, constant: CGFloat(200)  ),
-        //                cv.bottomAnchor.constraintEqualToAnchor(graphStackView.bottomAnchor, constant: CGFloat(-10)),
-        //                ])
-        //        }
 }

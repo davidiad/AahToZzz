@@ -15,7 +15,6 @@ class GraphBarView: UIView {
     var level: Int?
     var graphHeight: CGFloat?
     var colorCode: ColorCode?
-    
     var isEmpty: Bool?
     
     override init(frame: CGRect) {
@@ -29,87 +28,90 @@ class GraphBarView: UIView {
         self.graphHeight = graphHeight
         self.isEmpty = isEmpty
         
-        colorCode = ColorCode(code: level - 1) // TODO: verify -1
+        colorCode = ColorCode(code: level - 1)
         translatesAutoresizingMaskIntoConstraints = false
+        
         // create mask to round the corners of the graph bar
         let mask: UIView = UIView(frame: frame)
         let maskImageView = UIImageView(frame: frame)
         maskImageView.image = UIImage(named: "bar_graph_mask")
         mask.addSubview(maskImageView)
-        
         maskView = mask
         
         // TODO:-set the background color per level
         let bg_image = UIImage(named:"graph_bg")
-        let insets = UIEdgeInsets(top: 0,left: 0,bottom: 0,right: 0)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         bg_image!.resizableImageWithCapInsets(insets, resizingMode: .Tile)
         backgroundColor = UIColor(patternImage: bg_image!)
         
         // create the outline view
         let outlineView = UIImageView(frame: frame)
+        let outlineShadowView: UIImageView = UIImageView()
+        // Triple the line by making the inside a different color
+        // Will only be added on levels > 10
+        let outlineTripleView: UIImageView = UIImageView()
         let outlineShadowImageSingle = UIImage(named: "outline_shadow_single")
         let outlineShadowImageDouble = UIImage(named: "outline_shadow")
-        let outlineShadowView: UIImageView = UIImageView()// = UIImageView(image: outlineShadowImage)
+        let outlineImageTriple = UIImage(named: "outline_triple")
+        
         // Add the outline image on top of the level bar table controller
         // first, the shadow image beneath to help the outline stand out
-        // let outlineShadowImage = UIImage(named: "outline_shadow_single")
+
         
         outlineShadowView.alpha = 0.5
         outlineShadowView.frame = frame
+        outlineTripleView.frame = frame
         
         // TODO:- specify cases more clearly. 0 words vs. height is small enough that the rounded top doesn't fit without squishing
-        // Need to pass in number of words?
         
-        switch level {
-        case -1...5:
+        // if graph height is short, don't want to stretch the images, instead clip them without stretching (as in .BottomLeft)
+        if graphHeight < 22.0 || isEmpty {
+            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+            outlineView.contentMode = .BottomLeft
+        } else {
             
-            if graphHeight < 22.0 || isEmpty {
-                outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                outlineView.contentMode = .BottomLeft
-            } else {
-                outlineView.image = UIImage(named: "outline_single_flatbottom")
-                outlineShadowView.image = outlineShadowImageSingle
-            }
-        case 6...10:
-            
-            if graphHeight < 22.0 || isEmpty {
-                outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                outlineView.contentMode = .BottomLeft
-            } else {
+            switch level {
+            case -1...5:
+                
+//                if graphHeight < 22.0 || isEmpty {
+//                    outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+//                    outlineView.contentMode = .BottomLeft
+//                } else {
+                    outlineView.image = UIImage(named: "outline_single_flatbottom")
+                    outlineShadowView.image = outlineShadowImageSingle
+             //   }
+            case 6...10:
+                
+//                if graphHeight < 22.0 || isEmpty {
+//                    outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+//                    outlineView.contentMode = .BottomLeft
+//                } else {
+                    outlineView.image = UIImage(named: "outline_double_flatbottom")
+                    outlineShadowView.image = outlineShadowImageDouble
+               // }
+            case 11...15:
+                
+//                if graphHeight < 22.0 || isEmpty {
+//                    outlineView.image = UIImage(named: "outline_graph_double_unstretched")
+//                    outlineView.contentMode = .BottomLeft
+//                } else {
+                    outlineView.image = UIImage(named: "outline_double_flatbottom")
+                    outlineShadowView.image = outlineShadowImageDouble
+                    // the tripled image is a contrasting color
+                    outlineTripleView.image = outlineImageTriple
+            //    }
+            default:
+                
                 outlineView.image = UIImage(named: "outline_double_flatbottom")
                 outlineShadowView.image = outlineShadowImageDouble
+                // the tripled image is the same color, making it one thick line
+                outlineTripleView.image = outlineImageTriple
+                
             }
-        case 11...15:
-            
-            if graphHeight < 22.0 || isEmpty {
-                outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                outlineView.contentMode = .BottomLeft
-            } else {
-                outlineView.image = UIImage(named: "outline_double_flatbottom")
-                outlineShadowView.image = outlineShadowImageDouble
-            }
-        case 16...20:
-            
-            if graphHeight < 22.0 || isEmpty {
-                outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                outlineView.contentMode = .BottomLeft
-            } else {
-                outlineView.image = UIImage(named: "outline_double_flatbottom")
-                outlineShadowView.image = outlineShadowImageDouble
-            }
-        default:
-            
-            if graphHeight < 22.0 || isEmpty {
-                outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-                outlineView.contentMode = .BottomLeft
-            } else {
-                outlineView.image = UIImage(named: "outline_single_flatbottom")
-                outlineShadowView.image = outlineShadowImageDouble
-            }
-            
         }
         outlineView.frame = frame
         outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        
         // set the outlineView tintcolor per level
         guard let tintColor = colorCode?.tint else {
             return
@@ -119,9 +121,22 @@ class GraphBarView: UIView {
         addSubview(outlineShadowView)
         addSubview(outlineView)
         
+        if let tripleImage = outlineTripleView.image {
+            outlineTripleView.image = tripleImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            addSubview(outlineTripleView)
+            var colorCodeTriple: ColorCode? = ColorCode(code: level + 2)
+            guard let tripleTintColor = colorCodeTriple?.tint else {
+                return
+            }
+            outlineTripleView.tintColor = tripleTintColor
+            
+        }
+        
+        
         // make sure the shadow and outline are above the LevelTableView
-        outlineShadowView.layer.zPosition = 1000
-        outlineView.layer.zPosition = 1001
+        outlineShadowView.layer.zPosition   = 1000
+        outlineView.layer.zPosition         = 1001
+        outlineTripleView.layer.zPosition   = 1002
     }
     
     

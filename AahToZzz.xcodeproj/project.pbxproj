@@ -45,6 +45,7 @@
 		633C5BE91E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BE81E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf */; };
 		633C5BEB1E7B6819008E5A43 /* graph_shadow_single@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BEA1E7B6819008E5A43 /* graph_shadow_single@1x.pdf */; };
 		633C5BED1E7C9D87008E5A43 /* GraphBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C5BEC1E7C9D87008E5A43 /* GraphBarView.swift */; };
+		633C5BEF1E7E4AB9008E5A43 /* graph_triple@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BEE1E7E4AB9008E5A43 /* graph_triple@1x.pdf */; };
 		633C7B071DB46A060055CD83 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C7B061DB46A060055CD83 /* ProgressViewController.swift */; };
 		633C7B0B1DB46A9C0055CD83 /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */; };
 		634E76FA1D41E52800F9FC52 /* small_tile_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 634E76F71D41E52800F9FC52 /* small_tile_red.png */; };
@@ -206,6 +207,7 @@
 		633C5BE81E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_single_flatbottom@1x.pdf"; sourceTree = "<group>"; };
 		633C5BEA1E7B6819008E5A43 /* graph_shadow_single@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_shadow_single@1x.pdf"; sourceTree = "<group>"; };
 		633C5BEC1E7C9D87008E5A43 /* GraphBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphBarView.swift; sourceTree = "<group>"; };
+		633C5BEE1E7E4AB9008E5A43 /* graph_triple@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_triple@1x.pdf"; sourceTree = "<group>"; };
 		633C7B061DB46A060055CD83 /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
 		634E76F71D41E52800F9FC52 /* small_tile_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_red.png; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 		6324A8DC1DFA907500261E64 /* graph */ = {
 			isa = PBXGroup;
 			children = (
+				633C5BEE1E7E4AB9008E5A43 /* graph_triple@1x.pdf */,
 				633C5BEA1E7B6819008E5A43 /* graph_shadow_single@1x.pdf */,
 				633C5BE81E7B5FD6008E5A43 /* graph_single_flatbottom@1x.pdf */,
 				6377ED5A1E6FBDBC0001C080 /* graph_shadow@1x.pdf */,
@@ -728,6 +731,7 @@
 				63C449511C98BDD70053BE77 /* merged_small_tiles_yellow.png in Resources */,
 				63B5C5321E6D18B20031576E /* outline_graph_double_flatbottom@1x.pdf in Resources */,
 				63FE47A61E77691000BC4D95 /* progress_info_bg.png in Resources */,
+				633C5BEF1E7E4AB9008E5A43 /* graph_triple@1x.pdf in Resources */,
 				63C449791C99E3EA0053BE77 /* icon_newlist_52px@3x.png in Resources */,
 				635549961CA0C6DC00DB5167 /* down_arrow_h@3x.png in Resources */,
 				63C449561C98BDD70053BE77 /* merged_small_tiles@3x.png in Resources */,

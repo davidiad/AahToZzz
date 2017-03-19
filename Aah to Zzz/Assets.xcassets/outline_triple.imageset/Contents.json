@@ -1,8 +1,28 @@
 {
   "images" : [
     {
+      "alignment-insets" : {
+        "top" : 7,
+        "left" : 7,
+        "bottom" : 7,
+        "right" : 7
+      },
       "idiom" : "universal",
-      "filename" : "outline_triple.pdf"
+      "filename" : "graph_triple@1x.pdf",
+      "resizing" : {
+        "mode" : "9-part",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1,
+          "height" : 95
+        },
+        "cap-insets" : {
+          "bottom" : 3,
+          "top" : 6,
+          "right" : 7,
+          "left" : 7
+        }
+      }
     }
   ],
   "info" : {
