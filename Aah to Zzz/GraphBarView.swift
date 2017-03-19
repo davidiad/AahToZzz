@@ -16,15 +16,18 @@ class GraphBarView: UIView {
     var graphHeight: CGFloat?
     var colorCode: ColorCode?
     
+    var isEmpty: Bool?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
     }
     
-    init(frame: CGRect, level: Int, graphHeight: CGFloat) {
+    init(frame: CGRect, level: Int, graphHeight: CGFloat, isEmpty: Bool) {
         super.init(frame: frame)
         
         self.graphHeight = graphHeight
+        self.isEmpty = isEmpty
         
         colorCode = ColorCode(code: level - 1) // TODO: verify -1
         translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +63,7 @@ class GraphBarView: UIView {
         switch level {
         case -1...5:
             
-            if graphHeight < 22.0 {// || numWordsInLevel == 0 {
+            if graphHeight < 22.0 || isEmpty {
                 outlineView.image = UIImage(named: "outline_graph_double_unstretched")
                 outlineView.contentMode = .BottomLeft
             } else {
@@ -69,7 +72,7 @@ class GraphBarView: UIView {
             }
         case 6...10:
             
-            if graphHeight < 22.0 {//|| numWordsInLevel == 0 {
+            if graphHeight < 22.0 || isEmpty {
                 outlineView.image = UIImage(named: "outline_graph_double_unstretched")
                 outlineView.contentMode = .BottomLeft
             } else {
@@ -78,7 +81,7 @@ class GraphBarView: UIView {
             }
         case 11...15:
             
-            if graphHeight < 22.0 {//|| numWordsInLevel == 0 {
+            if graphHeight < 22.0 || isEmpty {
                 outlineView.image = UIImage(named: "outline_graph_double_unstretched")
                 outlineView.contentMode = .BottomLeft
             } else {
@@ -87,7 +90,7 @@ class GraphBarView: UIView {
             }
         case 16...20:
             
-            if graphHeight < 22.0 {//|| numWordsInLevel == 0 {
+            if graphHeight < 22.0 || isEmpty {
                 outlineView.image = UIImage(named: "outline_graph_double_unstretched")
                 outlineView.contentMode = .BottomLeft
             } else {
@@ -96,7 +99,7 @@ class GraphBarView: UIView {
             }
         default:
             
-            if graphHeight < 22.0 {//|| numWordsInLevel == 0 {
+            if graphHeight < 22.0 || isEmpty {
                 outlineView.image = UIImage(named: "outline_graph_double_unstretched")
                 outlineView.contentMode = .BottomLeft
             } else {
@@ -113,6 +116,12 @@ class GraphBarView: UIView {
         }
         outlineView.tintColor = tintColor  //colorCode.tint // Why not finding the .tint property in ColorCode?
 
+        addSubview(outlineShadowView)
+        addSubview(outlineView)
+        
+        // make sure the shadow and outline are above the LevelTableView
+        outlineShadowView.layer.zPosition = 1000
+        outlineView.layer.zPosition = 1001
     }
     
     

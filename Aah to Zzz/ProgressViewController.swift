@@ -372,7 +372,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             if unplayedWordsExist || i >= 0 { // Don't allow the case where i = -1, but there are no unplayed words
                 // (-1 is being used for the unplayed words array, which sometimes exists and sometimes not)
                 let containerView = UIView()
-//                let barContainer = GraphBarView()
+                //let barContainer = GraphBarView()
                 var numWordsInLevel: Int = 0
                 var colorCode = ColorCode(code: i - 1)
                 
@@ -397,7 +397,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 
                 if numWordsInLevel > 0 || levelContainingWordsHasBeenFound == true { // don't add the bar if it has no words in it -- unless it's to the right of a populated level
                     
-                    graphStackView.addArrangedSubview(containerView)
+                    //graphStackView.addArrangedSubview(containerView)
+                    
                     
                     levelContainingWordsHasBeenFound = true
                     // to be modified to only remove bars with 0 on the left, not in the middle or on the right
@@ -406,9 +407,12 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     // graphStackView.leadingAnchor
                     // Adding 22 to height to account for bottom starting from -20, and having a thin bar of 2 even where there are 0 words
                     let height = graphHeight * CGFloat((Float(numWordsInLevel) / findMaxLevelCount())) + 22
-                    
+                    let isEmpty = numWordsInLevel == 0
                     let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
-                    let barContainer = GraphBarView(frame: barFrame, level: i, graphHeight: height)
+                    let barContainerView = GraphBarView(frame: barFrame, level: i, graphHeight: height, isEmpty: isEmpty)
+                    
+                    graphStackView.addArrangedSubview(barContainerView)
+                    
                     // if there are no words in the level, adjust height so that just a thin colored bar appears at the bottom
                     // height needs to be at least 22 so that the top is never lower than the bottom
                     //                if height < 22 {
@@ -418,10 +422,10 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     // move bottom constraint down by 20 to be even with bottom(because margin?)
                     NSLayoutConstraint.activateConstraints([
                         
-                        containerView.widthAnchor.constraintEqualToConstant(BAR_WIDTH),
+                        barContainerView.widthAnchor.constraintEqualToConstant(BAR_WIDTH),
                         
-                        containerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
-                        containerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
+                        barContainerView.topAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-1 * height)),
+                        barContainerView.bottomAnchor.constraintEqualToAnchor(graphStackView.superview!.bottomAnchor, constant: CGFloat(-20)),
                         ])
 
                     // add child view controller view to container
@@ -441,13 +445,15 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     
                     addChildViewController(controller) // Was this line necessary?
                     controller.view.translatesAutoresizingMaskIntoConstraints = false
-                    containerView.addSubview(controller.view)
+//                    containerView.addSubview(controller.view)
+                    barContainerView.addSubview(controller.view)
+                    //TODO: set Z order so table is in back
                     
                     NSLayoutConstraint.activateConstraints([
-                        controller.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor),
-                        controller.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor),
-                        controller.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor),
-                        controller.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor)
+                        controller.view.leadingAnchor.constraintEqualToAnchor(barContainerView.leadingAnchor),
+                        controller.view.trailingAnchor.constraintEqualToAnchor(barContainerView.trailingAnchor),
+                        controller.view.topAnchor.constraintEqualToAnchor(barContainerView.topAnchor),
+                        controller.view.bottomAnchor.constraintEqualToAnchor(barContainerView.bottomAnchor)
                         ])
                     
                     controller.didMoveToParentViewController(self)
@@ -536,8 +542,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     
 
                     
-                    containerView.addSubview(outlineShadowView)
-                    containerView.addSubview(outlineView)
+//                    containerView.addSubview(outlineShadowView)
+//                    containerView.addSubview(outlineView)
                     
                     // Create a text label for the number of words that floats above the container
                     if numWordsInLevel > 0 { // don't add the label for empty levels
@@ -547,8 +553,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                         topLabel.text = String(controller.wordsInLevel.count)
                         view.addSubview(topLabel)
                         topLabel.translatesAutoresizingMaskIntoConstraints = false
-                        topLabel.bottomAnchor.constraintEqualToAnchor(containerView.topAnchor, constant: -3.0).active = true
-                        topLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
+                        topLabel.bottomAnchor.constraintEqualToAnchor(barContainerView.topAnchor, constant: -3.0).active = true
+                        topLabel.centerXAnchor.constraintEqualToAnchor(barContainerView.centerXAnchor).active = true
                     }
                     
                     // Create a text label for the word level that floats below the container
@@ -569,8 +575,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     view.addSubview(bottomLabel)
                     
                     bottomLabel.translatesAutoresizingMaskIntoConstraints = false
-                    bottomLabel.topAnchor.constraintEqualToAnchor(containerView.bottomAnchor, constant: 9.0).active = true
-                    bottomLabel.centerXAnchor.constraintEqualToAnchor(containerView.centerXAnchor).active = true
+                    bottomLabel.topAnchor.constraintEqualToAnchor(barContainerView.bottomAnchor, constant: 9.0).active = true
+                    bottomLabel.centerXAnchor.constraintEqualToAnchor(barContainerView.centerXAnchor).active = true
                 }
             }
         }
