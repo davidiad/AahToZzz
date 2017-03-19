@@ -2,19 +2,19 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "graph_triple_thick@1x.pdf",
+      "filename" : "graph_shadow_triple@1x.pdf",
       "resizing" : {
         "mode" : "9-part",
         "center" : {
           "mode" : "tile",
           "width" : 1,
-          "height" : 90
+          "height" : 1
         },
         "cap-insets" : {
-          "bottom" : 7,
+          "bottom" : 4,
           "top" : 7,
-          "right" : 7,
-          "left" : 7
+          "right" : 8,
+          "left" : 8
         }
       }
     }

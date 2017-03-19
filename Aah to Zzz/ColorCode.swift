@@ -34,6 +34,8 @@ struct ColorCode {
         colorCode = code
     }
     
+    //TODO: add a var called saturatedTint(or similar), that would get saturated versions of these colors
+    
     lazy var tile_bg: UIImage? = {
         var image = UIImage()
         
@@ -94,6 +96,33 @@ struct ColorCode {
                 return Colors.orange
             case 5:
                 return Colors.purple
+            default:
+                return UIColor.yellowColor()
+            }
+        }
+        return UIColor.yellowColor()
+    }()
+    
+    // set a saturated color, to be used as an accent for tripled lines
+    lazy var saturatedColor: UIColor? = {
+        if let colorCode = self.colorCode {
+            
+            let tintLevel = colorCode % 5
+            
+            switch tintLevel {
+
+            case 0:
+                return Colors.sat_yellow // already saturated, so desaturate
+            case 1:
+                return Colors.sat_magenta
+            case 2:
+                return Colors.sat_blue
+            case 3:
+                return Colors.sat_green
+            case 4:
+                return Colors.sat_orange
+            case 5:
+                return Colors.sat_purple
             default:
                 return UIColor.yellowColor()
             }
