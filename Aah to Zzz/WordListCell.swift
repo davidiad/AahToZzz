@@ -24,6 +24,7 @@ class WordListCell: UITableViewCell {
     @IBOutlet weak var thirdLetterBg: UIImageView!
     @IBOutlet weak var outlineView: UIImageView!
     @IBOutlet weak var outlineShadowView: UIImageView!
+    @IBOutlet weak var outlineTripleStripe: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,11 +64,26 @@ class WordListCell: UITableViewCell {
 //                    outlineShadowView.alpha = 0.45
                 }
             }
+            
             guard let shadow = colorCode?.shadow else {
                 return
             }
             outlineShadowView.image = shadow
             outlineShadowView.alpha = 0.45
+            
+            // set the color of the inner stripe, but only if there is a tripled line
+            if let tripleStripe = colorCode?.tripleStripe {
+                
+                outlineTripleStripe.image = tripleStripe
+                if outlineTripleStripe.image != nil {
+                    outlineTripleStripe.image = outlineTripleStripe.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                    if colorCode?.colorCode == 10 { // yellow is already fully saturated, so the inner stripe is desaturated and darker
+                        outlineTripleStripe.tintColor = Colors.desat_yellow
+                    } else {
+                        outlineTripleStripe.tintColor = colorCode?.saturatedColor
+                    }
+                }
+            }
         }
         
     }
@@ -84,6 +100,7 @@ class WordListCell: UITableViewCell {
         thirdLetter.text = nil
         outlineView.image = nil
         outlineShadowView.image = nil
+        outlineTripleStripe.image = nil
         
         word.text = ""
         

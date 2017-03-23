@@ -29,6 +29,8 @@
 		630681C41CADCC6B0010489E /* outline_shadow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630681C31CADCC6B0010489E /* outline_shadow.pdf */; };
 		630681C61CADE57F0010489E /* outline_triple.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630681C51CADE57F0010489E /* outline_triple.pdf */; };
 		630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630A9D1A1C9E2146008DF8DD /* outline_image.pdf */; };
+		63134C531E83230600D507C9 /* outline_image_triple@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63134C521E83230600D507C9 /* outline_image_triple@1x.pdf */; };
+		63134C571E8390B800D507C9 /* outline_image_double_triple@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63134C561E8390B800D507C9 /* outline_image_double_triple@1x.pdf */; };
 		6317546A1E39CF37008B359D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631754691E39CF37008B359D /* Game.swift */; };
 		6317546C1E39E059008B359D /* GameTypeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317546B1E39E059008B359D /* GameTypeInfo.swift */; };
 		6324A8DE1DFA908600261E64 /* outline_graph_double.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6324A8DD1DFA908600261E64 /* outline_graph_double.pdf */; };
@@ -69,6 +71,7 @@
 		6355499B1CA0E87D00DB5167 /* status_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549981CA0E87D00DB5167 /* status_bg@3x.png */; };
 		6355499C1CA0E87D00DB5167 /* status_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549991CA0E87D00DB5167 /* status_bg@2x.png */; };
 		636240851E308EEE007640DC /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636240841E308EEE007640DC /* Queue.swift */; };
+		637760481E7F9CE400BD59F6 /* ToDoList.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 637760471E7F9CE400BD59F6 /* ToDoList.rtf */; };
 		6377ED571E6F4C800001C080 /* graph_double_flatbottom@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */; };
 		6377ED591E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED581E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf */; };
 		6377ED5B1E6FBDBC0001C080 /* graph_shadow@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED5A1E6FBDBC0001C080 /* graph_shadow@1x.pdf */; };
@@ -191,6 +194,8 @@
 		630681C31CADCC6B0010489E /* outline_shadow.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_shadow.pdf; sourceTree = "<group>"; };
 		630681C51CADE57F0010489E /* outline_triple.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_triple.pdf; sourceTree = "<group>"; };
 		630A9D1A1C9E2146008DF8DD /* outline_image.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image.pdf; sourceTree = "<group>"; };
+		63134C521E83230600D507C9 /* outline_image_triple@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_image_triple@1x.pdf"; sourceTree = "<group>"; };
+		63134C561E8390B800D507C9 /* outline_image_double_triple@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_image_double_triple@1x.pdf"; sourceTree = "<group>"; };
 		631754691E39CF37008B359D /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		6317546B1E39E059008B359D /* GameTypeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTypeInfo.swift; sourceTree = "<group>"; };
 		6324A8DD1DFA908600261E64 /* outline_graph_double.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_graph_double.pdf; sourceTree = "<group>"; };
@@ -233,6 +238,7 @@
 		635549981CA0E87D00DB5167 /* status_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@3x.png"; sourceTree = "<group>"; };
 		635549991CA0E87D00DB5167 /* status_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@2x.png"; sourceTree = "<group>"; };
 		636240841E308EEE007640DC /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		637760471E7F9CE400BD59F6 /* ToDoList.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = ToDoList.rtf; sourceTree = "<group>"; };
 		6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_double_flatbottom@1x.pdf"; sourceTree = "<group>"; };
 		6377ED581E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_doubled_32px@1x.pdf"; sourceTree = "<group>"; };
 		6377ED5A1E6FBDBC0001C080 /* graph_shadow@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_shadow@1x.pdf"; sourceTree = "<group>"; };
@@ -516,6 +522,8 @@
 		63C449571C98BDE20053BE77 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				63134C561E8390B800D507C9 /* outline_image_double_triple@1x.pdf */,
+				63134C521E83230600D507C9 /* outline_image_triple@1x.pdf */,
 				63FE479E1E77630000BC4D95 /* info */,
 				6324A8DC1DFA907500261E64 /* graph */,
 				6300C65A1CA61F4B00E3B4D5 /* small_tiles_bg_yellow.png */,
@@ -598,6 +606,7 @@
 				63E4A2C41DC1AF98002BC4CE /* LevelTableViewController.swift */,
 				63E4A2C61DC24CBA002BC4CE /* LevelTableCell.swift */,
 				633C5BEC1E7C9D87008E5A43 /* GraphBarView.swift */,
+				637760471E7F9CE400BD59F6 /* ToDoList.rtf */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -749,6 +758,7 @@
 				6300C64D1CA5B11B00E3B4D5 /* small_tile_magenta@3x.png in Resources */,
 				6355499C1CA0E87D00DB5167 /* status_bg@2x.png in Resources */,
 				6300C6681CA6224000E3B4D5 /* small_tile_orange@3x.png in Resources */,
+				63134C531E83230600D507C9 /* outline_image_triple@1x.pdf in Resources */,
 				63C449731C99E3EA0053BE77 /* icon_settings@2x.png in Resources */,
 				6355499A1CA0E87D00DB5167 /* status_bg.png in Resources */,
 				635549891CA0ADA900DB5167 /* upper_button_positions_gray@2x.png in Resources */,
@@ -761,6 +771,7 @@
 				63C449521C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png in Resources */,
 				63EA98E21D52B98700537F2A /* small_tile_gray@2x.png in Resources */,
 				637AF0761C83EF1F005A36BA /* wordnik-logo@3x.png in Resources */,
+				63134C571E8390B800D507C9 /* outline_image_double_triple@1x.pdf in Resources */,
 				63B5C53C1E6E57D80031576E /* outline_graph_double_flatbottom4@1x.pdf in Resources */,
 				63D724E11E1EE7BC00EB3C89 /* graph_bg_image.png in Resources */,
 				6377ED591E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf in Resources */,
@@ -779,6 +790,7 @@
 				635549951CA0C6DC00DB5167 /* down_arrow_h@2x.png in Resources */,
 				6324A8E21DFB4AEA00261E64 /* outline_graph_double_halved@3x.png in Resources */,
 				63D724E21E1EE7BC00EB3C89 /* graph_bg_image@2x.png in Resources */,
+				637760481E7F9CE400BD59F6 /* ToDoList.rtf in Resources */,
 				6324A8E61DFB501000261E64 /* outline_graph_double@1x.pdf in Resources */,
 				635549841CA0836400DB5167 /* tile_bg@3x.png in Resources */,
 				635549921CA0C6DC00DB5167 /* down_arrow@2x.png in Resources */,

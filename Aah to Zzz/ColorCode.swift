@@ -10,20 +10,8 @@ import Foundation
 import UIKit
 
 struct ColorCode {
-//    struct Colors {
-//        static let magenta = UIColor(hue: 300/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-//        static let bluek = UIColor(hue: 200/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-//        static let green = UIColor(hue: 90/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-//        static let orange = UIColor(hue: 30/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-//        static let purple = UIColor(hue: 275/360, saturation: 0.4, brightness: 1.0, alpha: 1.0)
-//        static let whitish_red = UIColor(hue: 2/360, saturation: 0.35, brightness: 1.0, alpha: 1.0)
-//    }
-    
     
     var colorCode: Int? // typically the colorCode is the level, but sometimes there's an override (red/-1 when filling in the blanks, gray/-2 when inactive)
-    //var tile_bg: UIImage?
-    //var outline: UIImage?
-    //var tint: UIColor
     
     private init() {
         //tint = UIColor.yellowColor()
@@ -33,8 +21,6 @@ struct ColorCode {
     init(code: Int) {
         colorCode = code
     }
-    
-    //TODO: add a var called saturatedTint(or similar), that would get saturated versions of these colors
     
     lazy var tile_bg: UIImage? = {
         var image = UIImage()
@@ -72,10 +58,6 @@ struct ColorCode {
     // set the tint color for the outlines, etc
     lazy var tint: UIColor? = {
         if let colorCode = self.colorCode {
-            
-//            if colorCode == -1 {
-//                return Colors.whitish_red
-//            }
             
             let tintLevel = colorCode % 5
             
@@ -137,15 +119,32 @@ struct ColorCode {
         if self.colorCode != nil {
             switch self.colorCode! {
             case 0...4:
-                image = UIImage(named: "outline_thick")!
+                image = UIImage(named: "word_outline_single")! // regular single thickness
                 //return nil
             case 5...9:
-                image = UIImage(named: "outline_double_unstretched")!
+                image = UIImage(named: "word_outline_double")!
             case 10...14:
+                image = UIImage(named: "word_outline_double_triple")! // doubled outline, with inner line slightly thicker to compensate for the inner stripe covering part of it
+            case 15...19:
                 image = UIImage(named: "outline_thicker")!
-            //TODO: Implement tripled lines (tripled lines too close)
             default:
-                image = UIImage(named: "outline_thick")!
+                image = UIImage(named: "outline_thicker")!
+            }
+        }
+        return image
+    }()
+    
+    // Only for the tripled outline, set the image for the inner stripe
+    lazy var tripleStripe: UIImage? = {
+        var image = UIImage()
+        
+        if self.colorCode != nil {
+            switch self.colorCode! {
+            case 10...14:
+                image = UIImage(named: "word_outline_triple")!
+                
+            default:
+                return nil
             }
         }
         return image
@@ -164,9 +163,12 @@ struct ColorCode {
                 image = UIImage(named: "outline_shadow_unstretched")!
             case 10...14:
                 image = UIImage(named: "outline_shadow_unstretched")!
-            //TODO: Implement tripled lines (tripled lines too close) - Use Double line with colored center
+            case 15...19:
+                image = UIImage(named: "outline_shadow_unstretched")!
             default:
-                image = UIImage(named: "outline_yellow")! // thin outline, can be tinted other colors
+                //image = UIImage(named: "outline_yellow")! // thin outline, can be tinted other colors
+                image = UIImage(named: "outline_shadow_unstretched")!
+
             }
         }
         return image

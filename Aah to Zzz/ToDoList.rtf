@@ -1,0 +1,112 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf460
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red29\green133\blue25;}
+\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\deftab866
+\pard\tx866\pardeftab866\pardirnatural\partightenfactor0
+
+\f0\fs36 \cf0 \CocoaLigature0     \
+    \cf2 //TODO:- LIST\
+\
+\cf0     \cf2 // Settle on conventions for outlines per level, e.g; single line, then double line, then double line with inner color (making a tripled line), then thicker line. Make the graph level bars match the word cells in this regard. Make new graphics as needed. The inner colored tripling line should probably be a separate image overlaid, so that its color can be adjusted in code to be a color code level a fix amount from the main color\
+\cf0     \cf2 // Consider fixing the options so that the gradient can still be adjusted by user, but maybe not rotated vertical slider bars. Is there a custom slider bar with 4 sliders that can be adopted? \
+\cf0     \cf2 // Consider removing the gradient adjust options altogether, and wait til 1.1 to add back in.\
+\cf0     \cf2 // size classes for iPad\
+\cf0     \cf2 // colors really should be moved up by 1 -- yellow is 1 time found(not 0), etc\
+\cf0     \cf2 // In order to match the level bars they'll be added to\
+\cf0     \cf2 // Because 0 words would never show up in the word list.\
+\cf0     \cf2 // So the 0 graph bar should be some other color. Gray? or unplayed gray? and\
+\cf0     \cf2 // 0 could be red(ish)? Or unplayed and 0 both gray???\
+\cf0     \cf2 // except that::: 0 words *do* show up in the word list, they just haven't been counted yet. So it's a conundrum. Show the what the color *should* be, or what it actually is, since words shown in list have not been counted yet.\
+\cf0     \cf2 // Conclusion: move the color in the bars up by 1: that way they match the color shown in the word list. Even though it's not technically correct, and it means that the colorcode of the bars will be 1 off from the colorcode of the words. -Done -- but still not right -- or maybe it is. When we take words out of the lowest level, we don't see that color, because we've just found them again, so they're added to the next level. In other words, we might take 2 off of yellow, but when we find them, they are moving up one from yellow to magenta. So we see magenta, not their old color of yellow.\
+\
+\
+\cf0     \cf2 // incorporate Alamofire possibly - installed, but not being used yet\
+\cf0     \cf2 // add properties to GameData or Game object, that allow for different types of games. For instance, what letters you're searching for (e.g., X, J, Q, and Z words). How many letters (e.g. 2 letters, 3 letters, 7 letters, any size, 8 letter words, 9 letter words), what orientation (e.g., 2 or 3 letters are in portrait, 7, 8, 9 letters are in landscape). Number of positions (for 7 letter or more, might want more than 10 positions), etc - Done\
+\cf0     \cf2 // Add ability to manage games in the options\
+\cf0     \cf2 // adding a little switch button in top right corner(possibly) to switch between  or 3 letters, or 7 letters QXJZ, etc JZQX JXQZ JQXZ\
+\cf0     \cf2 // use Extensions to organize code better\
+\cf0     \cf2 // Deal with app lifecycle - what if app goes to background, etc\
+\cf0     \cf2 // Fix bug that prevents tiles from enlarging and raising when dragged (used to work) -Done\
+\cf0     \cf2 // When tiles are jumbled, enlarge them to varying degrees to add the illusion that some of them are closer\
+\cf0     \cf2 // Enlarge and raise tiles on long press\
+\cf0     \cf2 // Finish adding OSPD5 words, get paper copy to check for sure which are in\
+\cf0     \cf2 // Need to check a few questionable words\
+\cf0     \cf2 // Possible, add option to pick dictionary.\
+\cf0     \cf2 // If multiple dictionaries, make a new game for each dictionary.\
+\cf0     \cf2 // Allow user to have multiple games, and to name their games.\
+\cf0     \cf2 // Add more dictionaries, including one that removes offensive words. Use as default?\
+\cf0     \cf2 // Show definitions only when word has been found\
+\
+\cf0     \cf2 // add unit tests - Started\
+\cf0     \cf2 // Help/tutorial\
+\cf0     \cf2 // ghosted arrows to show you can scroll on right side. Maybe\
+\cf0     \cf2 // they show up when touching the side area?\
+\cf0     \cf2 // Figure out where to add 2 letter word games, and other games\
+\cf0     \cf2 // Add Game center and leaderboards. \
+\cf0     \cf2 // Challenges: Play all words once (missed or not). Find all words once. etc. Find all permutations of E, R, A. of T, E, A. Find all the Q words. All the Z words. All the X words.\
+\
+\cf0     \cf2 // if possible, vary the snap back angle/direction\
+\cf0     \cf2 // clean up UIDynamics code (some is not being used)\
+\
+\cf0     \cf2 // Make format of progress view finished and nicer (what to do with empty columns) - Better - Empties handled\
+\
+\
+\
+\cf0     \cf2 // Word definitions: find a better picture source.\
+\cf0     \cf2 // Cache visual dictionary (download in background after word list is generated)\
+\cf0     \cf2 // Consider eliminating the visual dictionary until v. 1.1\
+\cf0     \cf2 // In definition pop-up, make sure it only takes one tap, or preferably, a roll-over. And make the arrow that points to the word be the same color as the rest of the pop-up. (currently white)\
+\cf0     \cf2 // Upgrade to Xcode 8 and test with iOS10\
+\
+\cf0     \cf2 // Possible: refactor to MVVM\
+\cf0     \cf2 // Need app icons\
+\cf0     \cf2 // Change name to "AA to ZZZ"\
+\cf0     \cf2 // Update stats icon to be vertical instead of horizontal\
+\cf0     \cf2 // replace options with help/options(?)\
+\cf0     \cf2 // fix Error warning\
+\cf0     \cf2 // Add better error handling\
+\cf0     \cf2 // Fix infoViewController warning\
+\cf0     \cf2 // words in found word list -- determine # of outline rings -- also for bar graphs\
+\cf0     \cf2 // when tapping 2 letters, sometimes the 2nd one, instead of going to the upper positions, goes to an open lower position. So need to prioritize upper position\
+\
+\cf0     \cf2 // Using Model Versioning and Migration for core data\
+\cf0     \cf2 // after swapTiles, make sure the context is saved before using findVacancy again. Completion handler? Delay? Notification? Add a delay every time, but later replace with a test for the flag first, so the delay doesn't run every single time\
+\cf0     \cf2 // add sound fx (or wait til next version)?\
+\cf0     \cf2 // Note: in Progress view, the numbers in ProgressInfoVC (above) don't include Words that have been created, but not yet tallied. So the number of words played is a turn behind the level bar graphs (below). Make consistent?\
+\
+\cf0     \cf2 // Format level in Progress info to show fractions instead of decimals\
+\
+\cf0     \cf2 // Add a gradient line separating Progress Info from graph. Try adding a horizontal gradient below the title 'Progress', and another somewhere at the bottom\
+\cf0     \cf2 // Think of a way to add motivation to keep playing with such a large jump between levels\
+\
+// FEATURES FOR V. 1.1\
+\cf0     \cf2 // If possible, add a mini progress viewer that appears on the main page (v 1.1?)\
+\cf0     \cf2 // Ad integration?\
+\cf0     \cf2 // Swype style letter selection (in v 1.1)\
+\
+//FINISHED\
+\cf0     \cf2 // swap position of help/options icon with Fill in the Blanks icon - Done\
+\cf0     \cf2 // Check -- are word levels updating correctly?\
+\cf0     \cf2 // Tiles that snap back after jumble are off by a small amount - Fixed!\
+\cf0     \cf2 // Some words are grayed out, but are still in the list and findable - Fixed\
+\cf0     \cf2 // Also, when fill in the blanks is used, check that those words are counted as missed words - Done\
+\cf0     \cf2 // Once a level has been reached, prevent words from going below that level - Done\
+\cf0     \cf2 // Add a speed thru feature for testing - Done\
+\cf0     \cf2 // Add a 100x speed thru lists feature for testing - Done\
+\cf0     \cf2 // Tapping on tiles, sometimes they get moved in the wrong sequence -- frustrating -- Fixed!\
+\cf0     \cf2 // (Need to make sure the first one is moved before the 2nd, etc)\
+\cf0     \cf2 // Tiles sometimes get stuck at an angle -Fixed i think, needs verification\
+\cf0     \cf2 // fix autolayout bug with Progress View -Fixed\
+\cf0     \cf2 // Separate out parts of the main storyboard to their own storyboard, to mitigate the super slow down of working with the main.storyboard file - Done\
+\cf0     \cf2 // Add more or less level columns as # of levels being used goes up, & account for different device sizes-Done\
+	// In Progress view, get rid of the delay in the bars being displayed. - Fixed\
+\cf0     \cf2 // Calculate # of level bars for the device size - Done\
+\cf0     \cf2 // Add Level (figured to tenths place, to Progress info - Done\
+\cf0     \cf2 // and make percentage work - Done\
+\cf0     \cf2 // Move number of Words to left side of graph and possibly turn sideways - Done\
+\cf0     \cf2 // Don't show lowest empty level bars if the number of bars that fit is less than the number of bars.-Done\
+\cf0     \cf2 // Make height of level bars adjust for device size - Done\
+\cf0     \cf2 // Center Number of Words label vertically, per device size. - Done\
+\cf0     \cf2 // After Fill in Blanks, show "Start New List?" with appropriate message. -Done\
+\cf0     \cf2 // After Fill in Blanks, need to not allow words to be found again. -Done}

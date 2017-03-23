@@ -116,6 +116,13 @@
                                                                 <constraint firstAttribute="width" constant="78" id="eBK-zR-bPc"/>
                                                             </constraints>
                                                         </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aFZ-ZV-JSF">
+                                                            <rect key="frame" x="6" y="5" width="78" height="26"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="78" id="tky-mh-rLT"/>
+                                                                <constraint firstAttribute="height" constant="26" id="xYm-8K-0zN"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="OH0-Cj-VZ9" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="0UL-wJ-tQO"/>
@@ -137,9 +144,11 @@
                                                         <constraint firstItem="UXE-4Z-cC2" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="lgn-8q-WsL"/>
                                                         <constraint firstAttribute="bottomMargin" secondItem="eyE-qt-1f8" secondAttribute="bottom" constant="3.5" id="nzt-P0-mfG"/>
                                                         <constraint firstItem="UIS-pU-w9j" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="oev-bC-xfA"/>
+                                                        <constraint firstItem="aFZ-ZV-JSF" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="qrj-jq-RSV"/>
                                                         <constraint firstItem="Ych-MU-hz3" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="rj3-1s-Uex"/>
                                                         <constraint firstItem="LHj-NF-Bkx" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" id="tFb-id-7Mj"/>
                                                         <constraint firstItem="WyK-dH-Yfh" firstAttribute="centerY" secondItem="nST-1A-dcE" secondAttribute="centerY" id="xlw-4g-FQE"/>
+                                                        <constraint firstItem="aFZ-ZV-JSF" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" id="yEs-sM-G1I"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -149,6 +158,7 @@
                                                     <outlet property="firstLetter" destination="rVv-VQ-rgZ" id="THh-9c-PHO"/>
                                                     <outlet property="firstLetterBg" destination="WyK-dH-Yfh" id="Bay-2e-ZyI"/>
                                                     <outlet property="outlineShadowView" destination="oWa-Iv-e7i" id="gdX-8t-KGa"/>
+                                                    <outlet property="outlineTripleStripe" destination="aFZ-ZV-JSF" id="cv1-9s-nu6"/>
                                                     <outlet property="outlineView" destination="UXE-4Z-cC2" id="yHO-Ty-xwd"/>
                                                     <outlet property="secondLetter" destination="UIS-pU-w9j" id="XVH-6b-ON2"/>
                                                     <outlet property="secondLetterBg" destination="LHj-NF-Bkx" id="AJ9-76-ksk"/>
@@ -264,17 +274,17 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-Nl-wN2">
                                 <rect key="frame" x="107" y="690" width="305" height="44"/>
                                 <items>
-                                    <barButtonItem image="icon_fill" id="X0V-lR-doz">
-                                        <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="fillWordList:" destination="BYZ-38-t0r" id="BdU-fq-ljP"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="8e4-CM-w4J"/>
                                     <barButtonItem image="icon_settings" id="oIr-N2-xN1">
                                         <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <segue destination="ZPi-RY-WaU" kind="presentation" identifier="segueToOptions" id="gNQ-se-soE"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="8e4-CM-w4J"/>
+                                    <barButtonItem image="icon_fill" id="X0V-lR-doz">
+                                        <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="fillWordList:" destination="BYZ-38-t0r" id="BdU-fq-ljP"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="JH2-Sa-22A"/>
