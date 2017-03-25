@@ -62,17 +62,16 @@
 \cf0     \cf2 // Possible: refactor to MVVM\
 \cf0     \cf2 // Need app icons\
 \cf0     \cf2 // Change name to "AA to ZZZ"\
-\cf0     \cf2 // Update stats icon to be vertical instead of horizontal\
+\
 \cf0     \cf2 // replace options with help/options(?)\
 \cf0     \cf2 // fix Error warning\
 \cf0     \cf2 // Add better error handling\
 \cf0     \cf2 // Fix infoViewController warning\
-\cf0     \cf2 // words in found word list -- determine # of outline rings -- also for bar graphs\
-\cf0     \cf2 // when tapping 2 letters, sometimes the 2nd one, instead of going to the upper positions, goes to an open lower position. So need to prioritize upper position\
+\cf0  \cf2 \
 \
 \cf0     \cf2 // Using Model Versioning and Migration for core data\
-\cf0     \cf2 // after swapTiles, make sure the context is saved before using findVacancy again. Completion handler? Delay? Notification? Add a delay every time, but later replace with a test for the flag first, so the delay doesn't run every single time\
-\cf0     \cf2 // add sound fx (or wait til next version)?\
+\
+\cf0    \cf2 \
 \cf0     \cf2 // Note: in Progress view, the numbers in ProgressInfoVC (above) don't include Words that have been created, but not yet tallied. So the number of words played is a turn behind the level bar graphs (below). Make consistent?\
 \
 \cf0     \cf2 // Format level in Progress info to show fractions instead of decimals\
@@ -84,8 +83,12 @@
 \cf0     \cf2 // If possible, add a mini progress viewer that appears on the main page (v 1.1?)\
 \cf0     \cf2 // Ad integration?\
 \cf0     \cf2 // Swype style letter selection (in v 1.1)\
+	// add sound fx (or wait til next version)?\
 \
 //FINISHED\
+\cf0      \cf2 // words in found word list -- determine # of outline rings -- also for bar graphs -DONE\
+\cf0     \cf2 // when tapping 2 letters, sometimes the 2nd one, instead of going to the upper positions, goes to an open lower position. So need to prioritize upper position -FIXED\
+\cf0     \cf2 // Update stats icon to be vertical instead of horizontal -Done\
 \cf0     \cf2 // swap position of help/options icon with Fill in the Blanks icon - Done\
 \cf0     \cf2 // Check -- are word levels updating correctly?\
 \cf0     \cf2 // Tiles that snap back after jumble are off by a small amount - Fixed!\
@@ -100,6 +103,7 @@
 \cf0     \cf2 // fix autolayout bug with Progress View -Fixed\
 \cf0     \cf2 // Separate out parts of the main storyboard to their own storyboard, to mitigate the super slow down of working with the main.storyboard file - Done\
 \cf0     \cf2 // Add more or less level columns as # of levels being used goes up, & account for different device sizes-Done\
+\cf0     \cf2 // after swapTiles, make sure the context is saved before using findVacancy again. Completion handler? Delay? Notification? Add a delay every time, but later replace with a test for the flag first, so the delay doesn't run every single time -Fixed\
 	// In Progress view, get rid of the delay in the bars being displayed. - Fixed\
 \cf0     \cf2 // Calculate # of level bars for the device size - Done\
 \cf0     \cf2 // Add Level (figured to tenths place, to Progress info - Done\

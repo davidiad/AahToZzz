@@ -243,6 +243,7 @@
 		635549971CA0E87D00DB5167 /* status_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bg.png; sourceTree = "<group>"; };
 		635549981CA0E87D00DB5167 /* status_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@3x.png"; sourceTree = "<group>"; };
 		635549991CA0E87D00DB5167 /* status_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@2x.png"; sourceTree = "<group>"; };
+		635CC6641E8627730083F439 /* AtoZ_01.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AtoZ_01.xcdatamodel; sourceTree = "<group>"; };
 		636240841E308EEE007640DC /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		637760471E7F9CE400BD59F6 /* ToDoList.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = ToDoList.rtf; sourceTree = "<group>"; };
 		6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_double_flatbottom@1x.pdf"; sourceTree = "<group>"; };
@@ -1161,9 +1162,10 @@
 		63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				635CC6641E8627730083F439 /* AtoZ_01.xcdatamodel */,
 				63A3A1181C763F6C00F440B5 /* AtoZ.xcdatamodel */,
 			);
-			currentVersion = 63A3A1181C763F6C00F440B5 /* AtoZ.xcdatamodel */;
+			currentVersion = 635CC6641E8627730083F439 /* AtoZ_01.xcdatamodel */;
 			path = AtoZ.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

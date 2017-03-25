@@ -845,7 +845,7 @@
         <image name="down_arrow_h" width="157" height="29"/>
         <image name="icon_fill" width="26" height="26"/>
         <image name="icon_newlist" width="17" height="26"/>
-        <image name="icon_progress" width="25" height="25"/>
+        <image name="icon_progress" width="26" height="25"/>
         <image name="icon_settings" width="26" height="26"/>
         <image name="icon_shuffle" width="26" height="26"/>
         <image name="progress_info_bg.png" width="360" height="100"/>
