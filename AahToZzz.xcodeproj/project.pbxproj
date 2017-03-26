@@ -1110,6 +1110,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aah-to-Zzz";
 				PRODUCT_NAME = AahToZzz;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -1123,6 +1124,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aah-to-Zzz";
 				PRODUCT_NAME = AahToZzz;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
