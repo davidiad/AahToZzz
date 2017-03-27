@@ -79,7 +79,7 @@ class ProgressInfoViewController: UIViewController {
         guard let levelText = levelByTenths else {
             return
         }
-        levelLabel.text = "Your Level: " + levelText
+        levelLabel.text = "Overall Level: " + levelText
     }
     
     override func didReceiveMemoryWarning() {
