@@ -76,6 +76,18 @@ class Aah_to_ZzzTests: XCTestCase {
         XCTAssert(atozVC.checkForValidWord(wordToCheck))
 
     }
+    
+//    let sixLettersFromWords = getWordsForLetters()
+//    print("The 6: \(sixLettersFromWords)")
+//    for char in sixLettersFromWords.characters {
+//    letters.append(createLetter(String(char)))
+//    }
+    
+    func testGetWordsForLetters() {
+        let checkWords = model.getWordsForLetters()
+        let checkWordLength = checkWords.characters.count
+        XCTAssert(checkWordLength == 6)
+    }
  
     override func setUp() {
         super.setUp()

@@ -484,10 +484,10 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOt-2M-HXm">
-                                        <rect key="frame" x="48" y="82" width="336" height="416"/>
+                                        <rect key="frame" x="48" y="0.0" width="336" height="498"/>
                                         <subviews>
                                             <stackView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="800" distribution="equalCentering" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Bqh-No-vDe">
-                                                <rect key="frame" x="0.0" y="0.0" width="336" height="416"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="336" height="498"/>
                                             </stackView>
                                         </subviews>
                                         <constraints>
@@ -523,7 +523,7 @@
                                         </connections>
                                     </containerView>
                                     <label autoresizesSubviews="NO" opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Number of words" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWr-4a-vmb">
-                                        <rect key="frame" x="-16" y="266" width="86.5" height="12"/>
+                                        <rect key="frame" x="-16" y="225" width="86.5" height="12"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                         <color key="textColor" red="0.97480279209999998" green="0.97457337379999998" blue="0.97466939689999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="highlightedColor" red="0.97480279209999998" green="0.97457337379999998" blue="0.97466939689999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -558,13 +558,13 @@
                                     <constraint firstAttribute="bottom" secondItem="aRj-jz-wT8" secondAttribute="bottom" constant="50" id="aGm-jB-RJD"/>
                                     <constraint firstItem="oWr-4a-vmb" firstAttribute="centerY" secondItem="jOt-2M-HXm" secondAttribute="centerY" constant="-18" id="b7a-LC-BHT"/>
                                     <constraint firstItem="UwW-2Z-lBG" firstAttribute="bottom" secondItem="rIs-4h-gJe" secondAttribute="bottom" id="hWv-gY-IhN"/>
-                                    <constraint firstItem="jOt-2M-HXm" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" constant="82" id="iO6-Cq-hfw"/>
+                                    <constraint firstItem="jOt-2M-HXm" firstAttribute="top" secondItem="rIs-4h-gJe" secondAttribute="top" id="iO6-Cq-hfw"/>
                                     <constraint firstItem="jOt-2M-HXm" firstAttribute="bottom" secondItem="aRj-jz-wT8" secondAttribute="top" constant="-50" id="kCp-et-Quf"/>
                                     <constraint firstItem="oWr-4a-vmb" firstAttribute="leading" secondItem="rIs-4h-gJe" secondAttribute="leading" constant="-16" id="pwp-cw-nn8"/>
                                     <constraint firstAttribute="trailing" secondItem="aRj-jz-wT8" secondAttribute="trailing" constant="24" id="rQL-RL-mME"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olH-jB-6aY">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olH-jB-6aY">
                                 <rect key="frame" x="169" y="28" width="76" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>

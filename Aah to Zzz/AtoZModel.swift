@@ -286,7 +286,7 @@ class AtoZModel {
 
     
     func getWordsForLetters() -> String {
-        //TODO: add unit test to check that a 6 letter string is returned
+        
         var wordsForLetters: String = ""
         var firstWordIndex: Int
         var secondWordIndex: Int
