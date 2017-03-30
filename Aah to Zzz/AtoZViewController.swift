@@ -172,7 +172,20 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             letters[j].position = positions![sevenRandomizedInts[j]]
         }
         saveContext() // TODO: Need dispatch async?
+        for tile in lettertiles {
+            let s = CGAffineTransformMakeScale(0.75, 0.75)
+            print("ZPos: \(tile.layer.zPosition) and tag: \(tile.tag)")
+//            tile.transform = s
         
+            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            
+            tile.transform = s//CGAffineTransformConcat(scale, move)
+            
+            }, completion: { (finished: Bool) -> Void in
+                //hasFinishedBeganAnimation = finished
+                //print("ani done")
+        })
+        }
         jumbleTiles()
         
 //        // Jumble a 2nd time, after a slight delay
@@ -300,6 +313,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                     self.animator.addBehavior(tile.snapBehavior!)
                     self.collider.removeItem(tile)  // keeps the letters from getting stuck on each other.
+
                     
                     self.saveContext()
                     
@@ -311,6 +325,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         //        for tile in lettertiles {
         for i in 0 ..< lettertiles.count {
+//            let scale = CGAffineTransformMakeScale(3.0, 3.0)
+//            lettertiles[i].transform = scale
             
             // add a push in a random but up direction
             // taking into account that 0 (in radians) pushes to the right, and we want to vary between about 90 degrees (-1.57 radians) to the left, and to the right
@@ -327,7 +343,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             collider.addItem(lettertiles[i])
             gravity.addItem(lettertiles[i])
             dynamicItemBehavior.addItem(lettertiles[i])
-            
         }
     }
     
@@ -343,41 +358,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return CGPoint(x: self.view.frame.midX, y: self.view.frame.midY)
     }()
 
-//    lazy var radialGravity0: UIFieldBehavior = {
-//        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![0].position)
-//        radialGravity.region = UIRegion(radius: 100.0)
-//        radialGravity.strength = 50.0
-//        radialGravity.falloff = 2.0
-//        radialGravity.minimumRadius = 60.0
-//        return radialGravity
-//    }()
-//    
-//    lazy var radialGravity1: UIFieldBehavior = {
-//        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![1].position)
-//        radialGravity.region = UIRegion(radius: 100.0)
-//        radialGravity.strength = 50.0
-//        radialGravity.falloff = 2.0
-//        radialGravity.minimumRadius = 60.0
-//        return radialGravity
-//    }()
-//    
-//    lazy var radialGravity2: UIFieldBehavior = {
-//        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![2].position)
-//        radialGravity.region = UIRegion(radius: 100.0)
-//        radialGravity.strength = 50.0
-//        radialGravity.falloff = 2.0
-//        radialGravity.minimumRadius = 60.0
-//        return radialGravity
-//    }()
-//    
-//    lazy var radialGravity3: UIFieldBehavior = {
-//        let radialGravity: UIFieldBehavior = UIFieldBehavior.radialGravityFieldWithPosition(self.model.positions![3].position)
-//        radialGravity.region = UIRegion(radius: 100.0)
-//        radialGravity.strength = 50.0
-//        radialGravity.falloff = 2.0
-//        radialGravity.minimumRadius = 60.0
-//        return radialGravity
-//    }()
+
     
     private var animator: UIDynamicAnimator!
     private var attachmentBehavior: UIAttachmentBehavior!
@@ -545,56 +526,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
         itemBehavior.density = 10.0
         itemBehavior.angularResistance = 10.0
-        //animator.addBehavior(itemBehavior)
-        
-        //vortex.addItem(orbitingView)
-//        radialGravity0.addItem(lettertiles[0])
-//        
-//        radialGravity1.addItem(lettertiles[1])
-        
-        //animator.addBehavior(radialGravity)
-        //animator.addBehavior(vortex)
+
     }
     
-//    func snapTileToPosition (tile: Tile) {
-//        if !positions![7].occupied {
-//            tile.snapBehavior?.snapPoint = positions![7].position //position1
-//            positions![7].occupied = true // need to also set the from position to false
-//            //TODO: have to get the 'from' Position somehow. How to get the Tile's Letter? add a Letter property to Tile?
-//            occupied1 = true
-//        } else if !occupied2 {
-//            tile.snapBehavior?.snapPoint = positions![8].position
-//            occupied2 = true
-//            positions![8].occupied = true // need to also set the from position to false
-//
-//        } else if !occupied3 {
-//            tile.snapBehavior?.snapPoint = positions![9].position
-//            occupied3 = true
-//            positions![9].occupied = true // need to also set the from position to false
-//
-//        }
-//        // update the status of the 'from' tile
-//        tile.letter?.position?.occupied = false
-//        saveContext()
-//    }
-    
-//    func snapTileToUpperPosition(tile: Tile) {
-//        //var newPosition: Position
-//        if tile.letter?.position?.index < 7 { // for now, only moving tile if it is in a lower position
-//            let newPosition = findUpperVacancy()
-//            if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
-//                tile.snapBehavior?.snapPoint = (newPosition?.position)!
-//                // update the Positions
-//                tile.letter?.position?.letter = nil // the previous position is now vacant
-//                tile.letter?.position = newPosition
-//                newPosition?.letter = tile.letter
-//                //tile.position = newPosition?.position // is this line needed?
-//                saveContext()
-//            }
-//        } else {
-//            let newPosition = findLowerVacancy()
-//        }
-//    }
+
     
     // Each letter should have a position
     func swapTile(tile: Tile) {
@@ -1480,7 +1415,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     //hasFinishedBeganAnimation = finished
                     //print("ani done")
             })
-            
+
       
         case .Changed:
             t.center = location
@@ -1522,6 +1457,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             t.layer.shadowOpacity = 0.0
             t.transform = CGAffineTransformIdentity
+            
+            
+           
+            
             
         default:
             break
