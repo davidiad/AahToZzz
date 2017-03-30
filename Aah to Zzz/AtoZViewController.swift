@@ -172,20 +172,27 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             letters[j].position = positions![sevenRandomizedInts[j]]
         }
         saveContext() // TODO: Need dispatch async?
-        for tile in lettertiles {
-            let s = CGAffineTransformMakeScale(0.75, 0.75)
-            print("ZPos: \(tile.layer.zPosition) and tag: \(tile.tag)")
-//            tile.transform = s
         
+        
+        
+        for tile in lettertiles {
+            // To give a bit more of a 3D effect, vary the tiles' scale, depending on how high they are in the view hierarchy. Their tags range from 1000 to 1007, so convert that to a range between 0.5 and 1. Numbers < 1 scale the tiles bigger.
+            let scaleFactor = (CGFloat(tile.tag - 1000) / 14.0) + 0.5
+            let s = CGAffineTransformMakeScale(scaleFactor, scaleFactor)
+            
+            tile.layer.shadowOpacity = 0.95
+            tile.layer.shadowRadius = 24.0
+            tile.layer.shadowColor = UIColor.blackColor().CGColor
+            
             UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
-            
-            tile.transform = s//CGAffineTransformConcat(scale, move)
-            
-            }, completion: { (finished: Bool) -> Void in
-                //hasFinishedBeganAnimation = finished
-                //print("ani done")
-        })
+                
+                tile.transform = s
+                
+                }, completion: { (finished: Bool) -> Void in
+                    tile.layer.shadowOpacity = 0.0 // remove the shadow when back in a box
+            })
         }
+        
         jumbleTiles()
         
 //        // Jumble a 2nd time, after a slight delay
