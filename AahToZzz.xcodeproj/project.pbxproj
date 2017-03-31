@@ -1108,7 +1108,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Aah to Zzz/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aah-to-Zzz";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aa-to-Zzz";
 				PRODUCT_NAME = AahToZzz;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1122,7 +1122,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Aah to Zzz/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aah-to-Zzz";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aa-to-Zzz";
 				PRODUCT_NAME = AahToZzz;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
