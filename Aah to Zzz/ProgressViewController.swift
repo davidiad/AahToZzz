@@ -8,9 +8,9 @@
 
 import UIKit
 import CoreData
+import GameKit
 
-class ProgressViewController: UIViewController, NSFetchedResultsControllerDelegate//, UITableViewDataSource, UITableViewDelegate,
-    {
+class ProgressViewController: UIViewController, NSFetchedResultsControllerDelegate, GKGameCenterControllerDelegate {
     
     // hidden but saved for example @IBOutlet weak var table_00: UITableView!
     @IBOutlet weak var graphBgView: UIView!
@@ -44,6 +44,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
     // addLevelsContainers() is called in viewWillLayoutSubviews, so that the info needed for it, has first been obtained (inViewDidLoad). However, viewWillLayoutSubviews may be called multiple times. Therefore, adding a flag to ensure that addLevelsContainers is called only once.
     var viewWillLayoutSubviewsHasBeenCalled: Bool = false
+    
+    var score = Int()
     
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
@@ -140,18 +142,6 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 }
             }
         }
-        
-        
-        //TODO:- Add all the not yet played words to Level 0
-        // Get a set of all the dictionary words
-        // Get a set of all the played words
-        // subtract played words from dictionary words, leaving a set of all unplayed words
-        // create an array of Word objects from those unplayed words (but don't save to Managed Object Context)
-        // Add that array to levelArrays[0]
-        // sort in alphabetical order (possibly don't sort, just add on). Possibly make the unplayed a different color
-        // in the same level bar. Would that be too confusing? Possibly label each section as played or unplayed
-        // OR: Make a different level bar for the unplayed.
-        
     }
     
     // find the lowest level with any words and return a string formatted to one decimal (e.g. 1.2)
@@ -314,6 +304,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         numberOfWordsLabel.frame = CGRect(x: 0, y: 0, width: 30, height: 230)
         addGradientBar()
         
+        authPlayer()
+        
     }
     
     // get the graph height after viewDidLoad – otherwise, the views have not yet adapted to the device screen size
@@ -430,92 +422,6 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     
                     levelTableController.didMoveToParentViewController(self)
                     
-//                    // create mask to round the corners of the graph bar
-////                    let barFrame: CGRect = CGRectMake(0, 0, 32, CGFloat(height - 20) )
-//                    let mask: UIView = UIView(frame: barFrame)
-//                    let maskImageView = UIImageView(frame: barFrame)
-//                    maskImageView.image = UIImage(named: "bar_graph_mask")
-//                    mask.addSubview(maskImageView)
-//                    
-//                    containerView.maskView = mask
-//                    
-//                    let barTint = colorCode.tint
-                    
-                    
-                    //TODO:- move code that sets the outline and shadow to the LevelTableViewController class
-                    
-                    
-//                    // create the outline view
-//                    let outlineView = UIImageView(frame: barFrame)//UIImageView(image: outlineImage)
-//                    let outlineShadowImageSingle = UIImage(named: "outline_shadow_single")
-//                    let outlineShadowImageDouble = UIImage(named: "outline_shadow")
-//                    let outlineShadowView: UIImageView = UIImageView()// = UIImageView(image: outlineShadowImage)
-//                    // Add the outline image on top of the level bar table controller
-//                    // first, the shadow image beneath to help the outline stand out
-//                    // let outlineShadowImage = UIImage(named: "outline_shadow_single")
-//                    
-//                    outlineShadowView.alpha = 0.5
-//                    outlineShadowView.frame = barFrame
-                    
-                    // TODO:- specify cases more clearly. 0 words vs. height is small enough that the rounded top doesn't fit without squishing
-                    
-//                    switch i {
-//                    case -1...5:
-//                        
-//                        if height < 22.0 || numWordsInLevel == 0 {
-//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-//                            outlineView.contentMode = .BottomLeft
-//                        } else {
-//                            outlineView.image = UIImage(named: "outline_single_flatbottom")
-//                            outlineShadowView.image = outlineShadowImageSingle
-//                        }
-//                    case 6...10:
-//                        
-//                        if height < 22.0 || numWordsInLevel == 0 {
-//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-//                            outlineView.contentMode = .BottomLeft
-//                        } else {
-//                            outlineView.image = UIImage(named: "outline_double_flatbottom")
-//                            outlineShadowView.image = outlineShadowImageDouble
-//                        }
-//                    case 11...15:
-//                        
-//                        if height < 22.0 || numWordsInLevel == 0 {
-//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-//                            outlineView.contentMode = .BottomLeft
-//                        } else {
-//                            outlineView.image = UIImage(named: "outline_double_flatbottom")
-//                            outlineShadowView.image = outlineShadowImageDouble
-//                        }
-//                    case 16...20:
-//                        
-//                        if height < 22.0 || numWordsInLevel == 0 {
-//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-//                            outlineView.contentMode = .BottomLeft
-//                        } else {
-//                            outlineView.image = UIImage(named: "outline_double_flatbottom")
-//                            outlineShadowView.image = outlineShadowImageDouble
-//                        }
-//                    default:
-//                        
-//                        if height < 22.0 || numWordsInLevel == 0 {
-//                            outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-//                            outlineView.contentMode = .BottomLeft
-//                        } else {
-//                            outlineView.image = UIImage(named: "outline_single_flatbottom")
-//                            outlineShadowView.image = outlineShadowImageDouble
-//                        }
-//                        
-//                    }
-//                    outlineView.frame = barFrame
-//                    outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-//                    // set the outlineView tintcolor per level
-//                    outlineView.tintColor = colorCode.tint
-                    
-
-                    
-//                    containerView.addSubview(outlineShadowView)
-//                    containerView.addSubview(outlineView)
                     
                     // Create a text label for the number of words that floats above the container
                     if numWordsInLevel > 0 { // don't add the label for empty levels
@@ -565,5 +471,33 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         sideBar.layer.addSublayer(gradient)
         
         
+    }
+    
+    //MARK:- Game Center
+    
+    func authPlayer() {
+        let localPlayer = GKLocalPlayer.localPlayer()
+        localPlayer.authenticateHandler = {
+            (view, error) in
+            if view != nil {
+                self.presentViewController(view!, animated: true, completion: nil)
+            } else {
+                print("Game Center authenticated?: \(GKLocalPlayer.localPlayer().authenticated)")
+            }
+        }
+    }
+    
+    func addScore() {
+        score++
+    }
+    
+    func saveHighScore(number: Int) {
+        if GKLocalPlayer.localPlayer().authenticated {
+            
+        }
+    }
+    
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
+        // required func for Game Center delegate protocol
     }
 }
