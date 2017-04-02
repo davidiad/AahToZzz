@@ -41,6 +41,7 @@
 		6324A8E21DFB4AEA00261E64 /* outline_graph_double_halved@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6324A8E11DFB4AEA00261E64 /* outline_graph_double_halved@3x.png */; };
 		6324A8E61DFB501000261E64 /* outline_graph_double@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6324A8E51DFB501000261E64 /* outline_graph_double@1x.pdf */; };
 		6324A8EE1DFB796300261E64 /* outline_shadow@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6324A8ED1DFB796300261E64 /* outline_shadow@1x.pdf */; };
+		6324D2DB1E90D96D00C7B2D7 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6324D2DA1E90D96D00C7B2D7 /* GameKit.framework */; };
 		632D5B141E53D1310011F6D2 /* Aah_to_ZzzTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632D5B131E53D1310011F6D2 /* Aah_to_ZzzTests.swift */; };
 		6331F3281CA9D6CC00F98737 /* outline_image_thick.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F3271CA9D6CC00F98737 /* outline_image_thick.pdf */; };
 		6331F32C1CA9FBD700F98737 /* outline_image_thicker.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6331F32B1CA9FBD700F98737 /* outline_image_thicker.pdf */; };
@@ -209,6 +210,7 @@
 		6324A8E11DFB4AEA00261E64 /* outline_graph_double_halved@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outline_graph_double_halved@3x.png"; sourceTree = "<group>"; };
 		6324A8E51DFB501000261E64 /* outline_graph_double@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_graph_double@1x.pdf"; sourceTree = "<group>"; };
 		6324A8ED1DFB796300261E64 /* outline_shadow@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_shadow@1x.pdf"; sourceTree = "<group>"; };
+		6324D2DA1E90D96D00C7B2D7 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		632D5B111E53D1310011F6D2 /* Aah to ZzzTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Aah to ZzzTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		632D5B131E53D1310011F6D2 /* Aah_to_ZzzTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aah_to_ZzzTests.swift; sourceTree = "<group>"; };
 		632D5B151E53D1310011F6D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76614946B8DECF7CB42C13B7 /* Pods_AahToZzz.framework in Frameworks */,
+				6324D2DB1E90D96D00C7B2D7 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +369,7 @@
 		3D35FE0033F4A1C697F01B01 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6324D2DA1E90D96D00C7B2D7 /* GameKit.framework */,
 				B3140650B431C0DBF9CACD06 /* Pods_AahToZzz.framework */,
 			);
 			name = Frameworks;
@@ -698,7 +702,11 @@
 					};
 					63A3A10C1C763F6C00F440B5 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = ZG4367LV78;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

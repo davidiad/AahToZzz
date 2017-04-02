@@ -69,6 +69,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         return fetchedResultsController
     }()
     
+    
     //TODO:- calculate # words *not* found, add that as level 0, and add a bar with the words
     // - Get # words in dictionary
     // - Make an array of all the words that have *not* been found
@@ -488,16 +489,36 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     }
     
     func addScore() {
-        score++
+        score += 1
     }
     
     func saveHighScore(number: Int) {
         if GKLocalPlayer.localPlayer().authenticated {
-            
+            let scoreReporter = GKScore(leaderboardIdentifier: "atozleaderboard")
+            scoreReporter.value = Int64(number)
+            let scoreArray: [GKScore] = [scoreReporter]
+            GKScore.reportScores(scoreArray, withCompletionHandler: nil)
         }
     }
     
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
-        // required func for Game Center delegate protocol
+        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func showLeaderboard() {
+        let viewController = self//self.view.window?.rootViewController
+        let gamecenterVC = GKGameCenterViewController()
+        gamecenterVC.gameCenterDelegate = self
+        viewController.presentViewController(gamecenterVC, animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func openLeaderboards(sender: AnyObject) {
+        addScore()
+        //score = model.numWordsFound()!
+        saveHighScore(score)
+        
+        showLeaderboard()
+        
     }
 }
