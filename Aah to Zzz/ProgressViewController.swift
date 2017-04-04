@@ -30,6 +30,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     var graphHeight: CGFloat = 100.0
     var graphWidth: CGFloat = 100.0
     
+    @IBOutlet weak var graphLowerCaptionConstraint: NSLayoutConstraint!
     
     
 //    var levelArrays: [[Word]?] = [[Word]?]()
@@ -449,6 +450,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                         bottomLabel.numberOfLines = 4
                         bottomLabel.textAlignment = .Center
                         bottomLabel.widthAnchor.constraintEqualToConstant(40).active = true
+                        graphLowerCaptionConstraint.constant = 32
                         
                     } else {
                         bottomLabel.text = String(levelTableController.level!)
