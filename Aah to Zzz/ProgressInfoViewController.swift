@@ -75,7 +75,10 @@ class ProgressInfoViewController: UIViewController {
         guard let parentVC = parentViewController as? ProgressViewController else {
             return
         }
-        levelByTenths = parentVC.calculateLevel()
+        let levelFloat = parentVC.calculateLevel()
+        //TODO: ought to be able to eliminate either levelString or levelbyTenths
+        let levelString = String(format: "%.1f", levelFloat)
+        levelByTenths = levelString //parentVC.calculateLevel()
         guard let levelText = levelByTenths else {
             return
         }

@@ -153,8 +153,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // TODO: consider whether this should be a calculated, or lazy var, instead of a func
     
     // TODO:- Determine of to differentiate between level 1 count going up, and level 1 count going down because now adding to level 2, and so forth
-    func calculateLevel() -> String {
-        var levelString = "0"
+    // change to a calculated var?
+    func calculateLevel() -> Float {
+        var level: Float = 0.0
         
         // skip 0, because we start by looking at the # of words found once (not the # found 0 times)
         
@@ -163,7 +164,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         
         for i in 1 ..< levelArrays.count {
             guard let currentLevelArray = levelArrays[i] else {
-                return levelString
+                return level
             }
             // if 0 words in level, then that level is finished (or else not started)
             // so don't do anything with it, just go on to the next
@@ -181,19 +182,19 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     // To avoid rounding x.5 and greater numbers up to the next level,
                     // Convert to Int and back to Float
                     let levelInt = Int(10 * levelFloat) // Drop (floor) all digits past the tenths by converting to Int
-                    let level = Float(levelInt)/10.0 // Convert back to a Float with a tenths place
+                    level = Float(levelInt)/10.0 // Convert back to a Float with a tenths place
                     // Will display level in tenth point increments
                     // TODO: display as fraction 3 7/10 etc
-                    levelString = String(format: "%.1f", level)
-                    print ("Level Word Count : \(i) : \(levelWordCount)")
-                    return levelString // the level is the first one with some words, so return here
+                    //levelString = String(format: "%.1f", level)
+                    //print ("Level Word Count : \(i) : \(levelWordCount)")
+                    return level // the level is the first one with some words, so return here
                     // (you don't move to the next level until all are found)
                 }
             }
             //TODO: Why does levelString get returned twice?
         }
         // no levels had any words so return 0
-        return levelString
+        return level
     }
     
     
@@ -321,7 +322,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             graphHeight = view.bounds.height - VERTICAL_PADDING
             graphWidth = graphStackView.superview!.frame.size.width
             addLevelContainers()
-            levelText = calculateLevel()
+            let level = calculateLevel()
+            levelText = String(format: "%.1f", level)
         }
         viewWillLayoutSubviewsHasBeenCalled = true
         
@@ -492,12 +494,18 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         score += 1
     }
     
-    func saveHighScore(number: Int) {
+    func saveHighScore(number: Int, levelNumber: Float) {
         if GKLocalPlayer.localPlayer().authenticated {
             let scoreReporter = GKScore(leaderboardIdentifier: "atozleaderboard")
             scoreReporter.value = Int64(number)
             let scoreArray: [GKScore] = [scoreReporter]
             GKScore.reportScores(scoreArray, withCompletionHandler: nil)
+            
+            let levelReporter = GKScore(leaderboardIdentifier: "level_leaderboard")
+            // Game Center only allows Int64, but with format with 1 decimal point, so multiply by 10
+            levelReporter.value = Int64(levelNumber * 10)
+            let levelArray: [GKScore] = [levelReporter]
+            GKScore.reportScores(levelArray, withCompletionHandler: nil)
         }
     }
     
@@ -515,8 +523,9 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
     @IBAction func openLeaderboards(sender: AnyObject) {
         addScore()
-        //score = model.numWordsFound()!
-        saveHighScore(score)
+        print("Score: \(score)")
+        let levelScore = calculateLevel()
+        saveHighScore(score, levelNumber: levelScore)
         
         showLeaderboard()
         
