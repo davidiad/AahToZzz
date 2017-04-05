@@ -1276,8 +1276,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             saveContext()
             letters = currentLetterSet?.letters?.allObjects as! [Letter]
         }
-        //BanglaSangamMN-Bold
-        let attributes: [String: AnyObject] =  [NSFontAttributeName: UIFont(name: "GillSans-SemiBold", size: 30.0)!,
+        
+        // Possible fonts
+        //BanglaSangamMN-Bold //EuphemiaUCAS-Bold //GillSans-SemiBold //Copperplate-Bold
+        
+        let attributes: [String: AnyObject] =  [NSFontAttributeName: UIFont(name: "EuphemiaUCAS-Bold", size: 30.0)!,
                                                 NSForegroundColorAttributeName: Colors.midBrown,
                                                 NSStrokeWidthAttributeName: -3.0,
                                                 NSStrokeColorAttributeName: UIColor.blackColor()]

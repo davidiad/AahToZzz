@@ -94,9 +94,11 @@
 // cache images (or remove visual dictionary altogether)\
 \
 // Add lexincontext framework?\
-// Make the letters on the tiles larger. They are currently much smaller than they need to be.\
+\
+// Make the font color in the list match better with the tile font\
 \
 // FEATURES FOR V. 1.1\
+	// Animate the tiles over to the word list when a word is found. Possibly, then, instead of also returning the tile to below, have them sort of regenerate from within the positions below. Could be part of the same animation: first they shrink, optionally change color, and move over to the word list, disappearing into the word list. Then the same tiles could reappear within the lower positions. It would make sense to have found word tiles move to the word list, instead of returning directly to the lower positions. Helps distinguish between returning because they are returning, or because they are part of a found word.\
 	// badges for achievements and advancing to higher levels (could be a badge in the colors of that level coordinated with the stripes/colors of the words in the word list)\
 	// Add the ability to save and choose from games, organized in sections by type of game (JQXZ, 2, 3, or 7 letter, etc). Somewhere, should be able to go to the current game of a specific type.\
 	// Storyboard specific for iPads\
@@ -112,9 +114,13 @@
 // Make Splash screen with just the name of this game.\
 // Consider generalizing the name of this game so that it encompasses all the future games (7 - letter, JQXZ, etc)\
 // Possibly, just wait for the this over arching game until a business account is set up. Some of the games could be in-app purchases.\
-// Give tiles a nice custom font with an outline\
+\
+\
 \
 //FINISHED\
+	// Replace the J and possibly the K in GillSans with something else - not rendering correctly. Possibly replace with a customized version of the J if possible. -Done, by replacing font with EuphemiaUCAS-Bold\
+	// Make the letters on the tiles larger. They are currently much smaller than they need to be. -Done\
+	// Give tiles a nice custom font with an outline -Done\
 \cf0     \cf2 // Fix bug that prevents tiles from enlarging and raising when dragged (used to work) -Done\
 \cf0     \cf2 // When tiles are jumbled, enlarge them to varying degrees to add the illusion that some are closer -Done\
 	// for model.getWordsForLetters, add unit test to check that a 6 letter string is returned -Done\
