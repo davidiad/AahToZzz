@@ -42,7 +42,33 @@ class Tile: UIButton {
         layer.shadowRadius = 6
         layer.shadowOffset = CGSizeMake(2.0, 2.0)
         boundingPath = UIBezierPath(roundedRect: bounds, cornerRadius: layer.cornerRadius)
+        
+//        let mutableAttrString = NSMutableAttributedString(string: (titleLabel?.text)!)
+//        titleLabel?.attributedText = NSMutableAttributedString(attributedString: mutableAttrString)
+        
+       // var myRange = NSRange(location: 0, length: 1) // range starting at location 17 with a lenth of 7: "Strings"
+        //titleLabel?..addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: myRange)
+        
+
+        
+//        setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
+//        titleLabel?.font = UIFont.systemFontOfSize(42.0)
+        
+//        let attributes: [String : AnyObject] = [NSFontAttributeName : UIFont(name: "BanglaSangamMN-Bold", size: 42.0)!,
+//                                                NSForegroundColorAttributeName : UIColor.darkGrayColor()]
+//        let title = NSAttributedString(string: "A", attributes: attributes)
+//        
+//        setAttributedTitle(title, forState: .Normal)
+        
+        let image = UIImage(named: "tile") as UIImage?
+        setBackgroundImage(image, forState: .Normal)
+        
+        
     }
+    
+   // override func attributedTitleForState(state: UIControlState) -> NSAttributedString? {
+
+   // }
     
 //    func setupPanRecognizer() {
 //        let panRecognizer = UIPanGestureRecognizer(target: self, action: "pan:")

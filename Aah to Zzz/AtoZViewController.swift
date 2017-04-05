@@ -448,8 +448,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         animator.delegate = self
         lettertiles = [Tile]()
         tilesToSwap = [Tile]()
+        
         tileBackgrounds = [UIView]() // putting the tile bg's into an array so as to refer to them in collision detection
-        let image = UIImage(named: "tile") as UIImage?
+//        let image = UIImage(named: "tile") as UIImage?
         let bgImage = UIImage(named: "tile_bg") as UIImage?
         
         for i in 0 ..< 7 {
@@ -464,10 +465,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 bgView.tag = 2000 + i
                 tileBackgrounds?.append(bgView)
                 bgView.center = tilePos
-                tile.setBackgroundImage(image, forState: .Normal)
-                tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
+                
+//                tile.setBackgroundImage(image, forState: .Normal)
+                //tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
                 
                 tile.setTitle("Q", forState: .Normal) // Q is placeholder value
+                
                 //tile.addTarget(self, action: "addLetterToWordInProgress:", forControlEvents:.TouchUpInside)
                 tile.tag = 1000 + i
                 
@@ -1273,8 +1276,21 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             saveContext()
             letters = currentLetterSet?.letters?.allObjects as! [Letter]
         }
+        //BanglaSangamMN-Bold
+        let attributes: [String: AnyObject] =  [NSFontAttributeName: UIFont(name: "GillSans-SemiBold", size: 30.0)!,
+                                                NSForegroundColorAttributeName: Colors.midBrown,
+                                                NSStrokeWidthAttributeName: -3.0,
+                                                NSStrokeColorAttributeName: UIColor.blackColor()]
+
         for i in 0 ..< lettertiles.count {
-            lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
+            
+            // TODO: set the attributed title in Tile.swift instead
+            let title = NSAttributedString(string: letters[i].letter!, attributes: attributes)
+            lettertiles[i].setAttributedTitle(title, forState: .Normal)
+            
+            //lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
+//            let attributes: [String : AnyObject] = [NSFontAttributeName : UIFont(name: "BanglaSangamMN-Bold", size: 42.0)!, NSForegroundColorAttributeName : UIColor.darkGrayColor()]
+//            lettertiles[i].titleLabel?.attributedText = NSAttributedString(string: "A", attributes: attributes)
             lettertiles[i].letter = letters[i]
             lettertiles[i].position = letters[i].position?.position
             
