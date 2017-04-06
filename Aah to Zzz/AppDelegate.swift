@@ -55,6 +55,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             _ = try? self.sharedContext.save()
         }
     }
+    
+    func application(application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+        print("Save App state")
+        return true
+    }
+    
+    func application(application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        print("restore app state")
+        return true
+        
+    }
 
     // Apple's boilerplate Core Data code
     /*

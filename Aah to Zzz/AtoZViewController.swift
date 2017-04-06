@@ -914,10 +914,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             if word.found == true && word.inCurrentList == true {
                 if cell.word != nil { // may be unneeded safeguard
-                    
-                    setWordListCellProperties(cell, colorCode: word.level, textcolor: UIColor.blackColor(), text: word.word!)
-                    
-                    print("In configureCell: \(cell.word.text) at level \(word.level)")
+                    // TODO: consider setting word text color per level. Consider outlining text. Consider moving this code to WordListCell.swift
+                    setWordListCellProperties(cell, colorCode: word.level, textcolor: Colors.darkBrown, text: word.word!)
                     
                     
                 }

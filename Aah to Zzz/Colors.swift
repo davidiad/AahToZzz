@@ -31,7 +31,7 @@ struct Colors {
     static let desat_yellow = UIColor(hue: 38/360, saturation: 0.9, brightness: 1.0, alpha: 1.0)
     
     // Letter color
-    static let darkBrown = UIColor(hue: 38/360, saturation: 0.7, brightness: 0.3, alpha: 0.7)
+    static let darkBrown = UIColor(hue: 38/360, saturation: 0.7, brightness: 0.3, alpha: 1.0)
     static let midBrown = UIColor(hue: 38/360, saturation: 0.75, brightness: 0.7, alpha: 0.7
     )
 }

@@ -56,6 +56,7 @@
 		633C5BF31E7F2183008E5A43 /* graph_shadow_triple@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 633C5BF21E7F2183008E5A43 /* graph_shadow_triple@1x.pdf */; };
 		633C7B071DB46A060055CD83 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C7B061DB46A060055CD83 /* ProgressViewController.swift */; };
 		633C7B0B1DB46A9C0055CD83 /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */; };
+		634BE6861E96E3330074F2F8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634BE6851E96E3330074F2F8 /* HomeViewController.swift */; };
 		634E76FA1D41E52800F9FC52 /* small_tile_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 634E76F71D41E52800F9FC52 /* small_tile_red.png */; };
 		634E76FB1D41E52800F9FC52 /* small_tile_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 634E76F81D41E52800F9FC52 /* small_tile_red@2x.png */; };
 		634E76FC1D41E52800F9FC52 /* small_tile_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 634E76F91D41E52800F9FC52 /* small_tile_red@3x.png */; };
@@ -227,6 +228,7 @@
 		633C5BF21E7F2183008E5A43 /* graph_shadow_triple@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_shadow_triple@1x.pdf"; sourceTree = "<group>"; };
 		633C7B061DB46A060055CD83 /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
+		634BE6851E96E3330074F2F8 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		634E76F71D41E52800F9FC52 /* small_tile_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_red.png; sourceTree = "<group>"; };
 		634E76F81D41E52800F9FC52 /* small_tile_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_red@2x.png"; sourceTree = "<group>"; };
 		634E76F91D41E52800F9FC52 /* small_tile_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_red@3x.png"; sourceTree = "<group>"; };
@@ -621,6 +623,7 @@
 				63E4A2C61DC24CBA002BC4CE /* LevelTableCell.swift */,
 				633C5BEC1E7C9D87008E5A43 /* GraphBarView.swift */,
 				637760471E7F9CE400BD59F6 /* ToDoList.rtf */,
+				634BE6851E96E3330074F2F8 /* HomeViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -928,6 +931,7 @@
 				63A3A1261C764E3E00F440B5 /* AtoZViewController.swift in Sources */,
 				63A3A12A1C7652C300F440B5 /* AtoZModel.swift in Sources */,
 				63C449861C9A18F10053BE77 /* RotatingView.swift in Sources */,
+				634BE6861E96E3330074F2F8 /* HomeViewController.swift in Sources */,
 				633C7B071DB46A060055CD83 /* ProgressViewController.swift in Sources */,
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
 				6300C6471CA4B07300E3B4D5 /* ColorCode.swift in Sources */,

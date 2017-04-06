@@ -52,6 +52,7 @@ class WordListCell: UITableViewCell {
             
             thirdLetterBg.image = colorCode?.tile_bg!//UIImage(named: "small_tile_yellow")
             thirdLetter.text = wordtext?.substringFromIndex(wordtext!.endIndex.predecessor())
+            
             // set the image (if any) to use as an outline for the cell
             if let outline = colorCode?.outline {
                 outlineView.image = outline
@@ -87,6 +88,7 @@ class WordListCell: UITableViewCell {
         }
         
     }
+    
     
     //MARK:- Cell delegate
     override func prepareForReuse() {
