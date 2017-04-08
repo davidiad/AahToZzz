@@ -75,6 +75,7 @@
 		6355499A1CA0E87D00DB5167 /* status_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549971CA0E87D00DB5167 /* status_bg.png */; };
 		6355499B1CA0E87D00DB5167 /* status_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549981CA0E87D00DB5167 /* status_bg@3x.png */; };
 		6355499C1CA0E87D00DB5167 /* status_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549991CA0E87D00DB5167 /* status_bg@2x.png */; };
+		635F63E91E986B0A00C48913 /* UIStoryboardSegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635F63E81E986B0A00C48913 /* UIStoryboardSegueFromRight.swift */; };
 		636240851E308EEE007640DC /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636240841E308EEE007640DC /* Queue.swift */; };
 		637760481E7F9CE400BD59F6 /* ToDoList.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 637760471E7F9CE400BD59F6 /* ToDoList.rtf */; };
 		6377ED571E6F4C800001C080 /* graph_double_flatbottom@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */; };
@@ -248,6 +249,7 @@
 		635549981CA0E87D00DB5167 /* status_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@3x.png"; sourceTree = "<group>"; };
 		635549991CA0E87D00DB5167 /* status_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@2x.png"; sourceTree = "<group>"; };
 		635CC6641E8627730083F439 /* AtoZ_01.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AtoZ_01.xcdatamodel; sourceTree = "<group>"; };
+		635F63E81E986B0A00C48913 /* UIStoryboardSegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStoryboardSegueFromRight.swift; sourceTree = "<group>"; };
 		636240841E308EEE007640DC /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		637760471E7F9CE400BD59F6 /* ToDoList.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = ToDoList.rtf; sourceTree = "<group>"; };
 		6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_double_flatbottom@1x.pdf"; sourceTree = "<group>"; };
@@ -624,6 +626,7 @@
 				633C5BEC1E7C9D87008E5A43 /* GraphBarView.swift */,
 				637760471E7F9CE400BD59F6 /* ToDoList.rtf */,
 				634BE6851E96E3330074F2F8 /* HomeViewController.swift */,
+				635F63E81E986B0A00C48913 /* UIStoryboardSegueFromRight.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -934,6 +937,7 @@
 				634BE6861E96E3330074F2F8 /* HomeViewController.swift in Sources */,
 				633C7B071DB46A060055CD83 /* ProgressViewController.swift in Sources */,
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
+				635F63E91E986B0A00C48913 /* UIStoryboardSegueFromRight.swift in Sources */,
 				6300C6471CA4B07300E3B4D5 /* ColorCode.swift in Sources */,
 				63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */,
 				63E4A2C11DC0102F002BC4CE /* ProgressTableCell.swift in Sources */,

@@ -10,39 +10,52 @@
         <!--Home View Controller-->
         <scene sceneID="pgQ-h6-gUs">
             <objects>
-                <viewController restorationIdentifier="HomeViewController" storyboardIdentifier="HomeViewController" id="6UW-8g-sR0" customClass="HomeViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="HomeViewController" id="6UW-8g-sR0" customClass="HomeViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ahd-YK-11j"/>
                         <viewControllerLayoutGuide type="bottom" id="PCQ-1u-fRP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8FT-ui-kDq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwb-MG-8bs">
-                                <rect key="frame" x="192" y="353" width="30" height="30"/>
+                                <rect key="frame" x="285" y="285" width="30" height="30"/>
                                 <state key="normal" title="Play"/>
                                 <connections>
                                     <action selector="playGame:" destination="6UW-8g-sR0" eventType="touchUpInside" id="km5-7T-Ch3"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="FvA-XN-dnJ"/>
+                                    <segue destination="BYZ-38-t0r" kind="custom" customClass="UIStoryboardSegueFromRight" customModule="AahToZzz" customModuleProvider="target" id="FvA-XN-dnJ"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wHB-FN-ik4">
+                                <rect key="frame" x="540" y="0.0" width="60" height="600"/>
+                                <color key="backgroundColor" red="0.98603981733322144" green="0.0" blue="0.078923560678958893" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="7S7-Rb-F07"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="wHB-FN-ik4" secondAttribute="trailing" id="2eH-Ff-DMd"/>
                             <constraint firstItem="mwb-MG-8bs" firstAttribute="centerX" secondItem="8FT-ui-kDq" secondAttribute="centerX" id="3kE-RE-72S"/>
+                            <constraint firstItem="PCQ-1u-fRP" firstAttribute="top" secondItem="wHB-FN-ik4" secondAttribute="bottom" id="hHP-ch-2Da"/>
                             <constraint firstItem="mwb-MG-8bs" firstAttribute="centerY" secondItem="8FT-ui-kDq" secondAttribute="centerY" id="lgK-1c-sgr"/>
+                            <constraint firstItem="wHB-FN-ik4" firstAttribute="top" secondItem="8FT-ui-kDq" secondAttribute="top" id="sth-pj-U7I"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="rightSideBar" destination="wHB-FN-ik4" id="mhw-U9-eKR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rk-87-AV6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-130" y="410"/>
+            <point key="canvasLocation" x="-230" y="350"/>
         </scene>
         <!--AtoZ View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController restorationIdentifier="AtoZViewController" storyboardIdentifier="AtoZViewController" id="BYZ-38-t0r" customClass="AtoZViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="AtoZViewController" id="BYZ-38-t0r" customClass="AtoZViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -309,7 +322,7 @@
                                     <barButtonItem image="icon_settings" id="oIr-N2-xN1">
                                         <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
-                                            <segue destination="6UW-8g-sR0" kind="show" id="76K-rn-aoz"/>
+                                            <segue destination="6UW-8g-sR0" kind="custom" customClass="UIStoryboardSegueFromLeft" customModule="AahToZzz" customModuleProvider="target" id="76K-rn-aoz"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="8e4-CM-w4J"/>
@@ -503,7 +516,7 @@
         <!--Progress View Controller-->
         <scene sceneID="nrc-aF-haQ">
             <objects>
-                <viewController restorationIdentifier="ProgressViewController" storyboardIdentifier="ProgressViewController" automaticallyAdjustsScrollViewInsets="NO" id="7W8-FQ-237" customClass="ProgressViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="ProgressViewController" automaticallyAdjustsScrollViewInsets="NO" id="7W8-FQ-237" customClass="ProgressViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MEv-vp-N4w"/>
                         <viewControllerLayoutGuide type="bottom" id="KuB-ai-F5Y"/>

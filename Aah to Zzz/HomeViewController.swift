@@ -14,8 +14,12 @@ class HomeViewController: UIViewController {
        // performSegueWithIdentifier("PlaySegue", sender:self)
     }
     
+
+    @IBOutlet weak var rightSideBar: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        addGradientBar()
         
 
         // Do any additional setup after loading the view.
@@ -26,6 +30,13 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // TODO: repeated in Progress VC. Consolidate.
+    func addGradientBar() {
+        let gradient = model.yellowPinkBlueGreenGradient()
+        //gradient.frame = rightSideBar.frame
+        gradient.frame = CGRectMake(rightSideBar.frame.origin.x, rightSideBar.frame.origin.y, 60, view.bounds.height)
+        rightSideBar.layer.addSublayer(gradient)
+    }
 
     /*
     // MARK: - Navigation

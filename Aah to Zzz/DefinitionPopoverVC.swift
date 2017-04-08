@@ -14,7 +14,7 @@ class DefinitionPopoverVC: UIViewController {
     let flickr = FlickrClient.sharedInstance
     
     var sometext: String? //TODO: give 'sometext' a better variable name!
-    var definition: String? // Holds the definition from the OSPD4 dictionary in the original word list
+    var definition: String? // Holds the definition from the OSPD5 dictionary in the original word list
     
     @IBOutlet weak var exampleImage: UIImageView!
     @IBOutlet weak var definitionTextView: UITextView!

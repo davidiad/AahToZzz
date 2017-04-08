@@ -22,6 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.statusBarHidden = true
         return true
     }
+    
+//    // May need this, just for state restoration to work. But tested, and seems not needed.
+//    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+//        return true
+//    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -57,14 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
-        print("Save App state")
         return true
     }
     
     func application(application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
-        print("restore app state")
         return true
-        
     }
 
     // Apple's boilerplate Core Data code

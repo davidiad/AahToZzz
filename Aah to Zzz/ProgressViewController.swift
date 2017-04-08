@@ -469,13 +469,10 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     }
     
     func addGradientBar() {
-        
         let gradient = model.yellowPinkBlueGreenGradient()
         //gradient.frame = sideBar.bounds
         gradient.frame = CGRectMake(0, 0, 3, view.bounds.height)
         sideBar.layer.addSublayer(gradient)
-        
-        
     }
     
     //MARK:- Game Center
