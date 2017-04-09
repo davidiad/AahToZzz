@@ -16,14 +16,14 @@ class UIStoryboardSegueFromRight: UIStoryboardSegue {
     
     override func perform()
     {
-        let src = sourceViewController as UIViewController
-        let dst = destinationViewController as UIViewController
+        let src = self.sourceViewController as UIViewController
+        let dst = self.destinationViewController as UIViewController
         
         src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
         // The position of the destination view before animation.
         dst.view.transform = CGAffineTransformMakeTranslation(src.view.frame.size.width, 0)
         
-        UIView.animateWithDuration(0.5,
+        UIView.animateWithDuration(1.5,
                                    delay: 0.0,
                                    options: UIViewAnimationOptions.CurveEaseInOut,
                                    animations: {
@@ -37,20 +37,24 @@ class UIStoryboardSegueFromRight: UIStoryboardSegue {
             }
         )
     }
+    
+    deinit {
+        print("DEINIT RUGHT")
+    }
 }
 
 class UIStoryboardSegueFromLeft: UIStoryboardSegue {
     
     override func perform()
     {
-        let src = sourceViewController as UIViewController
-        let dst = destinationViewController as UIViewController
+        let src = self.sourceViewController as UIViewController
+        let dst = self.destinationViewController as UIViewController
         
         src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
         // Make the position negative, has it come in from the left instead of the right
         dst.view.transform = CGAffineTransformMakeTranslation(-src.view.frame.size.width, 0)
         
-        UIView.animateWithDuration(0.5,
+        UIView.animateWithDuration(1.5,
                                    delay: 0.0,
                                    options: UIViewAnimationOptions.CurveEaseInOut,
                                    animations: {
@@ -63,6 +67,10 @@ class UIStoryboardSegueFromLeft: UIStoryboardSegue {
             }
         )
     }
+    
+    deinit {
+        print("DEINIT Left")
+    }
 }
 
 /* // Unwind Segue
@@ -70,8 +78,8 @@ class UIStoryboardUnwindSegueFromRight: UIStoryboardSegue {
     
     override func perform()
     {
-        let src = sourceViewController as UIViewController
-        let dst = destinationViewController as UIViewController
+        let src = self.sourceViewController as UIViewController
+        let dst = self.destinationViewController as UIViewController
         
         src.view.superview?.insertSubview(dst.view, belowSubview: src.view)
         src.view.transform = CGAffineTransformMakeTranslation(0, 0)

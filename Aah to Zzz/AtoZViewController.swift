@@ -399,6 +399,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("VDL")
         //proxyTable.registerClass(ProxyTableCell.self, forCellReuseIdentifier: "proxycell")
         //wordTable.registerClass(WordListCell.self, forCellReuseIdentifier: "cell")
         

@@ -10,6 +10,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    
     @IBAction func playGame(sender: AnyObject) {
        // performSegueWithIdentifier("PlaySegue", sender:self)
     }
@@ -34,8 +35,9 @@ class HomeViewController: UIViewController {
     func addGradientBar() {
         let gradient = model.yellowPinkBlueGreenGradient()
         //gradient.frame = rightSideBar.frame
-        gradient.frame = CGRectMake(rightSideBar.frame.origin.x, rightSideBar.frame.origin.y, 60, view.bounds.height)
-        rightSideBar.layer.addSublayer(gradient)
+        //gradient.frame = CGRectMake(rightSideBar.frame.origin.x, rightSideBar.frame.origin.y, 60, view.bounds.height)
+        gradient.frame = CGRectMake(0, 0, 60, view.bounds.height)
+        rightSideBar.layer.addSublayer(gradient) 
     }
 
     /*

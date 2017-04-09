@@ -19,29 +19,99 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwb-MG-8bs">
-                                <rect key="frame" x="285" y="285" width="30" height="30"/>
-                                <state key="normal" title="Play"/>
-                                <connections>
-                                    <action selector="playGame:" destination="6UW-8g-sR0" eventType="touchUpInside" id="km5-7T-Ch3"/>
-                                    <segue destination="BYZ-38-t0r" kind="custom" customClass="UIStoryboardSegueFromRight" customModule="AahToZzz" customModuleProvider="target" id="FvA-XN-dnJ"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wHB-FN-ik4">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6uK-UW-Rv8">
                                 <rect key="frame" x="540" y="0.0" width="60" height="600"/>
-                                <color key="backgroundColor" red="0.98603981733322144" green="0.0" blue="0.078923560678958893" alpha="1" colorSpace="calibratedRGB"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wHB-FN-ik4">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="600"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="7S7-Rb-F07"/>
+                                    <constraint firstAttribute="width" constant="60" id="Rji-so-hWd"/>
+                                    <constraint firstItem="wHB-FN-ik4" firstAttribute="top" secondItem="6uK-UW-Rv8" secondAttribute="top" id="fX4-5D-cin"/>
+                                    <constraint firstItem="wHB-FN-ik4" firstAttribute="leading" secondItem="6uK-UW-Rv8" secondAttribute="leading" id="qmn-Gn-Jfh"/>
+                                    <constraint firstAttribute="bottom" secondItem="wHB-FN-ik4" secondAttribute="bottom" id="rbz-VL-hyP"/>
+                                    <constraint firstAttribute="trailing" secondItem="wHB-FN-ik4" secondAttribute="trailing" id="yvs-ss-JCk"/>
                                 </constraints>
-                            </imageView>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AA to ZZZ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2d-Ga-oun">
+                                <rect key="frame" x="245" y="28" width="110" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="an anagram word learning game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyR-YU-OHo">
+                                <rect key="frame" x="177" y="65" width="246" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Emq-h1-kej">
+                                <rect key="frame" x="180" y="94" width="240" height="145"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="8rP-9j-DMj"/>
+                                    <constraint firstAttribute="height" constant="145" id="AgT-NH-jtS"/>
+                                </constraints>
+                                <string key="text">A fun way to learn 3 letter words (which can help you score more points in games like SCRABBLE®). Tap the letters, or drag them up, to form words. When you find a word, it's put into the word list. You can tap the New List button to get a new set of letters with a new list. Keep going till you find all 1000+ 3 letter words!</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XAv-0M-tPX">
+                                <rect key="frame" x="54" y="267" width="484" height="314"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwb-MG-8bs">
+                                        <rect key="frame" x="227" y="0.0" width="30" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="playGame:" destination="6UW-8g-sR0" eventType="touchUpInside" id="km5-7T-Ch3"/>
+                                            <segue destination="BYZ-38-t0r" kind="custom" customClass="UIStoryboardSegueFromRight" customModule="AahToZzz" customModuleProvider="target" id="FvA-XN-dnJ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He6-7G-baV">
+                                        <rect key="frame" x="31" y="48" width="423" height="30"/>
+                                        <state key="normal" title="How 3 letter words help you score more points in word games"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ic2-fx-QBA">
+                                        <rect key="frame" x="186" y="95" width="112" height="30"/>
+                                        <state key="normal" title="Leave Feedback"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNe-vJ-zON">
+                                        <rect key="frame" x="226" y="142" width="32" height="30"/>
+                                        <state key="normal" title="Help"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9r-FU-YhZ">
+                                        <rect key="frame" x="216" y="189" width="52" height="30"/>
+                                        <state key="normal" title="Tutorial"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSt-UW-IVq">
+                                        <rect key="frame" x="215" y="237" width="55" height="30"/>
+                                        <state key="normal" title="Contact"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7mm-2N-FAG">
+                                        <rect key="frame" x="195" y="284" width="95" height="30"/>
+                                        <state key="normal" title="Leaderboards"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="wHB-FN-ik4" secondAttribute="trailing" id="2eH-Ff-DMd"/>
-                            <constraint firstItem="mwb-MG-8bs" firstAttribute="centerX" secondItem="8FT-ui-kDq" secondAttribute="centerX" id="3kE-RE-72S"/>
-                            <constraint firstItem="PCQ-1u-fRP" firstAttribute="top" secondItem="wHB-FN-ik4" secondAttribute="bottom" id="hHP-ch-2Da"/>
-                            <constraint firstItem="mwb-MG-8bs" firstAttribute="centerY" secondItem="8FT-ui-kDq" secondAttribute="centerY" id="lgK-1c-sgr"/>
-                            <constraint firstItem="wHB-FN-ik4" firstAttribute="top" secondItem="8FT-ui-kDq" secondAttribute="top" id="sth-pj-U7I"/>
+                            <constraint firstItem="uyR-YU-OHo" firstAttribute="top" secondItem="W2d-Ga-oun" secondAttribute="bottom" constant="8" id="7W6-7c-zAM"/>
+                            <constraint firstAttribute="trailing" secondItem="6uK-UW-Rv8" secondAttribute="trailing" id="BaH-d9-BDd"/>
+                            <constraint firstItem="W2d-Ga-oun" firstAttribute="top" secondItem="Ahd-YK-11j" secondAttribute="bottom" constant="8" id="Cxy-qe-b0P"/>
+                            <constraint firstItem="W2d-Ga-oun" firstAttribute="centerX" secondItem="8FT-ui-kDq" secondAttribute="centerX" id="F5o-HJ-gcT"/>
+                            <constraint firstItem="PCQ-1u-fRP" firstAttribute="top" secondItem="XAv-0M-tPX" secondAttribute="bottom" constant="20" id="Nv6-zh-q4l"/>
+                            <constraint firstItem="Emq-h1-kej" firstAttribute="top" secondItem="uyR-YU-OHo" secondAttribute="bottom" constant="8" id="YUc-kr-kwp"/>
+                            <constraint firstItem="uyR-YU-OHo" firstAttribute="centerX" secondItem="8FT-ui-kDq" secondAttribute="centerX" id="eXj-YY-deO"/>
+                            <constraint firstItem="6uK-UW-Rv8" firstAttribute="leading" secondItem="XAv-0M-tPX" secondAttribute="trailing" constant="2" id="hNh-Zu-8dB"/>
+                            <constraint firstItem="PCQ-1u-fRP" firstAttribute="top" secondItem="6uK-UW-Rv8" secondAttribute="bottom" id="i0b-Nl-Anf"/>
+                            <constraint firstItem="6uK-UW-Rv8" firstAttribute="top" secondItem="8FT-ui-kDq" secondAttribute="top" id="jtN-mH-WO3"/>
+                            <constraint firstItem="XAv-0M-tPX" firstAttribute="top" secondItem="Emq-h1-kej" secondAttribute="bottom" constant="28" id="knj-9D-vzQ"/>
+                            <constraint firstItem="Emq-h1-kej" firstAttribute="centerX" secondItem="8FT-ui-kDq" secondAttribute="centerX" id="oai-V5-BOU"/>
+                            <constraint firstItem="XAv-0M-tPX" firstAttribute="leading" secondItem="8FT-ui-kDq" secondAttribute="leading" constant="54" id="pmP-e0-swF"/>
                         </constraints>
                     </view>
                     <connections>
