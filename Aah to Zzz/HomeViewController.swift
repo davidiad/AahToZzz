@@ -36,7 +36,7 @@ class HomeViewController: UIViewController {
         let gradient = model.yellowPinkBlueGreenGradient()
         //gradient.frame = rightSideBar.frame
         //gradient.frame = CGRectMake(rightSideBar.frame.origin.x, rightSideBar.frame.origin.y, 60, view.bounds.height)
-        gradient.frame = CGRectMake(0, 0, 60, view.bounds.height)
+        gradient.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height)
         rightSideBar.layer.addSublayer(gradient) 
     }
 
