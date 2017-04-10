@@ -23,7 +23,7 @@ class UIStoryboardSegueFromRight: UIStoryboardSegue {
         // The position of the destination view before animation.
         dst.view.transform = CGAffineTransformMakeTranslation(src.view.frame.size.width, 0)
         
-        UIView.animateWithDuration(1.5,
+        UIView.animateWithDuration(0.5,
                                    delay: 0.0,
                                    options: UIViewAnimationOptions.CurveEaseInOut,
                                    animations: {
@@ -54,7 +54,7 @@ class UIStoryboardSegueFromLeft: UIStoryboardSegue {
         // Make the position negative, has it come in from the left instead of the right
         dst.view.transform = CGAffineTransformMakeTranslation(-src.view.frame.size.width, 0)
         
-        UIView.animateWithDuration(1.5,
+        UIView.animateWithDuration(0.5,
                                    delay: 0.0,
                                    options: UIViewAnimationOptions.CurveEaseInOut,
                                    animations: {

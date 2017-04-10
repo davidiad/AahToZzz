@@ -9,7 +9,10 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-
+    
+    @IBOutlet weak var descriptionView: UIView!
+    
+    @IBOutlet weak var buttonHolderView: UIView!
     
     @IBAction func playGame(sender: AnyObject) {
        // performSegueWithIdentifier("PlaySegue", sender:self)
@@ -21,7 +24,10 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addGradientBar()
-        
+        descriptionView.layer.cornerRadius = 12.0
+        descriptionView.layer.masksToBounds = true
+        buttonHolderView.layer.cornerRadius = 12.0
+        buttonHolderView.layer.masksToBounds = true
 
         // Do any additional setup after loading the view.
     }
