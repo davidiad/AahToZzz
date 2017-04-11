@@ -906,6 +906,20 @@ class AtoZModel {
         }
     }
     
+    func numTurnsPlayed() -> Int {
+        //TODO: combine guards
+        guard game != nil else {
+            return 0
+        }
+        guard game?.data != nil else {
+            return 0
+        }
+        guard game?.data?.lettersets != nil else {
+            return 0
+        }
+        return (game?.data?.lettersets?.count)! - 1
+    }
+    
     func randomize7() -> [Int] {
         let sevenInts = [0,1,2,3,4,5,6]
         return GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(sevenInts) as! [Int]

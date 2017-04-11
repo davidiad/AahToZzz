@@ -39,6 +39,8 @@ class ProgressInfoViewController: UIViewController {
         view.layer.masksToBounds = true
         //TODO: add in init?
         
+        print ("TURNS: \(model.numTurnsPlayed())")
+        
         if let numWordsPlayed = model.numWordsPlayed(), numWordsFound = model.numWordsFound() {
             var pluralize = ""
             if numWordsFound > 1 {
