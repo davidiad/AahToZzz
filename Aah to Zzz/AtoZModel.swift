@@ -11,6 +11,9 @@ import CoreData
 import UIKit
 import GameplayKit // used for random shuffling methods
 
+//TODO: use lazy var fetchedWordsController throughout
+//TODO: calculate level in the model, so it can be accessed from anywhere
+
 // inherit from NSObject so that NSFetchedResultsControllerDelegate protocol is fulfilled
 class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
@@ -44,7 +47,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     //var dictionaryName: String // which dictionary 3 letter word list to use
     // 3 different data structures to hold the 3 letter word list info, each with its own purpose
-    var wordsArray: [String]?
+    var wordsArray: [String]
     var wordsDictionary: [String: String]
     var wordsSet: Set<String> // may not need to use this outside of this class, consider relocating the declaration
     // update: using wordsSet in ProgressViewController
@@ -77,19 +80,23 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         var rawWordsArray = [String]()
         rawWordsArray = arrayFromContentsOfFileWithName(dictionaryName)!
         
+        // TODO: this guard statement leading to crashed. Why?
+//        guard var wordsArray = wordsArray else {
+//            print("NO WORDS ARRAY") // handle error
+//            return
+//        }
+
         // convert wordsArray to wordsDictionary
         // even elements of wordsArray are the keys (the word itself); odd entries are the values, which are the word definitions
         //for var i = 0; i < rawWordsArray.count - 1; i = i + 2 { // Swift2 code
         for i in 0.stride(to: rawWordsArray.count - 1, by: 2) { // Swift3 code
             let key = rawWordsArray[i]
             let value = rawWordsArray[i + 1]
-            guard var wordsArray = wordsArray else {
-                return
-            }
             wordsArray.append(key)
             wordsDictionary[key] = value
             wordsSet.insert(key)
         }
+
         game = fetchGame() // fetches the exisiting game if there is one, or else creates a new game
         
         // gameTypeSetting maps enum to int(for saving in Core Data, encapsulated in GameType
@@ -149,11 +156,11 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
 //            // TODO: handle error
 //            
 //        }
-        let firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray!.count)))
-        let secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray!.count)))
+        let firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+        let secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
         
         // Add the 6 letters from 2 random words to the letterset, for a total of 7 letters
-        let sixLettersFromWords = wordsArray![firstWordIndex] + wordsArray![secondWordIndex]
+        let sixLettersFromWords = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
         for char in sixLettersFromWords.characters {
             letters.append(createLetter(String(char)))
         }
@@ -320,10 +327,10 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         let fetchRequest = NSFetchRequest(entityName: "Word")
         
         do {
-            guard let wordsArray = wordsArray else {
-                // handle error
-                return "ABCDEF"
-            }
+//            guard let wordsArray = wordsArray else {
+//                // handle error
+//                return "ABCDEF"
+//            }
             let fetchedWords = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
             let numUnsavedWords = wordsArray.count - fetchedWords.count
             
@@ -391,28 +398,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                             }
                         }
                     }
-                    
                 }
-                
-//                switch unmasteredWordsArray.count {
-//                    
-//                case 0: // note -- repeating code under case 0 above
-//                    // pick 2 random words from wordsArray
-//                    firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
-//                    secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
-//                    wordsForLetters = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
-//                case 1:
-//                    firstWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
-//                    secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
-//                    wordsForLetters = unmasteredWordsArray[firstWordIndex] + wordsArray[secondWordIndex]
-//                default: // 2 or more
-//                    // pick 2 random words from unmasteredWordsArray
-//                    firstWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
-//                    secondWordIndex = Int(arc4random_uniform(UInt32(unmasteredWordsArray.count)))
-//                    wordsForLetters = unmasteredWordsArray[firstWordIndex] + unmasteredWordsArray[secondWordIndex]
-//                    
-//                }
-//            case _ where numUnsavedWords == 1: // get the 1 unsaved word, and then find another word
 
             default:
                 // some words have been saved, and >= 1 unsaved
@@ -433,6 +419,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                 } else {
                     // only 1 from the unsaved, still need to add another word to the array
                     secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+                    print("WAC: \(wordsArray.count)")
                     wordsForLetters += wordsArray[secondWordIndex]
                 }
             }
@@ -956,10 +943,10 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         print("***********STATS****************")
         print("You have found \(numWordsFound()!) words out of \(numWordsPlayed()!) words played")
         print("Your percentage: \(percentageFound()!)%")
-        guard let wordsArray = wordsArray else {
-            // handle error
-            return
-        }
+//        guard let wordsArray = wordsArray else {
+//            // handle error
+//            return
+//        }
         print("You have found \(numUniqueWordsFound()!) unique words out of the \(numUniqueWordsPlayed()!) unique words played from a dictionary of \(wordsArray.count) three letter words")
     }
     

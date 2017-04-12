@@ -62,7 +62,7 @@ class ProgressInfoViewController: UIViewController {
 //                pluralize = "s"
 //            }
             //uniqueWordsLabel.text = "You found \(numUniqueWordsFound) out of the \(numUniqueWordsPlayed) unique words played from a dictionary of \(model.wordsArray.count) three letter words"
-            uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray!.count) words in the dictionary \(currentData.level) or more times"
+            uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary \(currentData.level) or more times"
         }
         
         
