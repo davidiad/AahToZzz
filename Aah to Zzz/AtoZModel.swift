@@ -11,7 +11,8 @@ import CoreData
 import UIKit
 import GameplayKit // used for random shuffling methods
 
-class AtoZModel {
+// inherit from NSObject so that NSFetchedResultsControllerDelegate protocol is fulfilled
+class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     static let sharedInstance = AtoZModel() // defines as singleton
     
@@ -19,13 +20,31 @@ class AtoZModel {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
     
+    // TODO: -perhaps, combine with call to fetch the game (e.g. fetchedGame.words or similar)
+    lazy var fetchedWordsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Word")
+        
+        // Add Sort Descriptors
+        let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let fetchedWordsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        fetchedWordsController.delegate = self
+        
+        return fetchedWordsController
+    }()
+
+    
     // constant of what mix of characters to choose random letters from
     // adding extra vowels as they are more freqent in english words
-    let alphabetSoup = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ" // will come from gameInfo
+    let alphabetSoup = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ" // will come from GameTypeInfo (when Game options are implemented)
+    let dictionaryName = "OSPD5_3letter" // will come from Game managed object(when Game options are implemented)
     
-    var dictionaryName: String // which dictionary 3 letter word list to use
+    //var dictionaryName: String // which dictionary 3 letter word list to use
     // 3 different data structures to hold the 3 letter word list info, each with its own purpose
-    var wordsArray: [String]
+    var wordsArray: [String]?
     var wordsDictionary: [String: String]
     var wordsSet: Set<String> // may not need to use this outside of this class, consider relocating the declaration
     // update: using wordsSet in ProgressViewController
@@ -45,14 +64,15 @@ class AtoZModel {
     //MARK:-
     
     //This prevents others from using the default '()' initializer for this class.
-    private init() {
+    private override init() {
+        
         //TODO: check the new words from OSPD5 that are in question
         positions = [Position]()
         wordsArray = [String]()
         wordsDictionary = [:] // init empty dictionary
         wordsSet = Set<String>()
-        
-        dictionaryName = "OSPD5_3letter" // default wordlist
+        super.init()
+        //dictionaryName = "OSPD5_3letter" // default wordlist
         
         var rawWordsArray = [String]()
         rawWordsArray = arrayFromContentsOfFileWithName(dictionaryName)!
@@ -63,7 +83,9 @@ class AtoZModel {
         for i in 0.stride(to: rawWordsArray.count - 1, by: 2) { // Swift3 code
             let key = rawWordsArray[i]
             let value = rawWordsArray[i + 1]
-            
+            guard var wordsArray = wordsArray else {
+                return
+            }
             wordsArray.append(key)
             wordsDictionary[key] = value
             wordsSet.insert(key)
@@ -123,11 +145,15 @@ class AtoZModel {
         letters = [createLetter(nil)]
         
         // pick 2 random words from wordsArray
-        let firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
-        let secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray.count)))
+//        guard let wordsArray = wordsArray else {
+//            // TODO: handle error
+//            
+//        }
+        let firstWordIndex = Int(arc4random_uniform(UInt32(wordsArray!.count)))
+        let secondWordIndex = Int(arc4random_uniform(UInt32(wordsArray!.count)))
         
         // Add the 6 letters from 2 random words to the letterset, for a total of 7 letters
-        let sixLettersFromWords = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
+        let sixLettersFromWords = wordsArray![firstWordIndex] + wordsArray![secondWordIndex]
         for char in sixLettersFromWords.characters {
             letters.append(createLetter(String(char)))
         }
@@ -294,6 +320,10 @@ class AtoZModel {
         let fetchRequest = NSFetchRequest(entityName: "Word")
         
         do {
+            guard let wordsArray = wordsArray else {
+                // handle error
+                return "ABCDEF"
+            }
             let fetchedWords = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
             let numUnsavedWords = wordsArray.count - fetchedWords.count
             
@@ -920,17 +950,25 @@ class AtoZModel {
         return (game?.data?.lettersets?.count)! - 1
     }
     
-    func randomize7() -> [Int] {
-        let sevenInts = [0,1,2,3,4,5,6]
-        return GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(sevenInts) as! [Int]
-         //GKMersenneTwisterRandomSource // more randomized but slower method
-    }
+    
     
     func printStats() {
         print("***********STATS****************")
         print("You have found \(numWordsFound()!) words out of \(numWordsPlayed()!) words played")
         print("Your percentage: \(percentageFound()!)%")
+        guard let wordsArray = wordsArray else {
+            // handle error
+            return
+        }
         print("You have found \(numUniqueWordsFound()!) unique words out of the \(numUniqueWordsPlayed()!) unique words played from a dictionary of \(wordsArray.count) three letter words")
+    }
+    
+    //MARK:- Helpers
+    
+    func randomize7() -> [Int] {
+        let sevenInts = [0,1,2,3,4,5,6]
+        return GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(sevenInts) as! [Int]
+        //GKMersenneTwisterRandomSource // more randomized but slower method
     }
     
     
