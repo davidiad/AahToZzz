@@ -171,7 +171,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
             // so don't do anything with it, just go on to the next
             if currentLevelArray.count > 0 {
                 // What if there are some words in level 0?
-                // Need to count all the words in this level and above
+                // Need to count all the words in this level and above. Because words in higher levels should count towards the Level calculation.
                 var levelWordCount = 0
                 for j in i ..< levelArrays.count {
                     levelWordCount += levelArrays[j]!.count
@@ -307,7 +307,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         numberOfWordsLabel.frame = CGRect(x: 0, y: 0, width: 30, height: 230)
         addGradientBar()
         
-        authPlayer()
+        authPlayer() // for Game Center
         
     }
     

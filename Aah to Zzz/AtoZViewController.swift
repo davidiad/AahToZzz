@@ -1063,7 +1063,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // This is where stats for a word are tracked (numTimesFound, numTimesPlayed)
     //TODO:-- move tracking to separate func?
     func generateNewWordlist() {
-        model.findGameLevel()
+        model.calculateLevel()
         startNewList.alpha = 0
         startNewList.hidden = true
         returnTiles() // if any tiles are in the upper positions, return them
@@ -1107,6 +1107,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         currentNumberOfWords = currentWords?.count
         updateProgress(nil)
         animateStatusHeight(52.0)
+        let levelFromModel = model.calculateLevel()
+        print("levelFromModel: \(levelFromModel)")
     }
 
     

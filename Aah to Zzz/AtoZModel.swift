@@ -23,21 +23,23 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
     
+    var fetchedWordsController: NSFetchedResultsController?
+    
     // TODO: -perhaps, combine with call to fetch the game (e.g. fetchedGame.words or similar)
-    lazy var fetchedWordsController: NSFetchedResultsController = {
-        
-        let fetchRequest = NSFetchRequest(entityName: "Word")
-        
-        // Add Sort Descriptors
-        let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        let fetchedWordsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
-        
-        fetchedWordsController.delegate = self
-        
-        return fetchedWordsController
-    }()
+//    lazy var fetchedWordsController: NSFetchedResultsController = {
+//        
+//        let fetchRequest = NSFetchRequest(entityName: "Word")
+//        
+//        // Add Sort Descriptors
+//        let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
+//        fetchRequest.sortDescriptors = [sortDescriptor]
+//        
+//        let fetchedWordsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+//        
+//        fetchedWordsController.delegate = self
+//        
+//        return fetchedWordsController
+//    }()
 
     
     // constant of what mix of characters to choose random letters from
@@ -64,6 +66,9 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     var location2: CGFloat?
     var location3: CGFloat?
     var location4: CGFloat?
+    
+    var levelArrays: [[String]?]
+    
     //MARK:-
     
     //This prevents others from using the default '()' initializer for this class.
@@ -74,6 +79,8 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         wordsArray = [String]()
         wordsDictionary = [:] // init empty dictionary
         wordsSet = Set<String>()
+        levelArrays = [[String]?]()
+
         super.init()
         //dictionaryName = "OSPD5_3letter" // default wordlist
         
@@ -102,6 +109,18 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         // gameTypeSetting maps enum to int(for saving in Core Data, encapsulated in GameType
         gameTypeInfo = GameTypeInfo(gameType: game!.gameTypeSet)
         
+        //print(" fwc: \(fetchedWordsController)") // trying to ensure that the lazy var has been called
+        let fetchRequest = NSFetchRequest(entityName: "Word")
+        
+        // Add Sort Descriptors
+        let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let fetchedWordsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        fetchedWordsController.delegate = self
+        
+        //print(" fwc: \(fetchedWordsController)") // trying to ensure that the  var has been called
     }
     
     // read in the 3 letter word list with word definitions
@@ -595,25 +614,26 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     //MARK:- GameData funcs
     
-    // Better to do a new fetch? probably better to return a float, and use tenths place
-    func findGameLevel() {
-        if let currentGame = game {
-            if let currentData = currentGame.data {
-                // if all words have been played at least once
-                if currentData.words?.count == wordsDictionary.count {
-                    // the minimum word level is the game level
-                    var level = currentData.words?.anyObject()?.level
-                    for word in currentData.words! {
-                        if word.level < level {
-                            level = word.level
-                        }
-                    }
-                    model.game?.data?.level = Int16(level!)
-                    saveContext()
-                }
-            }
-        }
-    }
+//    // Better to do a new fetch? probably better to return a float, and use tenths place
+//    func findGameLevel() {
+//        if let currentGame = game {
+//            if let currentData = currentGame.data {
+//                // if all words have been played at least once
+//                if currentData.words?.count == wordsDictionary.count {
+//                    // the minimum word level is the game level
+//                    var level = currentData.words?.anyObject()?.level
+//                    for word in currentData.words! {
+//                        if word.level < level {
+//                            level = word.level
+//                        }
+//                    }
+//                    model.game?.data?.level = Int16(level!)
+//                    saveContext()
+//                }
+//            }
+//        }
+    
+//    }
 
 
 
@@ -862,10 +882,113 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     //MARK:- Stats calculations
     
+    func getHighestLevel() -> Int {
+        var highestLevel = 0
+        print ("FWC: \(fetchedWordsController!.fetchedObjects)")
+        for result in fetchedWordsController!.fetchedObjects! {
+            if let word = result as? Word {
+                if word.level > highestLevel {
+                    highestLevel = word.level
+                }
+            }
+        }
+        
+        return highestLevel
+    }
+    
+    func addLevelArray() {
+        let newLevelArray = [String]()
+        levelArrays.append(newLevelArray)
+    }
+    
+    // Go thru the fetched results and and put each Word into its level array
+    func addWordsToLevels() {
+        let highestLevel = getHighestLevel()
+        // Init the minimum, default # of level arrays
+        for _ in 0 ... highestLevel {
+            addLevelArray()
+        }
+        
+        for result in fetchedWordsController!.fetchedObjects! {
+            
+            if let word = result as? Word {
+                
+                // add the word to the array
+                levelArrays[word.level]!.append(word.word!) // forced unwraps -- look into
+                
+            }
+        }
+    }
+    
 //    func calculateLevel() -> Float {
 //        var currentLevel: Float = 0.0
+//        
+//        guard let numWords = fetchedWordsController.fetchedObjects?.count else {
+//            return currentLevel
+//        }
+//        if numWords < wordsArray.count {
+//            // there are unplayed words. Level must be < 1
+//        }
+//        
 //        return currentLevel
+//        //for word in fetchedWordsController
 //    }
+    
+    // Moved from ProgressVC
+    func calculateLevel() -> Float {
+        
+        addWordsToLevels()
+        
+        var level: Float = 0.0
+        var levelOnesPlace = 0
+        
+        // skip 0, because we start by looking at the # of words found once (not the # found 0 times)
+        
+        // need to find the *first* level that has not been filled
+        // need a stopping condition, when we find that
+        
+        // start at 1, because if a word was found 0 times, it doesn't add to the count
+        if levelArrays.count >= 2 { // Need at least level 0 and level 1, otherwise, there are no found words, and level = 0
+            for i in 1 ..< levelArrays.count {
+                guard let currentLevelArray = levelArrays[i] else {
+                    return level
+                }
+                // if 0 words in level, then that level is finished (or else not started)
+                // so don't do anything with it, just go on to the next
+                if currentLevelArray.count > 0 {
+                    // Need to count all the words in this level and above. Because words in higher levels should count towards the Level calculation.
+                    var levelWordCount = 0
+                    for j in i ..< levelArrays.count {
+                        levelWordCount += levelArrays[j]!.count
+                    }
+                    
+                    if levelWordCount + (levelArrays[0]?.count)! < wordsArray.count {
+                        // not all words have been played. So level must be < 1.
+                        levelOnesPlace = 0
+                    } else {
+                        levelOnesPlace = i - 1
+                    }
+                    
+                    //if levelWordCount < wordsDictionary.count {
+                    
+                    let levelFloat = Float(levelOnesPlace) + Float(levelWordCount) / Float(model.wordsArray.count)
+                    // To avoid rounding x.5 and greater numbers up to the next level,
+                    // Convert to Int and back to Float
+                    let levelInt = Int(10 * levelFloat) // Drop (floor) all digits past the tenths by converting to Int
+                    level = Float(levelInt)/10.0 // Convert back to a Float with a tenths place
+                    // Will display level in tenth point increments
+                    // TODO: display as fraction 3 7/10 etc
+                    //levelString = String(format: "%.1f", level)
+                    //print ("Level Word Count : \(i) : \(levelWordCount)")
+                    return level // the level is the first one with some words, so return here
+                    // (you don't move to the next level until all are found)
+                    
+                }
+            }
+        }
+        // no levels > 0 had any words so return 0
+        return level
+    }
   
     func numWordsFound() -> Int? {
         var numWords: Int16 = 0
