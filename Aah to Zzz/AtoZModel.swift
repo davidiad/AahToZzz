@@ -884,15 +884,23 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     func getHighestLevel() -> Int {
         var highestLevel = 0
-        print ("FWC: \(fetchedWordsController!.fetchedObjects)")
-        for result in fetchedWordsController!.fetchedObjects! {
-            if let word = result as? Word {
-                if word.level > highestLevel {
-                    highestLevel = word.level
+        
+        let fetchRequest = NSFetchRequest(entityName: "Word")
+        
+        do {
+            let fetchedWords = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+            
+            for result in fetchedWords {
+                if let word = result as? Word {
+                    if word.level > highestLevel {
+                        highestLevel = word.level
+                    }
                 }
             }
+            
+        } catch {
+            print("Word fetch error")
         }
-        
         return highestLevel
     }
     
@@ -903,21 +911,30 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     // Go thru the fetched results and and put each Word into its level array
     func addWordsToLevels() {
+        levelArrays.removeAll() // reset the levels so that we are not adding the same words over and over
         let highestLevel = getHighestLevel()
         // Init the minimum, default # of level arrays
         for _ in 0 ... highestLevel {
             addLevelArray()
         }
+        ////////////////////
+        let fetchRequest = NSFetchRequest(entityName: "Word")
         
-        for result in fetchedWordsController!.fetchedObjects! {
+        do {
+            let fetchedWords = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
             
-            if let word = result as? Word {
-                
-                // add the word to the array
-                levelArrays[word.level]!.append(word.word!) // forced unwraps -- look into
-                
+            for result in fetchedWords {
+                if let word = result as? Word {
+                    // add the word to the array
+                    levelArrays[word.level]!.append(word.word!) // forced unwraps -- look into
+                }
             }
-        }
+            
+        } catch {
+            print("Word fetch error")
+        }///////////////////
+        
+
     }
     
 //    func calculateLevel() -> Float {
@@ -961,7 +978,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                     for j in i ..< levelArrays.count {
                         levelWordCount += levelArrays[j]!.count
                     }
-                    
+                    print("LWC: \(levelWordCount)")
                     if levelWordCount + (levelArrays[0]?.count)! < wordsArray.count {
                         // not all words have been played. So level must be < 1.
                         levelOnesPlace = 0
@@ -971,7 +988,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                     
                     //if levelWordCount < wordsDictionary.count {
                     
-                    let levelFloat = Float(levelOnesPlace) + Float(levelWordCount) / Float(model.wordsArray.count)
+                    let levelFloat = Float(levelOnesPlace) + Float(currentLevelArray.count) / Float(model.wordsArray.count)
                     // To avoid rounding x.5 and greater numbers up to the next level,
                     // Convert to Int and back to Float
                     let levelInt = Int(10 * levelFloat) // Drop (floor) all digits past the tenths by converting to Int
@@ -1101,14 +1118,6 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         
         return gradientLayer
     }
-    
-    //MARK:- Colors
-//    
-//    struct Colors {
-//        
-//        static let magenta = UIColor(hue: 300/360, saturation: 1.0, brightness: 0.7, alpha: 1.0)
-//        
-//    }
 }
 
 
