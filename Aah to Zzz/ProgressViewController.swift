@@ -164,6 +164,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         // need a stopping condition, when we find that
         
         for i in 1 ..< levelArrays.count {
+            print("Counting the levels: \(i)")
             guard let currentLevelArray = levelArrays[i] else {
                 return level
             }
@@ -175,9 +176,16 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                 var levelWordCount = 0
                 for j in i ..< levelArrays.count {
                     levelWordCount += levelArrays[j]!.count
+                    print("Progress LWC: \(j) : \(levelWordCount)")
                 }
                 
-                if levelWordCount < model.wordsDictionary.count {
+                // The number of words at or above the current level has been calculated
+                // The level is not calculated if all the words have been found for that level.
+                // The loop continues, until the first level where the level before it had some words.
+                // Therefore the current level has less than the total # of possible words,
+                // The level is calculated, and then returned
+                // If there a more straightforward stop condition for the loop?
+                if levelWordCount < model.wordsDictionary.count { // why would this line be needed? levelWordCount can't be > wordDictionary.count (all the words). And if it was ==, that means no words have been found for that level. I guess it could happen?
                     
                     let levelFloat = Float(i - 1) + Float(levelWordCount) / Float(model.wordsDictionary.count)
                     // To avoid rounding x.5 and greater numbers up to the next level,

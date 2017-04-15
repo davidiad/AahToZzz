@@ -974,31 +974,37 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                 // so don't do anything with it, just go on to the next
                 if currentLevelArray.count > 0 {
                     // Need to count all the words in this level and above. Because words in higher levels should count towards the Level calculation.
-                    var levelWordCount = 0
+                    var levelWordCount = 0 // sum of all the words
                     for j in i ..< levelArrays.count {
                         levelWordCount += levelArrays[j]!.count
+                        print("LWC: \(levelWordCount)")
                     }
-                    print("LWC: \(levelWordCount)")
-                    if levelWordCount + (levelArrays[0]?.count)! < wordsArray.count {
-                        // not all words have been played. So level must be < 1.
-                        levelOnesPlace = 0
-                    } else {
+                    
+//                    if levelWordCount + (levelArrays[0]?.count)! < wordsArray.count {
+//                        // not all words have been played. So level must be < 1.
+//                        levelOnesPlace = 0
+//                    } else {
+//                        levelOnesPlace = i - 1
+//                    }
+                    
+                    if levelWordCount < wordsDictionary.count {
                         levelOnesPlace = i - 1
+                        let levelFloat = Float(levelOnesPlace) + Float(levelWordCount) / Float(wordsArray.count)
+                        print("levelFloat: \(levelFloat)")
+                        print("currentLevelArray.count: \(currentLevelArray.count)")
+                        print("wordsArray.count: \(wordsArray.count)")
+                        print("levelOnesPlace: \(levelOnesPlace)")
+                        // To avoid rounding x.5 and greater numbers up to the next level,
+                        // Convert to Int and back to Float
+                        let levelInt = Int(10 * levelFloat) // Drop (floor) all digits past the tenths by converting to Int
+                        level = Float(levelInt)/10.0 // Convert back to a Float with a tenths place
+                        // Will display level in tenth point increments
+                        // TODO: display as fraction 3 7/10 etc
+                        //levelString = String(format: "%.1f", level)
+                        //print ("Level Word Count : \(i) : \(levelWordCount)")
+                        return level // the level is the first one with some words, so return here
+                        // (you don't move to the next level until all are found)
                     }
-                    
-                    //if levelWordCount < wordsDictionary.count {
-                    
-                    let levelFloat = Float(levelOnesPlace) + Float(currentLevelArray.count) / Float(model.wordsArray.count)
-                    // To avoid rounding x.5 and greater numbers up to the next level,
-                    // Convert to Int and back to Float
-                    let levelInt = Int(10 * levelFloat) // Drop (floor) all digits past the tenths by converting to Int
-                    level = Float(levelInt)/10.0 // Convert back to a Float with a tenths place
-                    // Will display level in tenth point increments
-                    // TODO: display as fraction 3 7/10 etc
-                    //levelString = String(format: "%.1f", level)
-                    //print ("Level Word Count : \(i) : \(levelWordCount)")
-                    return level // the level is the first one with some words, so return here
-                    // (you don't move to the next level until all are found)
                     
                 }
             }
