@@ -9,6 +9,7 @@
 
 import UIKit
 import CoreData
+import GameKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,7 +21,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         application.statusBarHidden = true
+        authPlayer()
         return true
+    }
+    
+    //MARK:- Game Center
+    
+    func authPlayer() {
+        let localPlayer = GKLocalPlayer.localPlayer()
+        let viewController = self.window!.rootViewController! as UIViewController
+        localPlayer.authenticateHandler = {
+            (view, error) in
+            if view != nil {
+                viewController.presentViewController(view!, animated: true, completion: nil)
+            } else {
+                print("Game Center authenticated?: \(GKLocalPlayer.localPlayer().authenticated)")
+            }
+        }
     }
     
 //    // May need this, just for state restoration to work. But tested, and seems not needed.

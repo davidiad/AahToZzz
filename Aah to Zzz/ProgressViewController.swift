@@ -315,7 +315,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         numberOfWordsLabel.frame = CGRect(x: 0, y: 0, width: 30, height: 230)
         addGradientBar()
         
-        authPlayer() // for Game Center
+        //authPlayer() // for Game Center
         
     }
     
@@ -485,17 +485,17 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     
     //MARK:- Game Center
     
-    func authPlayer() {
-        let localPlayer = GKLocalPlayer.localPlayer()
-        localPlayer.authenticateHandler = {
-            (view, error) in
-            if view != nil {
-                self.presentViewController(view!, animated: true, completion: nil)
-            } else {
-                print("Game Center authenticated?: \(GKLocalPlayer.localPlayer().authenticated)")
-            }
-        }
-    }
+//    func authPlayer() {
+//        let localPlayer = GKLocalPlayer.localPlayer()
+//        localPlayer.authenticateHandler = {
+//            (view, error) in
+//            if view != nil {
+//                self.presentViewController(view!, animated: true, completion: nil)
+//            } else {
+//                print("Game Center authenticated?: \(GKLocalPlayer.localPlayer().authenticated)")
+//            }
+//        }
+//    }
     
     func addScore() {
         score += 1
