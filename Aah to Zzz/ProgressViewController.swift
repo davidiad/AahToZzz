@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import GameKit
 
-class ProgressViewController: UIViewController, NSFetchedResultsControllerDelegate, GKGameCenterControllerDelegate {
+class ProgressViewController: UIViewController, NSFetchedResultsControllerDelegate {
     
     // hidden but saved for example @IBOutlet weak var table_00: UITableView!
     @IBOutlet weak var graphBgView: UIView!
@@ -497,25 +497,25 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
 //        }
 //    }
     
-    func addScore() {
-        score += 1
-    }
+//    func addScore() {
+//        score += 1
+//    }
     
-    func saveHighScore(number: Int, levelNumber: Float) {
-        if GKLocalPlayer.localPlayer().authenticated {
-            let scoreReporter = GKScore(leaderboardIdentifier: "atozleaderboard")
-            scoreReporter.value = Int64(number)
-            let scoreArray: [GKScore] = [scoreReporter]
-            GKScore.reportScores(scoreArray, withCompletionHandler: nil)
-            
-            let levelReporter = GKScore(leaderboardIdentifier: "level_leaderboard")
-            // Game Center only allows Int64, but with format with 1 decimal point, so multiply by 10
-            levelReporter.value = Int64(levelNumber * 10)
-            let levelArray: [GKScore] = [levelReporter]
-            GKScore.reportScores(levelArray, withCompletionHandler: nil)
-        }
-    }
-    
+//    func saveHighScore(number: Int, levelNumber: Float) {
+//        if GKLocalPlayer.localPlayer().authenticated {
+//            let scoreReporter = GKScore(leaderboardIdentifier: "atozleaderboard")
+//            scoreReporter.value = Int64(number)
+//            let scoreArray: [GKScore] = [scoreReporter]
+//            GKScore.reportScores(scoreArray, withCompletionHandler: nil)
+//            
+//            let levelReporter = GKScore(leaderboardIdentifier: "level_leaderboard")
+//            // Game Center only allows Int64, but with format with 1 decimal point, so multiply by 10
+//            levelReporter.value = Int64(levelNumber * 10)
+//            let levelArray: [GKScore] = [levelReporter]
+//            GKScore.reportScores(levelArray, withCompletionHandler: nil)
+//        }
+//    }
+   /*
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -527,12 +527,11 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         viewController.presentViewController(gamecenterVC, animated: true, completion: nil)
         
     }
-    
+    */
     @IBAction func openLeaderboards(sender: AnyObject) {
-        addScore()
-        print("Score: \(score)")
-        let levelScore = calculateLevel()
-        saveHighScore(score, levelNumber: levelScore)
+       // addScore()
+        //let levelScore = calculateLevel()
+        //saveHighScore(score, levelNumber: levelScore)
         
         showLeaderboard()
         
