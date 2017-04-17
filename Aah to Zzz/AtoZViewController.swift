@@ -1107,12 +1107,16 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         currentNumberOfWords = currentWords?.count
         updateProgress(nil)
         animateStatusHeight(52.0)
+        
+        
         let levelFromModel = model.calculateLevel()
+        game?.data?.level = levelFromModel
         print("levelFromModel: \(levelFromModel)")
         let percentage = model.percentageFound()
         print("percentage: \(percentage)")
         let numListsPlayed = model.numListsPlayed()
         reportScores(levelFromModel, percentage: percentage, numberOfLists: numListsPlayed)
+        
     }
 
     

@@ -46,7 +46,11 @@ class ProgressInfoViewController: UIViewController {
             if numWordsFound > 1 {
                 pluralize = "s"
             }
-            playedWordsLabel.text = "\(numWordsFound) word" + pluralize + " out of \(numWordsPlayed) words played"
+            guard let numWordsFoundString = formatInt(numWordsFound), numWordsPlayedString = formatInt(numWordsPlayed) else {
+                playedWordsLabel.text = ""
+                return
+            }
+            playedWordsLabel.text = "\(numWordsFoundString) word" + pluralize + " out of \(numWordsPlayedString) words played"
         }
         
         if let numUniqueWordsFound = model.numUniqueWordsFound() {
@@ -62,6 +66,7 @@ class ProgressInfoViewController: UIViewController {
 //                pluralize = "s"
 //            }
             //uniqueWordsLabel.text = "You found \(numUniqueWordsFound) out of the \(numUniqueWordsPlayed) unique words played from a dictionary of \(model.wordsArray.count) three letter words"
+            
             uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary \(currentData.level) or more times"
         }
         
@@ -84,12 +89,21 @@ class ProgressInfoViewController: UIViewController {
         guard let levelText = levelByTenths else {
             return
         }
-        levelLabel.text = "Overall Level: " + levelText
+        levelLabel.text = "Level: " + levelText
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // Add comma separators to large Int's
+    // example to format by locale (e.g. France)
+    // fmt.locale = NSLocale(localeIdentifier: "fr_FR")
+    func formatInt(number: Int) -> String? {
+        let numberFormat = NSNumberFormatter()
+        numberFormat.numberStyle = .DecimalStyle
+        return numberFormat.stringFromNumber(number)
     }
     
 

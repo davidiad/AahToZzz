@@ -947,28 +947,28 @@
                                 <rect key="contentStretch" x="0.040000000000000001" y="0.040000000000000001" width="0.92222199999999999" height="0.71999999999999997"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="tEo-MP-uNb">
-                                <rect key="frame" x="12" y="12" width="339" height="94"/>
+                                <rect key="frame" x="10" y="12" width="343" height="94"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J1i-94-aU8">
-                                        <rect key="frame" x="0.0" y="0.0" width="339" height="26"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You found:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mTH-9n-VvA">
-                                        <rect key="frame" x="0.0" y="26" width="339" height="22"/>
+                                        <rect key="frame" x="0.0" y="26" width="343" height="22"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" misplaced="YES" text="Unique words" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1mE-dS-ByM">
-                                        <rect key="frame" x="0.0" y="48" width="339" height="23"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Played words" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z0a-2R-yfW">
+                                        <rect key="frame" x="0.0" y="48" width="343" height="23"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Played words" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z0a-2R-yfW">
-                                        <rect key="frame" x="0.0" y="71" width="339" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" misplaced="YES" text="Unique words" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1mE-dS-ByM">
+                                        <rect key="frame" x="0.0" y="71" width="343" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -982,13 +982,13 @@
                             <constraint firstItem="AiD-vJ-32i" firstAttribute="leading" secondItem="iwS-FX-Rf6" secondAttribute="leading" id="AGY-dG-4NC"/>
                             <constraint firstItem="tEo-MP-uNb" firstAttribute="top" secondItem="iwS-FX-Rf6" secondAttribute="top" constant="12" id="Bc1-yV-KJb"/>
                             <constraint firstItem="AiD-vJ-32i" firstAttribute="top" secondItem="kj0-LH-X6Q" secondAttribute="bottom" id="HQu-Gv-aWG"/>
-                            <constraint firstItem="tEo-MP-uNb" firstAttribute="trailing" secondItem="iwS-FX-Rf6" secondAttribute="trailing" constant="-12" id="QXN-a6-jqh"/>
+                            <constraint firstItem="tEo-MP-uNb" firstAttribute="trailing" secondItem="iwS-FX-Rf6" secondAttribute="trailing" constant="-10" id="QXN-a6-jqh"/>
                             <constraint firstAttribute="bottom" secondItem="AiD-vJ-32i" secondAttribute="bottom" id="XwR-fN-RI6"/>
                             <constraint firstItem="AiD-vJ-32i" firstAttribute="top" secondItem="iwS-FX-Rf6" secondAttribute="top" id="a2Q-eP-U9n"/>
                             <constraint firstItem="uPg-JB-w3g" firstAttribute="top" secondItem="AiD-vJ-32i" secondAttribute="bottom" id="e8g-fJ-WcY"/>
                             <constraint firstAttribute="trailing" secondItem="AiD-vJ-32i" secondAttribute="trailing" id="fSH-yD-N1g"/>
                             <constraint firstAttribute="trailing" secondItem="AiD-vJ-32i" secondAttribute="trailing" id="fpL-Go-j6m"/>
-                            <constraint firstItem="tEo-MP-uNb" firstAttribute="leading" secondItem="iwS-FX-Rf6" secondAttribute="leading" constant="12" id="k7q-3Q-emf"/>
+                            <constraint firstItem="tEo-MP-uNb" firstAttribute="leading" secondItem="iwS-FX-Rf6" secondAttribute="leading" constant="10" id="k7q-3Q-emf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">

@@ -681,7 +681,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                 print ("newGame: \(newGame)")
                 newGameData.game = newGame
                 newGame.data?.isCurrentGame = true
-                newGame.data?.level = 0
+                newGame.data?.level = 0.0
                 //TODO:- Set all other game isCurrentGame to false here?
                 // TODO:= create a mechanism to add new a new game. Where?
                 // create the Positions and add to game
