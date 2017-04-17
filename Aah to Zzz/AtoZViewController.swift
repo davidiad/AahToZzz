@@ -1109,7 +1109,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         animateStatusHeight(52.0)
         let levelFromModel = model.calculateLevel()
         print("levelFromModel: \(levelFromModel)")
-        saveHighScore(321, levelNumber: 667.3)
+        let percentage = model.percentageFound()
+        print("percentage: \(percentage)")
+        let numListsPlayed = model.numListsPlayed()
+        reportScores(levelFromModel, percentage: percentage, numberOfLists: numListsPlayed)
     }
 
     

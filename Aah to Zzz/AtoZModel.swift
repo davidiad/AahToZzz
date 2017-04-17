@@ -1055,21 +1055,21 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     
     
-    func percentageFound() -> Int? {
+    func percentageFound() -> Float {
         guard let numWordsPlayed = numWordsPlayed() else {
-            return nil
+            return 0.0
         }
         guard let numWordsFound = numWordsFound() else {
-            return nil
+            return 0.0
         }
         if numWordsPlayed > 0 {
-            return Int(100.0 * Float(numWordsFound) / Float(numWordsPlayed))
+            return 100.0 * Float(numWordsFound) / Float(numWordsPlayed)
         } else {
-            return nil
+            return 0.0
         }
     }
     
-    func numTurnsPlayed() -> Int {
+    func numListsPlayed() -> Int {
         //TODO: combine guards
         guard game != nil else {
             return 0
@@ -1088,7 +1088,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     func printStats() {
         print("***********STATS****************")
         print("You have found \(numWordsFound()!) words out of \(numWordsPlayed()!) words played")
-        print("Your percentage: \(percentageFound()!)%")
+        print("Your percentage: \(percentageFound())%")
 //        guard let wordsArray = wordsArray else {
 //            // handle error
 //            return

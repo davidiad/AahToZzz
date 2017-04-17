@@ -39,7 +39,7 @@ class ProgressInfoViewController: UIViewController {
         view.layer.masksToBounds = true
         //TODO: add in init?
         
-        print ("TURNS: \(model.numTurnsPlayed())")
+        print ("TURNS: \(model.numListsPlayed())")
         
         if let numWordsPlayed = model.numWordsPlayed(), numWordsFound = model.numWordsFound() {
             var pluralize = ""
@@ -66,9 +66,9 @@ class ProgressInfoViewController: UIViewController {
         }
         
         
-        if let percentageFound = model.percentageFound() {
-            percentageLabel.text = "Your percentage: \(percentageFound)%"
-        }
+//        //if let percentageFound = model.percentageFound() {
+//            percentageLabel.text = "Your percentage: \(model.percentageFound())%"
+//        //}
         
         
     }
