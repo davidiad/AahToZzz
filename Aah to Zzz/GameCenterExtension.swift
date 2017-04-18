@@ -10,7 +10,7 @@ import GameKit
 
 extension UIViewController: GKGameCenterControllerDelegate {
     
-    func reportScores(levelNumber: Float, percentage: Float, numberOfLists: Int) {
+    func reportScores(levelNumber: Float, percentage: Float, numberOfLists: Int, numberOfWords: Int) {
         if GKLocalPlayer.localPlayer().authenticated {
 //            let scoreReporter = GKScore(leaderboardIdentifier: "atozleaderboard")
 //            scoreReporter.value = Int64(number)
@@ -33,6 +33,11 @@ extension UIViewController: GKGameCenterControllerDelegate {
             numListsReporter.value = Int64(numberOfLists)
             let numberOfListsArray: [GKScore] = [numListsReporter]
             GKScore.reportScores(numberOfListsArray, withCompletionHandler: nil)
+            
+            let numWordsFoundReporter = GKScore(leaderboardIdentifier: "numberOfWordsFound")
+            numWordsFoundReporter.value = Int64(numberOfWords)
+            let numberOfWordsArray: [GKScore] = [numWordsFoundReporter]
+            GKScore.reportScores(numberOfWordsArray, withCompletionHandler: nil)
         }
     }
     

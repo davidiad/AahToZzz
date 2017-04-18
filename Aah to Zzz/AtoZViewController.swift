@@ -1117,7 +1117,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let percentage = model.percentageFound()
         print("percentage: \(percentage)")
         let numListsPlayed = model.numListsPlayed()
-        reportScores(levelFromModel, percentage: percentage, numberOfLists: numListsPlayed)
+        
+        var numWordsFound = 0
+        if let numWords = model.numWordsFound() {
+            numWordsFound = numWords
+        }
+        
+        reportScores(levelFromModel, percentage: percentage, numberOfLists: numListsPlayed, numberOfWords: numWordsFound)
         
     }
 

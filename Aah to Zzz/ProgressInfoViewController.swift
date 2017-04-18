@@ -18,7 +18,8 @@ class ProgressInfoViewController: UIViewController {
     var numUniqueWordsFound: Int?
     var percentageFound: Int?
     var levelByTenths: String?
-    var levelFloat: Float?
+    
+    var levelFloat: Float
     
     //var parentVC: ProgressViewController?
     
@@ -31,6 +32,7 @@ class ProgressInfoViewController: UIViewController {
     @IBOutlet weak var levelLabel: UILabel!
     
     required init?(coder aDecoder: NSCoder) {
+        levelFloat = 0.0
         super.init(coder: aDecoder)
     }
     
@@ -47,15 +49,16 @@ class ProgressInfoViewController: UIViewController {
         print ("TURNS: \(model.numListsPlayed())")
         
         if let numWordsPlayed = model.numWordsPlayed(), numWordsFound = model.numWordsFound() {
-            var pluralize = ""
-            if numWordsFound > 1 {
-                pluralize = "s"
-            }
+//            var pluralize = "s"
+//            if numWordsFound == 1 {
+//                pluralize = ""
+//            }
             guard let numWordsFoundString = formatInt(numWordsFound), numWordsPlayedString = formatInt(numWordsPlayed) else {
                 playedWordsLabel.text = ""
                 return
             }
-            playedWordsLabel.text = "\(numWordsFoundString) word" + pluralize + " out of \(numWordsPlayedString) words played"
+//            playedWordsLabel.text = "\(numWordsFoundString) word" + pluralize + " out of \(numWordsPlayedString) words played"
+            playedWordsLabel.text = "\(numWordsFoundString) out of \(numWordsPlayedString) words played"
         }
         
         if let numUniqueWordsFound = model.numUniqueWordsFound() {
@@ -76,13 +79,21 @@ class ProgressInfoViewController: UIViewController {
 //            }
             //uniqueWordsLabel.text = "You found \(numUniqueWordsFound) out of the \(numUniqueWordsPlayed) unique words played from a dictionary of \(model.wordsArray.count) three letter words"
 
-            guard let levelFloatIn = levelFloat else {
-            //String(format: "%.2d", model.calculateLevel())
-                return
-            }
-            let baseLevel = Int(levelFloatIn)
+//            guard let levelFloatIn = levelFloat else {
+//            //String(format: "%.2d", model.calculateLevel())
+//                return
+//            }
+            let baseLevel = Int(levelFloat) // drop everything past the decimal point
             
-            uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary \(baseLevel) or more times"
+            switch baseLevel {
+                
+            case 0:
+                uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary"
+            default:
+                uniqueWordsLabel.text = "All \(model.wordsArray.count) words in the dictionary \(baseLevel) or more times"
+            }
+            
+//            uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary \(baseLevel) or more times"
         }
         
         
@@ -103,11 +114,11 @@ class ProgressInfoViewController: UIViewController {
 //        let levelFloat = model.calculateLevel()
         //TODO: ought to be able to eliminate either levelString or levelbyTenths
         //TODO: can levelFloat be non-optional? Used twice, has to be unwrapped twice
-        guard let levelFloatIn = levelFloat else {
-            return
-        }
-        let levelString = String(format: "%.1f", levelFloatIn)
-        levelByTenths = levelString //parentVC.calculateLevel()
+//        guard let levelFloatIn = levelFloat else {
+//            return
+//        }
+        //let levelString = String(format: "%.1f", levelFloat)
+        levelByTenths = String(format: "%.1f", levelFloat)//levelString //parentVC.calculateLevel()
         guard let levelText = levelByTenths else {
             return
         }
