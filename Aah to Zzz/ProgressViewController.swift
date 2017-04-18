@@ -453,12 +453,12 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                     bottomLabel.font = UIFont.systemFontOfSize(11)
                     
                     if i < 0 {
-                        bottomLabel.text = "Words not yet played"
+                        bottomLabel.text = "Unplayed"//"Words not yet played"
                         bottomLabel.lineBreakMode = .ByWordWrapping
-                        bottomLabel.numberOfLines = 4
+                        //bottomLabel.numberOfLines = 4
                         bottomLabel.textAlignment = .Center
-                        bottomLabel.widthAnchor.constraintEqualToConstant(40).active = true
-                        graphLowerCaptionConstraint.constant = 32
+                        bottomLabel.widthAnchor.constraintEqualToConstant(56).active = true
+                        //graphLowerCaptionConstraint.constant = 32 // This line added space for when needed 4 lines for "Words not yet played"
                         
                     } else {
                         bottomLabel.text = String(levelTableController.level!)

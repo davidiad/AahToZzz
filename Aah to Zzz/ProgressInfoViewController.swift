@@ -90,7 +90,7 @@ class ProgressInfoViewController: UIViewController {
             case 0:
                 uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary"
             default:
-                uniqueWordsLabel.text = "All \(model.wordsArray.count) words in the dictionary \(baseLevel) or more times"
+                uniqueWordsLabel.text = "all \(model.wordsArray.count) words in the dictionary \(baseLevel) or more times"
             }
             
 //            uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary \(baseLevel) or more times"
