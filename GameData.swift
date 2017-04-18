@@ -15,7 +15,7 @@ class GameData: NSManagedObject {
     @NSManaged var isCurrentGame: Bool
     @NSManaged var currentLetterSetID: String?
     @NSManaged var name: String? // since the name could be changed, put in GameData rather than Game
-    @NSManaged var level: Int16
+    @NSManaged var level: Float
     @NSManaged var masteryLevel: Int16
     @NSManaged var masteryLevelManual: Bool // when true, the mastery level set by the user is used. When false, it's automatic
     @NSManaged var positions: NSSet?

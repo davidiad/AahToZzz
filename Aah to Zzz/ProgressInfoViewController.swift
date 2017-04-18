@@ -18,6 +18,8 @@ class ProgressInfoViewController: UIViewController {
     var numUniqueWordsFound: Int?
     var percentageFound: Int?
     var levelByTenths: String?
+    var levelFloat: Float?
+    
     //var parentVC: ProgressViewController?
     
     @IBOutlet weak var playedWordsLabel: UILabel!
@@ -32,8 +34,11 @@ class ProgressInfoViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
+    //TODO: when level is <1, don't display "0 or more times"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        levelFloat = model.calculateLevel()
         view.layer.cornerRadius = 12.0
         //view.layer.mask?.cornerRadius = 12.0
         view.layer.masksToBounds = true
@@ -54,20 +59,30 @@ class ProgressInfoViewController: UIViewController {
         }
         
         if let numUniqueWordsFound = model.numUniqueWordsFound() {
+            /* no longer need currentData  - get info from model.calculateLevel instead
+             
             guard let currentGame = model.game else {
                 return
             }
             guard let currentData = currentGame.data else {
                 return
             }
+            */
+            
 //            var pluralize = ""
 //            
 //            if currentData.level > 1 {
 //                pluralize = "s"
 //            }
             //uniqueWordsLabel.text = "You found \(numUniqueWordsFound) out of the \(numUniqueWordsPlayed) unique words played from a dictionary of \(model.wordsArray.count) three letter words"
+
+            guard let levelFloatIn = levelFloat else {
+            //String(format: "%.2d", model.calculateLevel())
+                return
+            }
+            let baseLevel = Int(levelFloatIn)
             
-            uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary \(currentData.level) or more times"
+            uniqueWordsLabel.text = "\(numUniqueWordsFound) of the \(model.wordsArray.count) words in the dictionary \(baseLevel) or more times"
         }
         
         
@@ -79,12 +94,19 @@ class ProgressInfoViewController: UIViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
+        /* Move calculate level to model, so no need now to call parent VC
         guard let parentVC = parentViewController as? ProgressViewController else {
             return
         }
         let levelFloat = parentVC.calculateLevel()
+        */
+//        let levelFloat = model.calculateLevel()
         //TODO: ought to be able to eliminate either levelString or levelbyTenths
-        let levelString = String(format: "%.1f", levelFloat)
+        //TODO: can levelFloat be non-optional? Used twice, has to be unwrapped twice
+        guard let levelFloatIn = levelFloat else {
+            return
+        }
+        let levelString = String(format: "%.1f", levelFloatIn)
         levelByTenths = levelString //parentVC.calculateLevel()
         guard let levelText = levelByTenths else {
             return

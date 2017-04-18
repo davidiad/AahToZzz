@@ -99,7 +99,6 @@
 		637F67601E20743600347F15 /* ProgressInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637F675F1E20743600347F15 /* ProgressInfoViewController.swift */; };
 		63A3A1111C763F6C00F440B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1101C763F6C00F440B5 /* AppDelegate.swift */; };
 		63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A1141C763F6C00F440B5 /* Main.storyboard */; };
-		63A3A1191C763F6C00F440B5 /* AtoZ.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */; };
 		63A3A11B1C763F6C00F440B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A11A1C763F6C00F440B5 /* Assets.xcassets */; };
 		63A3A11E1C763F6C00F440B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A11C1C763F6C00F440B5 /* LaunchScreen.storyboard */; };
 		63A3A1261C764E3E00F440B5 /* AtoZViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */; };
@@ -159,6 +158,7 @@
 		63EA98E11D52B98700537F2A /* small_tile_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EA98DE1D52B98700537F2A /* small_tile_gray.png */; };
 		63EA98E21D52B98700537F2A /* small_tile_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EA98DF1D52B98700537F2A /* small_tile_gray@2x.png */; };
 		63EA98E31D52B98700537F2A /* small_tile_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EA98E01D52B98700537F2A /* small_tile_gray@3x.png */; };
+		63FD05801EA59106005C8E96 /* AtoZ.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63FD057D1EA59106005C8E96 /* AtoZ.xcdatamodeld */; };
 		63FE47A01E77631600BC4D95 /* progress_info_bg.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63FE479F1E77631600BC4D95 /* progress_info_bg.pdf */; };
 		63FE47A41E77691000BC4D95 /* progress_info_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FE47A11E77691000BC4D95 /* progress_info_bg@3x.png */; };
 		63FE47A51E77691000BC4D95 /* progress_info_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FE47A21E77691000BC4D95 /* progress_info_bg@2x.png */; };
@@ -250,7 +250,6 @@
 		635549971CA0E87D00DB5167 /* status_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bg.png; sourceTree = "<group>"; };
 		635549981CA0E87D00DB5167 /* status_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@3x.png"; sourceTree = "<group>"; };
 		635549991CA0E87D00DB5167 /* status_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@2x.png"; sourceTree = "<group>"; };
-		635CC6641E8627730083F439 /* AtoZ_01.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AtoZ_01.xcdatamodel; sourceTree = "<group>"; };
 		635F63E81E986B0A00C48913 /* UIStoryboardSegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStoryboardSegueFromRight.swift; sourceTree = "<group>"; };
 		636240841E308EEE007640DC /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		637760471E7F9CE400BD59F6 /* ToDoList.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = ToDoList.rtf; sourceTree = "<group>"; };
@@ -275,7 +274,6 @@
 		63A3A10D1C763F6C00F440B5 /* AahToZzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AahToZzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A3A1101C763F6C00F440B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63A3A1151C763F6C00F440B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		63A3A1181C763F6C00F440B5 /* AtoZ.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AtoZ.xcdatamodel; sourceTree = "<group>"; };
 		63A3A11A1C763F6C00F440B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63A3A11D1C763F6C00F440B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63A3A11F1C763F6C00F440B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -336,6 +334,9 @@
 		63EA98DE1D52B98700537F2A /* small_tile_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_tile_gray.png; sourceTree = "<group>"; };
 		63EA98DF1D52B98700537F2A /* small_tile_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_gray@2x.png"; sourceTree = "<group>"; };
 		63EA98E01D52B98700537F2A /* small_tile_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_gray@3x.png"; sourceTree = "<group>"; };
+		63FD057E1EA59106005C8E96 /* AtoZ.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AtoZ.xcdatamodel; sourceTree = "<group>"; };
+		63FD057F1EA59106005C8E96 /* AtoZ_01.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AtoZ_01.xcdatamodel; sourceTree = "<group>"; };
+		63FD05811EA5911B005C8E96 /* AtoZ_02.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AtoZ_02.xcdatamodel; sourceTree = "<group>"; };
 		63FE479F1E77631600BC4D95 /* progress_info_bg.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = progress_info_bg.pdf; sourceTree = "<group>"; };
 		63FE47A11E77691000BC4D95 /* progress_info_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress_info_bg@3x.png"; sourceTree = "<group>"; };
 		63FE47A21E77691000BC4D95 /* progress_info_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress_info_bg@2x.png"; sourceTree = "<group>"; };
@@ -520,11 +521,11 @@
 		63A9FEF61C7AC2D200AE54F1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				63FD057D1EA59106005C8E96 /* AtoZ.xcdatamodeld */,
 				63A9FEF51C7AC2AC00AE54F1 /* Core Data Managed Objects */,
 				63D57BA91C8A48AB0046E349 /* Tile.swift */,
 				637AF0771C84297C005A36BA /* FlickrClient.swift */,
 				63A9FEE71C7AB4B500AE54F1 /* CoreDataStackManager.swift */,
-				63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */,
 				63A3A1291C7652C300F440B5 /* AtoZModel.swift */,
 				637AF06A1C8236C8005A36BA /* WordnikClient.swift */,
 				6300C6461CA4B07300E3B4D5 /* ColorCode.swift */,
@@ -941,6 +942,7 @@
 				633C7B071DB46A060055CD83 /* ProgressViewController.swift in Sources */,
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
 				635F63E91E986B0A00C48913 /* UIStoryboardSegueFromRight.swift in Sources */,
+				63FD05801EA59106005C8E96 /* AtoZ.xcdatamodeld in Sources */,
 				6300C6471CA4B07300E3B4D5 /* ColorCode.swift in Sources */,
 				63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */,
 				63E4A2C11DC0102F002BC4CE /* ProgressTableCell.swift in Sources */,
@@ -965,7 +967,6 @@
 				63A3A12E1C76603300F440B5 /* WordListCell.swift in Sources */,
 				63DA61521E383BB7009D42DE /* GameType.swift in Sources */,
 				63C449881C9A73B60053BE77 /* ProxyTableCell.swift in Sources */,
-				63A3A1191C763F6C00F440B5 /* AtoZ.xcdatamodeld in Sources */,
 				63A9FEF21C7AC29C00AE54F1 /* Letter.swift in Sources */,
 				63A3A1111C763F6C00F440B5 /* AppDelegate.swift in Sources */,
 				637F67601E20743600347F15 /* ProgressInfoViewController.swift in Sources */,
@@ -1185,13 +1186,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		63A3A1171C763F6C00F440B5 /* AtoZ.xcdatamodeld */ = {
+		63FD057D1EA59106005C8E96 /* AtoZ.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				635CC6641E8627730083F439 /* AtoZ_01.xcdatamodel */,
-				63A3A1181C763F6C00F440B5 /* AtoZ.xcdatamodel */,
+				63FD05811EA5911B005C8E96 /* AtoZ_02.xcdatamodel */,
+				63FD057E1EA59106005C8E96 /* AtoZ.xcdatamodel */,
+				63FD057F1EA59106005C8E96 /* AtoZ_01.xcdatamodel */,
 			);
-			currentVersion = 635CC6641E8627730083F439 /* AtoZ_01.xcdatamodel */;
+			currentVersion = 63FD05811EA5911B005C8E96 /* AtoZ_02.xcdatamodel */;
 			path = AtoZ.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
