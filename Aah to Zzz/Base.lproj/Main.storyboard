@@ -445,7 +445,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-Nl-wN2">
                                 <rect key="frame" x="107" y="690" width="305" height="44"/>
                                 <items>
-                                    <barButtonItem image="icon_settings" id="oIr-N2-xN1">
+                                    <barButtonItem image="icon_home" id="oIr-N2-xN1">
                                         <color key="tintColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <segue destination="6UW-8g-sR0" kind="custom" customClass="UIStoryboardSegueFromLeft" customModule="AahToZzz" customModuleProvider="target" id="76K-rn-aoz"/>
@@ -1079,9 +1079,9 @@
         <image name="down_arrow.png" width="157" height="29"/>
         <image name="down_arrow_h" width="157" height="29"/>
         <image name="icon_fill" width="26" height="26"/>
+        <image name="icon_home" width="27" height="26"/>
         <image name="icon_newlist" width="17" height="26"/>
         <image name="icon_progress" width="26" height="25"/>
-        <image name="icon_settings" width="26" height="26"/>
         <image name="icon_shuffle" width="26" height="26"/>
         <image name="progress_info_bg.png" width="360" height="100"/>
         <image name="shadow_up.png" width="80" height="54"/>
