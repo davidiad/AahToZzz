@@ -110,9 +110,17 @@
 // Move display of some of the stats to the leaderboards: percentage, turns played, number of words played?, num words found? and eliminate some of these from the progress view to simplify it. Consider a separate stats button to display this extra info\
 \
 // Don't allow words to go below a level that's been completed\
-// replace "Words not yet played" with "Unplayed"\
+// Add a leaderboard for # of times the jumble button has been used (curious to track how much that feature is used)\
+// Refine the app icon. Text needs to be darker. Make the various size versions.\
+//Things to cover in tutorial:\
+// tap or drag\
+// new list\
+// jumble\
+// prgress\
+// levels\
 \
 // FEATURES FOR V. 1.1\
+	// Make a 4 letter version that uses just 6 tiles -- do the math -- 300 possible combinations? Can use Lexicontext for dictionary\
 	// Animate the tiles over to the word list when a word is found. Possibly, then, instead of also returning the tile to below, have them sort of regenerate from within the positions below. Could be part of the same animation: first they shrink, optionally change color, and move over to the word list, disappearing into the word list. Then the same tiles could reappear within the lower positions. It would make sense to have found word tiles move to the word list, instead of returning directly to the lower positions. Helps distinguish between returning because they are returning, or because they are part of a found word.\
 	// badges for achievements and advancing to higher levels (could be a badge in the colors of that level coordinated with the stripes/colors of the words in the word list)\
 	// Add the ability to save and choose from games, organized in sections by type of game (JQXZ, 2, 3, or 7 letter, etc). Somewhere, should be able to go to the current game of a specific type.\
@@ -121,7 +129,6 @@
 \cf0     \cf2 // Ad integration?\
 	// Swype style letter selection (in v 1.1)\
 	// add sound fx (consider adding in initial version)\
-	// Calculate level after every list, and send details to game center for leaderboards.	\
 	// add lexicontext (?) to dictionary?\
 \
 \
@@ -134,6 +141,8 @@
 \
 \
 //FINISHED\
+	// Calculate level after every list, and send details to game center for leaderboards. -Done\
+	// replace "Words not yet played" with "Unplayed" -Done\
 	// Replace the J and possibly the K in GillSans with something else - not rendering correctly. Possibly replace with a customized version of the J if possible. -Done, by replacing font with EuphemiaUCAS-Bold\
 	// Make the letters on the tiles larger. They are currently much smaller than they need to be. -Done\
 	// Give tiles a nice custom font with an outline -Done\
