@@ -5,6 +5,7 @@
 //  Created by David Fierstein on 4/20/17.
 //  Copyright © 2017 David Fierstein. All rights reserved.
 //
+// with help from turtorial at: https://spin.atomicobject.com/2015/12/23/swift-uipageviewcontroller-tutorial/
 
 import UIKit
 
@@ -44,6 +45,59 @@ class TutorialPageViewController: UIPageViewController {
 
 extension TutorialPageViewController: UIPageViewControllerDataSource {
     
+//    func pageViewController(pageViewController: UIPageViewController,
+//                            viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+//        guard let viewControllerIndex = orderedViewControllers.indexOf(viewController) else {
+//            return nil
+//        }
+//        
+//        let previousIndex = viewControllerIndex - 1
+//        
+//        guard previousIndex >= 0 else {
+//            return nil
+//        }
+//        
+//        guard orderedViewControllers.count > previousIndex else {
+//            return nil
+//        }
+//        
+//        return orderedViewControllers[previousIndex]
+//    }
+//    
+//    func pageViewController(pageViewController: UIPageViewController,
+//                            viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+//        guard let viewControllerIndex = orderedViewControllers.indexOf(viewController) else {
+//            return nil
+//        }
+//        
+//        let nextIndex = viewControllerIndex + 1
+//        let orderedViewControllersCount = orderedViewControllers.count
+//        
+//        guard orderedViewControllersCount != nextIndex else {
+//            return nil
+//        }
+//        
+//        guard orderedViewControllersCount > nextIndex else {
+//            return nil
+//        }
+//        
+//        return orderedViewControllers[nextIndex]
+//    }
+    
+    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+        return orderedViewControllers.count
+    }
+    
+    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+        guard let firstViewController = viewControllers?.first,
+            firstViewControllerIndex = orderedViewControllers.indexOf(firstViewController) else {
+                return 0
+        }
+        
+        return firstViewControllerIndex
+    }
+    
+    // Alternate versions for looping
     func pageViewController(pageViewController: UIPageViewController,
                             viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = orderedViewControllers.indexOf(viewController) else {
@@ -52,8 +106,10 @@ extension TutorialPageViewController: UIPageViewControllerDataSource {
         
         let previousIndex = viewControllerIndex - 1
         
+        // User is on the first view controller and swiped left to loop to
+        // the last view controller.
         guard previousIndex >= 0 else {
-            return nil
+            return orderedViewControllers.last
         }
         
         guard orderedViewControllers.count > previousIndex else {
@@ -72,8 +128,10 @@ extension TutorialPageViewController: UIPageViewControllerDataSource {
         let nextIndex = viewControllerIndex + 1
         let orderedViewControllersCount = orderedViewControllers.count
         
+        // User is on the last view controller and swiped right to loop to
+        // the first view controller.
         guard orderedViewControllersCount != nextIndex else {
-            return nil
+            return orderedViewControllers.first
         }
         
         guard orderedViewControllersCount > nextIndex else {
@@ -81,18 +139,5 @@ extension TutorialPageViewController: UIPageViewControllerDataSource {
         }
         
         return orderedViewControllers[nextIndex]
-    }
-    
-    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return orderedViewControllers.count
-    }
-    
-    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-        guard let firstViewController = viewControllers?.first,
-            firstViewControllerIndex = orderedViewControllers.indexOf(firstViewController) else {
-                return 0
-        }
-        
-        return firstViewControllerIndex
     }
 }
