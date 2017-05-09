@@ -48,12 +48,12 @@ class ProgressInfoViewController: UIViewController {
         
         print ("TURNS: \(model.numListsPlayed())")
         
-        if let numWordsPlayed = model.numWordsPlayed(), numWordsFound = model.numWordsFound() {
+        if let numWordsPlayed = model.numWordsPlayed(), let numWordsFound = model.numWordsFound() {
 //            var pluralize = "s"
 //            if numWordsFound == 1 {
 //                pluralize = ""
 //            }
-            guard let numWordsFoundString = formatInt(numWordsFound), numWordsPlayedString = formatInt(numWordsPlayed) else {
+            guard let numWordsFoundString = formatInt(numWordsFound), let numWordsPlayedString = formatInt(numWordsPlayed) else {
                 playedWordsLabel.text = ""
                 return
             }
@@ -104,7 +104,7 @@ class ProgressInfoViewController: UIViewController {
         
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         /* Move calculate level to model, so no need now to call parent VC
         guard let parentVC = parentViewController as? ProgressViewController else {
             return
@@ -133,10 +133,10 @@ class ProgressInfoViewController: UIViewController {
     // Add comma separators to large Int's
     // example to format by locale (e.g. France)
     // fmt.locale = NSLocale(localeIdentifier: "fr_FR")
-    func formatInt(number: Int) -> String? {
-        let numberFormat = NSNumberFormatter()
-        numberFormat.numberStyle = .DecimalStyle
-        return numberFormat.stringFromNumber(number)
+    func formatInt(_ number: Int) -> String? {
+        let numberFormat = NumberFormatter()
+        numberFormat.numberStyle = .decimal
+        return numberFormat.string(from: NSNumber(number))
     }
     
 

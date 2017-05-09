@@ -14,11 +14,11 @@ class ProgressTableCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.layoutMargins = UIEdgeInsetsZero;
+        self.layoutMargins = UIEdgeInsets.zero;
         self.preservesSuperviewLayoutMargins = false;
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

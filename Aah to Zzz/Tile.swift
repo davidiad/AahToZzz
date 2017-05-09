@@ -37,10 +37,10 @@ class Tile: UIButton {
     func setup() {
         layer.cornerRadius = 8.0
         layer.masksToBounds = false
-        layer.shadowColor = UIColor.purpleColor().CGColor
+        layer.shadowColor = UIColor.purple.cgColor
         layer.shadowOpacity = 0.0
         layer.shadowRadius = 6
-        layer.shadowOffset = CGSizeMake(2.0, 2.0)
+        layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
         boundingPath = UIBezierPath(roundedRect: bounds, cornerRadius: layer.cornerRadius)
         
 //        let mutableAttrString = NSMutableAttributedString(string: (titleLabel?.text)!)
@@ -61,7 +61,7 @@ class Tile: UIButton {
 //        setAttributedTitle(title, forState: .Normal)
         
         let image = UIImage(named: "tile") as UIImage?
-        setBackgroundImage(image, forState: .Normal)
+        setBackgroundImage(image, for: UIControlState())
         
         
     }

@@ -10,8 +10,8 @@ import GameKit
 
 extension UIViewController: GKGameCenterControllerDelegate {
     
-    func reportScores(levelNumber: Float, percentage: Float, numberOfLists: Int, numberOfWords: Int) {
-        if GKLocalPlayer.localPlayer().authenticated {
+    func reportScores(_ levelNumber: Float, percentage: Float, numberOfLists: Int, numberOfWords: Int) {
+        if GKLocalPlayer.localPlayer().isAuthenticated {
 //            let scoreReporter = GKScore(leaderboardIdentifier: "atozleaderboard")
 //            scoreReporter.value = Int64(number)
 //            let scoreArray: [GKScore] = [scoreReporter]
@@ -21,35 +21,35 @@ extension UIViewController: GKGameCenterControllerDelegate {
             // Game Center only allows Int64, but with format with 1 decimal point, so multiply by 10
             levelReporter.value = Int64(levelNumber * 10)
             let levelArray: [GKScore] = [levelReporter]
-            GKScore.reportScores(levelArray, withCompletionHandler: nil)
+            GKScore.report(levelArray, withCompletionHandler: nil)
             
             let percentageReporter = GKScore(leaderboardIdentifier: "percentage")
             // Game Center only allows Int64, but with format with 1 decimal point, so multiply by 10
             percentageReporter.value = Int64(percentage * 10)
             let percentageArray: [GKScore] = [percentageReporter]
-            GKScore.reportScores(percentageArray, withCompletionHandler: nil)
+            GKScore.report(percentageArray, withCompletionHandler: nil)
             
             let numListsReporter = GKScore(leaderboardIdentifier: "numberOfLists")
             numListsReporter.value = Int64(numberOfLists)
             let numberOfListsArray: [GKScore] = [numListsReporter]
-            GKScore.reportScores(numberOfListsArray, withCompletionHandler: nil)
+            GKScore.report(numberOfListsArray, withCompletionHandler: nil)
             
             let numWordsFoundReporter = GKScore(leaderboardIdentifier: "numberOfWordsFound")
             numWordsFoundReporter.value = Int64(numberOfWords)
             let numberOfWordsArray: [GKScore] = [numWordsFoundReporter]
-            GKScore.reportScores(numberOfWordsArray, withCompletionHandler: nil)
+            GKScore.report(numberOfWordsArray, withCompletionHandler: nil)
         }
     }
     
-    public func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+    public func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
     
     func showLeaderboard() {
         let viewController = self//self.view.window?.rootViewController
         let gamecenterVC = GKGameCenterViewController()
         gamecenterVC.gameCenterDelegate = self
-        viewController.presentViewController(gamecenterVC, animated: true, completion: nil)
+        viewController.present(gamecenterVC, animated: true, completion: nil)
         
     }
     

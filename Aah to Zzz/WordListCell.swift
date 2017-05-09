@@ -31,7 +31,7 @@ class WordListCell: UITableViewCell {
         bg.image = UIImage(named: "merged_small_tiles")
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
     }
@@ -41,24 +41,24 @@ class WordListCell: UITableViewCell {
     var wordtext: String? {
         didSet {
             firstLetterBg.image = colorCode?.tile_bg!
-            firstLetter.text = wordtext?.substringToIndex(wordtext!.startIndex.successor())
+            firstLetter.text = wordtext?.substring(to: wordtext!.characters.index(after: wordtext!.startIndex))
             secondLetterBg.image = colorCode?.tile_bg!
             
             // Fix warning: 'init(start:end:)' is deprecated: it will be removed in Swift 3.  Use the '..<' operator.
             //secondLetter.text = wordtext?.substringWithRange(Range<String.Index>(start: wordtext!.startIndex.successor(), end: wordtext!.endIndex.predecessor()))
-            secondLetter.text = wordtext?.substringWithRange( wordtext!.startIndex.successor() ..< wordtext!.endIndex.predecessor() )
+            secondLetter.text = wordtext?.substring( with: wordtext!.characters.index(after: wordtext!.startIndex) ..< wordtext!.characters.index(before: wordtext!.endIndex) )
                 
                 
             
             thirdLetterBg.image = colorCode?.tile_bg!//UIImage(named: "small_tile_yellow")
-            thirdLetter.text = wordtext?.substringFromIndex(wordtext!.endIndex.predecessor())
+            thirdLetter.text = wordtext?.substring(from: wordtext!.characters.index(before: wordtext!.endIndex))
             
             // set the image (if any) to use as an outline for the cell
             if let outline = colorCode?.outline {
                 outlineView.image = outline
                 //TODO: Set this once, elsewhere?
                 if outlineView.image != nil {
-                    outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                    outlineView.image = outlineView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
                     //TODO: SHOULD BE SET IN COLORCODE
                     outlineView.tintColor = colorCode?.tint
 //                    outlineShadowView.image = UIImage(named: "outline_shadow_unstretched")
@@ -77,7 +77,7 @@ class WordListCell: UITableViewCell {
                 
                 outlineTripleStripe.image = tripleStripe
                 if outlineTripleStripe.image != nil {
-                    outlineTripleStripe.image = outlineTripleStripe.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                    outlineTripleStripe.image = outlineTripleStripe.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
                     if colorCode?.colorCode == 10 { // yellow is already fully saturated, so the inner stripe is desaturated and darker
                         outlineTripleStripe.tintColor = Colors.desat_yellow
                     } else {

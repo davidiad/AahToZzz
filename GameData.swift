@@ -25,15 +25,15 @@ class GameData: NSManagedObject {
     @NSManaged var game: Game?
     
     // standard Core Data init method.
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        let entity = NSEntityDescription.entityForName("GameData", inManagedObjectContext: context)!
+        let entity = NSEntityDescription.entity(forEntityName: "GameData", in: context)!
         
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        super.init(entity: entity,insertInto: context)
         
         // moved gameName to Game object
 //        if let gameName = dictionary["name"] as? String {

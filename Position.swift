@@ -20,7 +20,7 @@ class Position: NSManagedObject {
     
     // only change xPos and yPos, which then will update position. Not vice-versa.
     lazy var position: CGPoint = {
-        CGPointMake(CGFloat(self.xPos), CGFloat(self.yPos)) // need ref to self in lazy var
+        CGPoint(x: CGFloat(self.xPos), y: CGFloat(self.yPos)) // need ref to self in lazy var
     }()
     
     // no need to track 'occupied' as a separate bool. If there is a letter, occupied is true. Otherwise, false.
@@ -29,16 +29,16 @@ class Position: NSManagedObject {
     }()
     
     // standard Core Data init method.
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
         occupied = false // not occupied by default
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        let entity = NSEntityDescription.entityForName("Position", inManagedObjectContext: context)!
+        let entity = NSEntityDescription.entity(forEntityName: "Position", in: context)!
         
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        super.init(entity: entity,insertInto: context)
         
         //occupied = false // not occupied by default
         

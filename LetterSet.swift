@@ -19,15 +19,15 @@ class LetterSet: NSManagedObject {
     @NSManaged var currentGame: NSManagedObject?
     
     // standard Core Data init method.
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        let entity = NSEntityDescription.entityForName("LetterSet", inManagedObjectContext: context)!
+        let entity = NSEntityDescription.entity(forEntityName: "LetterSet", in: context)!
         
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        super.init(entity: entity,insertInto: context)
 
     }
 }

@@ -25,12 +25,12 @@ class LevelTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        tableView.backgroundColor = UIColor.clearColor()
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        tableView.backgroundColor = UIColor.clear
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        guard let numRows = wordsInLevel.count else {
 //            return 0
 //        }
@@ -38,21 +38,21 @@ class LevelTableViewController: UITableViewController {
     }
     
     // set height for cells
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 8.0;
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("levelcell", forIndexPath: indexPath) as? LevelTableCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "levelcell", for: indexPath) as? LevelTableCell
         
         
       //  if let word = fetchedResultsController.objectAtIndexPath(indexPath) as? Word {
 
             cell?.label.font = UIFont(name: "Courier", size: 7)
             cell?.label.text = "ABC"//word.word
-            cell?.label.textColor = UIColor.blueColor()
-            cell?.backgroundColor = UIColor.clearColor()//   colorCode?.tint
+            cell?.label.textColor = UIColor.blue
+            cell?.backgroundColor = UIColor.clear//   colorCode?.tint
             //cell?.backgroundView?.backgroundColor = UIColor.clearColor()
             
             //cell?.layoutMargins = UIEdgeInsetsZero;

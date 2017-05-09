@@ -13,7 +13,7 @@ struct ColorCode {
     
     var colorCode: Int? // typically the colorCode is the level, but sometimes there's an override (red/-1 when filling in the blanks, gray/-2 when inactive)
     
-    private init() {
+    fileprivate init() {
         //tint = UIColor.yellowColor()
         // other property values default to nil
     }
@@ -67,7 +67,7 @@ struct ColorCode {
             case -1:
                 return Colors.whitish_red
             case 0:
-                return UIColor.yellowColor()
+                return UIColor.yellow
             case 1:
                 return Colors.magenta
             case 2:
@@ -79,10 +79,10 @@ struct ColorCode {
             case 5:
                 return Colors.purple
             default:
-                return UIColor.yellowColor()
+                return UIColor.yellow
             }
         }
-        return UIColor.yellowColor()
+        return UIColor.yellow
     }()
     
     // set a saturated color, to be used as an accent for tripled lines
@@ -106,10 +106,10 @@ struct ColorCode {
             case 5:
                 return Colors.sat_purple
             default:
-                return UIColor.yellowColor()
+                return UIColor.yellow
             }
         }
-        return UIColor.yellowColor()
+        return UIColor.yellow
     }()
 
     // set which image to use for outline

@@ -31,7 +31,7 @@ class WordnikClient: NSObject {
     }()
 
     // used in the DefinitionPopover to get info from the net to add to the list of definitions
-    func getDefinitionForWord(word: String, completionHandler: (response: NSURLResponse?, definitions: [String]?, success: Bool, errorString: String?) -> Void) {
+    func getDefinitionForWord(_ word: String, completionHandler: @escaping (_ response: URLResponse?, _ definitions: [String]?, _ success: Bool, _ errorString: String?) -> Void) {
     
     //  API method arguments
     let methodArguments = [
@@ -44,46 +44,46 @@ class WordnikClient: NSObject {
         ]
         
         // Initialize session and url
-        let session = NSURLSession.sharedSession()
-        let urlString = BASE_URL + word + "/" + METHOD_NAME + escapedParameters(methodArguments)
-        let url = NSURL(string: urlString)!
-        let request = NSURLRequest(URL: url)
+        let session = URLSession.shared
+        let urlString = BASE_URL + word + "/" + METHOD_NAME + escapedParameters(methodArguments as [String : AnyObject])
+        let url = URL(string: urlString)!
+        let request = URLRequest(url: url)
         
         // Initialize task for getting data
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+        let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
             guard (response != nil) else {
-                completionHandler(response: response, definitions: nil, success: false, errorString: String(error))
+                completionHandler(response, nil, false, String(describing: error))
                 return
             }
             // Check for a successful response
             // GUARD: Was there an error?
             guard (error == nil) else {
-                completionHandler(response: response, definitions: nil, success: false, errorString: String(error))
+                completionHandler(response, nil, false, String(describing: error))
                 return
             }
             
             // GUARD: Did we get a successful 2XX response?
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                if let response = response as? NSHTTPURLResponse {
-                    completionHandler(response: response, definitions: nil, success: false, errorString: "Tried to get definitions but there was an error: Status code \(response.statusCode)")
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                if let response = response as? HTTPURLResponse {
+                    completionHandler(response, nil, false, "Tried to get definitions but there was an error: Status code \(response.statusCode)")
                 } else if let response = response {
-                    completionHandler(response: response, definitions: nil, success: false, errorString: "Tried to get definitions but there was an error: \(response)")
+                    completionHandler(response, nil, false, "Tried to get definitions but there was an error: \(response)")
                 } else {
-                    completionHandler(response: response, definitions: nil, success: false, errorString: "Tried to get definitions but there was an invalid response.")
+                    completionHandler(response, nil, false, "Tried to get definitions but there was an invalid response.")
                 }
                 return
             }
             
             // GUARD: Was there any data returned?
             guard let data = data else {
-                completionHandler(response: response, definitions: nil, success: false, errorString: "No data was found.")
+                completionHandler(response, nil, false, "No data was found.")
                 return
             }
             
             // - Parse the data
             let parsedResult: AnyObject!
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                 
                 guard let definitionsJSON = parsedResult as? [[String: AnyObject]]
                     else {
@@ -96,13 +96,13 @@ class WordnikClient: NSObject {
                         definitions.append(definition)
                     }
                 }
-                completionHandler(response: response, definitions: definitions, success: true, errorString: nil)
+                completionHandler(response, definitions, true, nil)
             } catch {
                 parsedResult = nil
-                completionHandler(response: response, definitions: nil, success: false, errorString: "Could not parse a result")
+                completionHandler(response, nil, false, "Could not parse a result")
                 return
             }
-        }
+        }) 
         task.resume()
     }
     
@@ -110,7 +110,7 @@ class WordnikClient: NSObject {
         //MARK: Helper functions
         
         // Given a dictionary of parameters, convert to a string for a url */
-        func escapedParameters(parameters: [String : AnyObject]) -> String {
+        func escapedParameters(_ parameters: [String : AnyObject]) -> String {
             
             var urlVars = [String]()
             
@@ -120,14 +120,14 @@ class WordnikClient: NSObject {
                 let stringValue = "\(value)"
                 
                 /* Escape it */
-                let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+                let escapedValue = stringValue.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
                 
                 /* Append it */
                 urlVars += [key + "=" + "\(escapedValue!)"]
                 
             }
             
-            return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
+            return (!urlVars.isEmpty ? "?" : "") + urlVars.joined(separator: "&")
         }
 
     // Wordnik example requests

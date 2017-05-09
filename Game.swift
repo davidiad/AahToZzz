@@ -19,29 +19,29 @@ class Game: NSManagedObject {
     
     @NSManaged var gameID: String? // ID using URI representation
     @NSManaged var dictionaryName: String? // since this won't change, put in Game rather than GameData
-    @NSManaged private var gameType: NSNumber?
+    @NSManaged fileprivate var gameType: NSNumber?
     @NSManaged var data: GameData?
     
     // convert enum to int value (saved in Core Data) and vice-versa
     var gameTypeSet: GameType {
         get {
-            return GameType(rawValue: self.gameType!.integerValue)!
+            return GameType(rawValue: self.gameType!.intValue)!
         }
         set {
-            self.gameType = newValue.rawValue
+            self.gameType = newValue.rawValue as NSNumber
         }
     }
     
     // standard Core Data init method.
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        let entity = NSEntityDescription.entityForName("Game", inManagedObjectContext: context)!
+        let entity = NSEntityDescription.entity(forEntityName: "Game", in: context)!
         
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        super.init(entity: entity,insertInto: context)
         
     }
     

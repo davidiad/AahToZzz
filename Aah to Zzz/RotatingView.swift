@@ -23,7 +23,7 @@ import UIKit
     }
     
     func updateRotation() {
-        transform = CGAffineTransformMakeRotation(CGFloat(rot!))
+        transform = CGAffineTransform(rotationAngle: CGFloat(rot!))
     }
     
     override func prepareForInterfaceBuilder() {

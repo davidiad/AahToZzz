@@ -23,7 +23,7 @@ public struct Queue<T> {
         return array.count - head
     }
     
-    public mutating func enqueue(element: T) {
+    public mutating func enqueue(_ element: T) {
         array.append(element)
     }
     

@@ -69,7 +69,7 @@ class Aah_to_ZzzTests: XCTestCase {
     }
     
     func testCheckForValidWord() {
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let atozVC = storyboard.instantiateInitialViewController() as! AtoZViewController
         let wordToCheck = "AAS"
         // seems like tests are run before the whole setup, so test fails
@@ -110,7 +110,7 @@ class Aah_to_ZzzTests: XCTestCase {
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }

@@ -13,8 +13,8 @@ import Foundation
 
 enum Orientation {
     
-    case Portrait
-    case Landscape
+    case portrait
+    case landscape
 }
 
 // add others as they are created
@@ -67,53 +67,53 @@ struct GameTypeInfo {
             lengthOfWords = 2
             numberOfTiles = 7
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
-            deviceOrientation = Orientation.Portrait
+            deviceOrientation = Orientation.portrait
             dictionaries = [DictionaryName.two.rawValue] // need to create this wordlist
             
         case 1 :
             lengthOfWords = 3
             numberOfTiles = 7
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
-            deviceOrientation = Orientation.Portrait
+            deviceOrientation = Orientation.portrait
             dictionaries = [DictionaryName.three.rawValue]
             
         case 2:
             lengthOfWords = nil // variable. Should set to max length?
             numberOfTiles = 7 // may be more
             letterMix = "AAABCDEEEFGHIIIJJJKLMNOOOPQQQRSTUUUUVWXXXYZZZ" // added extra J's, Q's, U's, X's, and Z's
-            deviceOrientation = Orientation.Landscape
+            deviceOrientation = Orientation.landscape
             dictionaries = [DictionaryName.jqxz.rawValue] // need to create this wordlist
          
         case 3:
             lengthOfWords = 7
             numberOfTiles = 7 // may be more
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
-            deviceOrientation = Orientation.Landscape
+            deviceOrientation = Orientation.landscape
             dictionaries = [DictionaryName.seven.rawValue] // need to create this wordlist
             
         case 4:
             lengthOfWords = 8
             numberOfTiles = 8 // may be more
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
-            deviceOrientation = Orientation.Landscape
+            deviceOrientation = Orientation.landscape
             dictionaries = [DictionaryName.eight.rawValue] // need to create this wordlist
             
         case 5:
             lengthOfWords = 9
             numberOfTiles = 9 // may be more
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
-            deviceOrientation = Orientation.Landscape
+            deviceOrientation = Orientation.landscape
             dictionaries = [DictionaryName.nine.rawValue] // need to create this wordlist
             
         default :
             lengthOfWords = 3
             numberOfTiles = 7
             letterMix = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUVWXYZ"
-            deviceOrientation = Orientation.Portrait
+            deviceOrientation = Orientation.portrait
             dictionaries = [DictionaryName.three.rawValue]
         }
         
-        guard let lOW = lengthOfWords, nOT = numberOfTiles else { // find better var names?
+        guard let lOW = lengthOfWords, let nOT = numberOfTiles else { // find better var names?
             numberOfPositions = 10 // default value
             return
         }

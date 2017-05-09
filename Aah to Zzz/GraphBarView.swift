@@ -32,16 +32,16 @@ class GraphBarView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         
         // create mask to round the corners of the graph bar
-        let mask: UIView = UIView(frame: frame)
+        let mask: UIView = UIView(frame: frame) // Swift 3 changed var to let
         let maskImageView = UIImageView(frame: frame)
         maskImageView.image = UIImage(named: "bar_graph_mask")
         mask.addSubview(maskImageView)
-        maskView = mask
+        self.mask = mask // added self. for Swift 3
         
         // TODO:-set the background color per level
         let bg_image = UIImage(named:"graph_bg")
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        bg_image!.resizableImageWithCapInsets(insets, resizingMode: .Tile)
+        bg_image!.resizableImage(withCapInsets: insets, resizingMode: .tile)
         backgroundColor = UIColor(patternImage: bg_image!)
         
         // create the outline view
@@ -67,7 +67,7 @@ class GraphBarView: UIView {
         // if graph height is short, don't want to stretch the images, instead clip them without stretching (as in .BottomLeft)
         if graphHeight < 22.0 || isEmpty {
             outlineView.image = UIImage(named: "outline_graph_double_unstretched")
-            outlineView.contentMode = .BottomLeft
+            outlineView.contentMode = .bottomLeft
         } else {
             
             switch level {
@@ -112,7 +112,7 @@ class GraphBarView: UIView {
             }
         }
         outlineView.frame = frame
-        outlineView.image = outlineView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        outlineView.image = outlineView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         
         // set the outlineView tintcolor per level
         guard let tintColor = colorCode?.tint else {
@@ -124,7 +124,7 @@ class GraphBarView: UIView {
         addSubview(outlineView)
         
         if let tripleImage = outlineTripleView.image {
-            outlineTripleView.image = tripleImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            outlineTripleView.image = tripleImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             addSubview(outlineTripleView)
             var colorCodeTriple: ColorCode? = ColorCode(code: level - 1) // same color, more saturated. Except yellow which was already saturated.
             if level < 16 {
@@ -141,7 +141,7 @@ class GraphBarView: UIView {
                 
                 // Changes to shadow image, only for 11 to 15, the tripled outlines
                 // use shadow image to thicken inside line
-                outlineShadowView.image = outlineShadowView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                outlineShadowView.image = outlineShadowView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
                 outlineShadowView.tintColor = tintColor
                 outlineShadowView.alpha = 1.0
                 // since the shadow image has been used to thicken the inside regular color,

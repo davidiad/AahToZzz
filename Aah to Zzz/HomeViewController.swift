@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var buttonHolderView: UIView!
     
-    @IBAction func playGame(sender: AnyObject) {
+    @IBAction func playGame(_ sender: AnyObject) {
        // performSegueWithIdentifier("PlaySegue", sender:self)
     }
     
@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
         let gradient = model.yellowPinkBlueGreenGradient()
         //gradient.frame = rightSideBar.frame
         //gradient.frame = CGRectMake(rightSideBar.frame.origin.x, rightSideBar.frame.origin.y, 60, view.bounds.height)
-        gradient.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height)
+        gradient.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         rightSideBar.layer.addSublayer(gradient) 
     }
 

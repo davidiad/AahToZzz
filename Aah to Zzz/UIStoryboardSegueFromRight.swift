@@ -16,24 +16,24 @@ class UIStoryboardSegueFromRight: UIStoryboardSegue {
     
     override func perform()
     {
-        let src = self.sourceViewController as UIViewController
-        let dst = self.destinationViewController as UIViewController
+        let src = self.source as UIViewController
+        let dst = self.destination as UIViewController
         
         src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
         // The position of the destination view before animation.
-        dst.view.transform = CGAffineTransformMakeTranslation(src.view.frame.size.width, 0)
+        dst.view.transform = CGAffineTransform(translationX: src.view.frame.size.width, y: 0)
         
-        UIView.animateWithDuration(0.5,
+        UIView.animate(withDuration: 0.5,
                                    delay: 0.0,
-                                   options: UIViewAnimationOptions.CurveEaseInOut,
+                                   options: UIViewAnimationOptions(),
                                    animations: {
                                     // The new position of the destination view
-                                    dst.view.transform = CGAffineTransformMakeTranslation(0, 0)
+                                    dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
                                     // slide the source view over as the destination slides in
-                                    src.view.transform = CGAffineTransformMakeTranslation(-src.view.frame.size.width, 0)
+                                    src.view.transform = CGAffineTransform(translationX: -src.view.frame.size.width, y: 0)
             },
                                    completion: { finished in
-                                    src.presentViewController(dst, animated: false, completion: nil)
+                                    src.present(dst, animated: false, completion: nil)
             }
         )
     }
@@ -47,23 +47,23 @@ class UIStoryboardSegueFromLeft: UIStoryboardSegue {
     
     override func perform()
     {
-        let src = self.sourceViewController as UIViewController
-        let dst = self.destinationViewController as UIViewController
+        let src = self.source as UIViewController
+        let dst = self.destination as UIViewController
         
         src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
         // Make the position negative, has it come in from the left instead of the right
-        dst.view.transform = CGAffineTransformMakeTranslation(-src.view.frame.size.width, 0)
+        dst.view.transform = CGAffineTransform(translationX: -src.view.frame.size.width, y: 0)
         
-        UIView.animateWithDuration(0.5,
+        UIView.animate(withDuration: 0.5,
                                    delay: 0.0,
-                                   options: UIViewAnimationOptions.CurveEaseInOut,
+                                   options: UIViewAnimationOptions(),
                                    animations: {
-                                    dst.view.transform = CGAffineTransformMakeTranslation(0, 0)
+                                    dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
                                     // slide the source view over as the destination slides in
-                                    src.view.transform = CGAffineTransformMakeTranslation(src.view.frame.size.width, 0)
+                                    src.view.transform = CGAffineTransform(translationX: src.view.frame.size.width, y: 0)
             },
                                    completion: { finished in
-                                    src.presentViewController(dst, animated: false, completion: nil)
+                                    src.present(dst, animated: false, completion: nil)
             }
         )
     }

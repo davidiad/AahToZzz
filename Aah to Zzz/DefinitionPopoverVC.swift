@@ -40,7 +40,7 @@ class DefinitionPopoverVC: UIViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if sometext != nil {
             
@@ -48,7 +48,7 @@ class DefinitionPopoverVC: UIViewController {
                 if response != nil {
                     
                     if success {
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             self.activityView.stopAnimating()
                             var networkDefinitions: String = ""
                             if definitions != nil {
@@ -64,13 +64,13 @@ class DefinitionPopoverVC: UIViewController {
                             self.networkDefinitionsTV.text = networkDefinitions
                         }
                     } else {
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             self.activityView.stopAnimating()
                             self.networkDefinitionsTV.text = errorString
                         }
                     }
                 } else {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         self.activityView.stopAnimating()
                         self.networkDefinitionsTV.text = "More definitions may be available on the net, but the internet connection appears to be offline"
                     }
@@ -89,7 +89,7 @@ class DefinitionPopoverVC: UIViewController {
                         if let data = data {
                             // Create the image
                             let image = UIImage(data: data)
-                            dispatch_async(dispatch_get_main_queue()) {
+                            DispatchQueue.main.async {
                                 self.flickrMessage.text = ""
                                 self.flickrActivityView.stopAnimating()
                                 self.exampleImage.image = image
@@ -97,7 +97,7 @@ class DefinitionPopoverVC: UIViewController {
                         }
                     }
                 } else {
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         self.flickrActivityView.stopAnimating()
                         self.flickrMessage.text = "Not successful in finding an example image"
                     }

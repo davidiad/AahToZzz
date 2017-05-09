@@ -9,7 +9,31 @@
 import Foundation
 import CoreData
 import UIKit
-import GameplayKit // used for random shuffling methods
+import GameplayKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+ // used for random shuffling methods
 
 //TODO: use lazy var fetchedWordsController throughout
 //TODO: calculate level in the model, so it can be accessed from anywhere
@@ -23,7 +47,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
     
-    var fetchedWordsController: NSFetchedResultsController?
+    var fetchedWordsController: NSFetchedResultsController<NSFetchRequestResult>?
     
     // TODO: -perhaps, combine with call to fetch the game (e.g. fetchedGame.words or similar)
 //    lazy var fetchedWordsController: NSFetchedResultsController = {
@@ -72,7 +96,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     //MARK:-
     
     //This prevents others from using the default '()' initializer for this class.
-    private override init() {
+    fileprivate override init() {
         
         //TODO: check the new words from OSPD5 that are in question
         positions = [Position]()
@@ -96,7 +120,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         // convert wordsArray to wordsDictionary
         // even elements of wordsArray are the keys (the word itself); odd entries are the values, which are the word definitions
         //for var i = 0; i < rawWordsArray.count - 1; i = i + 2 { // Swift2 code
-        for i in 0.stride(to: rawWordsArray.count - 1, by: 2) { // Swift3 code
+        for i in stride(from: 0, to: rawWordsArray.count - 1, by: 2) { // Swift3 code
             let key = rawWordsArray[i]
             let value = rawWordsArray[i + 1]
             wordsArray.append(key)
@@ -110,7 +134,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         gameTypeInfo = GameTypeInfo(gameType: game!.gameTypeSet)
         
         //print(" fwc: \(fetchedWordsController)") // trying to ensure that the lazy var has been called
-        let fetchRequest = NSFetchRequest(entityName: "Word")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Word")
         
         // Add Sort Descriptors
         let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
@@ -124,14 +148,14 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     }
     
     // read in the 3 letter word list with word definitions
-    func arrayFromContentsOfFileWithName(fileName: String) -> [String]? {
-        guard let path = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt") else {
+    func arrayFromContentsOfFileWithName(_ fileName: String) -> [String]? {
+        guard let path = Bundle.main.path(forResource: fileName, ofType: "txt") else {
             return nil
         }
         
         do {
-            let content = try String(contentsOfFile:path, encoding: NSUTF8StringEncoding)
-            return content.componentsSeparatedByString("\n")
+            let content = try String(contentsOfFile:path, encoding: String.Encoding.utf8)
+            return content.components(separatedBy: "\n")
         } catch _ as NSError {
             return nil
         }
@@ -142,7 +166,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     // Instead of returning an array of strings, return an array of Word objects
     // Called from the IBAction New List button as sender
-    func generateWords (letters: [Letter]) -> [Word] {
+    func generateWords (_ letters: [Letter]) -> [Word] {
         let wordlist = generateWordlist(letters)
         let wordManagedObjectsArray = createOrUpdateWords(wordlist)
         return wordManagedObjectsArray
@@ -158,7 +182,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     }
     
     // getting a wordlist from letters that can be called from another class
-    func generateWordlist (letters: [Letter]) -> [String] {
+    func generateWordlist (_ letters: [Letter]) -> [String] {
         return getWordlist(letters)
     }
     
@@ -185,11 +209,11 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         }
         
         // create a LetterSet managed object
-        let letterset = NSEntityDescription.insertNewObjectForEntityForName("LetterSet", inManagedObjectContext: sharedContext) as! LetterSet
+        let letterset = NSEntityDescription.insertNewObject(forEntityName: "LetterSet", into: sharedContext) as! LetterSet
         // add the LetterSet to the GameData object
         letterset.game = game
         saveContext()
-        letterset.letterSetID = String(letterset.objectID.URIRepresentation())
+        letterset.letterSetID = String(describing: letterset.objectID.uriRepresentation())
         
         game?.data?.currentLetterSetID = letterset.letterSetID
         
@@ -263,11 +287,11 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         }
         
         // create a LetterSet managed object
-        let letterset = NSEntityDescription.insertNewObjectForEntityForName("LetterSet", inManagedObjectContext: sharedContext) as! LetterSet
+        let letterset = NSEntityDescription.insertNewObject(forEntityName: "LetterSet", into: sharedContext) as! LetterSet
         // add the LetterSet to the GameData object
         letterset.game = game?.data //TODO: rename this game relationship to gameData?
         saveContext()
-        letterset.letterSetID = String(letterset.objectID.URIRepresentation())
+        letterset.letterSetID = String(describing: letterset.objectID.uriRepresentation())
         
         game?.data?.currentLetterSetID = letterset.letterSetID
         // this should do the same as above, and much simpler
@@ -306,7 +330,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
 //    }
     
     // Swift 3 version -- removed var parameter (which are deprecated in Swift 3) and replaced with var inside the func
-    func createLetter(letterStringIn: String?) -> Letter {
+    func createLetter(_ letterStringIn: String?) -> Letter {
         //TODO: test for validity of letter (e.g. what if it's a number, or more than 1 letter)
         var letterString = letterStringIn
         let alphabetArray = generateAlphabetArray()
@@ -343,14 +367,14 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         var firstWordIndex: Int
         var secondWordIndex: Int
         
-        let fetchRequest = NSFetchRequest(entityName: "Word")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Word")
         
         do {
 //            guard let wordsArray = wordsArray else {
 //                // handle error
 //                return "ABCDEF"
 //            }
-            let fetchedWords = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+            let fetchedWords = try sharedContext.fetch(fetchRequest) as! [Word]
             let numUnsavedWords = wordsArray.count - fetchedWords.count
             
             switch fetchedWords.count {
@@ -431,7 +455,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                 }
                 
                 // unsavedWords = wordsSet - savedWords
-                let unsavedWordsSet = wordsSet.subtract(savedWordsSet)
+                let unsavedWordsSet = wordsSet.subtracting(savedWordsSet)
                 wordsForLetters = randomElementIndex(unsavedWordsSet)
                 if  numUnsavedWords > 1 {
                     wordsForLetters += randomElementIndex(unsavedWordsSet)
@@ -452,13 +476,13 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     }
     
     // helper function to get a random element from a set
-    func randomElementIndex<T>(s: Set<T>) -> T {
+    func randomElementIndex<T>(_ s: Set<T>) -> T {
         let n = Int(arc4random_uniform(UInt32(s.count)))
-        let i = s.startIndex.advancedBy(n)
+        let i = s.index(s.startIndex, offsetBy: n)
         return s[i]
     }
     
-    func getWordlist(letters: [Letter]) -> [String] {
+    func getWordlist(_ letters: [Letter]) -> [String] {
         
         var allLetterPermutationsSet = Set<String>()
         var sequence: String = ""
@@ -483,17 +507,17 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         }
         
         // Find permutations which are also valid words, and sort them alphabetically
-        let validWordsSet = allLetterPermutationsSet.intersect(wordsSet)
+        let validWordsSet = allLetterPermutationsSet.intersection(wordsSet)
         let validWordsArray = Array(validWordsSet)
 
         
-        return validWordsArray.sort()
+        return validWordsArray.sorted()
     }
     
     //TODO:- add a func that takes the array of words from createOrUpdateWords, finds the mastered(if any), sorts them by level, and sets them to inactive starting from the highest level, continueing til inactive quota is reached.
     
     // either fetch or create Word managed objects for the current list, and update values to reflect their status
-    func createOrUpdateWords(wordlist: [String]) -> [Word] {
+    func createOrUpdateWords(_ wordlist: [String]) -> [Word] {
         var currentWords = [Word]()
         // can I assume that a GameData has been created, and etc?
         // starting a new fetch request, in case none has been made, or it needs updating
@@ -501,14 +525,14 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         //TODO:- keep the words sorted
         for i in 0 ..< wordlist.count {
        // for wordString in wordlist {
-            let fetchRequest = NSFetchRequest(entityName: "Word")
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Word")
             // Create Predicate
             let predicate = NSPredicate(format: "%K == %@", "word", wordlist[i])
             fetchRequest.predicate = predicate
             
             do {
                 // not to be confused with global var wordsArray
-                let wordArray = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+                let wordArray = try sharedContext.fetch(fetchRequest) as! [Word]
                 // check to see if anything was returned
                 if wordArray.count > 0 {
                     // a Word was returned for that String. Do not create another with the same string!
@@ -547,7 +571,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
  
     }
     
-    func checkForInactiveWords(words: [Word]) {
+    func checkForInactiveWords(_ words: [Word]) {
 
         inactiveCount = 0 // need the # of inactive's so the VC can find out when a list is completed
         
@@ -573,7 +597,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         if masteredWords.count > iq {
             
             for _ in 0 ..< masteredWords.count {
-                masteredWords.sortInPlace { $0.level > $1.level }
+                masteredWords.sort { $0.level > $1.level }
             }
             for i in 0 ..< masteredWords.count {
                 print("\(masteredWords[i].word) : \(masteredWords[i].level)")
@@ -604,7 +628,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         
     }
     
-    func getDefinition(word: String) -> String {
+    func getDefinition(_ word: String) -> String {
         if let definition = wordsDictionary[word] {
             return definition
         }
@@ -643,13 +667,13 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         // TODO: determine which is the current game, and load that.
         // whereever current game is set to true, must set all others to be false
         // and have a safeguard that allows only one currentGame at a time
-        let fetchRequest = NSFetchRequest(entityName: "Game")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Game")
         do {
-            let gameArray = try sharedContext.executeFetchRequest(fetchRequest) as! [Game]
+            let gameArray = try sharedContext.fetch(fetchRequest) as! [Game]
             if gameArray.count > 0 {
                 for _ in 0 ..< 10 { // generalize to numberOfPositions var, instead of 10 
                     positions = gameArray[0].data?.positions?.allObjects as? [Position]
-                    positions!.sortInPlace {
+                    positions!.sort {
                         ($0.index as Int16?) < ($1.index as Int16?)
                     }
                 }
@@ -666,7 +690,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                //     "isCurrentGame": true
               //  ]
                 //let newGameData = GameData(dictionary: gameDataDictionary, context: sharedContext)
-                let newGameData = NSEntityDescription.insertNewObjectForEntityForName("GameData", inManagedObjectContext: sharedContext) as! GameData
+                let newGameData = NSEntityDescription.insertNewObject(forEntityName: "GameData", into: sharedContext) as! GameData
                 newGameData.name = "Game-1"
                 saveContext()
                 //newGame.isCurrentGame = true
@@ -675,9 +699,9 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
             
                 let newGame = Game(dictionary: gameDictionary, context: sharedContext)
                 saveContext() // save the context so the URI becomes permanent, and can be used for ID
-                newGame.gameID = String(newGame.objectID.URIRepresentation())
+                newGame.gameID = String(describing: newGame.objectID.uriRepresentation())
                 newGame.data = newGameData
-                newGame.gameTypeSet = GameType.ThreeLetterWords // default to 3 letter word game
+                newGame.gameTypeSet = GameType.threeLetterWords // default to 3 letter word game
                 print ("newGame: \(newGame)")
                 newGameData.game = newGame
                 newGame.data?.isCurrentGame = true
@@ -689,7 +713,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                     // create the Positions for the tiles. There are 10 per game.
                     // TODO: use init instead. And use Game object, which then has a GameData object
                     // Should Positions go with Game, or GameData??
-                    let position = NSEntityDescription.insertNewObjectForEntityForName("Position", inManagedObjectContext: sharedContext) as! Position
+                    let position = NSEntityDescription.insertNewObject(forEntityName: "Position", into: sharedContext) as! Position
                     position.index = Int16(i)
                     position.game = newGameData //store positions in Game instead?
                     positions?.append(position)
@@ -717,7 +741,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         }
     }
     
-    func updateLetterPosition(posIndex: Int) {
+    func updateLetterPosition(_ posIndex: Int) {
         let pos = generateLetterPosition(posIndex)
         positions![posIndex].xPos = Float(pos.x)
         positions![posIndex].yPos = Float(pos.y)
@@ -735,11 +759,11 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
 
     
     func deleteGames() {
-        let fetchRequest = NSFetchRequest(entityName: "GameData")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "GameData")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {
-            try sharedContext.executeRequest(deleteRequest)
+            try sharedContext.execute(deleteRequest)
         } catch let error as NSError {
             print("Error in deleteMapInfo: \(error)")
         }
@@ -752,10 +776,10 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
             "gameID": 0,
             "dictionaryName": "OSPD5_3letter",
             "gameType": 1
-        ]
+        ] as [String : Any]
         //TODO: get the dictionaryName from the GameType
         
-        return gameDictionary
+        return gameDictionary as [String : AnyObject]
     }
     
     // make dict for Game Data values
@@ -764,9 +788,9 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         let gameDataDictionary = [
             "name": "David Game 1",
             "isCurrentGame": true
-        ]
+        ] as [String : Any]
         
-        return gameDataDictionary
+        return gameDataDictionary as [String : AnyObject]
     }
     
     //MARK:- Save Managed Object Context helper
@@ -785,7 +809,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     //MARK: - Calculation helpers
     
     // find the closest point to a given point
-    func findClosestPosition(location: CGPoint, positionArray: [Position]) -> Position? {
+    func findClosestPosition(_ location: CGPoint, positionArray: [Position]) -> Position? {
         var closestPosition = positionArray[0]
         var lowestSquared = 99999999.0 // arbitrary largish number (ensure it's larger than the largest possible value of distance squared)
         //TODO: optimizations to reduce # of calculations
@@ -810,18 +834,18 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
 //    }
     
     // find the point from which to anchor the tiles and associated views
-    func calculateAnchor(areaWidth: CGFloat, areaHeight: CGFloat, vertiShift: CGFloat, horizShift: CGFloat=0) -> CGPoint {
-        anchorPoint =  (CGPointMake( areaWidth * 0.5 + horizShift, areaHeight + vertiShift ) )
+    func calculateAnchor(_ areaWidth: CGFloat, areaHeight: CGFloat, vertiShift: CGFloat, horizShift: CGFloat=0) -> CGPoint {
+        anchorPoint =  (CGPoint( x: areaWidth * 0.5 + horizShift, y: areaHeight + vertiShift ) )
         updateLetterPositions()
         return anchorPoint! // TODO: should not need to both return, and set the anchorPoint var
     }
     
-    func generateLetterPosition(tileNum: Int) -> CGPoint {
+    func generateLetterPosition(_ tileNum: Int) -> CGPoint {
         var xpos: CGFloat
         var ypos: CGFloat
         
         if anchorPoint == nil {
-            anchorPoint = CGPointMake(130.0, 200.0)
+            anchorPoint = CGPoint(x: 130.0, y: 200.0)
         }
         
         switch tileNum {
@@ -850,10 +874,10 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
             ypos = anchorPoint!.y + CGFloat(200.0)
         }
         
-        return CGPointMake(xpos, ypos)
+        return CGPoint(x: xpos, y: ypos)
     }
     
-    func calculateInactiveQuota(wordlistCount: Int) -> Int {
+    func calculateInactiveQuota(_ wordlistCount: Int) -> Int {
         var inactiveFactor = 0.1  // arbitrary amount to give reasonable limits to max # inactives
         var inactiveQuota: Int = 0
         var tensPlace = Int(Double(wordlistCount) * 0.1)
@@ -885,10 +909,10 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     func getHighestLevel() -> Int {
         var highestLevel = 0
         
-        let fetchRequest = NSFetchRequest(entityName: "Word")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Word")
         
         do {
-            let fetchedWords = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+            let fetchedWords = try sharedContext.fetch(fetchRequest) as! [Word]
             
             for result in fetchedWords {
                 if let word = result as? Word {
@@ -918,10 +942,10 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
             addLevelArray()
         }
         ////////////////////
-        let fetchRequest = NSFetchRequest(entityName: "Word")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Word")
         
         do {
-            let fetchedWords = try sharedContext.executeFetchRequest(fetchRequest) as! [Word]
+            let fetchedWords = try sharedContext.fetch(fetchRequest) as! [Word]
             
             for result in fetchedWords {
                 if let word = result as? Word {
@@ -1100,7 +1124,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     func randomize7() -> [Int] {
         let sevenInts = [0,1,2,3,4,5,6]
-        return GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(sevenInts) as! [Int]
+        return GKRandomSource.sharedRandom().arrayByShufflingObjects(in: sevenInts) as! [Int]
         //GKMersenneTwisterRandomSource // more randomized but slower method
     }
     
@@ -1110,10 +1134,10 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     //MARK:- Gradient background funcs
     func yellowPinkBlueGreenGradient() -> CAGradientLayer {
         
-        let colorOne = UIColor(hue: 0.25, saturation: 0.70, brightness: 0.75, alpha: 1).CGColor as CGColorRef // green
-        let colorTwo = UIColor(hue: 0.597, saturation: 0.75, brightness: 1.00, alpha: 1).CGColor as CGColorRef // blue
-        let colorThree = UIColor(hue: 0.833, saturation: 0.70, brightness: 0.75, alpha: 1).CGColor as CGColorRef //magenta
-        let colorFour = UIColor(hue: 0.164, saturation: 1.0, brightness: 1.0, alpha: 1).CGColor as CGColorRef //dark blue
+        let colorOne = UIColor(hue: 0.25, saturation: 0.70, brightness: 0.75, alpha: 1).cgColor as CGColor // green
+        let colorTwo = UIColor(hue: 0.597, saturation: 0.75, brightness: 1.00, alpha: 1).cgColor as CGColor // blue
+        let colorThree = UIColor(hue: 0.833, saturation: 0.70, brightness: 0.75, alpha: 1).cgColor as CGColor //magenta
+        let colorFour = UIColor(hue: 0.164, saturation: 1.0, brightness: 1.0, alpha: 1).cgColor as CGColor //dark blue
         
         let gradientColors: Array <AnyObject> = [colorOne, colorTwo, colorThree, colorFour]
         

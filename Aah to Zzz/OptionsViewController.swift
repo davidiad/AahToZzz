@@ -23,7 +23,7 @@ class OptionsViewController: UIViewController {
     @IBOutlet weak var slider3: GradientSlider!
     @IBOutlet weak var slider4: GradientSlider!
     
-    @IBAction func sliderChanged(sender: AnyObject) {
+    @IBAction func sliderChanged(_ sender: AnyObject) {
         model.location1 = CGFloat(slider1.value)
         model.location2 = CGFloat(slider2.value)
         model.location3 = CGFloat(slider3.value)
@@ -36,21 +36,21 @@ class OptionsViewController: UIViewController {
         for layer in view.layer.sublayers! {
             if let updatedLayer = layer as? CAGradientLayer {
                 if updatedLayer.name == "optionsGradientLayer" {
-                    updatedLayer.locations![0] = slider1.value
-                    updatedLayer.locations![1] = slider2.value
-                    updatedLayer.locations![2] = slider3.value
-                    updatedLayer.locations![3] = slider4.value
+                    updatedLayer.locations![0] = NSNumber(slider1.value)
+                    updatedLayer.locations![1] = NSNumber(slider2.value)
+                    updatedLayer.locations![2] = NSNumber(slider3.value)
+                    updatedLayer.locations![3] = NSNumber(slider4.value)
                 }
             }
         }
     }
     
-    @IBAction func resetToDefaults(sender: AnyObject) {
+    @IBAction func resetToDefaults(_ sender: AnyObject) {
         setDefaultGradient()
         updateOptionsGradient()
     }
 
-    @IBAction func done(sender: AnyObject) {
+    @IBAction func done(_ sender: AnyObject) {
         
         let mainGradient = updateGradient(model.location1!, loc2: model.location2!, loc3: model.location3!, loc4: model.location4!)
 
@@ -59,7 +59,7 @@ class OptionsViewController: UIViewController {
         mainGradient.name = "mainGradientLayer"
         presentingViewController?.view.layer.addSublayer(mainGradient)
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // helper function for both initial appearance and Reset button
@@ -74,7 +74,7 @@ class OptionsViewController: UIViewController {
         model.location4 = CGFloat(slider4.value)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         slider1.thumbColor = UIColor(hue: 0.25, saturation: 0.70, brightness: 0.75, alpha: 1)
         slider1.thumbSize = 48.0
@@ -85,7 +85,7 @@ class OptionsViewController: UIViewController {
         slider4.thumbColor = UIColor(hue: 0.164, saturation: 1.0, brightness: 1.0, alpha: 1)
         slider4.thumbSize = 48.0
     
-        view.backgroundColor = UIColor.clearColor()
+        view.backgroundColor = UIColor.clear
         // if 1 is nil, they should all be nil, and vice-versa. But, be safe, check all
         if model.location1 == nil || model.location2 == nil || model.location3 == nil || model.location4 == nil{
             setDefaultGradient()
@@ -111,19 +111,19 @@ class OptionsViewController: UIViewController {
     }
     
     
-    func updateGradient(loc1: CGFloat, loc2: CGFloat, loc3: CGFloat, loc4: CGFloat) -> CAGradientLayer {
+    func updateGradient(_ loc1: CGFloat, loc2: CGFloat, loc3: CGFloat, loc4: CGFloat) -> CAGradientLayer {
         
-        let colorOne = UIColor(hue: 0.25, saturation: 0.70, brightness: 0.75, alpha: 1).CGColor as CGColorRef
-        let colorTwo = UIColor(hue: 0.597, saturation: 0.75, brightness: 1.00, alpha: 1).CGColor as CGColorRef
-        let colorThree = UIColor(hue: 0.833, saturation: 0.70, brightness: 0.75, alpha: 1).CGColor as CGColorRef
-        let colorFour = UIColor(hue: 0.164, saturation: 1.0, brightness: 1.0, alpha: 1).CGColor as CGColorRef
+        let colorOne = UIColor(hue: 0.25, saturation: 0.70, brightness: 0.75, alpha: 1).cgColor as CGColor
+        let colorTwo = UIColor(hue: 0.597, saturation: 0.75, brightness: 1.00, alpha: 1).cgColor as CGColor
+        let colorThree = UIColor(hue: 0.833, saturation: 0.70, brightness: 0.75, alpha: 1).cgColor as CGColor
+        let colorFour = UIColor(hue: 0.164, saturation: 1.0, brightness: 1.0, alpha: 1).cgColor as CGColor
         
         let gradientColors: Array <AnyObject> = [colorOne, colorTwo, colorThree, colorFour]
         
         
         let gradientLayer: CAGradientLayer = CAGradientLayer()
         gradientLayer.colors = gradientColors
-        gradientLayer.locations = [loc1, loc2, loc3, loc4]
+        gradientLayer.locations = [NSNumber(loc1), loc2, loc3, loc4]
         
         return gradientLayer
     }
