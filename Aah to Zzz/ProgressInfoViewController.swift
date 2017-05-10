@@ -136,7 +136,7 @@ class ProgressInfoViewController: UIViewController {
     func formatInt(_ number: Int) -> String? {
         let numberFormat = NumberFormatter()
         numberFormat.numberStyle = .decimal
-        return numberFormat.string(from: NSNumber(number))
+        return numberFormat.string(from: NSNumber(value: number))
     }
     
 

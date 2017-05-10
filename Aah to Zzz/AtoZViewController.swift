@@ -1033,6 +1033,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.dismiss(animated: true, completion: nil)
     }
     
+    
     //MARK:-Tests
     
     // print out a diagram to see the state of the Tiles and Positions

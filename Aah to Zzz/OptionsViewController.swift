@@ -36,10 +36,10 @@ class OptionsViewController: UIViewController {
         for layer in view.layer.sublayers! {
             if let updatedLayer = layer as? CAGradientLayer {
                 if updatedLayer.name == "optionsGradientLayer" {
-                    updatedLayer.locations![0] = NSNumber(slider1.value)
-                    updatedLayer.locations![1] = NSNumber(slider2.value)
-                    updatedLayer.locations![2] = NSNumber(slider3.value)
-                    updatedLayer.locations![3] = NSNumber(slider4.value)
+                    updatedLayer.locations![0] = slider1.value as NSNumber
+                    updatedLayer.locations![1] = slider2.value as NSNumber
+                    updatedLayer.locations![2] = slider3.value as NSNumber
+                    updatedLayer.locations![3] = slider4.value as NSNumber
                 }
             }
         }
@@ -123,7 +123,7 @@ class OptionsViewController: UIViewController {
         
         let gradientLayer: CAGradientLayer = CAGradientLayer()
         gradientLayer.colors = gradientColors
-        gradientLayer.locations = [NSNumber(loc1), loc2, loc3, loc4]
+        gradientLayer.locations = [loc1 as NSNumber, loc2 as NSNumber, loc3 as NSNumber, loc4 as NSNumber]
         
         return gradientLayer
     }
