@@ -1,3 +1,4 @@
+
 //
 //  GradientSlider.swift
 //  GradientSlider
@@ -305,7 +306,7 @@ import UIKit
         return UIEdgeInsetsMake(4.0, 2.0, 4.0, 2.0)
     }
     
-    override func layoutSublayersOfLayer(_ layer: CALayer) {
+    override func layoutSublayers(of layer: CALayer) {
         //super.layoutSublayersOfLayer(layer)
         
         if layer != self.layer {return}

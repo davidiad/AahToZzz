@@ -81,11 +81,11 @@ class WordnikClient: NSObject {
             }
             
             // - Parse the data
-            let parsedResult: AnyObject!
+            let parsedResult: [[String:Any]]!
             do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [[String:Any]]
                 
-                guard let definitionsJSON = parsedResult as? [[String: AnyObject]]
+                guard let definitionsJSON = parsedResult
                     else {
                         return
                 }

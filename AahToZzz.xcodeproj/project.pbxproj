@@ -723,6 +723,7 @@
 				TargetAttributes = {
 					632D5B101E53D1310011F6D2 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = ZG4367LV78;
 						LastSwiftMigration = 0830;
 						TestTargetID = 63A3A10C1C763F6C00F440B5;
 					};
@@ -1039,6 +1040,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				DEVELOPMENT_TEAM = ZG4367LV78;
 				INFOPLIST_FILE = "Aah to ZzzTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1054,6 +1056,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				DEVELOPMENT_TEAM = ZG4367LV78;
 				INFOPLIST_FILE = "Aah to ZzzTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

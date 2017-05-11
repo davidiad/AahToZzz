@@ -95,14 +95,14 @@ class FlickrClient: NSObject {
             
             // GUARD: Was there any data returned?
             guard let data = data else {
-                completion(nil, false, error as! NSError)
+                completion(nil, false, error! as NSError)
                 return
             }
             
             // - Parse the data
-            let parsedResult: AnyObject!
+            let parsedResult: [String:Any]!
             do {
-                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
             } catch {
                 parsedResult = nil
                 completion(nil, false, nil)

@@ -1214,7 +1214,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 if wordIsValid { // return the letters to the letter pool
                     //print("\(wordToCheck): at level \(wordToCheck.level)")
                     // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
-                    let time = DispatchTime(DispatchTime.now()) + Double(Int64(0.35 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC) //Int64(NSEC_PER_SEC))
+                    
+//                    let time = DispatchTime( uptimeNanoseconds: DispatchTime.now()) + Double(Int64(0.35 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC) //Int64(NSEC_PER_SEC))
+                    let time = DispatchTime.now() + 0.35
                     DispatchQueue.main.asyncAfter(deadline: time) {
                         //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
                         // rather than checking all 7 tiles
