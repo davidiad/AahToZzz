@@ -69,13 +69,13 @@ class FlickrClient: NSObject {
         // Initialize task for getting data
         let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
             guard (response != nil) else {
-                completion(nil, false, error as! NSError)
+                completion(nil, false, error! as NSError)
                 return
             }
             // Check for a successful response
             // GUARD: Was there an error?
             guard (error == nil) else {
-                completion(nil, false, error as! NSError)
+                completion(nil, false, error! as NSError)
                 return
             }
             
@@ -83,7 +83,7 @@ class FlickrClient: NSObject {
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 if let response = response as? HTTPURLResponse {
                     print("Your request returned an invalid response! Status code: \(response.statusCode)!")
-                    completion(nil, false, error as! NSError)
+                    completion(nil, false, error! as NSError)
                     
                 } else if let response = response {
                     print("Your request returned an invalid response! Response: \(response)!")
@@ -112,7 +112,7 @@ class FlickrClient: NSObject {
             // GUARD: Are the "photos" and "photo" keys in our result?
             guard let photosDictionary = parsedResult["photos"] as? NSDictionary,
                 let photoArray = photosDictionary["photo"] as? [[String: AnyObject]] else {
-                    completion(nil, false, error as! NSError)
+                    completion(nil, false, error! as NSError)
                     return
             }
             
@@ -120,11 +120,11 @@ class FlickrClient: NSObject {
                 let examplePhoto = photoArray.first
                 guard let imageUrlString = examplePhoto![EXTRAS] as? String else {
                     // handle error
-                    completion(nil, false, error as! NSError)
+                    completion(nil, false, error! as NSError)
                     return
                 }
                 
-                completion(imageUrlString, true, error as! NSError)
+                completion(imageUrlString, true, error! as NSError)
             } else {
                 completion(nil, false, nil)
             }

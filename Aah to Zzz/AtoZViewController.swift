@@ -1097,7 +1097,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // This is where stats for a word are tracked (numTimesFound, numTimesPlayed)
     //TODO:-- move tracking to separate func?
     func generateNewWordlist() {
-        model.calculateLevel() // still needed here? calling again later
+
+        // still needed here? calling again later
+        game?.data?.level = model.calculateLevel()
+        print("levelFromModel: \(String(describing: game?.data?.level))")
+        
         startNewList.alpha = 0
         startNewList.isHidden = true
         returnTiles() // if any tiles are in the upper positions, return them
@@ -1551,8 +1555,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func animateTile(_ sender: AnyObject) {
         
-        [UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveLinear, .allowUserInteraction], animations: {
-            //self.view.layoutIfNeeded()
+        _ = [UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveLinear, .allowUserInteraction], animations: {
             }, completion: nil)]
     }
     

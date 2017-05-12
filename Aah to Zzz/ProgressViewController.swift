@@ -265,7 +265,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
     // helper/diagnostic to view the number of words in each level
     func printLevelArrays() {
         for i in 0 ..< levelArrays.count {
-            print("Level \(i) has \(levelArrays[i]?.count) words")
+            print("Level \(i as Optional) has \(levelArrays[i]?.count as Optional) words")
         }
     }
     

@@ -600,7 +600,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                 masteredWords.sort { $0.level > $1.level }
             }
             for i in 0 ..< masteredWords.count {
-                print("\(masteredWords[i].word) : \(masteredWords[i].level)")
+                print("\(masteredWords[i].word as Optional) : \(masteredWords[i].level as Optional)")
             }
             
             // for the sake of playability, set some of the words back to active
@@ -915,11 +915,17 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
             let fetchedWords = try sharedContext.fetch(fetchRequest) as! [Word]
             
             for result in fetchedWords {
-                if let word = result as? Word {
-                    if word.level > highestLevel {
-                        highestLevel = word.level
-                    }
+                // conversion to Swift 3 -- says it doesn't need casting to Word
+//                if let word = result as? Word {
+//                    if word.level > highestLevel {
+//                        highestLevel = word.level
+//                    }
+//                }
+                
+                if result.level > highestLevel {
+                    highestLevel = result.level
                 }
+                
             }
             
         } catch {
@@ -948,10 +954,11 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
             let fetchedWords = try sharedContext.fetch(fetchRequest) as! [Word]
             
             for result in fetchedWords {
-                if let word = result as? Word {
+                // In Swift 3, seems to want to use result directly, no need to convert to a Word
+                //if let word = result as? Word {
                     // add the word to the array
-                    levelArrays[word.level]!.append(word.word!) // forced unwraps -- look into
-                }
+                    levelArrays[result.level]!.append(result.word!) // forced unwraps -- look into
+                //}
             }
             
         } catch {

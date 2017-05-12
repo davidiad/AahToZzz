@@ -39,7 +39,7 @@ import UIKit
         set{setValue(newValue, animated:true)}
     }
     
-    @IBInspectable var rotation: CGFloat =  CGFloat(M_PI * 0.5) {
+    @IBInspectable var rotation: CGFloat =  CGFloat.pi * 0.5 { //  CGFloat(M_PI * 0.5) {
            didSet{
                 updateRotation()
             //transform = CGAffineTransformMakeRotation(rotation)
