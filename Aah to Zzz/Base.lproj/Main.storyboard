@@ -50,14 +50,14 @@
         <!--Tutorial Page View Controller-->
         <scene sceneID="DYK-sk-fFq">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="mid" doubleSided="YES" id="NaI-Fe-NAV" customClass="TutorialPageViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="NaI-Fe-NAV" customClass="TutorialPageViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aop-hN-pRD" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="5" id="A89-Jb-O2C">
                     <rect key="frame" x="0.0" y="0.0" width="39" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </pageControl>
             </objects>
-            <point key="canvasLocation" x="-1147" y="-76"/>
+            <point key="canvasLocation" x="-1046" y="-184"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="qSQ-Tb-f2V">
@@ -164,13 +164,13 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AA to ZZZ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2d-Ga-oun">
-                                <rect key="frame" x="152" y="28" width="110" height="29"/>
+                                <rect key="frame" x="152.33333333333337" y="27.999999999999996" width="109.66666666666663" height="28.666666666666661"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="an anagram word learning game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyR-YU-OHo">
-                                <rect key="frame" x="84" y="65" width="246" height="21"/>
+                                <rect key="frame" x="84.333333333333314" y="64.666666666666686" width="245.33333333333337" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -248,7 +248,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rk-87-AV6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-300" y="353"/>
+            <point key="canvasLocation" x="-377" y="449"/>
         </scene>
         <!--AtoZ View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -740,7 +740,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of times a word was found, minus times missed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ch9-vl-b53">
-                                        <rect key="frame" x="67" y="518" width="279.5" height="12"/>
+                                        <rect key="frame" x="67" y="518" width="279.66666666666669" height="12"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -765,7 +765,7 @@
                                         </connections>
                                     </containerView>
                                     <label autoresizesSubviews="NO" opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Number of words" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWr-4a-vmb">
-                                        <rect key="frame" x="-16" y="255" width="86.5" height="12"/>
+                                        <rect key="frame" x="-16" y="255" width="86.666666666666671" height="12"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                         <color key="textColor" red="0.97480279209999998" green="0.97457337379999998" blue="0.97466939689999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="highlightedColor" red="0.97480279209999998" green="0.97457337379999998" blue="0.97466939689999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1124,7 +1124,7 @@
         <!--Options-->
         <scene sceneID="kDu-ow-V0t">
             <objects>
-                <viewControllerPlaceholder storyboardName="Options" id="ZPi-RY-WaU" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="OptionsVC" storyboardName="Options" id="ZPi-RY-WaU" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4bt-DS-E0y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="746" y="604"/>
