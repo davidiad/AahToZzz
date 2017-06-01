@@ -10,10 +10,15 @@ import UIKit
 
 class IntroViewController: UIViewController {
 
+    @IBAction func play(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor.clear
+        view.isOpaque = false
     }
 
     override func didReceiveMemoryWarning() {

@@ -564,24 +564,20 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //animator.setValue(true, forKey: "debugEnabled")
         
         
-        // why is this item behavirot=r needed?
+        // why is this item behavior needed?
         let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
         itemBehavior.density = 10.0
         itemBehavior.angularResistance = 10.0
         
+        // When first loading, add a basic info panel about the game, with a dismiss button
+        // TODO: enable dismiss by tapping anywhere
+        // TODO: customize the info vc animation
+        let infoViewController = self.storyboard?.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
+        infoViewController.modalPresentationStyle = .overCurrentContext
         
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
-        vc.modalPresentationStyle = UIModalPresentationStyle.popover
-        let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-        vc.preferredContentSize = CGSize(width: UIScreen.main.bounds.width - 32.0, height: 300.0)
-        popover.delegate = self
-        popover.sourceView = self.view
-        // set the origin for the popover with the sourceRect position
-        popover.sourceRect = CGRect(x: UIScreen.main.bounds.width * 0.5, y: 20, width: 0, height: 0)
-        popover.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-        present(vc, animated: true, completion:nil)
-
+        self.present(infoViewController, animated: true) {
+            
+        }
     }
     
 
