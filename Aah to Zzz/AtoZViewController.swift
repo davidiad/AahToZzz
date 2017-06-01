@@ -574,10 +574,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let vc = storyboard.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
         vc.modalPresentationStyle = UIModalPresentationStyle.popover
         let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+        vc.preferredContentSize = CGSize(width: UIScreen.main.bounds.width - 32.0, height: 300.0)
         popover.delegate = self
-        // make the popover arrow point from the sourceRect, further to the right than default
-        let sourceRect = CGRect(x: 10, y: 10, width: 170, height: 25)
-        popover.sourceRect = sourceRect
+        popover.sourceView = self.view
+        // set the origin for the popover with the sourceRect position
+        popover.sourceRect = CGRect(x: UIScreen.main.bounds.width * 0.5, y: 20, width: 0, height: 0)
+        popover.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
         present(vc, animated: true, completion:nil)
 
     }
