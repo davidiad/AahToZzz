@@ -75,7 +75,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hYA-o5-JiC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-965" y="743"/>
+            <point key="canvasLocation" x="-1158" y="715"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="pgQ-h6-gUs">
@@ -1128,6 +1128,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4bt-DS-E0y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="746" y="604"/>
+        </scene>
+        <!--Intro View Controller-->
+        <scene sceneID="JpF-yO-9Ms">
+            <objects>
+                <viewController storyboardIdentifier="Intro" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Lth-7f-w0D" customClass="IntroViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IBt-Ku-gCU"/>
+                        <viewControllerLayoutGuide type="bottom" id="Zn1-uu-VLB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TNc-fb-6pR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_info_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="contentStretch" x="0.040000000000000001" y="0.080000000000000002" width="0.92222199999999999" height="0.71999999999999997"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-Cn-cTF">
+                                <rect key="frame" x="20" y="20" width="374" height="696"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FuV-wN-7JJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="472.66666666666669"/>
+                                        <string key="text">AA to ZZZ
+
+noun | ah tu zi
+1. AA (a type of lava); ZZZ(sound made while sleeping)
+2. 1st 2 letter word to the last 3 letter word in the dictionary
+3. A fun way to learn 3 letter words for games such as SCRABBLE®</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uRl-0f-iXL">
+                                        <rect key="frame" x="0.0" y="472.66666666666674" width="374" height="223.33333333333326"/>
+                                        <string key="text">Tap or drag the letters to form 3 letter words.
+Tap on a word to see definition.</string>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cYu-Cn-cTF" firstAttribute="trailing" secondItem="TNc-fb-6pR" secondAttribute="trailing" constant="-20" id="36N-yp-WXL"/>
+                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="z7g-jS-JUT" secondAttribute="bottom" id="BxT-7r-0Sh"/>
+                            <constraint firstItem="z7g-jS-JUT" firstAttribute="top" secondItem="TNc-fb-6pR" secondAttribute="top" id="ZCt-Bo-LCK"/>
+                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="bottom" constant="20" id="fnb-jZ-1IL"/>
+                            <constraint firstItem="z7g-jS-JUT" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" id="ggr-Kv-0Bq"/>
+                            <constraint firstAttribute="trailing" secondItem="z7g-jS-JUT" secondAttribute="trailing" id="i8k-Tw-uL7"/>
+                            <constraint firstItem="cYu-Cn-cTF" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="20" id="pYT-TC-Tuz"/>
+                            <constraint firstItem="cYu-Cn-cTF" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" id="zXv-qE-tBe"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qhV-Ay-3EQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1255.072463768116" y="887.77173913043487"/>
         </scene>
     </scenes>
     <resources>

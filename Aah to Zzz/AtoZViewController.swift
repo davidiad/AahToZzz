@@ -551,8 +551,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-    }
+
     
+    
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateProgress(nil)
@@ -565,6 +568,17 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
         itemBehavior.density = 10.0
         itemBehavior.angularResistance = 10.0
+        
+        
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
+        vc.modalPresentationStyle = UIModalPresentationStyle.popover
+        let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+        popover.delegate = self
+        // make the popover arrow point from the sourceRect, further to the right than default
+        let sourceRect = CGRect(x: 10, y: 10, width: 170, height: 25)
+        popover.sourceRect = sourceRect
+        present(vc, animated: true, completion:nil)
 
     }
     
