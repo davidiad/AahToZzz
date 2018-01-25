@@ -1041,7 +1041,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     // added paramater 'first' only so #selector is recognized above - compiler can't disambiguate parameterless method
-    func dismiss(first: Bool) {
+    @objc func dismiss(first: Bool) {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -1349,10 +1349,10 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Possible fonts
         //BanglaSangamMN-Bold //EuphemiaUCAS-Bold //GillSans-SemiBold //Copperplate-Bold
         
-        let attributes: [String: AnyObject] =  [NSFontAttributeName: UIFont(name: "EuphemiaUCAS-Bold", size: 30.0)!,
-                                                NSForegroundColorAttributeName: Colors.midBrown,
-                                                NSStrokeWidthAttributeName: -3.0 as AnyObject,
-                                                NSStrokeColorAttributeName: UIColor.black]
+        let attributes: [NSAttributedStringKey: Any] =  [.font: UIFont(name: "EuphemiaUCAS-Bold", size: 30.0)!,
+                                                .foregroundColor: Colors.midBrown,
+                                                .strokeWidth: -3.0 as AnyObject,
+                                                .strokeColor: UIColor.black]
 
         for i in 0 ..< lettertiles.count {
             
@@ -1481,7 +1481,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     //TODO:-set up custom behaviors as separate classes
-    func panTile(_ pan: UIPanGestureRecognizer) {
+    @objc func panTile(_ pan: UIPanGestureRecognizer) {
         
         animator.removeAllBehaviors()
         
