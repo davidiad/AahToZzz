@@ -40,19 +40,31 @@ class WordListCell: UITableViewCell {
     
     var wordtext: String? {
         didSet {
+            guard let wordtext = wordtext else {
+                // TODO: handle error
+                return
+            }
+            /* //Swift 3 version
             firstLetterBg.image = colorCode?.tile_bg!
             firstLetter.text = wordtext?.substring(to: wordtext!.characters.index(after: wordtext!.startIndex))
             secondLetterBg.image = colorCode?.tile_bg!
-            
-            // Fix warning: 'init(start:end:)' is deprecated: it will be removed in Swift 3.  Use the '..<' operator.
-            //secondLetter.text = wordtext?.substringWithRange(Range<String.Index>(start: wordtext!.startIndex.successor(), end: wordtext!.endIndex.predecessor()))
             secondLetter.text = wordtext?.substring( with: wordtext!.characters.index(after: wordtext!.startIndex) ..< wordtext!.characters.index(before: wordtext!.endIndex) )
-                
-                
-            
             thirdLetterBg.image = colorCode?.tile_bg!//UIImage(named: "small_tile_yellow")
             thirdLetter.text = wordtext?.substring(from: wordtext!.characters.index(before: wordtext!.endIndex))
+            //END */
             
+            // Swift 4 version
+            let index2 = wordtext.index(after: wordtext.startIndex)
+            let index3 = wordtext.index(after: index2)
+            firstLetter.text = String(wordtext.prefix(1))
+            secondLetter.text = String(wordtext[index2 ..< index3])
+            thirdLetter.text = String(wordtext[index3 ..< wordtext.endIndex])
+            
+            firstLetterBg.image = colorCode?.tile_bg!
+            secondLetterBg.image = colorCode?.tile_bg!
+            thirdLetterBg.image = colorCode?.tile_bg!
+            // END
+
             // set the image (if any) to use as an outline for the cell
             if let outline = colorCode?.outline {
                 outlineView.image = outline

@@ -204,7 +204,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         
         // Add the 6 letters from 2 random words to the letterset, for a total of 7 letters
         let sixLettersFromWords = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
-        for char in sixLettersFromWords.characters {
+        for char in sixLettersFromWords {
             letters.append(createLetter(String(char)))
         }
         
@@ -282,7 +282,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         //let sixLettersFromWords = wordsArray[firstWordIndex] + wordsArray[secondWordIndex]
         let sixLettersFromWords = getWordsForLetters()
         print("The 6: \(sixLettersFromWords)")
-        for char in sixLettersFromWords.characters {
+        for char in sixLettersFromWords {
             letters.append(createLetter(String(char)))
         }
         
@@ -346,7 +346,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     // TODO: There must be a way to have this array created only once, not every time a random letter is generated. Compute it in a Struct, and then get the array from the Struct?
     func generateAlphabetArray() -> [String] {
         var alphabetArray: [String] = []
-        for char in alphabetSoup.characters {
+        for char in alphabetSoup {
             alphabetArray.append(String(char))
         }
         return alphabetArray

@@ -5,7 +5,7 @@
 //  Created by David Fierstein on 3/16/16.
 //  Copyright © 2016 David Fierstein. All rights reserved.
 //
-
+/* Not using this RotatingView class
 import UIKit
 
 @IBDesignable class RotatingView: UIView {
@@ -32,3 +32,4 @@ import UIKit
     }
     
 }
+*/
