@@ -85,7 +85,7 @@ class Aah_to_ZzzTests: XCTestCase {
     
     func testGetWordsForLetters() {
         let checkWords = model.getWordsForLetters()
-        let checkWordLength = checkWords.characters.count
+        let checkWordLength = checkWords.count
         XCTAssert(checkWordLength == 6)
     }
  

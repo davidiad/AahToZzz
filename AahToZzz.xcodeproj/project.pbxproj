@@ -505,6 +505,7 @@
 		63A3A10F1C763F6C00F440B5 /* AahToZzz */ = {
 			isa = PBXGroup;
 			children = (
+				637760471E7F9CE400BD59F6 /* ToDoList.rtf */,
 				63D57BA81C891C950046E349 /* Controller */,
 				637AF0701C83EEE9005A36BA /* Assets */,
 				63A3A1101C763F6C00F440B5 /* AppDelegate.swift */,
@@ -646,7 +647,6 @@
 				63E4A2C41DC1AF98002BC4CE /* LevelTableViewController.swift */,
 				63E4A2C61DC24CBA002BC4CE /* LevelTableCell.swift */,
 				633C5BEC1E7C9D87008E5A43 /* GraphBarView.swift */,
-				637760471E7F9CE400BD59F6 /* ToDoList.rtf */,
 				634BE6851E96E3330074F2F8 /* HomeViewController.swift */,
 				635F63E81E986B0A00C48913 /* UIStoryboardSegueFromRight.swift */,
 				6319C0811EA345F0004AC9B7 /* GameCenterExtension.swift */,
@@ -1055,7 +1055,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aah-to-ZzzTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AahToZzz.app/AahToZzz";
 			};
@@ -1072,7 +1072,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aah-to-ZzzTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AahToZzz.app/AahToZzz";
 			};
@@ -1190,7 +1190,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aa-to-Zzz";
 				PRODUCT_NAME = AahToZzz;
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1210,7 +1210,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.davidiad.Aa-to-Zzz";
 				PRODUCT_NAME = AahToZzz;
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
