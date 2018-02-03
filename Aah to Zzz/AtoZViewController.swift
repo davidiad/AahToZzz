@@ -41,33 +41,14 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //    fileprivate func testAlamoFire() {
 //        print (" Alamofire version: \(AlamofireVersionNumber)")
 //           }
-
-    
-    // MARK: - Unwind segue from Progress view
-    @IBAction func cancelToProgressViewController(_ segue:UIStoryboardSegue) {
-    }
     
     //TODO: When proxy scroll (invisible scrolling table on right, synced to table on left) is touched, show custom scroll indicator. Also show vertical bar with progress?
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == proxyTable {
-            wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
-        }
-//        if scrollView == wordTable {
-//            proxyTable.setContentOffset(wordTable.contentOffset, animated: false)
-//        }
-    }
-    
-    let gravity = UIGravityBehavior()
     
     var model = AtoZModel.sharedInstance //why not let?
     var letters: [Letter]! //TODO: why not ? instead of !
     var wordlist = [String]()
     var positions: [Position]?
     var wordHolderCenter: CGPoint?
-    /*var tileBackgrounds = [UIView]?() remove tileBackgrounds, 1 of 3 */
-    
-    @IBOutlet weak var progressLabl: UILabel!
     
     var game: Game?
     var currentLetterSet: LetterSet?
@@ -78,17 +59,26 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var fillingInBlanks: Bool = false // flag for configuring cells when Fill in the Blanks button is touched
     
+    var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
+    var tilesToSwap: [Tile]? // an array to temporarilly hold the tiles waiting to be swapped
+    var maxTilesToSwap: Int = 0 // temp. diagnostic
+    
+    //MARK:- IBOutlets
+    @IBOutlet weak var progressLabl: UILabel!
+    @IBOutlet weak var wordInProgress: UILabel!
+    @IBOutlet weak var startNewList: UIButton!
     @IBOutlet weak var wordTableHolderView: UIView!
     @IBOutlet weak var wordTable: UITableView!
     @IBOutlet weak var proxyTable: UITableView!
     @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    @IBOutlet weak var inProgressLeading: NSLayoutConstraint!
+    @IBOutlet weak var statusBgHeight: NSLayoutConstraint!
     
-    var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
-    var tilesToSwap: [Tile]? // an array to temporarilly hold the tiles waiting to be swapped
-    var maxTilesToSwap: Int = 0 // temp. diagnostic
-    @IBOutlet weak var wordInProgress: UILabel!
-    @IBOutlet weak var startNewList: UIButton!
-    
+    //MARK:- IBActions
+    // Unwind segue from Progress view
+    @IBAction func cancelToProgressViewController(_ segue:UIStoryboardSegue) {
+    }
     
     @IBAction func returnTiles(_ sender: AnyObject) {
         returnTiles()
@@ -123,33 +113,31 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
 
+    //MARK:- vars for UIDynamics
+    let gravity = UIGravityBehavior()
+    
+    lazy var center: CGPoint = {
+        return CGPoint(x: self.view.frame.midX, y: self.view.frame.midY)
+    }()
+    
+    fileprivate var animator: UIDynamicAnimator!
+    
+    // Two different collision behaviors being used (One of them seems to have different gravity?)
+    fileprivate var collisionBehavior = UICollisionBehavior()
     lazy var collider:UICollisionBehavior = {
         let lazyCollider = UICollisionBehavior()
         lazyCollider.collisionDelegate = self
-        // This line, makes the boundaries of our reference view a boundary
+        // This line makes the boundaries of our reference view a boundary
         // for the added items to collide with.
         lazyCollider.translatesReferenceBoundsIntoBoundary = true
         return lazyCollider
     }()
     
-    // This function will be called with every and each collision starts between all the views added to our collision behavior.
-//    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint){
-//        
-//        // We're only interested in collisions with the black circle (snappingCircle).
-//        if (item1 as? UIView)?.tag >= 2000 {
-//            print("Collides!: \((item1 as? UIView)?.tag) and \((item2 as? UIView)?.tag)")
-//        }
-//    }
-    
     lazy var dynamicItemBehavior:UIDynamicItemBehavior = {
         let lazyBehavior = UIDynamicItemBehavior()
-        // Let's make our square elastic
-        // 0 = no elacticity, 1.0 = max elacticity
+
         lazyBehavior.elasticity = 0.5
-        
-        // Other configurations
         lazyBehavior.allowsRotation = true
-        // lazyBehavior.density
         lazyBehavior.friction = 0.3
         lazyBehavior.resistance = 0.5
         
@@ -158,51 +146,29 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     lazy var uiDynamicItemBehavior:UIDynamicItemBehavior = {
         let lazyBehavior = UIDynamicItemBehavior()
-        // Let's make our square elastic
-        // 0 = no elacticity, 1.0 = max elacticity
         lazyBehavior.elasticity = 0.0
-        
-        // Other configurations
         lazyBehavior.allowsRotation = false
         lazyBehavior.density = 5500.0
         lazyBehavior.friction = 5110.00
         lazyBehavior.resistance = 5110.0
-        
+
         return lazyBehavior
     }()
-    
-//    lazy var dynamicItemBehavior_tile0:UIDynamicItemBehavior = {
-//        let lazyBehavior = UIDynamicItemBehavior()
-//        // Let's make our square elastic
-//        // 0 = no elacticity, 1.0 = max elacticity
-//        lazyBehavior.elasticity = 1.0
-//        
-//        // Other configurations
-//        lazyBehavior.allowsRotation = true
-//        lazyBehavior.density = 300.0
-//        lazyBehavior.friction = 0.0
-//        lazyBehavior.resistance = 0.0
-//        
-//        return lazyBehavior
-//    }()
+
     
     @IBAction func jumbleTiles(_ sender: AnyObject) {
         
-        // find the current positions of the letters
-        // randomize the positions of the letters
-        // later, snap to those positions
+        //Find current positions of the letters. Randomize the positions of the letters. Later, snap to those positions
         let sevenRandomizedInts = model.randomize7()
         for j in 0 ..< 7 {
             
-            // There are 10 Positions, not 7. Tiles in the upper positions (7,8,9) will be returned to lower positions
+        // There are 10 Positions, not 7. Tiles in the upper positions (7,8,9) will be returned to lower positions
             letters[j].position = positions![sevenRandomizedInts[j]]
         }
         saveContext() // TODO: Need dispatch async?
-        
-        
-        
+
         for tile in lettertiles {
-            // To give a bit more of a 3D effect, vary the tiles' scale, depending on how high they are in the view hierarchy. Their tags range from 1000 to 1007, so convert that to a range between 0.5 and 1. Numbers < 1 scale the tiles bigger.
+            // To give a bit of a 3D effect, vary the tiles' scale, depending on how high they are in the view hierarchy. Their tags range from 1000 to 1007, so convert that to a range between 0.5 and 1. Numbers < 1 scale the tiles bigger.
             let scaleFactor = (CGFloat(tile.tag - 1000) / 14.0) + 0.5
             let s = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
             
@@ -220,86 +186,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         jumbleTiles()
-        
-//        // Jumble a 2nd time, after a slight delay
-//        let timer = 1.5
-//        let delay = timer * Double(NSEC_PER_SEC)
-//        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-//        dispatch_after(time, dispatch_get_main_queue()) {
-//            for tile in self.lettertiles {
-////                tile.snapBehavior?.snapPoint = (tile.letter?.position?.position)!
-//                //tile.frame = CGRect(origin: (tile.letter?.position?.position)!, size: tile.frame.size)
-//            }
-//            //self.jumbleTiles()
-//        }
-        
-        /*
-        // find the current positions of the letters
-        // randomize the positions of the letters
-        // later, snap to those positions
-        let sevenRandomizedInts = model.randomize7()
-        for j in 0 ..< 7 {
-
-            // There are 10 Positions, not 7. Tiles in the upper positions (7,8,9) will be returned to lower positions
-            letters[j].position = positions![sevenRandomizedInts[j]]
-
-        }
-        saveContext() // TODO: Need dispatch async?
-        
-        // animator.setValue(true, forKey: "debugEnabled") // uncomment to see dynamics reference lines
-        animator.removeAllBehaviors() // reset the animator
-        
-        uiDynamicItemBehavior.addItem(toolbar)
-        animator.addBehavior(gravity)
-        animator.addBehavior(collider)
-        animator.addBehavior(dynamicItemBehavior)
-        animator.addBehavior(uiDynamicItemBehavior)
-        // add the scroll view that holds the word list as a collider
-        //collider.addItem(wordTableHolderView)
-        collider.addItem(toolbar)
-
-        // Delay snapping tiles back to positions until after the tiles have departed
-        var timer = 0.2
-        let delay = timer * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue()) {
-
-            timer = 0.1
-            for tile in self.lettertiles {
-                timer += 0.1
-                let delay = timer * Double(NSEC_PER_SEC)
-                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-                dispatch_after(time, dispatch_get_main_queue()) {
-                    tile.snapBehavior = UISnapBehavior(item: tile, snapToPoint: (tile.letter?.position?.position)!)
-                    self.animator.addBehavior(tile.snapBehavior!)
-                    self.collider.removeItem(tile)
-                    self.saveContext()
-                    
-                }
-            }
-        }
-        
-//        for tile in lettertiles {
-        for i in 0 ..< lettertiles.count {
-        
-            // add a push in a random but up direction
-            // taking into account that 0 (in radians) pushes to the right, and we want to vary between about 90 degrees (-1.57 radians) to the left, and to the right
-            // direction should be between ~ -3 and 0. or maybe ~ -.5 and -2.5 (needs fine tuning)
-            let direction = -1.5 * drand48() - 0.9
-            let push = UIPushBehavior(items: [lettertiles[i]], mode: .Instantaneous)
-            //push.pushDirection = CGVectorMake(0, CGFloat(direction))
-            push.angle = CGFloat(direction)
-            push.magnitude = CGFloat(7.0 * drand48() + 7.0)
-            animator.addBehavior(push)
-            print(animator.running)
-            
-            // add gravity to each tile
-            collider.addItem(lettertiles[i])
-            gravity.addItem(lettertiles[i])
-            dynamicItemBehavior.addItem(lettertiles[i])
-
-        }
-         */
     }
     
     func jumbleTiles() {
@@ -313,7 +199,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         animator.addBehavior(dynamicItemBehavior)
         animator.addBehavior(uiDynamicItemBehavior)
         // add the scroll view that holds the word list as a collider
-        //collider.addItem(wordTableHolderView)
         collider.addItem(toolbar)
         
         // Need to turn off gravity after awhile, otherwise it moves the tiles out of position
@@ -346,31 +231,22 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                     self.animator.addBehavior(tile.snapBehavior!)
                     self.collider.removeItem(tile)  // keeps the letters from getting stuck on each other.
-
-                    
                     self.saveContext()
-                    
                 }
             }
         }
         
-        
-        
         //        for tile in lettertiles {
         for i in 0 ..< lettertiles.count {
-//            let scale = CGAffineTransformMakeScale(3.0, 3.0)
-//            lettertiles[i].transform = scale
             
             // add a push in a random but up direction
             // taking into account that 0 (in radians) pushes to the right, and we want to vary between about 90 degrees (-1.57 radians) to the left, and to the right
             // direction should be between ~ -3 and 0. or maybe ~ -.5 and -2.5 (needs fine tuning)
             let direction = -1.5 * drand48() - 0.9
             let push = UIPushBehavior(items: [lettertiles[i]], mode: .instantaneous)
-            //push.pushDirection = CGVectorMake(0, CGFloat(direction))
             push.angle = CGFloat(direction)
             push.magnitude = CGFloat(7.0 * drand48() + 7.0)
             animator.addBehavior(push)
-            print(animator.isRunning)
             
             // add gravity to each tile
             collider.addItem(lettertiles[i])
@@ -379,27 +255,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    @IBOutlet weak var topConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var inProgressLeading: NSLayoutConstraint!
-    
-    @IBOutlet weak var statusBgHeight: NSLayoutConstraint!
-    
-    //MARK:- vars for UIDynamics
-    
-    lazy var center: CGPoint = {
-        return CGPoint(x: self.view.frame.midX, y: self.view.frame.midY)
-    }()
-
-
-    
-    fileprivate var animator: UIDynamicAnimator!
-    fileprivate var attachmentBehavior: UIAttachmentBehavior!
-    fileprivate var pushBehavior: UIPushBehavior!
-    fileprivate var itemBehavior: UIDynamicItemBehavior!
-    fileprivate var gravityBehavior = UIGravityBehavior()
-    fileprivate var collisionBehavior = UICollisionBehavior()
-    //private var blackhole = UIFieldBehavior!(nil) //for Swift 3, add nil inside parens
     
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
@@ -425,7 +280,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("VDL")
         //proxyTable.registerClass(ProxyTableCell.self, forCellReuseIdentifier: "proxycell")
         //wordTable.registerClass(WordListCell.self, forCellReuseIdentifier: "cell")
         
@@ -439,13 +293,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         game = model.game
 
-        
-        /* May not be needed, as 'positions' is sorted in the model
-        positions = game?.positions?.allObjects as? [Position]
-        positions!.sortInPlace {
-            ($0.index as Int16?) < ($1.index as Int16?)
-        }
-        */
         
         // save the center of the wordTableHolderView, so that it can be used as snap position, to keep the wordTableHolderView in place after it is jostled by moving tiles.
         wordHolderCenter = wordTableHolderView.center
@@ -475,11 +322,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         animator.delegate = self
         lettertiles = [Tile]()
         tilesToSwap = [Tile]()
-        /* remove tileBackgrounds 2 of 3
-        tileBackgrounds = [UIView]() // putting the tile bg's into an array so as to refer to them in collision detection
-        */
         
-//        let image = UIImage(named: "tile") as UIImage?
         let bgImage = UIImage(named: "tile_bg") as UIImage?
         
         for i in 0 ..< 7 {
@@ -536,13 +379,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         view.layer.addSublayer(mainGradient)
         
         collisionBehavior = UICollisionBehavior(items: [])
-        //collisionBehavior.translatesReferenceBoundsIntoBoundary = true
         for tile in lettertiles {
             if (tile.boundingPath) != nil {
                 collisionBehavior.addBoundary(withIdentifier: "tile" as NSCopying, for: tile.boundingPath!)
             }
         }
-        
         animator.addBehavior(collisionBehavior)
         
         //testAlamoFire()
@@ -550,10 +391,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-
-    
-    
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -580,7 +417,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-
+    //MARK:- Tile Swapping
     
     // Each letter should have a position
     func swapTile(_ tile: Tile) {
@@ -613,8 +450,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 self.saveContext() { success in
                     if success {
-                       // print("successful save")
-                    //}
                 
                     tile.snapBehavior?.snapPoint = (newPosition?.position)!
 
@@ -624,9 +459,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    // TODO: - safer unwrapping
+    // TODO:  safer unwrapping
     func swapTile() {
-        print("In NEW SWAP TILE")
         let tile = tilesToSwap![0]
         tilesToSwap?.removeFirst()
         
@@ -669,7 +503,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     }
                     print("maxTilesToSwap: \(self.maxTilesToSwap)")
                     // in case another tile is in the Q to swap, run this func again
-                    //TODO:- check whether this is ever called
+                    //TODO: check whether this is ever called
                     if (self.tilesToSwap?.count)! > 0 {
 
                         self.swapTile()
@@ -680,9 +514,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
 
-    
-    
-    
     //TODO: refactor the 3 swap tile funcs to not repeat code
     // in the case that we already know the position
     func swapTileToKnownPosition(_ tile: Tile, pos: Position) {
@@ -733,36 +564,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         if checkX > tolerance || checkY > tolerance {
-            // The tile is not at its correct position, so move it to correct position
-            
-//            if let snap = tile.snapBehavior {
-//                animator.addBehavior(snap)
-//            }
 
             
-//            tile.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-//                    tile.frame.origin = tile.position
-//                    self.view.layoutIfNeeded()
-//                }, completion: nil)
-            
-            
-            
-            
-//            let animation = CABasicAnimation(keyPath: "position")
-//            animation.fromValue = [tile.frame.origin.x, tile.frame.origin.y]
-//            animation.toValue = [tilePosX, tilePosY]
-//            
-//            tile.layer.addAnimation(animation, forKey: "position")
-            
-            
-            //let move = CGAffineTransformMakeTranslation(0.0, -90.0)
-            
             UIView.animate(withDuration: 0.15, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
-                
-                //t.transform = CGAffineTransformConcat(scale, move)
-                //tile.transform = CGAffineTransformTranslate(move, 90, 90)
-                //print("In Animation")
-                
                 
                 //tile.transform = CGAffineTransformIdentity // this line is a safeguard in case tiles get rotated after a jumble. However, may not be needed, and was preventing enlarging the tiles during a pan (to make them appear raised above the others while panning)
                 
@@ -771,34 +575,13 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }, completion: { (finished: Bool) -> Void in
             })
             
-            
-            
-            
             //tile.center = (tile.letter?.position?.position)!
-            
-            
-            
             
         }
         
     }
-    //MARK:-
-//    
-//    func test (v: UIView) {
-//        view.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-//            tile.frame.origin = tile.position
-//            self.view.layoutIfNeeded()
-//            }, completion: nil)
-//    }
     
     func findVacancy(_ tile: Tile) -> Position? {
-//        var position: Position?
-//        let delay = 0.2 * Double(NSEC_PER_SEC)
-//        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-//        
-//        dispatch_after(time, dispatch_get_main_queue()) {
-            // delay, just so the previous one has time to finish
-            
             
             if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard. Which doesn't seem to work anyway.
                 // tile is in lower position, so look for vacancy in the uppers
@@ -828,8 +611,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print ("was nil")
                 return nil
             }
-//            return position
-//        }
     }
     
 
@@ -1023,6 +804,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // TODO: prevent popover from attempting to present twice in a row
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == proxyTable {
+            wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
+        }
+    }
 
     
     //MARK:- Popover Delegate functions
@@ -1314,7 +1100,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // if there is a saved letterset, then use that instead of a new one
         game = model.fetchGame()
         if game?.data?.currentLetterSetID == nil {
-            //letters = model.generateLetters()
             currentLetterSet = model.generateLetterSet()
         } else {
             // there is a currentLetterSet, so let's find it
@@ -1397,10 +1182,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             } else {
                 
             }
-//                let currentWord = fetchedResultsController.objectAtIndexPath(indexPath) as! Word
-//                currentWord.found = true
-                saveContext()
-            
+            saveContext()
         }
         animateStatusHeight(80.0)
         progressLabl.text = "\(currentNumFound()) of \(currentNumberOfWords! - model.inactiveCount!) words found"
@@ -1468,8 +1250,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tile.addGestureRecognizer(panRecognizer)
         
         panRecognizer.require(toFail: tapRecognizer)
-
-        
 //        if let gestureRecognizers = tile.gestureRecognizers {
 //            for tap in gestureRecognizers {
 //                if tap.isKindOfClass(UITapGestureRecognizer) {
@@ -1496,7 +1276,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //animator?.removeBehavior(t.snapBehavior!) //TODO: behavior not being removed, and fighting with pan.
             //TODO:-- each remove behavior, and/or, use attachment behavior instead of pan, as in WWDC video
             t.superview?.bringSubview(toFront: t) // Make this Tile float above the other tiles
-            //let center = t.center
             t.layer.shadowOpacity = 0.85
             let scale = CGAffineTransform(scaleX: 1.25, y: 1.25)
             let move = CGAffineTransform(translationX: 0.0, y: -58.0)
@@ -1564,7 +1343,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK:- Animations
 
-
     func animateTile(_ sender: AnyObject) {
         
         _ = [UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveLinear, .allowUserInteraction], animations: {
@@ -1623,9 +1401,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             execute: closure
         )
     }
-    
-    
-
 }
 
 

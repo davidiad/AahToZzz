@@ -889,21 +889,6 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         return inactiveQuota
     }
     
-//    // Obj-C version
-//    - (int) calculateInactiveQuota : (int) wordlistCount {
-//    float inactiveFactor = 0.1; // arbitrary amount to give reasonable limits to max # inactives
-//    int inactiveQuota = 0;
-//    int tensPlace = (int)(wordlistCount * 0.1);
-//    if (tensPlace > 3) {
-//    tensPlace -= 1; // better distribution this way
-//    }
-//    for (int i=0; i<=tensPlace; i++) {
-//    inactiveQuota += (int)(inactiveFactor * wordlistCount);
-//    }
-//    NSLog(@"IQ is: %d", inactiveQuota);
-//    return inactiveQuota;
-//    }
-    
     //MARK:- Stats calculations
     
     func getHighestLevel() -> Int {
@@ -915,17 +900,10 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
             let fetchedWords = try sharedContext.fetch(fetchRequest) as! [Word]
             
             for result in fetchedWords {
-                // conversion to Swift 3 -- says it doesn't need casting to Word
-//                if let word = result as? Word {
-//                    if word.level > highestLevel {
-//                        highestLevel = word.level
-//                    }
-//                }
                 
                 if result.level > highestLevel {
                     highestLevel = result.level
                 }
-                
             }
             
         } catch {
