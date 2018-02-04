@@ -36,13 +36,14 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 */
 
-class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate, UIDynamicAnimatorDelegate {
+class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate {
     
 //    fileprivate func testAlamoFire() {
 //        print (" Alamofire version: \(AlamofireVersionNumber)")
 //           }
     
     //TODO: When proxy scroll (invisible scrolling table on right, synced to table on left) is touched, show custom scroll indicator. Also show vertical bar with progress?
+    let uiDynamicsDelegate = AtoZUIDynamicsDelegate();
     
     var model = AtoZModel.sharedInstance //why not let?
     var letters: [Letter]! //TODO: why not ? instead of !
@@ -318,10 +319,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         //scrollingSlider.transform = CGAffineTransformMakeRotation(CGFloat(M_PI * 0.5))
         
-        animator = UIDynamicAnimator(referenceView: view)
-        animator.delegate = self
         lettertiles = [Tile]()
         tilesToSwap = [Tile]()
+        
+        animator = UIDynamicAnimator(referenceView: view)
+        animator.delegate = uiDynamicsDelegate
+        uiDynamicsDelegate.lettertiles = lettertiles // Will these need to be updated on the delegate?
         
         let bgImage = UIImage(named: "tile_bg") as UIImage?
         
@@ -396,15 +399,9 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateProgress(nil)
-        // Thank you to Aaron Douglas for showing an easy way to turn on the cool fields of lines that visualize UIFieldBehaviors!
+        // Thank you Aaron Douglas for showing how to turn on the cool fields of lines that visualize UIFieldBehaviors!
         // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
         //animator.setValue(true, forKey: "debugEnabled")
-        
-        
-        // why is this item behavior needed?
-        let itemBehavior = UIDynamicItemBehavior(items: lettertiles)
-        itemBehavior.density = 10.0
-        itemBehavior.angularResistance = 10.0
         
         // When first loading, add a basic info panel about the game, with a dismiss button
         // TODO: enable dismiss by tapping anywhere
@@ -421,7 +418,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // Each letter should have a position
     func swapTile(_ tile: Tile) {
-        
+      
         animator.removeAllBehaviors()
         for anyTile in lettertiles {
             animator.addBehavior(anyTile.snapBehavior!)
@@ -526,59 +523,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tile.snapBehavior?.snapPoint = pos.position
 
         saveContext() // safest to save the context here, after every letter swap
-    }
-    
-    //MARK:- dynamic animator delegate
-    var animatorBeganPause: Bool = false
-    
-    func dynamicAnimatorDidPause(_ animator: UIDynamicAnimator){
-        if !animatorBeganPause { // otherwise this is called continually
-            print("Stasis! The universe stopped moving.")
-            for tile in lettertiles {
-                checkTilePosition(tile)
-            }
-            animatorBeganPause = true
-        }
-    }
-    
-    
-    func dynamicAnimatorWillResume(_ animator: UIDynamicAnimator) {
-        animatorBeganPause = false // reset
-    }
-    
-    // Helper to see if tile has reached its position after dynamic animator has paused
-    func checkTilePosition(_ tile: Tile) {
-        // TODO: check if the position checking is working
-        //animator.removeBehavior(tile.snapBehavior!)
-        
-        let tolerance: Float = 0.1
-        guard let tilePosX = tile.letter!.position?.xPos else {
-            return
-        }
-        let checkX = abs(Float(tile.frame.origin.x) - tilePosX)
-        
-        guard let tilePosY = tile.letter!.position?.yPos else {
-            return
-        }
-        let checkY = abs(Float(tile.frame.origin.y) - tilePosY)
-        
-        
-        if checkX > tolerance || checkY > tolerance {
-
-            
-            UIView.animate(withDuration: 0.15, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
-                
-                //tile.transform = CGAffineTransformIdentity // this line is a safeguard in case tiles get rotated after a jumble. However, may not be needed, and was preventing enlarging the tiles during a pan (to make them appear raised above the others while panning)
-                
-                tile.center = (tile.letter?.position?.position)!
-                
-                }, completion: { (finished: Bool) -> Void in
-            })
-            
-            //tile.center = (tile.letter?.position?.position)!
-            
-        }
-        
     }
     
     func findVacancy(_ tile: Tile) -> Position? {
@@ -1402,6 +1346,3 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         )
     }
 }
-
-
-

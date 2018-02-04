@@ -80,6 +80,7 @@
 		6355499C1CA0E87D00DB5167 /* status_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549991CA0E87D00DB5167 /* status_bg@2x.png */; };
 		635F63E91E986B0A00C48913 /* UIStoryboardSegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635F63E81E986B0A00C48913 /* UIStoryboardSegueFromRight.swift */; };
 		636240851E308EEE007640DC /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636240841E308EEE007640DC /* Queue.swift */; };
+		636E57122026D04800211944 /* AtoZUIDynamicsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */; };
 		637760481E7F9CE400BD59F6 /* ToDoList.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 637760471E7F9CE400BD59F6 /* ToDoList.rtf */; };
 		6377ED571E6F4C800001C080 /* graph_double_flatbottom@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */; };
 		6377ED591E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED581E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf */; };
@@ -261,6 +262,7 @@
 		635549991CA0E87D00DB5167 /* status_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@2x.png"; sourceTree = "<group>"; };
 		635F63E81E986B0A00C48913 /* UIStoryboardSegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStoryboardSegueFromRight.swift; sourceTree = "<group>"; };
 		636240841E308EEE007640DC /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZUIDynamicsDelegate.swift; sourceTree = "<group>"; };
 		637760471E7F9CE400BD59F6 /* ToDoList.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = ToDoList.rtf; sourceTree = "<group>"; };
 		6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_double_flatbottom@1x.pdf"; sourceTree = "<group>"; };
 		6377ED581E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_doubled_32px@1x.pdf"; sourceTree = "<group>"; };
@@ -652,6 +654,7 @@
 				6319C0811EA345F0004AC9B7 /* GameCenterExtension.swift */,
 				6322E7F51EA9B93700F5100D /* TutorialPageViewController.swift */,
 				63F020F11EDF803B0022A5D0 /* IntroViewController.swift */,
+				636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -986,6 +989,7 @@
 				6319C0821EA345F0004AC9B7 /* GameCenterExtension.swift in Sources */,
 				63E4A2C71DC24CBA002BC4CE /* LevelTableCell.swift in Sources */,
 				6317546C1E39E059008B359D /* GameTypeInfo.swift in Sources */,
+				636E57122026D04800211944 /* AtoZUIDynamicsDelegate.swift in Sources */,
 				633C5BED1E7C9D87008E5A43 /* GraphBarView.swift in Sources */,
 				63EA98D71D4F46E000537F2A /* Colors.swift in Sources */,
 				63D57BB61C8C00C80046E349 /* Position.swift in Sources */,
