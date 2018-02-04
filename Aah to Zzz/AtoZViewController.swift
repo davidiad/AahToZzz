@@ -36,7 +36,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 */
 
-class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate {
+class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate{//, UICollisionBehaviorDelegate {
     
 //    fileprivate func testAlamoFire() {
 //        print (" Alamofire version: \(AlamofireVersionNumber)")
@@ -127,7 +127,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     fileprivate var collisionBehavior = UICollisionBehavior()
     lazy var collider:UICollisionBehavior = {
         let lazyCollider = UICollisionBehavior()
-        lazyCollider.collisionDelegate = self
+        //lazyCollider.collisionDelegate = self  // delegate may ot even be needed
         // This line makes the boundaries of our reference view a boundary
         // for the added items to collide with.
         lazyCollider.translatesReferenceBoundsIntoBoundary = true
