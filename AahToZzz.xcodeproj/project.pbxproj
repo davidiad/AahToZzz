@@ -82,6 +82,7 @@
 		636240851E308EEE007640DC /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636240841E308EEE007640DC /* Queue.swift */; };
 		636E57122026D04800211944 /* AtoZUIDynamicsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */; };
 		637760481E7F9CE400BD59F6 /* ToDoList.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 637760471E7F9CE400BD59F6 /* ToDoList.rtf */; };
+		6377B8302028E9BA00C42743 /* AtoZPopoverDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6377B82F2028E9BA00C42743 /* AtoZPopoverDelegate.swift */; };
 		6377ED571E6F4C800001C080 /* graph_double_flatbottom@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */; };
 		6377ED591E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED581E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf */; };
 		6377ED5B1E6FBDBC0001C080 /* graph_shadow@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED5A1E6FBDBC0001C080 /* graph_shadow@1x.pdf */; };
@@ -264,6 +265,7 @@
 		636240841E308EEE007640DC /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZUIDynamicsDelegate.swift; sourceTree = "<group>"; };
 		637760471E7F9CE400BD59F6 /* ToDoList.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = ToDoList.rtf; sourceTree = "<group>"; };
+		6377B82F2028E9BA00C42743 /* AtoZPopoverDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZPopoverDelegate.swift; sourceTree = "<group>"; };
 		6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_double_flatbottom@1x.pdf"; sourceTree = "<group>"; };
 		6377ED581E6F6AEE0001C080 /* graph_doubled_32px@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_doubled_32px@1x.pdf"; sourceTree = "<group>"; };
 		6377ED5A1E6FBDBC0001C080 /* graph_shadow@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_shadow@1x.pdf"; sourceTree = "<group>"; };
@@ -435,6 +437,15 @@
 				632D5B151E53D1310011F6D2 /* Info.plist */,
 			);
 			path = "Aah to ZzzTests";
+			sourceTree = "<group>";
+		};
+		6377B82E2028E97700C42743 /* AtoZDelegates */ = {
+			isa = PBXGroup;
+			children = (
+				636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */,
+				6377B82F2028E9BA00C42743 /* AtoZPopoverDelegate.swift */,
+			);
+			name = AtoZDelegates;
 			sourceTree = "<group>";
 		};
 		637AF0701C83EEE9005A36BA /* Assets */ = {
@@ -634,9 +645,10 @@
 		63D57BA81C891C950046E349 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */,
+				6377B82E2028E97700C42743 /* AtoZDelegates */,
 				63A3A12D1C76603300F440B5 /* WordListCell.swift */,
 				637AF0791C84560D005A36BA /* GradientSlider.swift */,
-				63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */,
 				637AF0681C817F8D005A36BA /* DefinitionPopoverVC.swift */,
 				637AF06C1C83512F005A36BA /* OptionsViewController.swift */,
 				63C449851C9A18F10053BE77 /* RotatingView.swift */,
@@ -654,7 +666,6 @@
 				6319C0811EA345F0004AC9B7 /* GameCenterExtension.swift */,
 				6322E7F51EA9B93700F5100D /* TutorialPageViewController.swift */,
 				63F020F11EDF803B0022A5D0 /* IntroViewController.swift */,
-				636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -984,6 +995,7 @@
 				637AF07A1C84560D005A36BA /* GradientSlider.swift in Sources */,
 				63E4A2C31DC17498002BC4CE /* TestViewController.swift in Sources */,
 				637AF06B1C8236C8005A36BA /* WordnikClient.swift in Sources */,
+				6377B8302028E9BA00C42743 /* AtoZPopoverDelegate.swift in Sources */,
 				637AF0781C84297C005A36BA /* FlickrClient.swift in Sources */,
 				633C7B0B1DB46A9C0055CD83 /* ExampleTableViewController.swift in Sources */,
 				6319C0821EA345F0004AC9B7 /* GameCenterExtension.swift in Sources */,

@@ -36,7 +36,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 */
 
-class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate{//, UICollisionBehaviorDelegate {
+class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate{//, UICollisionBehaviorDelegate {
     
 //    fileprivate func testAlamoFire() {
 //        print (" Alamofire version: \(AlamofireVersionNumber)")
@@ -44,6 +44,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //TODO: When proxy scroll (invisible scrolling table on right, synced to table on left) is touched, show custom scroll indicator. Also show vertical bar with progress?
     let uiDynamicsDelegate = AtoZUIDynamicsDelegate();
+    let popoverDelegate = AtoZPopoverDelegate();
     
     var model = AtoZModel.sharedInstance //why not let?
     var letters: [Letter]! //TODO: why not ? instead of !
@@ -322,6 +323,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         lettertiles = [Tile]()
         tilesToSwap = [Tile]()
         
+        // Set Delegates
         animator = UIDynamicAnimator(referenceView: view)
         animator.delegate = uiDynamicsDelegate
         uiDynamicsDelegate.lettertiles = lettertiles // Will these need to be updated on the delegate?
@@ -625,28 +627,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        var cellIsProxy = false
-//        var proxyCell: ProxyTableCell?
-//        proxyCell = proxyTable.dequeueReusableCellWithIdentifier("proxycell", forIndexPath: indexPath) as? ProxyTableCell
-//        if proxyCell != nil {
-//            cellIsProxy = true
-//            //return proxyCell!
-//        }
-//
-////        if cellIsProxy == false {
-////            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as? WordListCell
-////            configureCell(cell!, atIndexPath: indexPath)
-////            return cell!
-////        }
-//        
-//        switch cellIsProxy {
-//        case false:
-//            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as? WordListCell
-//            configureCell(cell!, atIndexPath: indexPath)
-//            return cell!
-//        case true:
-//            return proxyCell!
-//        }
         
         if tableView == proxyTable {
             let proxyCell = tableView.dequeueReusableCell(withIdentifier: "proxycell", for: indexPath) as? ProxyTableCell
@@ -728,9 +708,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     vc.definition = model.getDefinition(wordObject.word!)
                 }
                 let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-                //popover.barButtonItem = sender
-                popover.delegate = self
-                popover.permittedArrowDirections = UIPopoverArrowDirection.left
+                popover.delegate = popoverDelegate
+//                popover.permittedArrowDirections = UIPopoverArrowDirection.left
                 // tell the popover that it should point from the cell that was tapped
                 popover.sourceView = tableView.cellForRow(at: indexPath)
                 // make the popover arrow point from the sourceRect, further to the right than default
@@ -755,29 +734,28 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     
-    //MARK:- Popover Delegate functions
-    
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        //return UIModalPresentationStyle.FullScreen
-        // allows popever style on iPhone as opposed to Full Screen
-        return UIModalPresentationStyle.none
-    }
-    
-    func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
-        let navigationController = UINavigationController(rootViewController: controller.presentedViewController)
-        let btnDone = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(AtoZViewController.dismiss(first:)))
-        navigationController.topViewController!.navigationItem.leftBarButtonItem = btnDone
-        return navigationController
-    }
-    
-    // added paramater 'first' only so #selector is recognized above - compiler can't disambiguate parameterless method
+//    //MARK:- Popover Delegate functions  /**** Moved to Delegate ****/
+//
+//    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+//        //return UIModalPresentationStyle.FullScreen
+//        // allows popever style on iPhone as opposed to Full Screen
+//        return UIModalPresentationStyle.none
+//    }
+//
+//    func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+//        let navigationController = UINavigationController(rootViewController: controller.presentedViewController)
+//        let btnDone = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(AtoZViewController.dismiss(first:)))
+//        navigationController.topViewController!.navigationItem.leftBarButtonItem = btnDone
+//        return navigationController
+//    }
+//
+//    // added paramater 'first' only so #selector is recognized above - compiler can't disambiguate parameterless method
     @objc func dismiss(first: Bool) {
         self.dismiss(animated: true, completion: nil)
     }
     
     
     //MARK:-Tests
-    
     // print out a diagram to see the state of the Tiles and Positions
     
     func printTileDiagram() {
@@ -842,7 +820,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         // still needed here? calling again later
         game?.data?.level = model.calculateLevel()
-        print("levelFromModel: \(String(describing: game?.data?.level))")
+        // print("levelFromModel: \(String(describing: game?.data?.level))")
         
         startNewList.alpha = 0
         startNewList.isHidden = true
@@ -1133,35 +1111,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         animateNewListButton()
     }
     
-    /* obj -c version
-     // 'Cheat' function, to fill in unanswered words
-     - (IBAction) fillInTheBlanks {
-     if (!wordlistCompleted) {
-     [self animateStatus:NO]; // NO meaning the status box grows, not shrinks
-     wordlistCompleted = YES;
-     }
-     filledInTheBlanks = YES;
-     for (NSString *checkString in currentWordList) {
-     int indexOfCurrentWord = [currentWordList indexOfObject:checkString];
-     
-     UILabel *currentLabel = (UILabel *)[self.view viewWithTag:100 + indexOfCurrentWord];
-     UIView *thisView = (UIView *)[self.view viewWithTag:200 + indexOfCurrentWord];
-     //NSString * blankString = [[NSString alloc] initWithFormat:@""];
-     NSString * blankString = @"";
-     if ([currentLabel.text isEqualToString: blankString]) {
-     [currentLabel setText:checkString];
-     [currentLabel setTextColor:[UIColor redColor]];
-     currentLabel.hidden = YES;
-     [self fillInTheBlanksByLetter:indexOfCurrentWord :checkString :[UIColor whiteColor] : 0.6];
-     thisView.hidden = NO;
-     [thisView setOpaque:NO];
-     thisView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"merged_small_tiles_red.png"]];
-     }
-     }
-     }
-     
-     */
-    
 //    //TODO: layout the Tiles which are not using autolayout
 //    override func layoutSubviews() {
 //        super.layoutSubviews()
@@ -1261,13 +1210,11 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             // hypothesis: if movement is tiny, user meant to tap, so should move to upper/lower position
             // if movement is small but not tiny, indicates intention to start to pan, and then decided to stop
             // so move back to original position
-            //if model.calculateDistance(startingLocation, p2: location) > sensitivity {
-            
+
             if let closestOpenPosition = model.findClosestPosition(location, positionArray: positions!) {
                 swapTileToKnownPosition(t, pos: closestOpenPosition)
                 checkUpperPositionsForWord()
             }
-            //}
             
             // seemed to have extra snapping behaviors interfering, so removed all behaviors, and added back here.
             for tile in lettertiles {
@@ -1275,10 +1222,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             t.layer.shadowOpacity = 0.0
             t.transform = CGAffineTransform.identity
-            
-            
-           
-            
             
         default:
             break
