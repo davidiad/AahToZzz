@@ -45,6 +45,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //TODO: When proxy scroll (invisible scrolling table on right, synced to table on left) is touched, show custom scroll indicator. Also show vertical bar with progress?
     let uiDynamicsDelegate = AtoZUIDynamicsDelegate();
     let popoverDelegate = AtoZPopoverDelegate();
+    let tableViewsDelegate = AtoZTableViewDelegates();
     
     var model = AtoZModel.sharedInstance //why not let?
     var letters: [Letter]! //TODO: why not ? instead of !
@@ -273,17 +274,21 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
         
-        fetchedResultsController.delegate = self
-        
+        fetchedResultsController.delegate = tableViewsDelegate
+
         return fetchedResultsController
     }()
-    
+ 
     //MARK:- View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //proxyTable.registerClass(ProxyTableCell.self, forCellReuseIdentifier: "proxycell")
-        //wordTable.registerClass(WordListCell.self, forCellReuseIdentifier: "cell")
+        //wordTable.registerClass(WordListCell.self, forCellReuseIdentifier: "cell")\
+        
+        tableViewsDelegate.wordTable = wordTable
+        tableViewsDelegate.proxyTable = proxyTable
+        tableViewsDelegate.fetchedResultsController = fetchedResultsController
         
         do {
             try fetchedResultsController.performFetch()
@@ -348,7 +353,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 tile.setTitle("Q", for: UIControlState()) // Q is placeholder value
                 
-                //tile.addTarget(self, action: "addLetterToWordInProgress:", forControlEvents:.TouchUpInside)
                 tile.tag = 1000 + i
                 
                 lettertiles.append(tile)
@@ -559,7 +563,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
     }
     
-
+/*
     // MARK:- FetchedResultsController delegate protocol
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -604,7 +608,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
             break;
         }
     }
-
+*/
     
     //MARK:- Table View Data Source Methods
     
@@ -640,6 +644,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    //TODO: Move to delegate, next 3 funcs
     func configureProxyCell(_ cell: ProxyTableCell, atIndexPath indexPath: IndexPath) {
         //
     }
@@ -666,8 +671,6 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 if cell.word != nil { // may be unneeded safeguard
                     // TODO: consider setting word text color per level. Consider outlining text. Consider moving this code to WordListCell.swift
                     setWordListCellProperties(cell, colorCode: word.level, textcolor: Colors.darkBrown, text: word.word!)
-                    
-                    
                 }
             }
             //TODO:-- Ensure that inactive words are being counted (or not counted) correctly
@@ -678,14 +681,12 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 cell.outlineShadowView.alpha = 0.2
                 print("INACTIVE, in configureCell: \(String(describing: cell.word.text)) at level \(word.level)")
                 print(word)
-                
             }
-
-            
         }
     }
     
-    //TODO: helper func for setting cell attributes
+    
+    // helper func for setting cell attributes
     func setWordListCellProperties(_ cell: WordListCell, colorCode: Int, textcolor: UIColor, text: String) {
         cell.colorCode = ColorCode(code: colorCode)
         cell.firstLetter.textColor = textcolor
@@ -693,8 +694,8 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.thirdLetter.textColor = textcolor
         cell.word.text = text // cell.word is a UILabel
         cell.wordtext = text // triggers didSet to add image and letters
-        
     }
+    
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if let wordCell = tableView.cellForRow(at: indexPath) as? WordListCell {

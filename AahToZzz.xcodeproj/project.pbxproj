@@ -29,6 +29,7 @@
 		630681C41CADCC6B0010489E /* outline_shadow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630681C31CADCC6B0010489E /* outline_shadow.pdf */; };
 		630681C61CADE57F0010489E /* outline_triple.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630681C51CADE57F0010489E /* outline_triple.pdf */; };
 		630A9D1B1C9E2146008DF8DD /* outline_image.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 630A9D1A1C9E2146008DF8DD /* outline_image.pdf */; };
+		630C3D38202CDE2B0026B86D /* AtoZTableViewDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C3D37202CDE2B0026B86D /* AtoZTableViewDelegates.swift */; };
 		63134C531E83230600D507C9 /* outline_image_triple@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63134C521E83230600D507C9 /* outline_image_triple@1x.pdf */; };
 		63134C571E8390B800D507C9 /* outline_image_double_triple@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63134C561E8390B800D507C9 /* outline_image_double_triple@1x.pdf */; };
 		63134C5B1E845F9000D507C9 /* icon_progress_vertical.png in Resources */ = {isa = PBXBuildFile; fileRef = 63134C581E845F9000D507C9 /* icon_progress_vertical.png */; };
@@ -210,6 +211,7 @@
 		630681C31CADCC6B0010489E /* outline_shadow.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_shadow.pdf; sourceTree = "<group>"; };
 		630681C51CADE57F0010489E /* outline_triple.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_triple.pdf; sourceTree = "<group>"; };
 		630A9D1A1C9E2146008DF8DD /* outline_image.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_image.pdf; sourceTree = "<group>"; };
+		630C3D37202CDE2B0026B86D /* AtoZTableViewDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZTableViewDelegates.swift; sourceTree = "<group>"; };
 		63134C521E83230600D507C9 /* outline_image_triple@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_image_triple@1x.pdf"; sourceTree = "<group>"; };
 		63134C561E8390B800D507C9 /* outline_image_double_triple@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_image_double_triple@1x.pdf"; sourceTree = "<group>"; };
 		63134C581E845F9000D507C9 /* icon_progress_vertical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_progress_vertical.png; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 			children = (
 				636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */,
 				6377B82F2028E9BA00C42743 /* AtoZPopoverDelegate.swift */,
+				630C3D37202CDE2B0026B86D /* AtoZTableViewDelegates.swift */,
 			);
 			name = AtoZDelegates;
 			sourceTree = "<group>";
@@ -1001,6 +1004,7 @@
 				6319C0821EA345F0004AC9B7 /* GameCenterExtension.swift in Sources */,
 				63E4A2C71DC24CBA002BC4CE /* LevelTableCell.swift in Sources */,
 				6317546C1E39E059008B359D /* GameTypeInfo.swift in Sources */,
+				630C3D38202CDE2B0026B86D /* AtoZTableViewDelegates.swift in Sources */,
 				636E57122026D04800211944 /* AtoZUIDynamicsDelegate.swift in Sources */,
 				633C5BED1E7C9D87008E5A43 /* GraphBarView.swift in Sources */,
 				63EA98D71D4F46E000537F2A /* Colors.swift in Sources */,

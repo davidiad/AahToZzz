@@ -43,8 +43,6 @@ class FlickrClient: NSObject {
         let page = "1"
         photoArray = [String]()
         
-        //let augmentedSearchtext = searchtext + "definition"
-        
         //  API method arguments
         let methodArguments = [
             "method": FLICKR_METHOD_NAME,
