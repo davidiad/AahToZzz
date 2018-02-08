@@ -8,7 +8,7 @@
 //  Client to get network data through the Wordnik API
 //  words definitions and examples of use in a sentence
 
-import Foundation
+//import Foundation
 import CoreData
 
 let BASE_URL = "http://api.wordnik.com:80/v4/word.json/"

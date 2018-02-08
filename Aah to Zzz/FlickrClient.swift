@@ -43,6 +43,7 @@ class FlickrClient: NSObject {
         let page = "1"
         photoArray = [String]()
         
+        //let augmentedSearchtext = searchtext + "definition"
         
         //  API method arguments
         let methodArguments = [
@@ -123,8 +124,14 @@ class FlickrClient: NSObject {
                     completion(nil, false, error! as NSError)
                     return
                 }
-                
-                completion(imageUrlString, true, error! as NSError)
+                // 2-7-18 /*** Not sure why, but this fixed the inability to get images from flickr
+                guard let e = error as NSError? else {
+                    completion(imageUrlString, true, nil)
+                    return
+                }
+                completion(imageUrlString, true, e as NSError)
+                // completion(imageUrlString, true, error! as NSError)
+                // END 2-7-18
             } else {
                 completion(nil, false, nil)
             }

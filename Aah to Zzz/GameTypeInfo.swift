@@ -9,7 +9,7 @@
 // Works with GameType. Sets the basic game info that corresponds to each type. And each
 // Game has its GameType saved in the Game managed object.
 
-import Foundation
+//import Foundation
 
 enum Orientation {
     

@@ -6,7 +6,7 @@
 //  Copyright © 2016 David Fierstein. All rights reserved.
 //
 
-import Foundation
+//import Foundation
 import UIKit
 
 struct Colors {
