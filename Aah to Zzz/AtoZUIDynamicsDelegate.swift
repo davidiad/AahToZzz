@@ -11,14 +11,14 @@ import UIKit
 
 class AtoZUIDynamicsDelegate: NSObject, UIDynamicAnimatorDelegate, Lettertiles {
     
-    var lettertiles: [Tile]!
+    var lettertiles: [Tile]?
     
     //MARK:- dynamic animator delegate
     var animatorBeganPause: Bool = false
     
     func dynamicAnimatorDidPause(_ animator: UIDynamicAnimator) {
         if !animatorBeganPause { // otherwise this is called continually
-            for tile in lettertiles {
+            for tile in lettertiles! {
                 checkTilePosition(tile) // NOTE: this check may not be needed
             }
             animatorBeganPause = true
@@ -61,5 +61,5 @@ class AtoZUIDynamicsDelegate: NSObject, UIDynamicAnimatorDelegate, Lettertiles {
 }
 
 protocol Lettertiles {
-    var lettertiles: [Tile]! {get}
+    var lettertiles: [Tile]? {get}
 }

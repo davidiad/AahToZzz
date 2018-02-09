@@ -36,16 +36,17 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 */
 
-class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate{//, UICollisionBehaviorDelegate {
+class AtoZViewController: UIViewController, UITableViewDataSource, UIGestureRecognizerDelegate{//, UICollisionBehaviorDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate {
     
 //    fileprivate func testAlamoFire() {
 //        print (" Alamofire version: \(AlamofireVersionNumber)")
 //           }
     
     //TODO: When proxy scroll (invisible scrolling table on right, synced to table on left) is touched, show custom scroll indicator. Also show vertical bar with progress?
-    let uiDynamicsDelegate = AtoZUIDynamicsDelegate();
-    let popoverDelegate = AtoZPopoverDelegate();
-    let tableViewsDelegate = AtoZTableViewDelegates();
+    
+//    let popoverDelegate = AtoZPopoverDelegate();
+    let tableViewsDelegate = AtoZTableViewDelegates()
+    let uiDynamicsDelegate = AtoZUIDynamicsDelegate()
     
     var model = AtoZModel.sharedInstance //why not let?
     var letters: [Letter]! //TODO: why not ? instead of !
@@ -281,11 +282,20 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
  
     //MARK:- View Lifecycle
     
+    // Present definition when a word is tapped
+    @objc func presentDefinition(_ notification: Notification) {
+        if let pop = notification.userInfo?["item"] as? DefinitionPopoverVC {
+            present(pop, animated: true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //proxyTable.registerClass(ProxyTableCell.self, forCellReuseIdentifier: "proxycell")
-        //wordTable.registerClass(WordListCell.self, forCellReuseIdentifier: "cell")\
-        
+
+        NotificationCenter.default.addObserver(self, selector: #selector (presentDefinition(_:)), name: NSNotification.Name(rawValue: "PresentDefinition"), object: nil)
+
+        wordTable.delegate = tableViewsDelegate
+        proxyTable.delegate = tableViewsDelegate
         tableViewsDelegate.wordTable = wordTable
         tableViewsDelegate.proxyTable = proxyTable
         tableViewsDelegate.fetchedResultsController = fetchedResultsController
@@ -331,7 +341,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Set Delegates
         animator = UIDynamicAnimator(referenceView: view)
         animator.delegate = uiDynamicsDelegate
-        uiDynamicsDelegate.lettertiles = lettertiles // Will these need to be updated on the delegate?
+        
         
         let bgImage = UIImage(named: "tile_bg") as UIImage?
         
@@ -361,6 +371,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 view.addSubview(tile)
             }
         }
+        
         let upperPositionsBg = UIImage(named: "upper_positions_bg") as UIImage?
         let upperPositionsView = UIImageView(image: upperPositionsBg)
         upperPositionsView.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + 120)
@@ -400,6 +411,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        uiDynamicsDelegate.lettertiles = lettertiles
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -696,43 +708,45 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.wordtext = text // triggers didSet to add image and letters
     }
     
+    // TableViewDelegate /*** Moved to delegate file ***///
+//    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+//        if let wordCell = tableView.cellForRow(at: indexPath) as? WordListCell {
+//            // only if false to prevent the same Popover being called again while it's already up for that word
+//            if wordCell.isSelected == false {
+//                let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                let vc = storyboard.instantiateViewController(withIdentifier: "definition") as! DefinitionPopoverVC
+//                vc.modalPresentationStyle = UIModalPresentationStyle.popover
+//                if let wordObject = fetchedResultsController.object(at: indexPath) as? Word {
+//                    vc.sometext = wordObject.word
+//                    vc.definition = model.getDefinition(wordObject.word!)
+//                }
+//                let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+//                popover.delegate = popoverDelegate
+////                popover.permittedArrowDirections = UIPopoverArrowDirection.left
+//                // tell the popover that it should point from the cell that was tapped
+//                popover.sourceView = tableView.cellForRow(at: indexPath)
+//                // make the popover arrow point from the sourceRect, further to the right than default
+//                let sourceRect = CGRect(x: 10, y: 10, width: 170, height: 25)
+//                popover.sourceRect = sourceRect
+//                present(vc, animated: true, completion:nil)
+//            }
+//        } else {
+//            print("no word cell here")
+//        }
+//        return indexPath
+//    }
     
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if let wordCell = tableView.cellForRow(at: indexPath) as? WordListCell {
-            // only if false to prevent the same Popover being called again while it's already up for that word
-            if wordCell.isSelected == false {
-                let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "definition") as! DefinitionPopoverVC
-                vc.modalPresentationStyle = UIModalPresentationStyle.popover
-                if let wordObject = fetchedResultsController.object(at: indexPath) as? Word {
-                    vc.sometext = wordObject.word
-                    vc.definition = model.getDefinition(wordObject.word!)
-                }
-                let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-                popover.delegate = popoverDelegate
-//                popover.permittedArrowDirections = UIPopoverArrowDirection.left
-                // tell the popover that it should point from the cell that was tapped
-                popover.sourceView = tableView.cellForRow(at: indexPath)
-                // make the popover arrow point from the sourceRect, further to the right than default
-                let sourceRect = CGRect(x: 10, y: 10, width: 170, height: 25)
-                popover.sourceRect = sourceRect
-                present(vc, animated: true, completion:nil)
-            }
-        } else {
-            print("no word cell here")
-        }
-        return indexPath
-    }
+
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: prevent popover from attempting to present twice in a row
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == proxyTable {
-            wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
-        }
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        // TODO: prevent popover from attempting to present twice in a row
+//    }
+//    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView == proxyTable {
+//            wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
+//        }
+//    }
 
     
 //    //MARK:- Popover Delegate functions  /**** Moved to Delegate ****/
@@ -1290,3 +1304,5 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UITableViewDe
         )
     }
 }
+
+

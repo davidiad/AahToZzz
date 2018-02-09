@@ -8,11 +8,13 @@
 import CoreData
 import UIKit
 
-class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, WordTables {
+class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITableViewDelegate, WordTables {
     // Do we really need WordTables as a protocol, or just the vars?
     var wordTable: UITableView!
     var proxyTable: UITableView!
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
+    let popoverDelegate = AtoZPopoverDelegate()
+    
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
         CoreDataStackManager.sharedInstance().managedObjectContext
@@ -78,6 +80,47 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, Word
         }
     }
     
+    // MARK:- Table View Delegate
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if let wordCell = tableView.cellForRow(at: indexPath) as? WordListCell {
+            // only if false to prevent the same Popover being called again while it's already up for that word
+            if wordCell.isSelected == false {
+                let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "definition") as! DefinitionPopoverVC
+                vc.modalPresentationStyle = UIModalPresentationStyle.popover
+                if let wordObject = fetchedResultsController?.object(at: indexPath) as? Word {
+                    vc.sometext = wordObject.word
+                    vc.definition = model.getDefinition(wordObject.word!)
+                }
+                let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+                popover.delegate = popoverDelegate
+                //                popover.permittedArrowDirections = UIPopoverArrowDirection.left
+                // tell the popover that it should point from the cell that was tapped
+                popover.sourceView = tableView.cellForRow(at: indexPath)
+                // make the popover arrow point from the sourceRect, further to the right than default
+                let sourceRect = CGRect(x: 10, y: 10, width: 170, height: 25)
+                popover.sourceRect = sourceRect
+                let userInfo = ["item": vc]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "PresentDefinition"), object: nil, userInfo: userInfo)
+            }
+        } else {
+            print("no word cell here")
+        }
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: prevent popover from attempting to present twice in a row
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == proxyTable {
+            wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
+        }
+    }
+    
+    // MARK:- Helpers
     func configureCell(_ cell: WordListCell, atIndexPath indexPath: IndexPath) {
         
         // Fetch Word
@@ -137,3 +180,10 @@ protocol WordTables {
     var wordTable: UITableView! {get}
     var proxyTable: UITableView! {get}
 }
+
+//extension Notification.Name {
+//
+//    static let PresentDefinition = Notification.Name(rawValue: "PresentDefinition")
+//
+//}
+

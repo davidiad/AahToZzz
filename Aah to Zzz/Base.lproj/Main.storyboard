@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+        <array key="Noteworthy.ttc">
+            <string>Noteworthy-Light</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="pUg-nk-ugX">
@@ -164,13 +172,13 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AA to ZZZ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2d-Ga-oun">
-                                <rect key="frame" x="152.33333333333337" y="27.999999999999996" width="109.66666666666663" height="28.666666666666661"/>
+                                <rect key="frame" x="153.66666666666666" y="28" width="107.33333333333334" height="28.666666666666671"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="an anagram word learning game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyR-YU-OHo">
-                                <rect key="frame" x="84.333333333333314" y="64.666666666666686" width="245.33333333333337" height="20.333333333333329"/>
+                                <rect key="frame" x="84.333333333333329" y="64.666666666666671" width="245.33333333333337" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -191,14 +199,14 @@
                                         <state key="normal" title="Help"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9r-FU-YhZ">
-                                        <rect key="frame" x="94" y="123.66666666666669" width="52" height="30"/>
+                                        <rect key="frame" x="94.666666666666657" y="123.66666666666669" width="51" height="30"/>
                                         <state key="normal" title="Tutorial"/>
                                         <connections>
                                             <segue destination="NaI-Fe-NAV" kind="presentation" customClass="UIStoryboardSegueFromRight" customModule="AahToZzz" customModuleProvider="target" id="6WT-BM-oCC"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCH-Co-bR6">
-                                        <rect key="frame" x="104" y="185.66666666666669" width="32" height="29.999999999999943"/>
+                                        <rect key="frame" x="104" y="185.66666666666669" width="32" height="30"/>
                                         <state key="normal" title="Rate"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ic2-fx-QBA">
@@ -253,7 +261,7 @@
         <!--AtoZ View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController restorationIdentifier="AtoZViewController" id="BYZ-38-t0r" customClass="AtoZViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="AtoZViewController" storyboardIdentifier="AtoZVC" id="BYZ-38-t0r" customClass="AtoZViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -288,7 +296,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyE-qt-1f8">
-                                                            <rect key="frame" x="18" y="11.000000000000002" width="64" height="13.66666666666667"/>
+                                                            <rect key="frame" x="25" y="13.999999999999998" width="50" height="7.6666666666666661"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -413,7 +421,6 @@
                                         </prototypes>
                                         <connections>
                                             <outlet property="dataSource" destination="BYZ-38-t0r" id="4Le-lY-Xac"/>
-                                            <outlet property="delegate" destination="BYZ-38-t0r" id="lGV-63-jFX"/>
                                         </connections>
                                     </tableView>
                                     <imageView userInteractionEnabled="NO" alpha="0.66000000000000003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_up.png" translatesAutoresizingMaskIntoConstraints="NO" id="ELs-lh-jFG">
@@ -604,7 +611,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3tH-ng-G60">
-                                <rect key="frame" x="183" y="646" width="74" height="30"/>
+                                <rect key="frame" x="184" y="646" width="73" height="30"/>
                                 <state key="normal" title="AutoFill * x"/>
                                 <connections>
                                     <action selector="autoFillMultiple:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tyJ-ll-b3K"/>
@@ -676,7 +683,7 @@
                                 <rect key="frame" x="0.0" y="28" width="40" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i9a-Rb-KBw" id="T6q-0D-etL">
-                                    <rect key="frame" x="0.0" y="0.0" width="40" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="40" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9QK-Cn-zaG">
@@ -854,7 +861,7 @@
                                 <rect key="frame" x="0.0" y="1" width="414" height="744"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsS-Rq-guZ">
-                                        <rect key="frame" x="8" y="96.666666666666686" width="398" height="45.333333333333314"/>
+                                        <rect key="frame" x="8" y="96.666666666666671" width="398" height="45.333333333333329"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45.5" id="i83-pO-6ED"/>
@@ -1021,7 +1028,7 @@
                                 <rect key="frame" x="10" y="12" width="343" height="94"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mTH-9n-VvA">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="15.333333333333332"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="15.333333333333334"/>
                                         <attributedString key="attributedText">
                                             <fragment content="You found:">
                                                 <attributes>
@@ -1060,7 +1067,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1mE-dS-ByM">
-                                        <rect key="frame" x="0.0" y="50.666666666666657" width="343" height="19.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="50.666666666666664" width="343" height="19.333333333333336"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Unique words">
                                                 <attributes>
@@ -1161,7 +1168,7 @@ noun | ah tu zi
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uRl-0f-iXL">
-                                        <rect key="frame" x="0.0" y="192.66666666666669" width="314" height="91.000000000000057"/>
+                                        <rect key="frame" x="0.0" y="192.66666666666666" width="314" height="90.999999999999972"/>
                                         <string key="text">Tap or drag the letters to form 3 letter words.
 Tap on a word to see definition.</string>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -1169,7 +1176,7 @@ Tap on a word to see definition.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jnC-FW-GVe">
-                                        <rect key="frame" x="0.0" y="283.66666666666674" width="314" height="76.333333333333314"/>
+                                        <rect key="frame" x="0.0" y="283.66666666666669" width="314" height="76.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Play"/>
                                         <connections>
