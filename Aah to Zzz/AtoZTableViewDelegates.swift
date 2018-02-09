@@ -8,7 +8,7 @@
 import CoreData
 import UIKit
 
-class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITableViewDelegate, WordTables {
+class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, WordTables {
     // Do we really need WordTables as a protocol, or just the vars?
     var wordTable: UITableView!
     var proxyTable: UITableView!
@@ -173,6 +173,46 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
         cell.thirdLetter.textColor = textcolor
         cell.word.text = text // cell.word is a UILabel
         cell.wordtext = text // triggers didSet to add image and letters
+    }
+    
+    //MARK:- Table View Data Source Methods
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if let _ = fetchedResultsController?.sections {
+            return 1
+        }
+        
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let sections = fetchedResultsController?.sections {
+            let sectionInfo = sections[section]
+            /**** When data source was in the view controller, these 2 lines worked ***/
+//            currentNumberOfWords = sectionInfo.numberOfObjects
+//            return currentNumberOfWords!
+            // Send the currentNumberOfWords to AtoZViewController
+            let userInfo = ["item": sectionInfo.numberOfObjects]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCNOW"), object: nil, userInfo: userInfo)
+            
+            return sectionInfo.numberOfObjects
+        }
+        
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if tableView == proxyTable {
+            let proxyCell = tableView.dequeueReusableCell(withIdentifier: "proxycell", for: indexPath) as? ProxyTableCell
+            configureProxyCell(proxyCell!, atIndexPath: indexPath)
+            return proxyCell!
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? WordListCell
+            configureCell(cell!, atIndexPath: indexPath)
+            return cell!
+        }
+        
     }
 }
 

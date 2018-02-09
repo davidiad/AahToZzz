@@ -36,7 +36,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 */
 
-class AtoZViewController: UIViewController, UITableViewDataSource, UIGestureRecognizerDelegate{//, UICollisionBehaviorDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate {
+class AtoZViewController: UIViewController, UIGestureRecognizerDelegate {//, UICollisionBehaviorDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
 //    fileprivate func testAlamoFire() {
 //        print (" Alamofire version: \(AlamofireVersionNumber)")
@@ -280,7 +280,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UIGestureReco
         return fetchedResultsController
     }()
  
-    //MARK:- View Lifecycle
+    // MARK:- Notifications
     
     // Present definition when a word is tapped
     @objc func presentDefinition(_ notification: Notification) {
@@ -289,13 +289,23 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UIGestureReco
         }
     }
     
+    @objc func updateCurrentNumberOfWords(_ notification: Notification) {
+        if let cnow = notification.userInfo?["item"] as? Int {
+            currentNumberOfWords = cnow
+        }
+    }
+    
+    //MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector (presentDefinition(_:)), name: NSNotification.Name(rawValue: "PresentDefinition"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector (updateCurrentNumberOfWords(_:)), name: NSNotification.Name(rawValue: "UpdateCNOW"), object: nil)
 
         wordTable.delegate = tableViewsDelegate
         proxyTable.delegate = tableViewsDelegate
+        wordTable.dataSource = tableViewsDelegate
+        proxyTable.dataSource = tableViewsDelegate
         tableViewsDelegate.wordTable = wordTable
         tableViewsDelegate.proxyTable = proxyTable
         tableViewsDelegate.fetchedResultsController = fetchedResultsController
@@ -622,40 +632,41 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UIGestureReco
     }
 */
     
-    //MARK:- Table View Data Source Methods
+//    //MARK:- Table View Data Source Methods
+//    
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        if let _ = fetchedResultsController.sections {
+//            return 1
+//        }
+//        
+//        return 0
+//    }
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if let sections = fetchedResultsController.sections {
+//            let sectionInfo = sections[section]
+//            currentNumberOfWords = sectionInfo.numberOfObjects
+//            return currentNumberOfWords!
+//        }
+//        
+//        return 0
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        
+//        if tableView == proxyTable {
+//            let proxyCell = tableView.dequeueReusableCell(withIdentifier: "proxycell", for: indexPath) as? ProxyTableCell
+//            configureProxyCell(proxyCell!, atIndexPath: indexPath)
+//            return proxyCell!
+//        } else {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? WordListCell
+//            configureCell(cell!, atIndexPath: indexPath)
+//            return cell!
+//        }
+//        
+//    }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if let _ = fetchedResultsController.sections {
-            return 1
-        }
-        
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let sections = fetchedResultsController.sections {
-            let sectionInfo = sections[section]
-            currentNumberOfWords = sectionInfo.numberOfObjects
-            return currentNumberOfWords!
-        }
-        
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if tableView == proxyTable {
-            let proxyCell = tableView.dequeueReusableCell(withIdentifier: "proxycell", for: indexPath) as? ProxyTableCell
-            configureProxyCell(proxyCell!, atIndexPath: indexPath)
-            return proxyCell!
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? WordListCell
-            configureCell(cell!, atIndexPath: indexPath)
-            return cell!
-        }
-        
-    }
-    
+    /*
     //TODO: Move to delegate, next 3 funcs
     func configureProxyCell(_ cell: ProxyTableCell, atIndexPath indexPath: IndexPath) {
         //
@@ -707,6 +718,7 @@ class AtoZViewController: UIViewController, UITableViewDataSource, UIGestureReco
         cell.word.text = text // cell.word is a UILabel
         cell.wordtext = text // triggers didSet to add image and letters
     }
+    */
     
     // TableViewDelegate /*** Moved to delegate file ***///
 //    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

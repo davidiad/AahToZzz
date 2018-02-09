@@ -419,9 +419,6 @@
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="4Le-lY-Xac"/>
-                                        </connections>
                                     </tableView>
                                     <imageView userInteractionEnabled="NO" alpha="0.66000000000000003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_up.png" translatesAutoresizingMaskIntoConstraints="NO" id="ELs-lh-jFG">
                                         <rect key="frame" x="0.0" y="0.0" width="102" height="124"/>
@@ -516,10 +513,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="yj0-AI-ata"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="eeS-fY-nKn"/>
-                                </connections>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOe-Nl-wN2">
                                 <rect key="frame" x="107" y="690" width="305" height="44"/>
