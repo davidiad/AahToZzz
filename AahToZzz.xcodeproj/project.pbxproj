@@ -122,6 +122,7 @@
 		63B5C53A1E6E55210031576E /* outline_graph_double_flatbottom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B5C5391E6E55210031576E /* outline_graph_double_flatbottom@3x.png */; };
 		63B5C53C1E6E57D80031576E /* outline_graph_double_flatbottom4@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63B5C53B1E6E57D80031576E /* outline_graph_double_flatbottom4@1x.pdf */; };
 		63B5C53E1E6E5CBF0031576E /* outline_graph_double_flatbottom5@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63B5C53D1E6E5CBF0031576E /* outline_graph_double_flatbottom5@1x.pdf */; };
+		63C17BD920322654007A06B3 /* AtoZViewControllerBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C17BD820322654007A06B3 /* AtoZViewControllerBackup.swift */; };
 		63C449511C98BDD70053BE77 /* merged_small_tiles_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C4494B1C98BDD70053BE77 /* merged_small_tiles_yellow.png */; };
 		63C449521C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C4494C1C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png */; };
 		63C449531C98BDD70053BE77 /* merged_small_tiles_yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C4494D1C98BDD70053BE77 /* merged_small_tiles_yellow@3x.png */; };
@@ -309,6 +310,7 @@
 		63B5C5391E6E55210031576E /* outline_graph_double_flatbottom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outline_graph_double_flatbottom@3x.png"; sourceTree = "<group>"; };
 		63B5C53B1E6E57D80031576E /* outline_graph_double_flatbottom4@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_graph_double_flatbottom4@1x.pdf"; sourceTree = "<group>"; };
 		63B5C53D1E6E5CBF0031576E /* outline_graph_double_flatbottom5@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_graph_double_flatbottom5@1x.pdf"; sourceTree = "<group>"; };
+		63C17BD820322654007A06B3 /* AtoZViewControllerBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZViewControllerBackup.swift; sourceTree = "<group>"; };
 		63C4494B1C98BDD70053BE77 /* merged_small_tiles_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = merged_small_tiles_yellow.png; sourceTree = "<group>"; };
 		63C4494C1C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "merged_small_tiles_yellow@2x.png"; sourceTree = "<group>"; };
 		63C4494D1C98BDD70053BE77 /* merged_small_tiles_yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "merged_small_tiles_yellow@3x.png"; sourceTree = "<group>"; };
@@ -651,6 +653,7 @@
 		63D57BA81C891C950046E349 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				63C17BD820322654007A06B3 /* AtoZViewControllerBackup.swift */,
 				63A3A1251C764E3E00F440B5 /* AtoZViewController.swift */,
 				6377B82E2028E97700C42743 /* AtoZDelegates */,
 				63A3A12D1C76603300F440B5 /* WordListCell.swift */,
@@ -987,6 +990,7 @@
 			files = (
 				6322E7F61EA9B93700F5100D /* TutorialPageViewController.swift in Sources */,
 				63A3A1261C764E3E00F440B5 /* AtoZViewController.swift in Sources */,
+				63C17BD920322654007A06B3 /* AtoZViewControllerBackup.swift in Sources */,
 				63A3A12A1C7652C300F440B5 /* AtoZModel.swift in Sources */,
 				63C449861C9A18F10053BE77 /* RotatingView.swift in Sources */,
 				634BE6861E96E3330074F2F8 /* HomeViewController.swift in Sources */,

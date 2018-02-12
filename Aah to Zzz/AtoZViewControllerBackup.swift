@@ -1,3 +1,4 @@
+/* Backup of AtoZViewController.swift before removing delegate code
 //
 //  AtoZViewController.swift
 //  Aah to Zzz
@@ -10,8 +11,42 @@ import UIKit
 import CoreData
 import Alamofire
 
-class AtoZViewController: UIViewController {
+/*
+ // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+ // Consider refactoring the code to use the non-optional operators.
+ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+ switch (lhs, rhs) {
+ case let (l?, r?):
+ return l < r
+ case (nil, _?):
+ return true
+ default:
+ return false
+ }
+ }
+ 
+ // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+ // Consider refactoring the code to use the non-optional operators.
+ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+ switch (lhs, rhs) {
+ case let (l?, r?):
+ return l > r
+ default:
+ return rhs < lhs
+ }
+ }
+ */
+import UIKit
+
+class AtoZViewController: UIViewController {//}, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    //    fileprivate func testAlamoFire() {
+    //        print (" Alamofire version: \(AlamofireVersionNumber)")
+    //           }
+    
+    //TODO: When proxy scroll (invisible scrolling table on right, synced to table on left) is touched, show custom scroll indicator. Also show vertical bar with progress?
+    
+    //    let popoverDelegate = AtoZPopoverDelegate();
     let tableViewsDelegate = AtoZTableViewDelegates()
     let uiDynamicsDelegate = AtoZUIDynamicsDelegate()
     let gestureDelegate = AtoZGestureDelegate()
@@ -84,7 +119,7 @@ class AtoZViewController: UIViewController {
             updateProgress("Auto Found the words")
         }
     }
-
+    
     //MARK:- vars for UIDynamics
     let gravity = UIGravityBehavior()
     
@@ -98,6 +133,7 @@ class AtoZViewController: UIViewController {
     fileprivate var collisionBehavior = UICollisionBehavior()
     lazy var collider:UICollisionBehavior = {
         let lazyCollider = UICollisionBehavior()
+        //lazyCollider.collisionDelegate = self  // delegate may ot even be needed
         // This line makes the boundaries of our reference view a boundary
         // for the added items to collide with.
         lazyCollider.translatesReferenceBoundsIntoBoundary = true
@@ -106,7 +142,7 @@ class AtoZViewController: UIViewController {
     
     lazy var dynamicItemBehavior:UIDynamicItemBehavior = {
         let lazyBehavior = UIDynamicItemBehavior()
-
+        
         lazyBehavior.elasticity = 0.5
         lazyBehavior.allowsRotation = true
         lazyBehavior.friction = 0.3
@@ -122,10 +158,10 @@ class AtoZViewController: UIViewController {
         lazyBehavior.density = 5500.0
         lazyBehavior.friction = 5110.00
         lazyBehavior.resistance = 5110.0
-
+        
         return lazyBehavior
     }()
-
+    
     
     @IBAction func jumbleTiles(_ sender: AnyObject) {
         
@@ -133,11 +169,11 @@ class AtoZViewController: UIViewController {
         let sevenRandomizedInts = model.randomize7()
         for j in 0 ..< 7 {
             
-        // There are 10 Positions, not 7. Tiles in the upper positions (7,8,9) will be returned to lower positions
+            // There are 10 Positions, not 7. Tiles in the upper positions (7,8,9) will be returned to lower positions
             letters[j].position = positions![sevenRandomizedInts[j]]
         }
         saveContext() // TODO: Need dispatch async?
-
+        
         for tile in lettertiles {
             // To give a bit of a 3D effect, vary the tiles' scale, depending on how high they are in the view hierarchy. Their tags range from 1000 to 1007, so convert that to a range between 0.5 and 1. Numbers < 1 scale the tiles bigger.
             let scaleFactor = (CGFloat(tile.tag - 1000) / 14.0) + 0.5
@@ -151,8 +187,8 @@ class AtoZViewController: UIViewController {
                 
                 tile.transform = s
                 
-                }, completion: { (finished: Bool) -> Void in
-                    tile.layer.shadowOpacity = 0.0 // remove the shadow when back in a box
+            }, completion: { (finished: Bool) -> Void in
+                tile.layer.shadowOpacity = 0.0 // remove the shadow when back in a box
             })
         }
         
@@ -193,12 +229,12 @@ class AtoZViewController: UIViewController {
                 let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
                 DispatchQueue.main.asyncAfter(deadline: time) {
                     tile.snapBehavior = UISnapBehavior(item: tile, snapTo: (tile.letter?.position?.position)!)
- 
-//                    // To do an action on every frame
-//                    tile.snapBehavior?.action = {
-//                        () -> Void in
-//                        print("action")
-//                    }
+                    
+                    //                    // To do an action on every frame
+                    //                    tile.snapBehavior?.action = {
+                    //                        () -> Void in
+                    //                        print("action")
+                    //                    }
                     
                     self.animator.addBehavior(tile.snapBehavior!)
                     self.collider.removeItem(tile)  // keeps the letters from getting stuck on each other.
@@ -226,6 +262,7 @@ class AtoZViewController: UIViewController {
         }
     }
     
+    
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
         CoreDataStackManager.sharedInstance().managedObjectContext
@@ -242,10 +279,10 @@ class AtoZViewController: UIViewController {
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
         
         fetchedResultsController.delegate = tableViewsDelegate
-
+        
         return fetchedResultsController
     }()
- 
+    
     // MARK:- Notifications
     
     // Present definition when a word is tapped
@@ -264,10 +301,10 @@ class AtoZViewController: UIViewController {
     //MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector (presentDefinition(_:)), name: NSNotification.Name(rawValue: "PresentDefinition"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector (updateCurrentNumberOfWords(_:)), name: NSNotification.Name(rawValue: "UpdateCNOW"), object: nil)
-
+        
         wordTable.delegate = tableViewsDelegate
         proxyTable.delegate = tableViewsDelegate
         wordTable.dataSource = tableViewsDelegate
@@ -285,7 +322,8 @@ class AtoZViewController: UIViewController {
         }
         
         game = model.game
-
+        
+        
         // save the center of the wordTableHolderView, so that it can be used as snap position, to keep the wordTableHolderView in place after it is jostled by moving tiles.
         wordHolderCenter = wordTableHolderView.center
         
@@ -317,18 +355,27 @@ class AtoZViewController: UIViewController {
         animator = UIDynamicAnimator(referenceView: view)
         animator.delegate = uiDynamicsDelegate
         
+        
         let bgImage = UIImage(named: "tile_bg") as UIImage?
         
         for i in 0 ..< 7 {
+            
+            //let button   = UIButton(type: UIButtonType.Custom) as UIButton
             //TODO: move some of this stuff to init for Tile
             //TODO: use the eventual tile positions
+            //lettertiles[i].letter!.position!.position
             if let tilePos = positions?[i].position {
                 let tile = Tile(frame: CGRect(x: tilePos.x, y: tilePos.y * CGFloat(i), width: 50, height: 50))
                 let bgView = UIImageView(image: bgImage)
                 bgView.tag = 2000 + i
+                /*tileBackgrounds?.append(bgView) remove tileBackgrounds 3 of 3*/
                 bgView.center = tilePos
                 
+                //                tile.setBackgroundImage(image, forState: .Normal)
+                //tile.setTitleColor(UIColor.blueColor(), forState: .Normal)
+                
                 tile.setTitle("Q", for: UIControlState()) // Q is placeholder value
+                
                 tile.tag = 1000 + i
                 
                 lettertiles.append(tile)
@@ -371,13 +418,15 @@ class AtoZViewController: UIViewController {
             }
         }
         animator.addBehavior(collisionBehavior)
+        
+        //testAlamoFire()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         uiDynamicsDelegate.lettertiles = lettertiles
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateProgress(nil)
@@ -405,7 +454,7 @@ class AtoZViewController: UIViewController {
     
     // Each letter should have a position
     func swapTile(_ tile: Tile) {
-      
+        
         animator.removeAllBehaviors()
         for anyTile in lettertiles {
             animator.addBehavior(anyTile.snapBehavior!)
@@ -414,29 +463,29 @@ class AtoZViewController: UIViewController {
         // add slight delay to give time for the positions to be updated and saved to context
         // TODO: use completion handler instead of a delay every single time
         //delay(0.15) { // still sometimes moves to a lower pos when an upper is open, and should be moved to
-            let newPosition = self.findVacancy(tile)
+        let newPosition = self.findVacancy(tile)
+        
+        
+        if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
             
             
-            if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
-                
-                
-                // update the Positions
-                let previousPosition = tile.letter?.position
-                
-                previousPosition?.letter = nil // the previous position is now vacant
-                
-                tile.letter?.position = newPosition
-                
-                // Tiles drop slightly from gravity unless it's removed here. Gravity is added each time the tiles are jumbled anyway.
-                self.animator.removeBehavior(self.gravity)
-                
-                //self.saveContext() // safest to save the context here, after every letter swap
-                
-                self.saveContext() { success in
-                    if success {
-                
+            // update the Positions
+            let previousPosition = tile.letter?.position
+            
+            previousPosition?.letter = nil // the previous position is now vacant
+            
+            tile.letter?.position = newPosition
+            
+            // Tiles drop slightly from gravity unless it's removed here. Gravity is added each time the tiles are jumbled anyway.
+            self.animator.removeBehavior(self.gravity)
+            
+            //self.saveContext() // safest to save the context here, after every letter swap
+            
+            self.saveContext() { success in
+                if success {
+                    
                     tile.snapBehavior?.snapPoint = (newPosition?.position)!
-
+                    
                     self.checkUpperPositionsForWord() // moved here from tileTapped, so it runs after the delay
                 }
             }
@@ -457,6 +506,7 @@ class AtoZViewController: UIViewController {
         let newPosition = self.findVacancy(tile)
         
         if newPosition != nil { // if newPosition is nil, then all spaces are occupied, and nothing happens
+            
             
             // update the Positions
             let previousPosition = tile.letter?.position
@@ -484,63 +534,257 @@ class AtoZViewController: UIViewController {
                     if (self.tilesToSwap?.count)! > self.maxTilesToSwap {
                         self.maxTilesToSwap = (self.tilesToSwap?.count)!
                     }
+                    print("maxTilesToSwap: \(self.maxTilesToSwap)")
                     // in case another tile is in the Q to swap, run this func again
                     //TODO: check whether this is ever called
                     if (self.tilesToSwap?.count)! > 0 {
-
+                        
                         self.swapTile()
                     }
                 }
             }
         }
+        
     }
-
+    
     //TODO: refactor the 3 swap tile funcs to not repeat code
     // in the case that we already know the position
     func swapTileToKnownPosition(_ tile: Tile, pos: Position) {
+        print("in swapTileToKnownPosition")
         // update the Positions
         let previousPosition = tile.letter?.position
         
         previousPosition?.letter = nil // the previous position is now vacant
         tile.letter?.position = pos
         tile.snapBehavior?.snapPoint = pos.position
-
+        
         saveContext() // safest to save the context here, after every letter swap
     }
     
     func findVacancy(_ tile: Tile) -> Position? {
-            
-            if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard. Which doesn't seem to work anyway.
-                // tile is in lower position, so look for vacancy in the uppers
-                if (tile.letter?.position!.index)! < 7 {
-                    for i in 7 ..< 10 {
-                        if self.positions![i].letter == nil {
-                            self.collisionBehavior.addItem(tile) // enable collisions only for tiles when they are in 7 8 or 9
-                            return positions![i]
-                        }
+        
+        if tile.letter != nil { // tile.letter should never be nil, so this is an extra, possibly unneeded, safeguard. Which doesn't seem to work anyway.
+            // tile is in lower position, so look for vacancy in the uppers
+            if (tile.letter?.position!.index)! < 7 {
+                for i in 7 ..< 10 {
+                    if self.positions![i].letter == nil {
+                        self.collisionBehavior.addItem(tile) // enable collisions only for tiles when they are in 7 8 or 9
+                        return positions![i]
                     }
-                    return nil
-                } else { // must be in the upper positions, so look for a vacancy in the lowers
-                    
-                    //TODO: verify that .stride is working correctly
-                    // for var i=6; i>=0; i -= 1 {
-                    for i in stride(from: 6, through: 0, by: -1) {
-                        //for i in (0 ..< 6).reversed() {
-                        
-                        if self.positions![i].letter == nil {
-                            self.collisionBehavior.removeItem(tile)
-                            return positions![i]
-                        }
-                    }
-                    return nil
                 }
-            } else {
-                print ("was nil")
+                return nil
+            } else { // must be in the upper positions, so look for a vacancy in the lowers
+                
+                //TODO: verify that .stride is working correctly
+                // for var i=6; i>=0; i -= 1 {
+                for i in stride(from: 6, through: 0, by: -1) {
+                    //for i in (0 ..< 6).reversed() {
+                    
+                    if self.positions![i].letter == nil {
+                        self.collisionBehavior.removeItem(tile)
+                        return positions![i]
+                    }
+                }
                 return nil
             }
+        } else {
+            print ("was nil")
+            return nil
+        }
     }
     
-// added paramater 'first' only so #selector is recognized above - compiler can't disambiguate parameterless method
+    /*
+     // MARK:- FetchedResultsController delegate protocol
+     
+     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+     wordTable.beginUpdates()
+     proxyTable.beginUpdates()
+     }
+     
+     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+     wordTable.endUpdates()
+     proxyTable.endUpdates()
+     }
+     
+     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+     switch (type) {
+     case .insert:
+     if let indexPath = newIndexPath {
+     wordTable.insertRows(at: [indexPath], with: .fade)
+     proxyTable.insertRows(at: [indexPath], with: .fade)
+     }
+     break;
+     case .delete:
+     if let indexPath = indexPath {
+     wordTable.deleteRows(at: [indexPath], with: .fade)
+     proxyTable.deleteRows(at: [indexPath], with: .fade)
+     }
+     break;
+     case .update:
+     if let indexPath = indexPath, let cell = wordTable.cellForRow(at: indexPath) as? WordListCell {
+     configureCell(cell, atIndexPath: indexPath)
+     }
+     break;
+     case .move:
+     if let indexPath = indexPath {
+     wordTable.deleteRows(at: [indexPath], with: .fade)
+     proxyTable.deleteRows(at: [indexPath], with: .fade)
+     }
+     
+     if let newIndexPath = newIndexPath {
+     wordTable.insertRows(at: [newIndexPath], with: .fade)
+     proxyTable.insertRows(at: [newIndexPath], with: .fade)
+     }
+     break;
+     }
+     }
+     */
+    
+    //    //MARK:- Table View Data Source Methods
+    //
+    //    func numberOfSections(in tableView: UITableView) -> Int {
+    //        if let _ = fetchedResultsController.sections {
+    //            return 1
+    //        }
+    //
+    //        return 0
+    //    }
+    //
+    //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    //        if let sections = fetchedResultsController.sections {
+    //            let sectionInfo = sections[section]
+    //            currentNumberOfWords = sectionInfo.numberOfObjects
+    //            return currentNumberOfWords!
+    //        }
+    //
+    //        return 0
+    //    }
+    //
+    //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    //
+    //        if tableView == proxyTable {
+    //            let proxyCell = tableView.dequeueReusableCell(withIdentifier: "proxycell", for: indexPath) as? ProxyTableCell
+    //            configureProxyCell(proxyCell!, atIndexPath: indexPath)
+    //            return proxyCell!
+    //        } else {
+    //            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? WordListCell
+    //            configureCell(cell!, atIndexPath: indexPath)
+    //            return cell!
+    //        }
+    //
+    //    }
+    
+    /*
+     //TODO: Move to delegate, next 3 funcs
+     func configureProxyCell(_ cell: ProxyTableCell, atIndexPath indexPath: IndexPath) {
+     //
+     }
+     
+     func configureCell(_ cell: WordListCell, atIndexPath indexPath: IndexPath) {
+     
+     // Fetch Word
+     if let word = fetchedResultsController.object(at: indexPath) as? Word {
+     //TODO: can i use cell.wordtext property instead and eliminate the uilabel?
+     //TODO: use the word.numTimesFound property to send the correctly colored tiles to the cell
+     if fillingInBlanks == true {
+     
+     if word.found == false && word.inCurrentList == true {
+     
+     setWordListCellProperties(cell, colorCode: -1, textcolor: Colors.reddish_white, text: word.word!)
+     
+     // hack for now TODO:-- single line outlines need to have a different shadow image than doubled lines
+     cell.outlineShadowView.image = UIImage(named: "outline_thick")
+     cell.outlineShadowView.alpha = 0.2
+     }
+     }
+     
+     if word.found == true && word.inCurrentList == true {
+     if cell.word != nil { // may be unneeded safeguard
+     // TODO: consider setting word text color per level. Consider outlining text. Consider moving this code to WordListCell.swift
+     setWordListCellProperties(cell, colorCode: word.level, textcolor: Colors.darkBrown, text: word.word!)
+     }
+     }
+     //TODO:-- Ensure that inactive words are being counted (or not counted) correctly
+     if word.active == false {
+     setWordListCellProperties(cell, colorCode: -2, textcolor: Colors.gray_text, text: word.word!)
+     // hack for now TODO:-- single line outlines need to have a different shadow image than doubled lines
+     cell.outlineShadowView.image = UIImage(named: "outline_thick")
+     cell.outlineShadowView.alpha = 0.2
+     print("INACTIVE, in configureCell: \(String(describing: cell.word.text)) at level \(word.level)")
+     print(word)
+     }
+     }
+     }
+     
+     
+     // helper func for setting cell attributes
+     func setWordListCellProperties(_ cell: WordListCell, colorCode: Int, textcolor: UIColor, text: String) {
+     cell.colorCode = ColorCode(code: colorCode)
+     cell.firstLetter.textColor = textcolor
+     cell.secondLetter.textColor = textcolor
+     cell.thirdLetter.textColor = textcolor
+     cell.word.text = text // cell.word is a UILabel
+     cell.wordtext = text // triggers didSet to add image and letters
+     }
+     */
+    
+    // TableViewDelegate /*** Moved to delegate file ***///
+    //    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    //        if let wordCell = tableView.cellForRow(at: indexPath) as? WordListCell {
+    //            // only if false to prevent the same Popover being called again while it's already up for that word
+    //            if wordCell.isSelected == false {
+    //                let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    //                let vc = storyboard.instantiateViewController(withIdentifier: "definition") as! DefinitionPopoverVC
+    //                vc.modalPresentationStyle = UIModalPresentationStyle.popover
+    //                if let wordObject = fetchedResultsController.object(at: indexPath) as? Word {
+    //                    vc.sometext = wordObject.word
+    //                    vc.definition = model.getDefinition(wordObject.word!)
+    //                }
+    //                let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+    //                popover.delegate = popoverDelegate
+    ////                popover.permittedArrowDirections = UIPopoverArrowDirection.left
+    //                // tell the popover that it should point from the cell that was tapped
+    //                popover.sourceView = tableView.cellForRow(at: indexPath)
+    //                // make the popover arrow point from the sourceRect, further to the right than default
+    //                let sourceRect = CGRect(x: 10, y: 10, width: 170, height: 25)
+    //                popover.sourceRect = sourceRect
+    //                present(vc, animated: true, completion:nil)
+    //            }
+    //        } else {
+    //            print("no word cell here")
+    //        }
+    //        return indexPath
+    //    }
+    
+    
+    
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        // TODO: prevent popover from attempting to present twice in a row
+    //    }
+    //
+    //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    //        if scrollView == proxyTable {
+    //            wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
+    //        }
+    //    }
+    
+    
+    //    //MARK:- Popover Delegate functions  /**** Moved to Delegate ****/
+    //
+    //    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+    //        //return UIModalPresentationStyle.FullScreen
+    //        // allows popever style on iPhone as opposed to Full Screen
+    //        return UIModalPresentationStyle.none
+    //    }
+    //
+    //    func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+    //        let navigationController = UINavigationController(rootViewController: controller.presentedViewController)
+    //        let btnDone = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(AtoZViewController.dismiss(first:)))
+    //        navigationController.topViewController!.navigationItem.leftBarButtonItem = btnDone
+    //        return navigationController
+    //    }
+    //
+    //    // added paramater 'first' only so #selector is recognized above - compiler can't disambiguate parameterless method
     @objc func dismiss(first: Bool) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -582,8 +826,8 @@ class AtoZViewController: UIViewController {
             
             self.progressLabl.alpha = 0.58
             
-            }, completion: { (finished: Bool) -> Void in
-                
+        }, completion: { (finished: Bool) -> Void in
+            
         })
     }
     
@@ -608,7 +852,7 @@ class AtoZViewController: UIViewController {
     // This is where stats for a word are tracked (numTimesFound, numTimesPlayed)
     //TODO:-- move tracking to separate func?
     func generateNewWordlist() {
-
+        
         // still needed here? calling again later
         game?.data?.level = model.calculateLevel()
         // print("levelFromModel: \(String(describing: game?.data?.level))")
@@ -662,7 +906,7 @@ class AtoZViewController: UIViewController {
         print("levelFromModel: \(levelFromModel)")
         
         saveContext()
-
+        
         let percentage = model.percentageFound()
         print("percentage: \(percentage)")
         let numListsPlayed = model.numListsPlayed()
@@ -675,7 +919,11 @@ class AtoZViewController: UIViewController {
         reportScores(levelFromModel, percentage: percentage, numberOfLists: numListsPlayed, numberOfWords: numWordsFound)
         
     }
-
+    
+    
+    //    func requireGestureRecognizerToFail(otherGR: UIGestureRecognizer) {
+    //
+    //    }
     //MARK:-Tile Tapped
     // replaces addLetterToWordInProgress(sender: Tile)
     
@@ -684,9 +932,11 @@ class AtoZViewController: UIViewController {
     // Create an array of Tiles to hold any tiles that are tapped, and waiting in line to be swapped
     
     @IBAction func tileTapped(_ gesture: UIGestureRecognizer) {
+        print("in TileTapped")
         if let tile = gesture.view as? Tile {
             
             tilesToSwap?.append(tile)
+            
             
             // add the new letter to the word in progress
             
@@ -698,10 +948,20 @@ class AtoZViewController: UIViewController {
             
             // then, check for a valid word
             // but iff 7 8 and 9 are occupado, then check for valid word
-//            checkUpperPositionsForWord() // moved to findVacancy(), so it can be inside the delay
+            //            checkUpperPositionsForWord() // moved to findVacancy(), so it can be inside the delay
             // TODO: use a completion handler, so this line can be moved back to here
         }
     }
+    
+    //    // being replaced by tileTapped GR
+    //    //TODO:- remove this func if no longer being used
+    //    @IBAction func addLetterToWordInProgress(sender: Tile) {
+    //        swapTile(sender) // swapping whichever tile is tapped
+    //        // then, check for a valid word
+    //        // but iff 7 8 and 9 are occupado, then check for valid word
+    //        checkUpperPositionsForWord()
+    //    }
+    
     
     // need to incorporate this into func above this one (and consolidate with checkForValidWord)
     func checkUpperPositionsForWord () {
@@ -711,6 +971,10 @@ class AtoZViewController: UIViewController {
                 let wordIsValid = checkForValidWord(wordToCheck)
                 
                 if wordIsValid { // return the letters to the letter pool
+                    //print("\(wordToCheck): at level \(wordToCheck.level)")
+                    // Add a brief delay after the 3rd letter so the user can see the 3rd letter displayed before returning letters to original placement
+                    
+                    //                    let time = DispatchTime( uptimeNanoseconds: DispatchTime.now()) + Double(Int64(0.35 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC) //Int64(NSEC_PER_SEC))
                     let time = DispatchTime.now() + 0.35
                     DispatchQueue.main.asyncAfter(deadline: time) {
                         //TODO: might be better to track which tiles have positions at 7 8 and 9 and checking those 3
@@ -759,6 +1023,7 @@ class AtoZViewController: UIViewController {
                 proxyTable.scrollToRow(at: indexPath, at: UITableViewScrollPosition.middle, animated: true)
                 
                 return true
+                
             }
         }
         return false
@@ -785,7 +1050,7 @@ class AtoZViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        
     }
     
     func checkForExistingLetters () {
@@ -827,15 +1092,19 @@ class AtoZViewController: UIViewController {
         //BanglaSangamMN-Bold //EuphemiaUCAS-Bold //GillSans-SemiBold //Copperplate-Bold
         
         let attributes: [NSAttributedStringKey: Any] =  [.font: UIFont(name: "EuphemiaUCAS-Bold", size: 30.0)!,
-                                                .foregroundColor: Colors.midBrown,
-                                                .strokeWidth: -3.0 as AnyObject,
-                                                .strokeColor: UIColor.black]
-
+                                                         .foregroundColor: Colors.midBrown,
+                                                         .strokeWidth: -3.0 as AnyObject,
+                                                         .strokeColor: UIColor.black]
+        
         for i in 0 ..< lettertiles.count {
             
             // TODO: set the attributed title in Tile.swift instead
             let title = NSAttributedString(string: letters[i].letter!, attributes: attributes)
             lettertiles[i].setAttributedTitle(title, for: UIControlState())
+            
+            //lettertiles[i].setTitle(letters[i].letter, forState: UIControlState.Normal)
+            //            let attributes: [String : AnyObject] = [NSFontAttributeName : UIFont(name: "BanglaSangamMN-Bold", size: 42.0)!, NSForegroundColorAttributeName : UIColor.darkGrayColor()]
+            //            lettertiles[i].titleLabel?.attributedText = NSAttributedString(string: "A", attributes: attributes)
             lettertiles[i].letter = letters[i]
             lettertiles[i].position = letters[i].position?.position
             
@@ -845,7 +1114,7 @@ class AtoZViewController: UIViewController {
                 // update the snapPoint
                 lettertiles[i].snapBehavior?.snapPoint = (lettertiles[i].letter?.position?.position)!
             } else { // Add snap behavior to Tile, but only if it doesn't already have one
-            //if lettertiles[i].snapBehavior == nil {
+                //if lettertiles[i].snapBehavior == nil {
                 lettertiles[i].snapBehavior = UISnapBehavior(item: lettertiles[i], snapTo: lettertiles[i].letter!.position!.position)
                 lettertiles[i].snapBehavior?.damping = 0.6
                 animator.addBehavior(lettertiles[i].snapBehavior!)
@@ -877,11 +1146,20 @@ class AtoZViewController: UIViewController {
         animateNewListButton()
     }
     
-//    //TODO: layout the Tiles which are not using autolayout
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//
-//    }
+    //    //TODO: layout the Tiles which are not using autolayout
+    //    override func layoutSubviews() {
+    //        super.layoutSubviews()
+    //
+    //    }
+    
+    
+    //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    //        if gestureRecognizer.isKind(of: UITapGestureRecognizer.self) {
+    //            return true
+    //        } else {
+    //            return false
+    //        }
+    //    }
     
     //MARK:- Tapping and Panning for Tiles
     func setupGestureRecognizers(_ tile: Tile) {
@@ -896,6 +1174,14 @@ class AtoZViewController: UIViewController {
         tile.addGestureRecognizer(panRecognizer)
         
         panRecognizer.require(toFail: tapRecognizer)
+        //        if let gestureRecognizers = tile.gestureRecognizers {
+        //            for tap in gestureRecognizers {
+        //                if tap.isKindOfClass(UITapGestureRecognizer) {
+        //                    tap.requireGestureRecognizerToFail(panRecognizer)
+        //                }
+        //            }
+        //            print("In setup pan: GR's: \(tile.gestureRecognizers!.count)")
+        //        }
     }
     
     //TODO:-set up custom behaviors as separate classes
@@ -905,8 +1191,8 @@ class AtoZViewController: UIViewController {
         
         let t = pan.view as! Tile
         let location = pan.location(in: self.view)
-//        let startingLocation = location
-//        let sensitivity: Float = 10.0
+        //        let startingLocation = location
+        //        let sensitivity: Float = 10.0
         
         switch pan.state {
         case .began:
@@ -917,33 +1203,33 @@ class AtoZViewController: UIViewController {
             t.layer.shadowOpacity = 0.85
             let scale = CGAffineTransform(scaleX: 1.25, y: 1.25)
             let move = CGAffineTransform(translationX: 0.0, y: -58.0)
-
+            
             UIView.animate(withDuration: 0.15, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
                 
                 t.transform = scale.concatenating(move)
                 
-                }, completion: { (finished: Bool) -> Void in
-                    //hasFinishedBeganAnimation = finished
-                    //print("ani done")
+            }, completion: { (finished: Bool) -> Void in
+                //hasFinishedBeganAnimation = finished
+                //print("ani done")
             })
-
+            
         case .changed:
             t.center = location
             
         case .ended:
             //TODO: make a completion block where 1st this code, then when velocity is below a set point, add the snap behavior
-//            let velocity = pan.velocityInView(self.view) // doesn't seem to be needed for a snap behavior
-//
-//            collisionBehavior = UICollisionBehavior(items: [t])
-//            collisionBehavior.translatesReferenceBoundsIntoBoundary = true
-//            
-//            itemBehavior = UIDynamicItemBehavior(items: [t])
-//            itemBehavior.resistance = 5.5
-//            itemBehavior.angularResistance = 2
-//            itemBehavior.elasticity = 1.1
-//            animator?.addBehavior(itemBehavior)
-//            animator?.addBehavior(collisionBehavior)
-//            itemBehavior.addLinearVelocity(velocity, forItem: t)
+            //            let velocity = pan.velocityInView(self.view) // doesn't seem to be needed for a snap behavior
+            //
+            //            collisionBehavior = UICollisionBehavior(items: [t])
+            //            collisionBehavior.translatesReferenceBoundsIntoBoundary = true
+            //
+            //            itemBehavior = UIDynamicItemBehavior(items: [t])
+            //            itemBehavior.resistance = 5.5
+            //            itemBehavior.angularResistance = 2
+            //            itemBehavior.elasticity = 1.1
+            //            animator?.addBehavior(itemBehavior)
+            //            animator?.addBehavior(collisionBehavior)
+            //            itemBehavior.addLinearVelocity(velocity, forItem: t)
             
             // interesting. is Position not an optional type, but then closestOpenPosition could still be a nil?
             // check for the nearest unoccupied position, and snap to that
@@ -953,7 +1239,7 @@ class AtoZViewController: UIViewController {
             // hypothesis: if movement is tiny, user meant to tap, so should move to upper/lower position
             // if movement is small but not tiny, indicates intention to start to pan, and then decided to stop
             // so move back to original position
-
+            
             if let closestOpenPosition = model.findClosestPosition(location, positionArray: positions!) {
                 swapTileToKnownPosition(t, pos: closestOpenPosition)
                 checkUpperPositionsForWord()
@@ -972,18 +1258,18 @@ class AtoZViewController: UIViewController {
     }
     
     //MARK:- Animations
-
+    
     func animateTile(_ sender: AnyObject) {
         
         _ = [UIView.animate(withDuration: 5.0, delay: 0.0, options: [.curveLinear, .allowUserInteraction], animations: {
-            }, completion: nil)]
+        }, completion: nil)]
     }
     
     func animateStatusHeight(_ ht: CGFloat) {
         UIView.animate(withDuration: 0.4, animations: {
             self.statusBgHeight.constant = ht
             self.view.layoutIfNeeded()
-        }) 
+        })
     }
     
     func animateNewListButton() {
@@ -991,7 +1277,7 @@ class AtoZViewController: UIViewController {
             self.startNewList.isHidden = false
             self.startNewList.alpha = 1.0
             self.view.layoutIfNeeded()
-        }) 
+        })
     }
     
     // MARK: - Core Data Saving support
@@ -1032,5 +1318,6 @@ class AtoZViewController: UIViewController {
         )
     }
 }
+*/
 
 
