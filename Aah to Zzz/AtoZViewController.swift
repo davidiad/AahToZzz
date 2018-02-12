@@ -35,8 +35,9 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 */
+import UIKit
 
-class AtoZViewController: UIViewController, UIGestureRecognizerDelegate {//, UICollisionBehaviorDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class AtoZViewController: UIViewController {//}, UIGestureRecognizerDelegate, UICollisionBehaviorDelegate, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
 //    fileprivate func testAlamoFire() {
 //        print (" Alamofire version: \(AlamofireVersionNumber)")
@@ -47,6 +48,7 @@ class AtoZViewController: UIViewController, UIGestureRecognizerDelegate {//, UIC
 //    let popoverDelegate = AtoZPopoverDelegate();
     let tableViewsDelegate = AtoZTableViewDelegates()
     let uiDynamicsDelegate = AtoZUIDynamicsDelegate()
+    let gestureDelegate = AtoZGestureDelegate()
     
     var model = AtoZModel.sharedInstance //why not let?
     var letters: [Letter]! //TODO: why not ? instead of !
@@ -440,6 +442,11 @@ class AtoZViewController: UIViewController, UIGestureRecognizerDelegate {//, UIC
         self.present(infoViewController, animated: true) {
             
         }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     //MARK:- Tile Swapping
@@ -1144,18 +1151,14 @@ class AtoZViewController: UIViewController, UIGestureRecognizerDelegate {//, UIC
 //
 //    }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer.isKind(of: UITapGestureRecognizer.self) {
-            return true
-        } else {
-            return false
-        }
-    }
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        if gestureRecognizer.isKind(of: UITapGestureRecognizer.self) {
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
     
     //MARK:- Tapping and Panning for Tiles
     func setupGestureRecognizers(_ tile: Tile) {
@@ -1163,8 +1166,8 @@ class AtoZViewController: UIViewController, UIGestureRecognizerDelegate {//, UIC
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tileTapped(_:)))
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panTile(_:)))
         
-        tapRecognizer.delegate = self
-        panRecognizer.delegate = self
+        tapRecognizer.delegate = gestureDelegate
+        panRecognizer.delegate = gestureDelegate
         
         tile.addGestureRecognizer(tapRecognizer)
         tile.addGestureRecognizer(panRecognizer)
@@ -1200,7 +1203,6 @@ class AtoZViewController: UIViewController, UIGestureRecognizerDelegate {//, UIC
             let scale = CGAffineTransform(scaleX: 1.25, y: 1.25)
             let move = CGAffineTransform(translationX: 0.0, y: -58.0)
 
-            
             UIView.animate(withDuration: 0.15, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
                 
                 t.transform = scale.concatenating(move)
@@ -1210,7 +1212,6 @@ class AtoZViewController: UIViewController, UIGestureRecognizerDelegate {//, UIC
                     //print("ani done")
             })
 
-      
         case .changed:
             t.center = location
             

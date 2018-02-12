@@ -81,6 +81,7 @@
 		6355499C1CA0E87D00DB5167 /* status_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635549991CA0E87D00DB5167 /* status_bg@2x.png */; };
 		635F63E91E986B0A00C48913 /* UIStoryboardSegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635F63E81E986B0A00C48913 /* UIStoryboardSegueFromRight.swift */; };
 		636240851E308EEE007640DC /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636240841E308EEE007640DC /* Queue.swift */; };
+		636A2CEA2032201500F63EE6 /* AtoZGestureRecognizerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A2CE92032201500F63EE6 /* AtoZGestureRecognizerDelegate.swift */; };
 		636E57122026D04800211944 /* AtoZUIDynamicsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */; };
 		637760481E7F9CE400BD59F6 /* ToDoList.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 637760471E7F9CE400BD59F6 /* ToDoList.rtf */; };
 		6377B8302028E9BA00C42743 /* AtoZPopoverDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6377B82F2028E9BA00C42743 /* AtoZPopoverDelegate.swift */; };
@@ -265,6 +266,7 @@
 		635549991CA0E87D00DB5167 /* status_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_bg@2x.png"; sourceTree = "<group>"; };
 		635F63E81E986B0A00C48913 /* UIStoryboardSegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStoryboardSegueFromRight.swift; sourceTree = "<group>"; };
 		636240841E308EEE007640DC /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		636A2CE92032201500F63EE6 /* AtoZGestureRecognizerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZGestureRecognizerDelegate.swift; sourceTree = "<group>"; };
 		636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZUIDynamicsDelegate.swift; sourceTree = "<group>"; };
 		637760471E7F9CE400BD59F6 /* ToDoList.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = ToDoList.rtf; sourceTree = "<group>"; };
 		6377B82F2028E9BA00C42743 /* AtoZPopoverDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZPopoverDelegate.swift; sourceTree = "<group>"; };
@@ -447,6 +449,7 @@
 				636E57112026D04800211944 /* AtoZUIDynamicsDelegate.swift */,
 				6377B82F2028E9BA00C42743 /* AtoZPopoverDelegate.swift */,
 				630C3D37202CDE2B0026B86D /* AtoZTableViewDelegates.swift */,
+				636A2CE92032201500F63EE6 /* AtoZGestureRecognizerDelegate.swift */,
 			);
 			name = AtoZDelegates;
 			sourceTree = "<group>";
@@ -988,6 +991,7 @@
 				63C449861C9A18F10053BE77 /* RotatingView.swift in Sources */,
 				634BE6861E96E3330074F2F8 /* HomeViewController.swift in Sources */,
 				633C7B071DB46A060055CD83 /* ProgressViewController.swift in Sources */,
+				636A2CEA2032201500F63EE6 /* AtoZGestureRecognizerDelegate.swift in Sources */,
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
 				635F63E91E986B0A00C48913 /* UIStoryboardSegueFromRight.swift in Sources */,
 				63FD05801EA59106005C8E96 /* AtoZ.xcdatamodeld in Sources */,
