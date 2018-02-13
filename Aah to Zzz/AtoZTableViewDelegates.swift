@@ -14,6 +14,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
     var proxyTable: UITableView!
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
     let popoverDelegate = AtoZPopoverDelegate()
+    //var fillingInBlanks: Bool = false
     
     // MARK: - NSFetchedResultsController
     lazy var sharedContext = {
@@ -128,8 +129,9 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
             //TODO: can i use cell.wordtext property instead and eliminate the uilabel?
             //TODO: use the word.numTimesFound property to send the correctly colored tiles to the cell
             
-            /* Set aside for now. Need a way to pass fillingInBlanks from the view controller
-            if fillingInBlanks == true {
+            // Set aside for now. Need a way to pass fillingInBlanks from the view controller. Use Core Data?
+            if word.game?.fillingInBlanks == true {
+            //if fillingInBlanks == true {
                 
                 if word.found == false && word.inCurrentList == true {
                     
@@ -141,7 +143,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
                 }
             }
             
-            */
+ 
             
             if word.found == true && word.inCurrentList == true {
                 if cell.word != nil { // may be unneeded safeguard

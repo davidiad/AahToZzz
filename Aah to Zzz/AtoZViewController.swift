@@ -11,7 +11,7 @@ import CoreData
 import Alamofire
 
 class AtoZViewController: UIViewController {
-    
+    //TODO: should weak optional vars be used for delegatesa?
     let tableViewsDelegate = AtoZTableViewDelegates()
     let uiDynamicsDelegate = AtoZUIDynamicsDelegate()
     let gestureDelegate = AtoZGestureDelegate()
@@ -226,7 +226,7 @@ class AtoZViewController: UIViewController {
         }
     }
     
-    // MARK: - NSFetchedResultsController
+    // MARK: - NSFetchedResultsController vars
     lazy var sharedContext = {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
@@ -380,7 +380,13 @@ class AtoZViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        updateProgress(nil)
+        if game?.data?.fillingInBlanks == true {
+            fillingInBlanks = true
+            updateProgress("Filled")
+            wordListCompleted()
+        } else {
+            updateProgress(nil)
+        }
         // Thank you Aaron Douglas for showing how to turn on the cool fields of lines that visualize UIFieldBehaviors!
         // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
         //animator.setValue(true, forKey: "debugEnabled")
@@ -570,9 +576,10 @@ class AtoZViewController: UIViewController {
             if currentNumberOfWords != nil && model.inactiveCount != nil {
                 if numFound == currentNumberOfWords! - model.inactiveCount! {
                     // TODO: make wordListCompleted func
-                    animateStatusHeight(80.0)
-                    progressLabl.text = "Word List Completed!"
-                    animateNewListButton()
+                    wordListCompleted()
+//                    animateStatusHeight(80.0)
+//                    progressLabl.text = "Word List Completed!"
+//                    animateNewListButton()
                 } else {
                     progressLabl.text = "\(numFound) of \(currentNumberOfWords! - model.inactiveCount!) words found"
                 }
@@ -585,6 +592,12 @@ class AtoZViewController: UIViewController {
             }, completion: { (finished: Bool) -> Void in
                 
         })
+    }
+    
+    func wordListCompleted () {
+        animateStatusHeight(80.0)
+        progressLabl.text = "Word List Completed!"
+        animateNewListButton()
     }
     
     // each time a word is found, calculate how many have been found to show to the player
@@ -640,9 +653,11 @@ class AtoZViewController: UIViewController {
             }
         }
         
+        fillingInBlanks = false
+        game?.data?.fillingInBlanks = fillingInBlanks
         saveContext()
         
-        fillingInBlanks = false // reset to false
+        // TODO: needed to set here? // fillingInBlanks = false // reset to false
         
         // Now that the results of the previous round have been saved, create a new set of letters
         currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
@@ -791,6 +806,9 @@ class AtoZViewController: UIViewController {
     func checkForExistingLetters () {
         // if there is a saved letterset, then use that instead of a new one
         game = model.fetchGame()
+        if let fib = game?.data?.fillingInBlanks {
+            fillingInBlanks = fib
+        }
         if game?.data?.currentLetterSetID == nil {
             currentLetterSet = model.generateLetterSet()
         } else {
@@ -799,6 +817,7 @@ class AtoZViewController: UIViewController {
             let id = sharedContext.persistentStoreCoordinator?.managedObjectID(forURIRepresentation: lettersetURI!)
             do {
                 currentLetterSet = try sharedContext.existingObject(with: id!) as? LetterSet
+
                 // the Letter's are saved in Core Data as an NSSet, so convert to array
                 //letters = currentLetterSet?.letters?.allObjects as! [Letter]
             } catch {
@@ -870,11 +889,12 @@ class AtoZViewController: UIViewController {
             } else {
                 
             }
-            saveContext()
         }
         animateStatusHeight(80.0)
         progressLabl.text = "\(currentNumFound()) of \(currentNumberOfWords! - model.inactiveCount!) words found"
         animateNewListButton()
+        game?.data?.fillingInBlanks = true
+        saveContext()
     }
     
 //    //TODO: layout the Tiles which are not using autolayout

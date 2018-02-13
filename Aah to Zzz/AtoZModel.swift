@@ -309,6 +309,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         }
         
         // save the managed object context
+        game?.data?.fillingInBlanks = false // since the letters are new, fillingInBlanks reset to default
         saveContext()
 
         return letterset
@@ -562,7 +563,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                 print(fetchError)
             }
         }
-        
+        // game?.data?.fillingInBlanks = false // reset to default
         saveContext()
         // Check currentWords for mastered words, and set to inactive up til inactive quota limit
         checkForInactiveWords(currentWords)
