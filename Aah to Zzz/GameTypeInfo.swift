@@ -9,7 +9,6 @@
 // Works with GameType. Sets the basic game info that corresponds to each type. And each
 // Game has its GameType saved in the Game managed object.
 
-//import Foundation
 
 enum Orientation {
     
@@ -17,7 +16,7 @@ enum Orientation {
     case landscape
 }
 
-// add others as they are created
+// Word lists to put in the dictionary. add others as they are created
 enum DictionaryName: String {
     case two = "OSPD5_2letter"
     case three = "OSPD5_3letter"
@@ -42,12 +41,12 @@ struct GameTypeInfo {
     
     // for reference
 //    enum GameType: Int {
-//        case TwoLetterWords = 0
+//        case TwoLetterWords   = 0
 //        case ThreeLetterWords = 1
-//        case JQXZ = 2
+//        case JQXZ             = 2
 //        case SevenLetterWords = 3
 //        case EightLetterWords = 4
-//        case NineLetterWords = 5
+//        case NineLetterWords  = 5
 //    }
     
     

@@ -103,6 +103,8 @@
 		637EA83A1C9C826300A9D8AF /* small_tile_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637EA8371C9C826300A9D8AF /* small_tile_yellow@2x.png */; };
 		637EA83B1C9C826300A9D8AF /* small_tile_yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 637EA8381C9C826300A9D8AF /* small_tile_yellow@3x.png */; };
 		637F67601E20743600347F15 /* ProgressInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637F675F1E20743600347F15 /* ProgressInfoViewController.swift */; };
+		63854326203346AC00252F69 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63854325203346AC00252F69 /* GameState.swift */; };
+		63854328203379E800252F69 /* GameStateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63854327203379E800252F69 /* GameStateInfo.swift */; };
 		63A3A1111C763F6C00F440B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1101C763F6C00F440B5 /* AppDelegate.swift */; };
 		63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A1141C763F6C00F440B5 /* Main.storyboard */; };
 		63A3A11B1C763F6C00F440B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A11A1C763F6C00F440B5 /* Assets.xcassets */; };
@@ -289,6 +291,8 @@
 		637EA8371C9C826300A9D8AF /* small_tile_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_yellow@2x.png"; sourceTree = "<group>"; };
 		637EA8381C9C826300A9D8AF /* small_tile_yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_yellow@3x.png"; sourceTree = "<group>"; };
 		637F675F1E20743600347F15 /* ProgressInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressInfoViewController.swift; sourceTree = "<group>"; };
+		63854325203346AC00252F69 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		63854327203379E800252F69 /* GameStateInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStateInfo.swift; sourceTree = "<group>"; };
 		63A3A10D1C763F6C00F440B5 /* AahToZzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AahToZzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A3A1101C763F6C00F440B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63A3A1151C763F6C00F440B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -570,6 +574,8 @@
 				636240841E308EEE007640DC /* Queue.swift */,
 				63DA61511E383BB7009D42DE /* GameType.swift */,
 				6317546B1E39E059008B359D /* GameTypeInfo.swift */,
+				63854325203346AC00252F69 /* GameState.swift */,
+				63854327203379E800252F69 /* GameStateInfo.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1010,6 +1016,7 @@
 				6377B8302028E9BA00C42743 /* AtoZPopoverDelegate.swift in Sources */,
 				637AF0781C84297C005A36BA /* FlickrClient.swift in Sources */,
 				633C7B0B1DB46A9C0055CD83 /* ExampleTableViewController.swift in Sources */,
+				63854326203346AC00252F69 /* GameState.swift in Sources */,
 				6319C0821EA345F0004AC9B7 /* GameCenterExtension.swift in Sources */,
 				63E4A2C71DC24CBA002BC4CE /* LevelTableCell.swift in Sources */,
 				6317546C1E39E059008B359D /* GameTypeInfo.swift in Sources */,
@@ -1020,6 +1027,7 @@
 				63D57BB61C8C00C80046E349 /* Position.swift in Sources */,
 				636240851E308EEE007640DC /* Queue.swift in Sources */,
 				63E4A2C51DC1AF98002BC4CE /* LevelTableViewController.swift in Sources */,
+				63854328203379E800252F69 /* GameStateInfo.swift in Sources */,
 				633727601C7EAEA4003E8447 /* Word.swift in Sources */,
 				637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */,
 				63A9FEE81C7AB4B500AE54F1 /* CoreDataStackManager.swift in Sources */,
