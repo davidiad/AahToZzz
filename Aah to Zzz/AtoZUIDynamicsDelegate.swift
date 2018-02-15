@@ -18,7 +18,11 @@ class AtoZUIDynamicsDelegate: NSObject, UIDynamicAnimatorDelegate, Lettertiles {
     
     func dynamicAnimatorDidPause(_ animator: UIDynamicAnimator) {
         if !animatorBeganPause { // otherwise this is called continually
-            for tile in lettertiles! {
+            guard let lettertiles = lettertiles else {
+                print("No lettertiles at this moment")
+                return
+            }
+            for tile in lettertiles {
                 checkTilePosition(tile) // NOTE: this check may not be needed
             }
             animatorBeganPause = true

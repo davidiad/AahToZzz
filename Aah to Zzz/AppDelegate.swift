@@ -19,7 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]? = [:]) -> Bool {
+        window?.makeKeyAndVisible()
+        window?.restorationIdentifier = "MainWindow"
         application.isStatusBarHidden = true
         authPlayer()
         return true
@@ -38,11 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Game Center authenticated?: \(GKLocalPlayer.localPlayer().isAuthenticated)")
             }
         }
-    }
-    
-//    // May need this, just for state restoration to work. But tested, and seems not needed.
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
