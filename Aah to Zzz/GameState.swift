@@ -8,7 +8,7 @@
 import Foundation
 
 @objc enum GameState: Int {
-    case playingTwoLetter     = 0
+    case firstTime            = 0
     case playingThreeLetter   = 1
     case home                 = 2
     case tutorial             = 3

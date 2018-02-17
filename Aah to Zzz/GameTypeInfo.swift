@@ -61,6 +61,7 @@ struct GameTypeInfo {
         guard let typeCase = self.type?.rawValue else {
             return
         }
+        
         switch typeCase {
         case 0 :
             lengthOfWords = 2

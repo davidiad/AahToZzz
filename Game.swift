@@ -32,6 +32,15 @@ class Game: NSManagedObject {
         }
     }
     
+//    var gameStateSet: GameState {
+//        get {
+//            return GameState(rawValue: self.gameState!.intValue)!
+//        }
+//        set {
+//            self.gameState = newValue.rawValue as NSNumber
+//        }
+//    }
+    
     // standard Core Data init method.
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)

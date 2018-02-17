@@ -81,6 +81,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
     
     var game: Game? // The managed object that is at the root of the object graph
     var gameTypeInfo: GameTypeInfo? // holds the game info that is dependent on the gameType
+    var gameStateInfo: GameStateInfo?
     var positions: [Position]? // array to hold the letter Positions. Needed??
     
     var anchorPoint: CGPoint? // anchor point to calculate tile and UI position. Will depend on device size. And will be adjustable by the user to some degree to what works best (hand size, left or right handed, personal preference.
@@ -130,8 +131,9 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
 
         game = fetchGame() // fetches the exisiting game if there is one, or else creates a new game
         
-        // gameTypeSetting maps enum to int(for saving in Core Data, encapsulated in GameType
+        // gameTypeSetting maps enum to int(for saving in Core Data, encapsulated in GameType)
         gameTypeInfo = GameTypeInfo(gameType: game!.gameTypeSet)
+        gameStateInfo = GameStateInfo(gameState: (game!.data?.gameStateSet)!) // TODO: better unwrapping
         
         //print(" fwc: \(fetchedWordsController)") // trying to ensure that the lazy var has been called
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Word")

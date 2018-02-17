@@ -17,10 +17,11 @@ struct GameStateInfo {
     var state: GameState?
     var viewController: String?
     var screenshotPath: String?
+    var firstTimePlaying: Bool = true
     
 //    for reference
 //    @objc enum GameState: Int {
-//        case playingTwoLetter     = 0
+//        case firstTime            = 0
 //        case playingThreeLetter   = 1
 //        case home                 = 2
 //        case tutorial             = 3
@@ -43,29 +44,36 @@ struct GameStateInfo {
         // Dummy info for now
         switch stateCase {
         case 0 :
+            firstTimePlaying = true
             viewController = "playing2"
             screenshotPath = "somePath"
         case 1 :
+            firstTimePlaying = false
             viewController = "playing2"
             screenshotPath = "somePath"
             
         case 2:
+            firstTimePlaying = false
             viewController = "playing2"
             screenshotPath = "somePath"
             
         case 3:
+            firstTimePlaying = false
             viewController = "playing2"
             screenshotPath = "somePath"
             
         case 4:
+            firstTimePlaying = false
             viewController = "playing2"
             screenshotPath = "somePath"
             
         case 5:
+            firstTimePlaying = false
             viewController = "playing2"
             screenshotPath = "somePath"
             
         default :
+            firstTimePlaying = false
             viewController = "playing2"
             screenshotPath = "somePath"
         }

@@ -12,7 +12,7 @@ import CoreData
 
 class GameData: NSManagedObject {
     
-    @NSManaged fileprivate var gameState: NSNumber?
+    @NSManaged var gameState: NSNumber?
     @NSManaged var currentLetterSetID: String?
     @NSManaged var name: String? // since the name could be changed, put in GameData rather than Game
     @NSManaged var level: Float

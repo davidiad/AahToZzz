@@ -394,12 +394,18 @@ class AtoZViewController: UIViewController {
         // When first loading, add a basic info panel about the game, with a dismiss button
         // TODO: enable dismiss by tapping anywhere
         // TODO: customize the info vc animation
-        let infoViewController = self.storyboard?.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
-        infoViewController.modalPresentationStyle = .overCurrentContext
-        
-        self.present(infoViewController, animated: true) {
-            
+        // TODO: blur the background behind the info view controller
+        if game?.data?.gameState == 0 {
+            let infoViewController = storyboard?.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
+            infoViewController.modalPresentationStyle = .overCurrentContext
+            present(infoViewController, animated: true)
+            game?.data?.gameState = 1 // set to state where info window is not shown
+            saveContext()
         }
+        
+//        self.present(infoViewController, animated: true) {
+//
+//        }
     }
     
     override func didReceiveMemoryWarning() {
