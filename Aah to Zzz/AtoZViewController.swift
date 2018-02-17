@@ -251,7 +251,7 @@ class AtoZViewController: UIViewController {
     // Present definition when a word is tapped
     @objc func presentDefinition(_ notification: Notification) {
         if let pop = notification.userInfo?["item"] as? DefinitionPopoverVC {
-            present(pop, animated: true, completion: nil)
+            self.present(pop, animated: true, completion: nil)
         }
     }
     
