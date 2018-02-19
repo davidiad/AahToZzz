@@ -1141,11 +1141,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_info_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT">
+                            <imageView hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_info_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT">
                                 <rect key="frame" x="50" y="40" width="314" height="360"/>
                                 <rect key="contentStretch" x="0.040000000000000001" y="0.080000000000000002" width="0.92222199999999999" height="0.71999999999999997"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-Cn-cTF">
+                            <stackView clearsContextBeforeDrawing="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-Cn-cTF">
                                 <rect key="frame" x="50" y="40" width="314" height="360"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FuV-wN-7JJ">
@@ -1177,6 +1177,7 @@ Tap on a word to see definition.</string>
                                         </connections>
                                     </button>
                                 </subviews>
+                                <color key="backgroundColor" red="0.98603981730000001" green="0.0" blue="0.078923560680000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="360" id="ICS-8v-GCh"/>
                                 </constraints>
@@ -1192,6 +1193,10 @@ Tap on a word to see definition.</string>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="20" id="zXv-qE-tBe"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bg" destination="z7g-jS-JUT" id="GKC-RC-WKt"/>
+                        <outlet property="stackView" destination="cYu-Cn-cTF" id="8Er-eN-eSn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhV-Ay-3EQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
