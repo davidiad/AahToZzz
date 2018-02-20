@@ -1141,36 +1141,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_info_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT">
-                                <rect key="frame" x="50" y="40" width="314" height="360"/>
+                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_info_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT">
+                                <rect key="frame" x="50" y="50" width="314" height="180"/>
                                 <rect key="contentStretch" x="0.040000000000000001" y="0.080000000000000002" width="0.92222199999999999" height="0.71999999999999997"/>
                             </imageView>
-                            <stackView clearsContextBeforeDrawing="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-Cn-cTF">
-                                <rect key="frame" x="50" y="40" width="314" height="360"/>
+                            <stackView opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-Cn-cTF">
+                                <rect key="frame" x="50" y="50" width="314" height="180"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FuV-wN-7JJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="192.66666666666666"/>
-                                        <string key="text">AA to ZZZ
-
-noun | ah tu zi
-1. AA (a type of lava); ZZZ(sound made while sleeping)
-2. 1st 2 letter word to the last 3 letter word in the dictionary
-3. A fun way to learn 3 letter words for games such as SCRABBLE®</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uRl-0f-iXL">
-                                        <rect key="frame" x="0.0" y="192.66666666666666" width="314" height="90.999999999999972"/>
-                                        <string key="text">Tap or drag the letters to form 3 letter words.
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uRl-0f-iXL">
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="132.66666666666666"/>
+                                        <string key="text">Tap or drag the letters to form three letter words.
 Tap on a word to see definition.</string>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jnC-FW-GVe">
-                                        <rect key="frame" x="0.0" y="283.66666666666669" width="314" height="76.333333333333314"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <rect key="frame" x="0.0" y="132.66666666666666" width="314" height="47.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <state key="normal" title="Play"/>
                                         <connections>
                                             <action selector="play:" destination="Lth-7f-w0D" eventType="touchUpInside" id="MNX-f4-vVR"/>
@@ -1179,7 +1167,7 @@ Tap on a word to see definition.</string>
                                 </subviews>
                                 <color key="backgroundColor" red="0.98603981730000001" green="0.0" blue="0.078923560680000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="360" id="ICS-8v-GCh"/>
+                                    <constraint firstAttribute="height" constant="180" id="ICS-8v-GCh"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -1190,7 +1178,7 @@ Tap on a word to see definition.</string>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="leading" secondItem="cYu-Cn-cTF" secondAttribute="leading" id="S3G-Xl-jbd"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="bottom" secondItem="cYu-Cn-cTF" secondAttribute="bottom" id="T3i-kZ-sXO"/>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="50" id="pYT-TC-Tuz"/>
-                            <constraint firstItem="cYu-Cn-cTF" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="20" id="zXv-qE-tBe"/>
+                            <constraint firstItem="cYu-Cn-cTF" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="30" id="zXv-qE-tBe"/>
                         </constraints>
                     </view>
                     <connections>

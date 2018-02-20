@@ -396,9 +396,12 @@ class AtoZViewController: UIViewController {
         // TODO: customize the info vc animation
         // TODO: blur the background behind the info view controller
         if game?.data?.gameState == 0 {
-            let infoViewController = storyboard?.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
-            infoViewController.modalPresentationStyle = .overCurrentContext
-            present(infoViewController, animated: true)
+            
+                let infoViewController = storyboard?.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
+                infoViewController.modalPresentationStyle = .overCurrentContext
+                present(infoViewController, animated: true)
+
+
             game?.data?.gameState = 1 // set to state where info window is not shown
             saveContext()
         }
