@@ -42,37 +42,25 @@ class IntroViewController: UIViewController {
         bg.isOpaque = false
         var blurEffect: UIBlurEffect
         if #available(iOS 10.0, *) {
-            blurEffect = UIBlurEffect(style: .regular)
+            blurEffect = UIBlurEffect(style: .prominent)
         } else {
             blurEffect = UIBlurEffect(style: .light)
         }
-        blurView = UIVisualEffectView(effect: blurEffect)
+        blurView = UIVisualEffectView(effect: nil)
         guard let blurView = blurView else {
             return
         }
         
-//        @available(iOS 10.0, *)
-//        var animator: UIViewPropertyAnimator?
-        
         if #available(iOS 10.0, *) {
             var animator: UIViewPropertyAnimator?
-            animator = UIViewPropertyAnimator(duration: 1, curve: .linear) {
-                self.blurView?.effect = nil
-                animator?.fractionComplete = CGFloat(0.125)
+            animator = UIViewPropertyAnimator(duration: 30, curve: .linear) {
+                self.blurView?.effect = blurEffect
+                animator?.pauseAnimation()
             }
-        } else {
-            // Fallback on earlier versions
+            animator?.startAnimation()
+            animator?.fractionComplete = 0.66 // set the amount of bluriness here
         }
-//        if #available(iOS 10.0, *) {
-//            animator?.fractionComplete = CGFloat(0.3)
-//        } else {
-//            // Fallback on earlier versions
-//        }
-    
-    
 
-
-    
         blurView.layer.cornerRadius = 30.0
         blurView.layer.masksToBounds = true
         blurView.layer.borderWidth = 2.0
@@ -92,28 +80,22 @@ class IntroViewController: UIViewController {
             blurView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
             ])
         
-//        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
-//        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
-//        vibrancyView.translatesAutoresizingMaskIntoConstraints = false
-//        //vibrancyView.contentView.addSubview(view)
-//        blurView.layer.cornerRadius = 30
-//        blurView.layer.masksToBounds = true
-//       // blurView.layer.maskedCorners
-//        blurView.contentView.addSubview(vibrancyView)
-//
-//        NSLayoutConstraint.activate([
-//            vibrancyView.heightAnchor.constraint(equalTo: blurView.contentView.heightAnchor),
-//            vibrancyView.leadingAnchor.constraint(equalTo: blurView.contentView.leadingAnchor),
-//            vibrancyView.topAnchor.constraint(equalTo: blurView.contentView.topAnchor),
-//            vibrancyView.trailingAnchor.constraint(equalTo: blurView.contentView.trailingAnchor)
-//            ])
-//
-//        NSLayoutConstraint.activate([
-//            view.centerXAnchor.constraint(equalTo: vibrancyView.contentView.centerXAnchor),
-//            view.centerYAnchor.constraint(equalTo: vibrancyView.contentView.centerYAnchor),
-//            ])
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+        vibrancyView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.contentView.addSubview(vibrancyView)
 
-        
+        NSLayoutConstraint.activate([
+            vibrancyView.heightAnchor.constraint(equalTo: blurView.contentView.heightAnchor),
+            vibrancyView.leadingAnchor.constraint(equalTo: blurView.contentView.leadingAnchor),
+            vibrancyView.topAnchor.constraint(equalTo: blurView.contentView.topAnchor),
+            vibrancyView.trailingAnchor.constraint(equalTo: blurView.contentView.trailingAnchor)
+            ])
+
+        NSLayoutConstraint.activate([
+            view.centerXAnchor.constraint(equalTo: vibrancyView.contentView.centerXAnchor),
+            view.centerYAnchor.constraint(equalTo: vibrancyView.contentView.centerYAnchor),
+            ])
     }
 
     override func didReceiveMemoryWarning() {

@@ -1141,7 +1141,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_info_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT">
+                            <imageView hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_info_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT">
                                 <rect key="frame" x="50" y="50" width="314" height="180"/>
                                 <rect key="contentStretch" x="0.040000000000000001" y="0.080000000000000002" width="0.92222199999999999" height="0.71999999999999997"/>
                             </imageView>
