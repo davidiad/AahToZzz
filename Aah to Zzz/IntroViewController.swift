@@ -13,6 +13,7 @@ class IntroViewController: UIViewController {
 
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var bg: UIImageView!
+    @IBOutlet weak var infoBorder: UIImageView!
     
     @IBAction func play(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -26,13 +27,13 @@ class IntroViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bg.layoutIfNeeded()
-        bg.layer.cornerRadius = 30.0
-        bg.layer.borderWidth = 4.0
+        bg.layer.cornerRadius = 20.0
+        bg.layer.borderWidth = 0.0
         bg.layer.borderColor = Colors.bluek.cgColor
         bg.layer.shadowColor = UIColor.white.cgColor
         bg.layer.shadowOpacity = 1
         bg.layer.shadowOffset = CGSize.zero
-        bg.layer.shadowRadius = 9
+        bg.layer.shadowRadius = 8
         bg.layer.masksToBounds = false
         
         view.isOpaque = false
@@ -40,6 +41,19 @@ class IntroViewController: UIViewController {
         // blur effect
         bg.backgroundColor = .clear
         bg.isOpaque = false
+        
+        infoBorder.layoutIfNeeded()
+        infoBorder.layer.cornerRadius = 20.0
+        infoBorder.layer.borderWidth = 0.0
+        infoBorder.layer.borderColor = Colors.bluek.cgColor
+        infoBorder.layer.masksToBounds = false
+        
+        view.isOpaque = false
+        
+        // blur effect
+        bg.backgroundColor = .clear
+        bg.isOpaque = false
+        
         var blurEffect: UIBlurEffect
         if #available(iOS 10.0, *) {
             blurEffect = UIBlurEffect(style: .prominent)
@@ -61,9 +75,9 @@ class IntroViewController: UIViewController {
             animator?.fractionComplete = 0.66 // set the amount of bluriness here
         }
 
-        blurView.layer.cornerRadius = 30.0
+        blurView.layer.cornerRadius = 20.0
         blurView.layer.masksToBounds = true
-        blurView.layer.borderWidth = 2.0
+        blurView.layer.borderWidth = 0.0
         
         blurView.layer.borderColor = Colors.desat_yellow.cgColor
         blurView.translatesAutoresizingMaskIntoConstraints = false

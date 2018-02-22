@@ -1141,10 +1141,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_info_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT">
-                                <rect key="frame" x="50" y="50" width="314" height="180"/>
-                                <rect key="contentStretch" x="0.040000000000000001" y="0.080000000000000002" width="0.92222199999999999" height="0.71999999999999997"/>
-                            </imageView>
                             <stackView opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-Cn-cTF">
                                 <rect key="frame" x="50" y="50" width="314" height="180"/>
                                 <subviews>
@@ -1170,19 +1166,32 @@ Tap on a word to see definition.</string>
                                     <constraint firstAttribute="height" constant="180" id="ICS-8v-GCh"/>
                                 </constraints>
                             </stackView>
+                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_border" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT" userLabel="Shadow">
+                                <rect key="frame" x="50" y="50" width="314" height="180"/>
+                                <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.92857000000000001" height="0.59999999999999998"/>
+                            </imageView>
+                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_border" translatesAutoresizingMaskIntoConstraints="NO" id="L85-BR-M22">
+                                <rect key="frame" x="50" y="50" width="314" height="180"/>
+                                <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.92857000000000001" height="0.59999999999999998"/>
+                            </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="trailing" secondItem="TNc-fb-6pR" secondAttribute="trailing" constant="-50" id="36N-yp-WXL"/>
+                            <constraint firstItem="L85-BR-M22" firstAttribute="trailing" secondItem="z7g-jS-JUT" secondAttribute="trailing" id="5fz-e6-u7z"/>
+                            <constraint firstItem="L85-BR-M22" firstAttribute="leading" secondItem="z7g-jS-JUT" secondAttribute="leading" id="A0I-n3-5hA"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="trailing" secondItem="cYu-Cn-cTF" secondAttribute="trailing" id="BcF-3E-lpL"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="top" id="RPi-gH-QRR"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="leading" secondItem="cYu-Cn-cTF" secondAttribute="leading" id="S3G-Xl-jbd"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="bottom" secondItem="cYu-Cn-cTF" secondAttribute="bottom" id="T3i-kZ-sXO"/>
+                            <constraint firstItem="L85-BR-M22" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="top" id="eOH-Ru-BMp"/>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="50" id="pYT-TC-Tuz"/>
+                            <constraint firstItem="L85-BR-M22" firstAttribute="bottom" secondItem="z7g-jS-JUT" secondAttribute="bottom" id="rIw-bA-NJ3"/>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="30" id="zXv-qE-tBe"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bg" destination="z7g-jS-JUT" id="GKC-RC-WKt"/>
+                        <outlet property="infoBorder" destination="L85-BR-M22" id="V8H-NS-o0P"/>
                         <outlet property="stackView" destination="cYu-Cn-cTF" id="8Er-eN-eSn"/>
                     </connections>
                 </viewController>
@@ -1199,6 +1208,7 @@ Tap on a word to see definition.</string>
         <image name="icon_newlist" width="17" height="26"/>
         <image name="icon_progress" width="25" height="25"/>
         <image name="icon_shuffle" width="26" height="26"/>
+        <image name="info_border" width="360" height="100"/>
         <image name="progress_info_bg.png" width="360" height="100"/>
         <image name="shadow_up.png" width="80" height="54"/>
         <image name="shadown_down" width="80" height="54"/>
