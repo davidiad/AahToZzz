@@ -356,9 +356,7 @@ class AtoZViewController: UIViewController {
         startNewList.alpha = 0
         startNewList.isHidden = true
         
-        
         let mainGradient = model.yellowPinkBlueGreenGradient()
-        
         mainGradient.frame = view.bounds
         mainGradient.zPosition = -1
         mainGradient.name = "mainGradientLayer"
@@ -401,19 +399,14 @@ class AtoZViewController: UIViewController {
                 infoViewController.modalPresentationStyle = .overCurrentContext
                 present(infoViewController, animated: true)
 
-
             game?.data?.gameState = 1 // set to state where info window is not shown
             saveContext()
         }
-        
-//        self.present(infoViewController, animated: true) {
-//
-//        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        saveContext()
     }
     
     //MARK:- Tile Swapping

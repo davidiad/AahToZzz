@@ -30,11 +30,41 @@ class IntroViewController: UIViewController {
         bg.layer.cornerRadius = 20.0
         bg.layer.borderWidth = 0.0
         bg.layer.borderColor = Colors.bluek.cgColor
-        bg.layer.shadowColor = UIColor.white.cgColor
+        bg.layer.shadowColor = UIColor.black.cgColor
         bg.layer.shadowOpacity = 1
         bg.layer.shadowOffset = CGSize.zero
-        bg.layer.shadowRadius = 8
+        bg.layer.shadowRadius = 12
         bg.layer.masksToBounds = false
+        
+        let outerPath = UIBezierPath(roundedRect: bg.frame, cornerRadius: 20)
+        let innerCG = CGRect(x: 134.0, y: 72.0, width: 269, height: 176)
+        let innerPath = UIBezierPath(roundedRect: innerCG , cornerRadius: 20)
+        //outerPath.append(innerPath)
+        outerPath.usesEvenOddFillRule = true
+        outerPath.addClip()
+        let shadowPath = outerPath.cgPath
+        bg.layer.transform = CATransform3DMakeTranslation(-66, -52, 0)
+        bg.layer.shadowPath = shadowPath
+        
+        // Mask path
+        //CGMutablePathRef path = CGPathCreateMutable();
+        let path = CGMutablePath()
+        let shadowArea = UIBezierPath(rect: CGRect(x: -50, y: -80, width: 600, height: 400))
+        //CGPathAddRect(path, nil, (CGRect){.origin={0,0}, .size=frame.size});
+        path.addPath(shadowArea.cgPath)
+        //CGPathAddPath(path, &trans, shadowLayer.shadowPath);
+        path.addPath(innerPath.cgPath)
+        //CGPathCloseSubpath(path);
+        path.closeSubpath()
+        
+        // Mask layer
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = innerCG
+        maskLayer.fillRule = kCAFillRuleEvenOdd;
+        maskLayer.path = path;
+        print("DIM: \(bg.frame)")
+        maskLayer.transform = CATransform3DMakeTranslation(-200, -90, 0)
+        bg.layer.mask = maskLayer
         
         view.isOpaque = false
         
@@ -48,11 +78,15 @@ class IntroViewController: UIViewController {
         infoBorder.layer.borderColor = Colors.bluek.cgColor
         infoBorder.layer.masksToBounds = false
         
+        
+        
         view.isOpaque = false
         
         // blur effect
         bg.backgroundColor = .clear
         bg.isOpaque = false
+        
+        
         
         var blurEffect: UIBlurEffect
         if #available(iOS 10.0, *) {
@@ -110,6 +144,12 @@ class IntroViewController: UIViewController {
             view.centerXAnchor.constraint(equalTo: vibrancyView.contentView.centerXAnchor),
             view.centerYAnchor.constraint(equalTo: vibrancyView.contentView.centerYAnchor),
             ])
+        
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        print("DIM VWLOSV's: \(bg.frame)")
     }
 
     override func didReceiveMemoryWarning() {
