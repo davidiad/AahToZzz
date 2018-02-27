@@ -101,7 +101,7 @@ class IntroViewController: UIViewController {
         
         if #available(iOS 10.0, *) {
             var animator: UIViewPropertyAnimator?
-            animator = UIViewPropertyAnimator(duration: 30, curve: .linear) {
+            animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
                 self.blurView?.effect = blurEffect
                 animator?.pauseAnimation()
             }

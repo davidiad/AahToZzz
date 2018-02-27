@@ -543,8 +543,8 @@
 		63A3A10F1C763F6C00F440B5 /* AahToZzz */ = {
 			isa = PBXGroup;
 			children = (
-				63F449862041703400837434 /* View */,
 				637760471E7F9CE400BD59F6 /* ToDoList.rtf */,
+				63F449862041703400837434 /* View */,
 				63D57BA81C891C950046E349 /* Controller */,
 				637AF0701C83EEE9005A36BA /* Assets */,
 				63A3A1101C763F6C00F440B5 /* AppDelegate.swift */,

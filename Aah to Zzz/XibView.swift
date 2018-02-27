@@ -20,9 +20,13 @@ class XibView : UIView {
     var contentView:UIView?
     @IBInspectable var nibName:String?
 
+    @IBOutlet weak var blurView: UIVisualEffectView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         xibSetup()
+        controlBlur()
     }
     
     func xibSetup() {
@@ -32,6 +36,7 @@ class XibView : UIView {
             [.flexibleWidth, .flexibleHeight]
         addSubview(view)
         contentView = view
+        
     }
     
     func loadViewFromNib() -> UIView? {
@@ -49,4 +54,39 @@ class XibView : UIView {
         contentView?.prepareForInterfaceBuilder()
     }
     
+    func controlBlur () {
+        
+        
+        var blurEffect: UIBlurEffect
+        if #available(iOS 10.0, *) {
+            blurEffect = UIBlurEffect(style: .prominent)
+        } else {
+            blurEffect = UIBlurEffect(style: .light)
+        }
+        //blurView = UIVisualEffectView(effect: nil)
+//        guard let blurView = blurView else {
+//            return
+//        }
+        blurView.effect = nil
+        if #available(iOS 10.0, *) {
+            //var animator: UIViewPropertyAnimator?
+            
+            
+            var animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear) {
+                print ("CONTROL BLUR animator")
+                self.blurView?.effect = blurEffect
+                
+            }
+            
+            
+            //animator.pauseAnimation()
+            //animator.startAnimation()
+           
+            //blurView?.effect = blurEffect
+            animator.stopAnimation(true)
+            
+            animator.fractionComplete = 0.66 // set the amount of bluriness here
+        }
+ 
+    }
 }

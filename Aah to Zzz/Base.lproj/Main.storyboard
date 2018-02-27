@@ -1174,9 +1174,12 @@ Tap on a word to see definition.</string>
                                 <rect key="frame" x="50" y="50" width="314" height="180"/>
                                 <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.92857000000000001" height="0.59999999999999998"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wordnik" translatesAutoresizingMaskIntoConstraints="NO" id="ynO-mS-lXH">
+                                <rect key="frame" x="-1" y="304" width="416" height="128"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YD3-gY-eQb" customClass="XibView" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="87" y="275" width="240" height="305"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="BlurBubble"/>
                                 </userDefinedRuntimeAttributes>
@@ -1194,7 +1197,11 @@ Tap on a word to see definition.</string>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="top" id="RPi-gH-QRR"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="leading" secondItem="cYu-Cn-cTF" secondAttribute="leading" id="S3G-Xl-jbd"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="bottom" secondItem="cYu-Cn-cTF" secondAttribute="bottom" id="T3i-kZ-sXO"/>
+                            <constraint firstItem="ynO-mS-lXH" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="-1" id="WW2-tN-HRj"/>
                             <constraint firstItem="L85-BR-M22" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="top" id="eOH-Ru-BMp"/>
+                            <constraint firstItem="ynO-mS-lXH" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="bottom" constant="74" id="gXV-5V-zlA"/>
+                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="ynO-mS-lXH" secondAttribute="bottom" constant="304" id="lDl-H5-ThN"/>
+                            <constraint firstAttribute="trailing" secondItem="ynO-mS-lXH" secondAttribute="trailing" constant="-1" id="nTE-9g-X29"/>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="50" id="pYT-TC-Tuz"/>
                             <constraint firstItem="L85-BR-M22" firstAttribute="bottom" secondItem="z7g-jS-JUT" secondAttribute="bottom" id="rIw-bA-NJ3"/>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="30" id="zXv-qE-tBe"/>
