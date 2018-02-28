@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XibView" customModule="AahToZzz" customModuleProvider="target">
             <connections>
-                <outlet property="blurView" destination="6lZ-SX-L4G" id="kBG-dh-W76"/>
+                <outlet property="bview" destination="YSC-mO-F6j" id="rRC-EK-hZN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -20,19 +20,19 @@
             <rect key="frame" x="0.0" y="0.0" width="266" height="232"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6lZ-SX-L4G">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="info_border" translatesAutoresizingMaskIntoConstraints="NO" id="EBf-bB-I3s">
                     <rect key="frame" x="0.0" y="0.0" width="266" height="232"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="Ar6-GL-Lym">
+                </imageView>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YSC-mO-F6j">
+                    <rect key="frame" x="0.0" y="0.0" width="266" height="232"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="3Nf-bc-51G">
                         <rect key="frame" x="0.0" y="0.0" width="266" height="232"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <blurEffect style="light"/>
                 </visualEffectView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="info_border" translatesAutoresizingMaskIntoConstraints="NO" id="EBf-bB-I3s">
-                    <rect key="frame" x="0.0" y="0.0" width="266" height="232"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vFJ-WE-FmV">
                     <rect key="frame" x="0.0" y="0.0" width="266" height="232"/>
                     <subviews>
@@ -40,6 +40,9 @@
                             <rect key="frame" x="0.0" y="0.0" width="266" height="193.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="36"/>
                             <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="changeBlur:" destination="-1" eventType="touchUpInside" id="J31-Vf-5Bs"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6t7-JJ-lRt">
                             <rect key="frame" x="0.0" y="193.5" width="266" height="38.5"/>

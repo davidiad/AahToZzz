@@ -17,16 +17,20 @@ import UIKit
 @IBDesignable
 class XibView : UIView {
     
+    @IBAction func changeBlur(_ sender: Any) {
+        controlBlur()
+    }
+    
+    @IBOutlet weak var bview: UIVisualEffectView!
     var contentView:UIView?
+    //var blurView2: UIVisualEffectView?
     @IBInspectable var nibName:String?
-
-    @IBOutlet weak var blurView: UIVisualEffectView!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         xibSetup()
-        controlBlur()
+        //controlBlur()
     }
     
     func xibSetup() {
@@ -36,7 +40,6 @@ class XibView : UIView {
             [.flexibleWidth, .flexibleHeight]
         addSubview(view)
         contentView = view
-        
     }
     
     func loadViewFromNib() -> UIView? {
@@ -56,37 +59,55 @@ class XibView : UIView {
     
     func controlBlur () {
         
-        
         var blurEffect: UIBlurEffect
         if #available(iOS 10.0, *) {
             blurEffect = UIBlurEffect(style: .prominent)
         } else {
             blurEffect = UIBlurEffect(style: .light)
         }
-        //blurView = UIVisualEffectView(effect: nil)
-//        guard let blurView = blurView else {
+        
+        //blurView2 = UIVisualEffectView(effect: nil)
+//        guard let bview = bview else {
 //            return
 //        }
-        blurView.effect = nil
+        //bview.effect = nil
+        
         if #available(iOS 10.0, *) {
-            //var animator: UIViewPropertyAnimator?
+            var animator: UIViewPropertyAnimator?
+            
+//            var ani = UIViewPropertyAnimator(duration: 1.0, curve: .linear, animations: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
+//                        animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear, animations: { [weak self] in
+            
+//            animator = UIViewPropertyAnimator(duration: 1, curve: .linear) {
+//                print ("CONTROL BLUR animator")
+//
+//                self.bview?.effect = blurEffect
+//
+//            }
             
             
-            var animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear) {
-                print ("CONTROL BLUR animator")
-                self.blurView?.effect = blurEffect
+            animator = UIViewPropertyAnimator(duration: 9, curve: .linear) {
+                self.bview?.effect = nil
                 
+                
+            
             }
             
+//
+            animator?.stopAnimation(false)
+            //animator?.finishAnimation(at: UIViewAnimatingPosition(rawValue: Int(1.0))!)
             
-            //animator.pauseAnimation()
-            //animator.startAnimation()
-           
-            //blurView?.effect = blurEffect
-            animator.stopAnimation(true)
+            animator?.startAnimation()
             
-            animator.fractionComplete = 0.66 // set the amount of bluriness here
+            
+//
+ //
+//
+//            animator?.fractionComplete = 0.66 // set the amount of blurriness here
+            
         }
- 
+        
+//        contentView?.insertSubview(blurView2, at: 0)
     }
 }
+
