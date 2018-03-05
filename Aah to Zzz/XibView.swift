@@ -73,7 +73,10 @@ class XibView : UIView {
         //bview.effect = nil
         
         if #available(iOS 10.0, *) {
-            var animator: UIViewPropertyAnimator?
+//            var animateDown: UIViewPropertyAnimator?
+//            var animateUp: UIViewPropertyAnimator?
+//            animateDown?.isInterruptible = true
+//            animateUp?.isInterruptible = true
             
 //            var ani = UIViewPropertyAnimator(duration: 1.0, curve: .linear, animations: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
 //                        animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear, animations: { [weak self] in
@@ -84,20 +87,72 @@ class XibView : UIView {
 //                self.bview?.effect = blurEffect
 //
 //            }
-            
-            
-            animator = UIViewPropertyAnimator(duration: 9, curve: .linear) {
-                self.bview?.effect = nil
+//            if #available(iOS 11.0, *) {
+//                animateDown?.pausesOnCompletion = true
+//                animateUp?.pausesOnCompletion = true
+//            }
+            var animateDown: UIViewPropertyAnimator?
+            animateDown = UIViewPropertyAnimator(duration: 4, curve: .linear) {
                 
                 
-            
+//                    self.bview?.effect = UIBlurEffect(style: .dark)
+                    self.bview?.effect = nil
+//                animateDown?.pauseAnimation()
             }
             
-//
-            animator?.stopAnimation(false)
-            //animator?.finishAnimation(at: UIViewAnimatingPosition(rawValue: Int(1.0))!)
+//            animateDown = partialAni {
+//                print("Partial Ani")
+//                animateDown.startAnimation()
+//                animateDown.fractionComplete = 0.25
+//            }
+            animateDown?.startAnimation()
             
-            animator?.startAnimation()
+            animateDown?.fractionComplete = 0.25
+
+//            animateDown?.addCompletion { _ in
+//                print("IN COMPLETION")
+//                animateUp?.fractionComplete = CGFloat(0.4)
+//                animateUp?.startAnimation()
+//                animateUp?.fractionComplete = CGFloat(0.3)
+//            }
+            
+//            animateUp = UIViewPropertyAnimator(duration: 3.0, curve: .linear) {
+//                animateUp?.fractionComplete = CGFloat(0.3)
+//                self.bview?.effect = blurEffect
+//
+//                animateUp?.fractionComplete = CGFloat(0.3)
+                //animateDown?.stopAnimation(false)
+                //animateUp?.pauseAnimation()
+            
+            //dataTask(with: request, completionHandler: { (data, response, error) in
+            
+            
+            
+//            partialAni(ani:animateDown, completion: {
+//                    animateDown.pauseAnimation()
+//                })
+            
+           
+        
+        
+//
+//            animateUp?.addCompletion { _ in
+////                let secondAnimator = UIViewPropertyAnimator(duration: 1, curve: .linear) {
+////                    animatableView.transform = CGAffineTransform.identity
+////                }
+//                print("COMPETIONS???")
+//                animateUp?.stopAnimation(true)
+//                animateUp?.fractionComplete = 0.5
+////                secondAnimator.startAnimation()
+//            }
+            
+//            if #available(iOS 11.0, *) {
+//                animateUp?.pausesOnCompletion = true
+//            }
+            //animateUp?.startAnimation()
+            
+            //animateUp?.stopAnimation(true)
+            
             
             
 //
@@ -106,8 +161,25 @@ class XibView : UIView {
 //            animator?.fractionComplete = 0.66 // set the amount of blurriness here
             
         }
-        
-//        contentView?.insertSubview(blurView2, at: 0)
+    
     }
+    
+    @available(iOS 10.0, *)
+    func partialAni(completion: () -> Void) -> UIViewPropertyAnimator  {
+        var ani: UIViewPropertyAnimator?
+        ani = UIViewPropertyAnimator(duration: 2, curve: .linear) {
+            //self.bview?.effect = UIBlurEffect(style: .light)
+            self.bview?.effect = nil
+            ani?.pauseAnimation()
+        }
+        
+        return ani!
+    }
+    
+
+    
+    
+//        contentView?.insertSubview(blurView2, at: 0)
 }
+
 

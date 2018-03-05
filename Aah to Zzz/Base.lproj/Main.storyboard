@@ -1184,6 +1184,12 @@ Tap on a word to see definition.</string>
                                     <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="BlurBubble"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fix-Zi-miH">
+                                <rect key="frame" x="146" y="588" width="240" height="128"/>
+                                <connections>
+                                    <segue destination="OkP-iR-O8v" kind="embed" id="UoJ-ZQ-SM2"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="YD3-gY-eQb" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="67" id="290-e0-ada"/>
@@ -1193,7 +1199,10 @@ Tap on a word to see definition.</string>
                             <constraint firstItem="YD3-gY-eQb" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="bottom" constant="45" id="A4L-k7-a69"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="trailing" secondItem="cYu-Cn-cTF" secondAttribute="trailing" id="BcF-3E-lpL"/>
                             <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="YD3-gY-eQb" secondAttribute="bottom" constant="156" id="CEX-87-QR8"/>
+                            <constraint firstItem="Fix-Zi-miH" firstAttribute="top" secondItem="YD3-gY-eQb" secondAttribute="bottom" constant="8" id="N3h-A6-HXd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YD3-gY-eQb" secondAttribute="trailing" constant="67" id="Odt-vi-sJU"/>
+                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="Fix-Zi-miH" secondAttribute="bottom" constant="20" id="PbE-Jo-abg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Fix-Zi-miH" secondAttribute="trailing" constant="8" id="Qzx-Dl-gAE"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="top" id="RPi-gH-QRR"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="leading" secondItem="cYu-Cn-cTF" secondAttribute="leading" id="S3G-Xl-jbd"/>
                             <constraint firstItem="z7g-jS-JUT" firstAttribute="bottom" secondItem="cYu-Cn-cTF" secondAttribute="bottom" id="T3i-kZ-sXO"/>
@@ -1202,6 +1211,7 @@ Tap on a word to see definition.</string>
                             <constraint firstItem="ynO-mS-lXH" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="bottom" constant="74" id="gXV-5V-zlA"/>
                             <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="ynO-mS-lXH" secondAttribute="bottom" constant="304" id="lDl-H5-ThN"/>
                             <constraint firstAttribute="trailing" secondItem="ynO-mS-lXH" secondAttribute="trailing" constant="-1" id="nTE-9g-X29"/>
+                            <constraint firstItem="Fix-Zi-miH" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="126" id="oAI-Qj-nhz"/>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="50" id="pYT-TC-Tuz"/>
                             <constraint firstItem="L85-BR-M22" firstAttribute="bottom" secondItem="z7g-jS-JUT" secondAttribute="bottom" id="rIw-bA-NJ3"/>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="30" id="zXv-qE-tBe"/>
@@ -1212,11 +1222,29 @@ Tap on a word to see definition.</string>
                         <outlet property="bg" destination="z7g-jS-JUT" id="GKC-RC-WKt"/>
                         <outlet property="infoBorder" destination="L85-BR-M22" id="V8H-NS-o0P"/>
                         <outlet property="stackView" destination="cYu-Cn-cTF" id="8Er-eN-eSn"/>
+                        <outlet property="xibview" destination="YD3-gY-eQb" id="jDI-k3-LY3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhV-Ay-3EQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1213.0434782608697" y="881.25000000000011"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="I52-Dp-dl8">
+            <objects>
+                <viewController id="OkP-iR-O8v" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BZq-01-VLv" customClass="XibView" customModule="AahToZzz" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="BlurBubble"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="isx-b0-pzK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1417" y="1392"/>
         </scene>
     </scenes>
     <resources>

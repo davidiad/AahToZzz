@@ -11,6 +11,7 @@ import UIKit
 
 class IntroViewController: UIViewController {
 
+    @IBOutlet weak var xibview: XibView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var bg: UIImageView!
     @IBOutlet weak var infoBorder: UIImageView!
@@ -23,9 +24,37 @@ class IntroViewController: UIViewController {
 
     
     var blurView: UIVisualEffectView?
+    var blurView2: UIVisualEffectView?
+    var blurView3: UIVisualEffectView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        blurView3 = UIVisualEffectView(effect: nil)
+        guard let blurView3 = blurView3 else {
+            return
+        }
+        
+        blurView2 = xibview.bview
+        if #available(iOS 10.0, *) {
+            //blurView3.effect = nil
+            var animator2: UIViewPropertyAnimator?
+            animator2 = UIViewPropertyAnimator(duration: 5, curve: .linear) {
+                self.blurView3?.effect = UIBlurEffect(style: .extraLight)
+                animator2?.pauseAnimation()
+            }
+            animator2?.fractionComplete = 0.1
+            animator2?.startAnimation()
+            animator2?.fractionComplete = 0.2 // set the amount of blurriness here
+        }
+        view.insertSubview(blurView3, at: 1)
+        NSLayoutConstraint.activate([
+            blurView3.heightAnchor.constraint(equalTo: (blurView2?.heightAnchor)!),
+            blurView3.leadingAnchor.constraint(equalTo: (blurView2?.leadingAnchor)!),
+            blurView3.topAnchor.constraint(equalTo: (blurView2?.topAnchor)!),
+            blurView3.trailingAnchor.constraint(equalTo: (blurView2?.trailingAnchor)!)
+            ])
+        
+        
         bg.layoutIfNeeded()
         bg.layer.cornerRadius = 20.0
         bg.layer.borderWidth = 0.0
@@ -145,6 +174,7 @@ class IntroViewController: UIViewController {
             view.centerYAnchor.constraint(equalTo: vibrancyView.contentView.centerYAnchor),
             ])
         
+
         
     }
     
