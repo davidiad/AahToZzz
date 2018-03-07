@@ -8,11 +8,12 @@
 
 import UIKit
 
+@IBDesignable
 class BlurBubbleViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
 
     

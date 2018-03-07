@@ -172,6 +172,8 @@
 		63EA98E21D52B98700537F2A /* small_tile_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EA98DF1D52B98700537F2A /* small_tile_gray@2x.png */; };
 		63EA98E31D52B98700537F2A /* small_tile_gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63EA98E01D52B98700537F2A /* small_tile_gray@3x.png */; };
 		63EB4218204D2E1000275EB2 /* BlurBubbleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB4217204D2E1000275EB2 /* BlurBubbleViewController.swift */; };
+		63EB421B204E429400275EB2 /* BlurViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB4219204E429400275EB2 /* BlurViewController.swift */; };
+		63EB421C204E429400275EB2 /* BlurViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63EB421A204E429400275EB2 /* BlurViewController.xib */; };
 		63F020F21EDF803B0022A5D0 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F020F11EDF803B0022A5D0 /* IntroViewController.swift */; };
 		63F44983204160DC00837434 /* XibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F44982204160DC00837434 /* XibView.swift */; };
 		63F44985204162BC00837434 /* BlurBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63F44984204162BC00837434 /* BlurBubble.xib */; };
@@ -370,6 +372,8 @@
 		63EA98DF1D52B98700537F2A /* small_tile_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_gray@2x.png"; sourceTree = "<group>"; };
 		63EA98E01D52B98700537F2A /* small_tile_gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small_tile_gray@3x.png"; sourceTree = "<group>"; };
 		63EB4217204D2E1000275EB2 /* BlurBubbleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBubbleViewController.swift; sourceTree = "<group>"; };
+		63EB4219204E429400275EB2 /* BlurViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurViewController.swift; sourceTree = "<group>"; };
+		63EB421A204E429400275EB2 /* BlurViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlurViewController.xib; sourceTree = "<group>"; };
 		63F020F11EDF803B0022A5D0 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		63F44982204160DC00837434 /* XibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibView.swift; sourceTree = "<group>"; };
 		63F44984204162BC00837434 /* BlurBubble.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlurBubble.xib; sourceTree = "<group>"; };
@@ -695,6 +699,8 @@
 				6322E7F51EA9B93700F5100D /* TutorialPageViewController.swift */,
 				63F020F11EDF803B0022A5D0 /* IntroViewController.swift */,
 				63EB4217204D2E1000275EB2 /* BlurBubbleViewController.swift */,
+				63EB4219204E429400275EB2 /* BlurViewController.swift */,
+				63EB421A204E429400275EB2 /* BlurViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -917,6 +923,7 @@
 				635549921CA0C6DC00DB5167 /* down_arrow@2x.png in Resources */,
 				630681C61CADE57F0010489E /* outline_triple.pdf in Resources */,
 				63B5C53A1E6E55210031576E /* outline_graph_double_flatbottom@3x.png in Resources */,
+				63EB421C204E429400275EB2 /* BlurViewController.xib in Resources */,
 				6355499B1CA0E87D00DB5167 /* status_bg@3x.png in Resources */,
 				63C449781C99E3EA0053BE77 /* icon_newlist_52px@2x.png in Resources */,
 				6300C6671CA6224000E3B4D5 /* small_tile_orange@2x.png in Resources */,
@@ -1036,6 +1043,7 @@
 				63C449861C9A18F10053BE77 /* RotatingView.swift in Sources */,
 				634BE6861E96E3330074F2F8 /* HomeViewController.swift in Sources */,
 				633C7B071DB46A060055CD83 /* ProgressViewController.swift in Sources */,
+				63EB421B204E429400275EB2 /* BlurViewController.swift in Sources */,
 				636A2CEA2032201500F63EE6 /* AtoZGestureRecognizerDelegate.swift in Sources */,
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
 				635F63E91E986B0A00C48913 /* UIStoryboardSegueFromRight.swift in Sources */,
