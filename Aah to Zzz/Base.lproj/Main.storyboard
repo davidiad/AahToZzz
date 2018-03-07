@@ -1187,13 +1187,13 @@ Tap on a word to see definition.</string>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fix-Zi-miH">
                                 <rect key="frame" x="284" y="588" width="102" height="128"/>
                                 <connections>
-                                    <segue destination="OkP-iR-O8v" kind="embed" id="UoJ-ZQ-SM2"/>
+                                    <segue destination="OkP-iR-O8v" kind="embed" identifier="Blurred2" id="UoJ-ZQ-SM2"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ2-et-PgL">
                                 <rect key="frame" x="9" y="588" width="240" height="128"/>
                                 <connections>
-                                    <segue destination="mxI-QG-9Yx" kind="embed" id="7y2-bk-RDx"/>
+                                    <segue destination="mxI-QG-9Yx" kind="embed" identifier="Blurred1" id="7y2-bk-RDx"/>
                                 </connections>
                             </containerView>
                         </subviews>

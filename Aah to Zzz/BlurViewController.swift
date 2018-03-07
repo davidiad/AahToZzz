@@ -10,14 +10,56 @@ import UIKit
 
 class BlurViewController: UIViewController {
 
+    @IBOutlet weak var stackView: UIStackView!
+    
     //var blurHolder: UIView?
     var blurView: UIVisualEffectView?
+    var numLines: Int?
+    var textLines: [String]?
     
+    // Can be called during segue from container view
+    func initLines() {
+        print ("INIT LINES")
+        guard let numLines = numLines else {
+            print ("NO NUMLINES")
+            return
+        }
+        if numLines > 0 {
+            if textLines == nil {
+                print ("TEXTLINES WAS NIL")
+                textLines = Array(repeating: "Q", count: numLines)
+            }
+            // create the labels and add them to the stack view
+                for t in textLines! {
+                    print ("CreATE A LAVEL")
+                    let textLine = UILabel()
+                    // set the labels' text to the value of textLines[n]
+                    textLine.text = t
+                    print (t)
+                    textLine.sizeToFit()
+                    stackView.addArrangedSubview(textLine)
+                    
+        // add any necessary formatting
+        
+            }
+        }  else {
+            print (" NUMLINES 0")
+        }
+    }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//
+//        print ("numLines: \(numLines)")
+//        initLines()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    
+//        if numLines > 0 {
+//            textLines = Array(repeating: "Q", count: numLines)
+//        }
+        
         var blurEffect: UIBlurEffect
         if #available(iOS 10.0, *) {
             blurEffect = UIBlurEffect(style: .prominent)
@@ -75,6 +117,8 @@ class BlurViewController: UIViewController {
             blurView.topAnchor.constraint(equalTo: view.topAnchor),
             blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
+        
+            initLines()
     }
 
     override func didReceiveMemoryWarning() {

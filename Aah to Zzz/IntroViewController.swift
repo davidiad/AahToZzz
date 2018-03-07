@@ -20,15 +20,25 @@ class IntroViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-
-
+    var blurredViews: [BlurViewController]?
+    
     
     var blurView: UIVisualEffectView?
     var blurView2: UIVisualEffectView?
     var blurView3: UIVisualEffectView?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        var bvc1 = BlurViewController()
+        var bvc2 = BlurViewController()
+        blurredViews = [BlurViewController]()
+        print("??????????")
+        blurredViews?.append(bvc1)
+        blurredViews?.append(bvc2)
+        print(blurredViews)
+        print("BVC: \(blurredViews?.count)")
+        print("??????????")
         blurView3 = UIVisualEffectView(effect: nil)
         guard let blurView3 = blurView3 else {
             return
@@ -178,6 +188,55 @@ class IntroViewController: UIViewController {
         
     }
     
+
+//    var blurredViews: [BlurViewController]?
+    //var embeddedViewController: BlurViewController!
+    // Pass text info to blurred background VC's
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let blurredBubble = segue.destination as? BlurViewController else {
+            print ("NO BLURRED BUBBLE")
+            return
+        }
+        if blurredViews == nil {
+            let bvc1 = BlurViewController()
+            let bvc2 = BlurViewController()
+            blurredViews = [BlurViewController]()
+            print("??????????")
+            blurredViews?.append(bvc1)
+            blurredViews?.append(bvc2)
+            print(blurredViews ?? "NO BLURRED vvvvvviewwwws")
+            print("BVC: \(blurredViews?.count)")
+            print("??????????")
+        }
+//        guard let blurred = blurredViews else {
+//            print ("NO BLURRED VIEWS")
+//            return
+//        }
+        
+        if segue.identifier == "Blurred1" {
+
+            blurredViews![0] = (segue.destination as? BlurViewController)!
+            blurredViews![0].numLines = 2
+            print(blurredViews![0])
+            if blurredViews![0].textLines == nil {
+                blurredViews![0].textLines = Array(repeating: "Q", count: blurredViews![0].numLines!)
+            }
+            blurredViews![0].textLines![0] = "First Line"
+            blurredViews![0].textLines![1] = "2nd Line of D"
+        } else if segue.identifier == "Blurred2" {
+            blurredViews![1] = (segue.destination as? BlurViewController)!
+            blurredViews![1].numLines = 1
+            if blurredViews![1].textLines == nil {
+                blurredViews![1].textLines = Array(repeating: "Q", count: blurredViews![1].numLines!)
+            }
+            
+            blurredViews![1].textLines![0] = "3"
+        }
+        //blurredBubble.initLines()
+        print("BlurredViews: \(blurredViews)    \(blurredViews?.count)")
+    }
+    
+    // needed??
     override func viewWillLayoutSubviews() {
         print("DIM VWLOSV's: \(bg.frame)")
     }
