@@ -11,34 +11,38 @@ import UIKit
 
 class IntroViewController: UIViewController {
 
+    //MARK:- Outlets
     @IBOutlet weak var xibview: XibView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var bg: UIImageView!
     @IBOutlet weak var infoBorder: UIImageView!
     
+    //MARK:- Actions
     @IBAction func play(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
-    var blurredViews: [BlurViewController]?
+    //MARK:- Constants
+    // 1st bubble
+    let NUMLINES1 = 2
+    let BUBBLETEXT1 = "I am the first line!*"
+    let BUBBLETEXT2 = "When is under 1 = 2?"
     
+    // 2nd bubble
+    let NUMLINES2 = 1
+    let BUBBLETEXT3 = "3 > 1+2!!!"
+    
+    //MARK:- Vars
+    var blurredViews: [BlurViewController] = []
     
     var blurView: UIVisualEffectView?
     var blurView2: UIVisualEffectView?
     var blurView3: UIVisualEffectView?
     
-    
+    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        var bvc1 = BlurViewController()
-        var bvc2 = BlurViewController()
-        blurredViews = [BlurViewController]()
-        print("??????????")
-        blurredViews?.append(bvc1)
-        blurredViews?.append(bvc2)
-        print(blurredViews)
-        print("BVC: \(blurredViews?.count)")
-        print("??????????")
+        
         blurView3 = UIVisualEffectView(effect: nil)
         guard let blurView3 = blurView3 else {
             return
@@ -188,52 +192,26 @@ class IntroViewController: UIViewController {
         
     }
     
-
-//    var blurredViews: [BlurViewController]?
-    //var embeddedViewController: BlurViewController!
     // Pass text info to blurred background VC's
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let blurredBubble = segue.destination as? BlurViewController else {
-            print ("NO BLURRED BUBBLE")
+        guard let bubble = segue.destination as? BlurViewController else {
             return
         }
-        if blurredViews == nil {
-            let bvc1 = BlurViewController()
-            let bvc2 = BlurViewController()
-            blurredViews = [BlurViewController]()
-            print("??????????")
-            blurredViews?.append(bvc1)
-            blurredViews?.append(bvc2)
-            print(blurredViews ?? "NO BLURRED vvvvvviewwwws")
-            print("BVC: \(blurredViews?.count)")
-            print("??????????")
-        }
-//        guard let blurred = blurredViews else {
-//            print ("NO BLURRED VIEWS")
-//            return
-//        }
         
         if segue.identifier == "Blurred1" {
-
-            blurredViews![0] = (segue.destination as? BlurViewController)!
-            blurredViews![0].numLines = 2
-            print(blurredViews![0])
-            if blurredViews![0].textLines == nil {
-                blurredViews![0].textLines = Array(repeating: "Q", count: blurredViews![0].numLines!)
-            }
-            blurredViews![0].textLines![0] = "First Line"
-            blurredViews![0].textLines![1] = "2nd Line of D"
+            blurredViews.append(bubble)
+            // Since we do not know which order the controllers are added to blurredViews,
+            // set the index to the element just added to the array
+            let index = blurredViews.count - 1
+            blurredViews[index].numLines = NUMLINES1
+            blurredViews[index].textLines.append(BUBBLETEXT1)
+            blurredViews[index].textLines.append(BUBBLETEXT2)
         } else if segue.identifier == "Blurred2" {
-            blurredViews![1] = (segue.destination as? BlurViewController)!
-            blurredViews![1].numLines = 1
-            if blurredViews![1].textLines == nil {
-                blurredViews![1].textLines = Array(repeating: "Q", count: blurredViews![1].numLines!)
-            }
-            
-            blurredViews![1].textLines![0] = "3"
+            blurredViews.append(bubble)
+            let index = blurredViews.count - 1
+            blurredViews[index].numLines = NUMLINES2
+            blurredViews[index].textLines.append(BUBBLETEXT3)
         }
-        //blurredBubble.initLines()
-        print("BlurredViews: \(blurredViews)    \(blurredViews?.count)")
     }
     
     // needed??

@@ -14,28 +14,27 @@ class BlurViewController: UIViewController {
     
     //var blurHolder: UIView?
     var blurView: UIVisualEffectView?
-    var numLines: Int?
-    var textLines: [String]?
+    var numLines: Int = 0
+    var textLines: [String] = []
     
     // Can be called during segue from container view
     func initLines() {
         print ("INIT LINES")
-        guard let numLines = numLines else {
-            print ("NO NUMLINES")
-            return
-        }
+//        guard let numLines = numLines else {
+//            print ("NO NUMLINES")
+//            return
+//        }
         if numLines > 0 {
-            if textLines == nil {
-                print ("TEXTLINES WAS NIL")
-                textLines = Array(repeating: "Q", count: numLines)
-            }
+//            if textLines == nil {
+//                print ("TEXTLINES WAS NIL")
+//                textLines = Array(repeating: "Q", count: numLines)
+//            }
             // create the labels and add them to the stack view
-                for t in textLines! {
-                    print ("CreATE A LAVEL")
+                for t in textLines {
                     let textLine = UILabel()
                     // set the labels' text to the value of textLines[n]
                     textLine.text = t
-                    print (t)
+//                    print (t)
                     textLine.sizeToFit()
                     stackView.addArrangedSubview(textLine)
                     
