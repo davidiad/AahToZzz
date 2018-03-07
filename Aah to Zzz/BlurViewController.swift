@@ -10,7 +10,7 @@ import UIKit
 
 class BlurViewController: UIViewController {
 
-    var blurHolder: UIView?
+    //var blurHolder: UIView?
     var blurView: UIVisualEffectView?
     
     
@@ -20,22 +20,22 @@ class BlurViewController: UIViewController {
     
         var blurEffect: UIBlurEffect
         if #available(iOS 10.0, *) {
-            blurEffect = UIBlurEffect(style: .extraLight)
+            blurEffect = UIBlurEffect(style: .prominent)
         } else {
             blurEffect = UIBlurEffect(style: .light)
         }
         blurView = UIVisualEffectView(effect: nil)
-        blurHolder = UIView()
-        blurHolder?.backgroundColor = UIColor.clear
-        blurHolder?.translatesAutoresizingMaskIntoConstraints = false
+//        blurHolder = UIView()
+//        blurHolder?.backgroundColor = UIColor.clear
+//        blurHolder?.translatesAutoresizingMaskIntoConstraints = false
         
         guard let blurView = blurView else {
             return
         }
         
-        guard let blurHolder = blurHolder else {
-            return
-        }
+//        guard let blurHolder = blurHolder else {
+//            return
+//        }
         
         if #available(iOS 10.0, *) {
             var animator: UIViewPropertyAnimator?
@@ -47,26 +47,26 @@ class BlurViewController: UIViewController {
             animator?.fractionComplete = 0.66 // set the amount of bluriness here
         }
         
-        blurView.layer.cornerRadius = 70.0
+        blurView.layer.cornerRadius = 20.0
         blurView.layer.masksToBounds = true
-        blurView.layer.borderWidth = 10.0
+        blurView.layer.borderWidth = 1.0
         
         blurView.layer.borderColor = Colors.bluek.cgColor
         blurView.translatesAutoresizingMaskIntoConstraints = false
         blurView.layer.shadowColor = UIColor.black.cgColor
-        blurView.layer.shadowOpacity = 0
+        blurView.layer.shadowOpacity = 1
         blurView.layer.shadowOffset = CGSize.zero
         blurView.layer.shadowRadius = 20
         blurView.backgroundColor = UIColor.clear
         view.backgroundColor = UIColor.clear
-        view.insertSubview(blurHolder, at: 0)
-        view.insertSubview(blurView, at: 1)
-        NSLayoutConstraint.activate([
-            blurHolder.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            blurHolder.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            blurHolder.topAnchor.constraint(equalTo: view.topAnchor),
-            blurHolder.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
+        //view.insertSubview(blurHolder, at: 0)
+        view.insertSubview(blurView, at: 0)
+//        NSLayoutConstraint.activate([
+//            blurHolder.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            blurHolder.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            blurHolder.topAnchor.constraint(equalTo: view.topAnchor),
+//            blurHolder.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//            ])
     
         
         NSLayoutConstraint.activate([
@@ -82,9 +82,9 @@ class BlurViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillLayoutSubviews() {
-        print("DIM VWLOSV's: ")
-    }
+//    override func viewWillLayoutSubviews() {
+//        print("DIM VWLOSV's: ")
+//    }
     
 
     /*

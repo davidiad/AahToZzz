@@ -46,13 +46,13 @@ class IntroViewController: UIViewController {
             animator2?.startAnimation()
             animator2?.fractionComplete = 0.2 // set the amount of blurriness here
         }
-        view.insertSubview(blurView3, at: 1)
-        NSLayoutConstraint.activate([
-            blurView3.heightAnchor.constraint(equalTo: (blurView2?.heightAnchor)!),
-            blurView3.leadingAnchor.constraint(equalTo: (blurView2?.leadingAnchor)!),
-            blurView3.topAnchor.constraint(equalTo: (blurView2?.topAnchor)!),
-            blurView3.trailingAnchor.constraint(equalTo: (blurView2?.trailingAnchor)!)
-            ])
+        //view.insertSubview(blurView3, at: 1)
+//        NSLayoutConstraint.activate([
+//            blurView3.heightAnchor.constraint(equalTo: (blurView2?.heightAnchor)!),
+//            blurView3.leadingAnchor.constraint(equalTo: (blurView2?.leadingAnchor)!),
+//            blurView3.topAnchor.constraint(equalTo: (blurView2?.topAnchor)!),
+//            blurView3.trailingAnchor.constraint(equalTo: (blurView2?.trailingAnchor)!)
+//            ])
         
         
         bg.layoutIfNeeded()
@@ -139,7 +139,7 @@ class IntroViewController: UIViewController {
         }
 
         blurView.layer.cornerRadius = 20.0
-        blurView.layer.masksToBounds = true
+        blurView.layer.masksToBounds = false
         blurView.layer.borderWidth = 0.0
         
         blurView.layer.borderColor = Colors.desat_yellow.cgColor
