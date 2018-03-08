@@ -17,9 +17,13 @@ class BlurViewController: UIViewController {
     var numLines: Int = 0
     var textLines: [String] = []
     
+    var animator: UIViewPropertyAnimator?
+
+    
+    
     // Can be called during segue from container view
     func initLines() {
-        print ("INIT LINES")
+
 //        guard let numLines = numLines else {
 //            print ("NO NUMLINES")
 //            return
@@ -78,15 +82,17 @@ class BlurViewController: UIViewController {
 //            return
 //        }
         
-        if #available(iOS 10.0, *) {
-            var animator: UIViewPropertyAnimator?
+        //if #available(iOS 10.0, *) {
+            //var animator: UIViewPropertyAnimator?
+        
             animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
                 self.blurView?.effect = blurEffect
-                animator?.pauseAnimation()
+                self.animator?.pauseAnimation()
             }
+            //let ani2 = animator
             animator?.startAnimation()
             animator?.fractionComplete = 0.66 // set the amount of bluriness here
-        }
+        //}
         
         blurView.layer.cornerRadius = 20.0
         blurView.layer.masksToBounds = true

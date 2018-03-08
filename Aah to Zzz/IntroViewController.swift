@@ -12,15 +12,15 @@ import UIKit
 class IntroViewController: UIViewController {
 
     //MARK:- Outlets
-    @IBOutlet weak var xibview: XibView!
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var bg: UIImageView!
-    @IBOutlet weak var infoBorder: UIImageView!
+    //@IBOutlet weak var xibview: XibView!
+    //@IBOutlet weak var stackView: UIStackView!
+    //@IBOutlet weak var bg: UIImageView!
+    //@IBOutlet weak var infoBorder: UIImageView!
     
     //MARK:- Actions
-    @IBAction func play(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
+    //@IBAction func play(_ sender: Any) {
+        //dismiss(animated: true, completion: nil)
+    //}
     
     //MARK:- Constants
     // 1st bubble
@@ -42,7 +42,7 @@ class IntroViewController: UIViewController {
     //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        /*
         blurView3 = UIVisualEffectView(effect: nil)
         guard let blurView3 = blurView3 else {
             return
@@ -187,9 +187,7 @@ class IntroViewController: UIViewController {
             view.centerXAnchor.constraint(equalTo: vibrancyView.contentView.centerXAnchor),
             view.centerYAnchor.constraint(equalTo: vibrancyView.contentView.centerYAnchor),
             ])
-        
-
-        
+ */
     }
     
     // Pass text info to blurred background VC's
@@ -206,6 +204,7 @@ class IntroViewController: UIViewController {
             blurredViews[index].numLines = NUMLINES1
             blurredViews[index].textLines.append(BUBBLETEXT1)
             blurredViews[index].textLines.append(BUBBLETEXT2)
+        
         } else if segue.identifier == "Blurred2" {
             blurredViews.append(bubble)
             let index = blurredViews.count - 1
@@ -214,10 +213,10 @@ class IntroViewController: UIViewController {
         }
     }
     
-    // needed??
-    override func viewWillLayoutSubviews() {
-        print("DIM VWLOSV's: \(bg.frame)")
-    }
+//    // needed??
+//    override func viewWillLayoutSubviews() {
+//        print("DIM VWLOSV's: \(bg.frame)")
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

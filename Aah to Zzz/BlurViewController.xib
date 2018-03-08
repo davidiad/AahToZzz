@@ -23,7 +23,7 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_border.png" translatesAutoresizingMaskIntoConstraints="NO" id="dfq-mH-oJ9">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.92857000000000001" height="0.59999999999999998"/>
+                    <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.88800000000000001" height="0.59999999999999998"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="hQW-jO-iZ3">
                     <rect key="frame" x="24" y="27" width="327" height="616"/>
