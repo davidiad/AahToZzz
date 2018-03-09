@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BlurViewController" customModule="AahToZzz" customModuleProvider="target">
             <connections>
+                <outlet property="outerShadowMask" destination="5ST-Pe-lXa" id="fbI-q1-96t"/>
+                <outlet property="shadowView" destination="htV-PF-8kJ" id="zS5-6r-GVa"/>
                 <outlet property="stackView" destination="hQW-jO-iZ3" id="3Uf-hU-GSj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,6 +23,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="htV-PF-8kJ">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_border.png" translatesAutoresizingMaskIntoConstraints="NO" id="dfq-mH-oJ9">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.88800000000000001" height="0.59999999999999998"/>
@@ -28,15 +34,28 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="hQW-jO-iZ3">
                     <rect key="frame" x="24" y="27" width="327" height="616"/>
                 </stackView>
+                <view opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ST-Pe-lXa">
+                    <rect key="frame" x="-25" y="-25" width="425" height="717"/>
+                    <color key="backgroundColor" red="0.98922836780000001" green="0.41531395910000002" blue="0.031820401550000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <viewLayoutGuide key="safeArea" id="jo7-RO-bmY"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="dfq-mH-oJ9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Cfl-gh-ePd"/>
                 <constraint firstItem="dfq-mH-oJ9" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="DU5-LG-Adl"/>
                 <constraint firstItem="hQW-jO-iZ3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="Dpp-Rb-Uey"/>
+                <constraint firstItem="htV-PF-8kJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="FmX-kF-qps"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hQW-jO-iZ3" secondAttribute="bottom" constant="24" id="POO-ca-e9q"/>
+                <constraint firstItem="htV-PF-8kJ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Qqk-Nr-wY9"/>
+                <constraint firstItem="htV-PF-8kJ" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="R4G-oO-HSJ"/>
+                <constraint firstItem="5ST-Pe-lXa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="-25" id="RV9-G1-8c7"/>
+                <constraint firstItem="htV-PF-8kJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RZK-UX-FGY"/>
+                <constraint firstItem="5ST-Pe-lXa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="-25" id="S0N-a1-oqU"/>
                 <constraint firstItem="hQW-jO-iZ3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="7" id="Zfl-7X-t0T"/>
+                <constraint firstItem="5ST-Pe-lXa" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="25" id="aHc-bc-Nnu"/>
                 <constraint firstItem="dfq-mH-oJ9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fbd-FS-O1X"/>
+                <constraint firstItem="5ST-Pe-lXa" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="25" id="itf-4r-zQj"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hQW-jO-iZ3" secondAttribute="trailing" constant="24" id="kMh-h3-ULM"/>
                 <constraint firstItem="dfq-mH-oJ9" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lJm-sr-xOW"/>
             </constraints>

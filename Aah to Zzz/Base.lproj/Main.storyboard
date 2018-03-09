@@ -1182,13 +1182,13 @@ Tap on a word to see definition.</string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ2-et-PgL">
-                                <rect key="frame" x="9" y="588" width="240" height="128"/>
+                                <rect key="frame" x="9" y="588" width="41" height="128"/>
                                 <connections>
                                     <segue destination="mxI-QG-9Yx" kind="embed" identifier="Blurred1" id="7y2-bk-RDx"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8d-qc-6K7">
-                                <rect key="frame" x="257" y="530" width="137" height="198"/>
+                                <rect key="frame" x="118" y="139" width="209" height="505"/>
                                 <connections>
                                     <segue destination="Bfw-yD-eiF" kind="embed" identifier="Blurred2" id="uT7-0T-0Hg"/>
                                 </connections>
@@ -1212,15 +1212,15 @@ Tap on a word to see definition.</string>
                             <constraint firstItem="ynO-mS-lXH" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="-1" id="WW2-tN-HRj"/>
                             <constraint firstItem="L85-BR-M22" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="top" id="eOH-Ru-BMp"/>
                             <constraint firstItem="ynO-mS-lXH" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="bottom" constant="74" id="gXV-5V-zlA"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="trailing" secondItem="TNc-fb-6pR" secondAttribute="trailingMargin" id="gda-A5-o3a"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="ynO-mS-lXH" secondAttribute="bottom" constant="98" id="hXC-Zx-LL9"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="trailing" secondItem="TNc-fb-6pR" secondAttribute="trailingMargin" constant="-67" id="gda-A5-o3a"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="ynO-mS-lXH" secondAttribute="bottom" constant="-293" id="hXC-Zx-LL9"/>
                             <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="ynO-mS-lXH" secondAttribute="bottom" constant="304" id="lDl-H5-ThN"/>
                             <constraint firstAttribute="trailing" secondItem="ynO-mS-lXH" secondAttribute="trailing" constant="-1" id="nTE-9g-X29"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="8" id="pDI-qq-3HO"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="68" id="pDI-qq-3HO"/>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="50" id="pYT-TC-Tuz"/>
                             <constraint firstItem="L85-BR-M22" firstAttribute="bottom" secondItem="z7g-jS-JUT" secondAttribute="bottom" id="rIw-bA-NJ3"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="257" id="wrV-kh-xlm"/>
-                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="y8d-qc-6K7" secondAttribute="bottom" constant="8" id="yor-5k-XLy"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="118" id="wrV-kh-xlm"/>
+                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="y8d-qc-6K7" secondAttribute="bottom" constant="92" id="yor-5k-XLy"/>
                             <constraint firstItem="cYu-Cn-cTF" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="30" id="zXv-qE-tBe"/>
                         </constraints>
                     </view>

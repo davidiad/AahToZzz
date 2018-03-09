@@ -11,8 +11,9 @@ import UIKit
 class BlurViewController: UIViewController {
 
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var outerShadowMask: UIView!
     
-    //var blurHolder: UIView?
     var blurView: UIVisualEffectView?
     var numLines: Int = 0
     var textLines: [String] = []
@@ -21,47 +22,8 @@ class BlurViewController: UIViewController {
 
     
     
-    // Can be called during segue from container view
-    func initLines() {
-
-//        guard let numLines = numLines else {
-//            print ("NO NUMLINES")
-//            return
-//        }
-        if numLines > 0 {
-//            if textLines == nil {
-//                print ("TEXTLINES WAS NIL")
-//                textLines = Array(repeating: "Q", count: numLines)
-//            }
-            // create the labels and add them to the stack view
-                for t in textLines {
-                    let textLine = UILabel()
-                    // set the labels' text to the value of textLines[n]
-                    textLine.text = t
-//                    print (t)
-                    textLine.sizeToFit()
-                    stackView.addArrangedSubview(textLine)
-                    
-        // add any necessary formatting
-        
-            }
-        }  else {
-            print (" NUMLINES 0")
-        }
-    }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//
-//        print ("numLines: \(numLines)")
-//        initLines()
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        if numLines > 0 {
-//            textLines = Array(repeating: "Q", count: numLines)
-//        }
         
         var blurEffect: UIBlurEffect
         if #available(iOS 10.0, *) {
@@ -70,51 +32,30 @@ class BlurViewController: UIViewController {
             blurEffect = UIBlurEffect(style: .light)
         }
         blurView = UIVisualEffectView(effect: nil)
-//        blurHolder = UIView()
-//        blurHolder?.backgroundColor = UIColor.clear
-//        blurHolder?.translatesAutoresizingMaskIntoConstraints = false
         
         guard let blurView = blurView else {
             return
         }
-        
-//        guard let blurHolder = blurHolder else {
-//            return
-//        }
+
         
         //if #available(iOS 10.0, *) {
             //var animator: UIViewPropertyAnimator?
-        
             animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
                 self.blurView?.effect = blurEffect
                 self.animator?.pauseAnimation()
             }
-            //let ani2 = animator
             animator?.startAnimation()
-            animator?.fractionComplete = 0.66 // set the amount of bluriness here
+            animator?.fractionComplete = 0.5 // set the amount of bluriness here
         //}
         
         blurView.layer.cornerRadius = 20.0
         blurView.layer.masksToBounds = true
         blurView.layer.borderWidth = 1.0
-        
         blurView.layer.borderColor = Colors.bluek.cgColor
         blurView.translatesAutoresizingMaskIntoConstraints = false
-        blurView.layer.shadowColor = UIColor.black.cgColor
-        blurView.layer.shadowOpacity = 1
-        blurView.layer.shadowOffset = CGSize.zero
-        blurView.layer.shadowRadius = 20
         blurView.backgroundColor = UIColor.clear
         view.backgroundColor = UIColor.clear
-        //view.insertSubview(blurHolder, at: 0)
         view.insertSubview(blurView, at: 0)
-//        NSLayoutConstraint.activate([
-//            blurHolder.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            blurHolder.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            blurHolder.topAnchor.constraint(equalTo: view.topAnchor),
-//            blurHolder.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-//            ])
-    
         
         NSLayoutConstraint.activate([
             blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -123,27 +64,73 @@ class BlurViewController: UIViewController {
             blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
         
-            initLines()
+        shadowView.layer.cornerRadius = 20.0
+        shadowView.layer.shadowColor = UIColor.black.cgColor
+        shadowView.layer.shadowOpacity = 1
+        shadowView.layer.shadowRadius = 10
+        shadowView.layer.masksToBounds = false
+//        let r = CGRect(x: outerShadowMask.frame.minX + 25.0, y: outerShadowMask.frame.minY + 25.0, width: outerShadowMask.frame.width - 50.0, height: outerShadowMask.frame.height - 50.0)
+        let r = outerShadowMask.frame.offsetBy(dx: 25, dy: 25)
+        let outerPath = UIBezierPath(rect: outerShadowMask.frame)
+        let innerPath = UIBezierPath(roundedRect: r, cornerRadius: 20)
+        
+        let shadowMask = CGMutablePath()
+        let shadowMaskLayer = CAShapeLayer()
+        shadowMask.addPath(outerPath.cgPath)
+        shadowMask.addPath(innerPath.cgPath)
+        shadowMaskLayer.path = shadowMask
+        shadowMaskLayer.fillRule = kCAFillRuleEvenOdd
+        shadowView.layer.mask = shadowMaskLayer
+        
+        initLines()
+        
+//        //outerPath.append(innerPath)
+//        outerPath.usesEvenOddFillRule = true
+//        outerPath.addClip()
+//        let shadowPath = outerPath.cgPath
+//        blurView.layer.transform = CATransform3DMakeTranslation(-66, -52, 0)
+//        blurView.layer.shadowPath = shadowPath
+
+//        // Mask path
+//        //CGMutablePathRef path = CGPathCreateMutable();
+//        let path = CGMutablePath()
+//        let shadowArea = UIBezierPath(rect: CGRect(x: -30, y: -30, width: 500, height: 750))
+//        //CGPathAddRect(path, nil, (CGRect){.origin={0,0}, .size=frame.size});
+//        path.addPath(shadowArea.cgPath)
+//        //CGPathAddPath(path, &trans, shadowLayer.shadowPath);
+//        path.addPath(innerPath.cgPath)
+//        //CGPathCloseSubpath(path);
+//        path.closeSubpath()
+//
+        // Mask layer
+//        let path = CGMutablePath()
+//        let maskLayer = CAShapeLayer()
+//        maskLayer.frame = shadowView.frame
+//        //maskLayer.fillRule = kCAFillRuleEvenOdd;
+//        maskLayer.path = innerPath.cgPath;
+//        //maskLayer.transform = CATransform3DMakeTranslation(-25, 15, 0)
+//        shadowView.layer.mask = maskLayer
+    }
+    
+    // Set the text for the bubble
+    func initLines() {
+        
+        if numLines > 0 {
+            
+            // create the labels and add them to the stack view
+            for t in textLines {
+                let textLine = UILabel()
+                // set the labels' text to the value of textLines[n]
+                textLine.text = t
+                textLine.sizeToFit() // move to formatting
+                stackView.addArrangedSubview(textLine)
+                
+                // add any necessary formatting
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
-//    override func viewWillLayoutSubviews() {
-//        print("DIM VWLOSV's: ")
-//    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

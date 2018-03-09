@@ -211,6 +211,8 @@ class IntroViewController: UIViewController {
             blurredViews[index].numLines = NUMLINES2
             blurredViews[index].textLines.append(BUBBLETEXT3)
         }
+        // Pass thru the size of the container view
+        
     }
     
 //    // needed??
