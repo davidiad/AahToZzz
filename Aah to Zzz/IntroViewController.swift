@@ -35,13 +35,48 @@ class IntroViewController: UIViewController {
     //MARK:- Vars
     var blurredViews: [BlurViewController] = []
     
-    var blurView: UIVisualEffectView?
-    var blurView2: UIVisualEffectView?
-    var blurView3: UIVisualEffectView?
+
+    
+//    var blurView: UIVisualEffectView?
+//    var blurView2: UIVisualEffectView?
+//    var blurView3: UIVisualEffectView?
+    
+    // Pass text info to blurred background VC's
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let bubble = segue.destination as? BlurViewController else {
+            return
+        }
+        
+        if segue.identifier == "Blurred1" {
+            blurredViews.append(bubble)
+            // Since we do not know in which order the controllers are added to blurredViews,
+            // set the index to the element just added to the array
+            let index = blurredViews.count - 1
+            blurredViews[index].numLines = NUMLINES1
+            blurredViews[index].textLines.append(BUBBLETEXT1)
+            blurredViews[index].textLines.append(BUBBLETEXT2)
+            
+        } else if segue.identifier == "Blurred2" {
+            blurredViews.append(bubble)
+            let index = blurredViews.count - 1
+            blurredViews[index].numLines = NUMLINES2
+            blurredViews[index].textLines.append(BUBBLETEXT3)
+        }
+    }
+    
+    @objc func handleTap(recognizer: UITapGestureRecognizer) {
+        dismiss(animated: true, completion: nil)
+    }
     
     //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer: )))
+        view.addGestureRecognizer(tapGesture)
+        
+        
+        
         /*
         blurView3 = UIVisualEffectView(effect: nil)
         guard let blurView3 = blurView3 else {
@@ -190,30 +225,7 @@ class IntroViewController: UIViewController {
  */
     }
     
-    // Pass text info to blurred background VC's
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let bubble = segue.destination as? BlurViewController else {
-            return
-        }
-        
-        if segue.identifier == "Blurred1" {
-            blurredViews.append(bubble)
-            // Since we do not know which order the controllers are added to blurredViews,
-            // set the index to the element just added to the array
-            let index = blurredViews.count - 1
-            blurredViews[index].numLines = NUMLINES1
-            blurredViews[index].textLines.append(BUBBLETEXT1)
-            blurredViews[index].textLines.append(BUBBLETEXT2)
-        
-        } else if segue.identifier == "Blurred2" {
-            blurredViews.append(bubble)
-            let index = blurredViews.count - 1
-            blurredViews[index].numLines = NUMLINES2
-            blurredViews[index].textLines.append(BUBBLETEXT3)
-        }
-        // Pass thru the size of the container view
-        
-    }
+
     
 //    // needed??
 //    override func viewWillLayoutSubviews() {
@@ -222,7 +234,6 @@ class IntroViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 
