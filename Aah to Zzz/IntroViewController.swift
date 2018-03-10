@@ -46,7 +46,7 @@ class IntroViewController: UIViewController {
         guard let bubble = segue.destination as? BlurViewController else {
             return
         }
-        
+
         if segue.identifier == "Blurred1" {
             blurredViews.append(bubble)
             // Since we do not know in which order the controllers are added to blurredViews,

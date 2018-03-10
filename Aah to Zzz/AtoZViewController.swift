@@ -34,6 +34,7 @@ class AtoZViewController: UIViewController {
     var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
     var tilesToSwap: [Tile]? // an array to temporarilly hold the tiles waiting to be swapped
     var maxTilesToSwap: Int = 0 // temp. diagnostic
+    var blurredViews: [BlurViewController] = []
     
     //MARK:- IBOutlets
     @IBOutlet weak var progressLabl: UILabel!
@@ -808,8 +809,22 @@ class AtoZViewController: UIViewController {
         // (Possibly these rules have been violated if their was a crash after the model has been changed, but before it was saved?)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
+    // Pass text info to blurred background VC's
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let bubble = segue.destination as? BlurViewController else {
+            return
+        }
+
+        if segue.identifier == "BlurredStatusBG" {
+            blurredViews.append(bubble)
+            // Since we do not know in which order the controllers are added to blurredViews,
+            // set the index to the element just added to the array
+            let index = blurredViews.count - 1
+            blurredViews[index].shadowRadius    = 2.4
+            blurredViews[index].shadowOpacity   = 0.6
+            blurredViews[index].borderWidth     = 0.2
+        }
     }
     
     func checkForExistingLetters () {

@@ -9,19 +9,27 @@
 import UIKit
 
 class BlurViewController: UIViewController {
-
+    
+    //MARK:- Outlets
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var outerShadowMask: UIView!
     
-    var blurView: UIVisualEffectView?
-    var numLines: Int = 0
-    var textLines: [String] = []
+    //MARK: - Properties
+    var numLines: Int           = 0
+    var textLines: [String]     = []
+    var blurriness: CGFloat     = 0.5
+    var cornerRadius: CGFloat   = 20.0
+    var shadowOpacity: Float    = 0.4
+    var shadowRadius: CGFloat   = 6.0
+    var borderWidth: CGFloat    = 1.0
     
+    //MARK:- Vars
+    var blurView: UIVisualEffectView?
     var animator: UIViewPropertyAnimator?
     var opacityAnimator: UIViewPropertyAnimator?
     
-    
+    //MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,11 +51,11 @@ class BlurViewController: UIViewController {
             self.animator?.pauseAnimation()
         }
         animator?.startAnimation()
-        animator?.fractionComplete = 0.5 // set the amount of bluriness here
+        animator?.fractionComplete = blurriness
         
-        blurView.layer.cornerRadius = 20.0
+        blurView.layer.cornerRadius = cornerRadius
         blurView.layer.masksToBounds = true
-        blurView.layer.borderWidth = 1.0
+        blurView.layer.borderWidth = borderWidth
         blurView.layer.borderColor = Colors.bluek.cgColor
         blurView.translatesAutoresizingMaskIntoConstraints = false
         blurView.backgroundColor = UIColor.clear
@@ -66,21 +74,22 @@ class BlurViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         // shadowView.frame size is now set, so it's safe to create the shadowmask
-        shadowView.layer.cornerRadius = 20.0
+        shadowView.layer.cornerRadius = cornerRadius
         shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowOpacity = 0.4
-        shadowView.layer.shadowRadius = 6
+        shadowView.layer.shadowOpacity = shadowOpacity
+        shadowView.layer.shadowRadius = shadowRadius
         shadowView.layer.masksToBounds = false
 
         let outerPath = UIBezierPath(rect: outerShadowMask.frame)
-        let innerPath = UIBezierPath(roundedRect: shadowView.frame, cornerRadius: 20)
+        let innerPath = UIBezierPath(roundedRect: shadowView.frame, cornerRadius: cornerRadius)
         
-        let shadowMask = CGMutablePath()
-        let shadowMaskLayer = CAShapeLayer()
+        let shadowMask                          = CGMutablePath()
+        let shadowMaskLayer                     = CAShapeLayer()
         shadowMask.addPath(outerPath.cgPath)
         shadowMask.addPath(innerPath.cgPath)
-        shadowMaskLayer.path = shadowMask
-        shadowMaskLayer.fillRule = kCAFillRuleEvenOdd
+        shadowMaskLayer.path                    = shadowMask
+        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+        shadowMaskLayer.shadowOffset.height     = -2.0
         shadowView.layer.mask = shadowMaskLayer
         
         // Since we don't know the size of the shadowmask until ViewDidAppear
