@@ -596,7 +596,7 @@ class AtoZViewController: UIViewController {
         }
         UIView.animate(withDuration: 2.35, delay: 0.25, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
             
-            self.progressLabl.alpha = 0.58
+            self.progressLabl.alpha = 0.85
             
             }, completion: { (finished: Bool) -> Void in
                 

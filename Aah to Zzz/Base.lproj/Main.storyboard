@@ -554,7 +554,13 @@
                                 </items>
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="status_bg" translatesAutoresizingMaskIntoConstraints="NO" id="P9D-OZ-Gqm">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nIa-8b-4Cg">
+                                <rect key="frame" x="125" y="276" width="190" height="52"/>
+                                <connections>
+                                    <segue destination="wfj-tV-mNT" kind="embed" id="Dtg-DK-czb"/>
+                                </connections>
+                            </containerView>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="status_bg" translatesAutoresizingMaskIntoConstraints="NO" id="P9D-OZ-Gqm">
                                 <rect key="frame" x="125" y="276" width="190" height="52"/>
                                 <rect key="contentStretch" x="0.0785" y="0.28299999999999997" width="0.84299999999999997" height="0.434"/>
                                 <constraints>
@@ -563,7 +569,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word List Completed!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kp7-7N-n01">
-                                <rect key="frame" x="130" y="285" width="180" height="28.666666666666686"/>
+                                <rect key="frame" x="130" y="285.66666666666669" width="180" height="28.333333333333314"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="5Ev-oS-NIM"/>
                                     <constraint firstAttribute="height" constant="21" id="azr-2u-C5Q"/>
@@ -571,9 +577,9 @@
                                     <constraint firstAttribute="width" constant="180" id="v7m-od-pFY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
-                                <color key="textColor" red="0.99747711419999996" green="0.8684134483" blue="0.038625180719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="highlightedColor" red="0.3344411705" green="0.52740943149999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="shadowColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="azr-2u-C5Q"/>
@@ -616,12 +622,14 @@
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="0o8-wi-NUA"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="bottom" secondItem="jOe-Nl-wN2" secondAttribute="bottom" constant="3" id="22w-TA-8ZC"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="46A-Cs-V45"/>
+                            <constraint firstItem="nIa-8b-4Cg" firstAttribute="leading" secondItem="P9D-OZ-Gqm" secondAttribute="leading" id="4tb-cT-hb2"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="3tH-ng-G60" secondAttribute="bottom" constant="14" id="AqJ-A3-BDe"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="107" id="CKT-X1-GIn"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="3" id="Isv-RH-R5p"/>
                             <constraint firstItem="qUf-Or-Qu2" firstAttribute="leading" secondItem="3tH-ng-G60" secondAttribute="trailing" constant="39" id="MaN-X9-Zam"/>
                             <constraint firstItem="kp7-7N-n01" firstAttribute="centerX" secondItem="P9D-OZ-Gqm" secondAttribute="centerX" id="NuU-XB-5bW"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="leading" secondItem="qUf-Or-Qu2" secondAttribute="trailing" constant="27" id="Za4-go-BpQ"/>
+                            <constraint firstItem="nIa-8b-4Cg" firstAttribute="bottom" secondItem="P9D-OZ-Gqm" secondAttribute="bottom" id="eRw-P0-YIq"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="P9D-OZ-Gqm" secondAttribute="bottom" constant="10" id="ea0-yK-Ys3"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" constant="-2" id="egx-nc-KW4"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eu5-Sw-OsY"/>
@@ -635,6 +643,8 @@
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pot-2E-FRR"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="top" secondItem="ojv-Vd-35V" secondAttribute="bottom" constant="8" id="qde-c6-hRu"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="318" identifier="inProgessTop" id="qy0-rM-BjO"/>
+                            <constraint firstItem="nIa-8b-4Cg" firstAttribute="top" secondItem="P9D-OZ-Gqm" secondAttribute="top" id="rcI-vW-iBa"/>
+                            <constraint firstItem="nIa-8b-4Cg" firstAttribute="trailing" secondItem="P9D-OZ-Gqm" secondAttribute="trailing" id="sN4-4q-NMH"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="z27-At-0xo"/>
                             <constraint firstItem="P9D-OZ-Gqm" firstAttribute="centerX" secondItem="ojv-Vd-35V" secondAttribute="centerX" id="zFU-gH-ByP"/>
                             <constraint firstAttribute="trailing" secondItem="jOe-Nl-wN2" secondAttribute="trailing" constant="2" id="zpZ-54-fPw"/>
@@ -661,7 +671,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="506" y="73"/>
+            <point key="canvasLocation" x="505.79710144927537" y="72.554347826086968"/>
         </scene>
         <!--Level Graph Bar-->
         <scene sceneID="PFf-E0-MxZ">
@@ -1245,6 +1255,14 @@ Tap on a word to see definition.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OaM-O9-Vbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1789" y="1370"/>
+        </scene>
+        <!--Blur View Controller-->
+        <scene sceneID="0fI-ZK-ev4">
+            <objects>
+                <viewController id="wfj-tV-mNT" customClass="BlurViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s9d-9Q-KVS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1084" y="-279"/>
         </scene>
     </scenes>
     <resources>
