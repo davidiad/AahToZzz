@@ -25,9 +25,9 @@
             <subviews>
                 <view opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="htV-PF-8kJ">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <color key="backgroundColor" red="1" green="0.92742772240000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.98922836780000001" green="0.41531395910000002" blue="0.031820401550000002" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_border.png" translatesAutoresizingMaskIntoConstraints="NO" id="dfq-mH-oJ9">
+                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_border.png" translatesAutoresizingMaskIntoConstraints="NO" id="dfq-mH-oJ9">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.88800000000000001" height="0.59999999999999998"/>
                 </imageView>

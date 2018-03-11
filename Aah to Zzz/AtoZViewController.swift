@@ -35,6 +35,7 @@ class AtoZViewController: UIViewController {
     var tilesToSwap: [Tile]? // an array to temporarilly hold the tiles waiting to be swapped
     var maxTilesToSwap: Int = 0 // temp. diagnostic
     var blurredViews: [BlurViewController] = []
+    var animatingStatusHeight: Bool = false
     
     //MARK:- IBOutlets
     @IBOutlet weak var progressLabl: UILabel!
@@ -47,6 +48,7 @@ class AtoZViewController: UIViewController {
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var inProgressLeading: NSLayoutConstraint!
     @IBOutlet weak var statusBgHeight: NSLayoutConstraint!
+    @IBOutlet weak var blurredViewHeight: NSLayoutConstraint!
     
     //MARK:- IBActions
     // Unwind segue from Progress view
@@ -1024,10 +1026,21 @@ class AtoZViewController: UIViewController {
     }
     
     func animateStatusHeight(_ ht: CGFloat) {
+        animatingStatusHeight = true
+        if self.blurredViews.count > 0 {
+            blurredViews[0].animatingStatusHeight = true
+        }
         UIView.animate(withDuration: 0.4, animations: {
             self.statusBgHeight.constant = ht
+            self.blurredViewHeight.constant = ht
             self.view.layoutIfNeeded()
-        }) 
+        }, completion: {completion in
+            self.animatingStatusHeight = false
+            print(self.animatingStatusHeight)
+            if self.blurredViews.count > 0 {
+                self.blurredViews[0].animatingStatusHeight = false
+            }
+        })
     }
     
     func animateNewListButton() {

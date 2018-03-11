@@ -20,7 +20,7 @@ class BlurViewController: UIViewController {
     var textLines: [String]     = []
     var blurriness: CGFloat     = 0.5
     var cornerRadius: CGFloat   = 20.0
-    var shadowOpacity: Float    = 0.4
+    var shadowOpacity: Float    = 0.5
     var shadowRadius: CGFloat   = 6.0
     var borderWidth: CGFloat    = 1.0
     
@@ -28,6 +28,8 @@ class BlurViewController: UIViewController {
     var blurView: UIVisualEffectView?
     var animator: UIViewPropertyAnimator?
     var opacityAnimator: UIViewPropertyAnimator?
+    var opacityAnimator2: UIViewPropertyAnimator?
+    var animatingStatusHeight: Bool = false
     
     //MARK:- View Lifecycle
     override func viewDidLoad() {
@@ -80,17 +82,19 @@ class BlurViewController: UIViewController {
         shadowView.layer.shadowRadius = shadowRadius
         shadowView.layer.masksToBounds = false
 
-        let outerPath = UIBezierPath(rect: outerShadowMask.frame)
-        let innerPath = UIBezierPath(roundedRect: shadowView.frame, cornerRadius: cornerRadius)
+//        let outerPath = UIBezierPath(rect: outerShadowMask.frame)
+//        let innerPath = UIBezierPath(roundedRect: shadowView.frame, cornerRadius: cornerRadius)
+//
+//        let shadowMask                          = CGMutablePath()
+//        let shadowMaskLayer                     = CAShapeLayer()
+//        shadowMask.addPath(outerPath.cgPath)
+//        shadowMask.addPath(innerPath.cgPath)
+//        shadowMaskLayer.path                    = shadowMask
+//        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+//
+//        shadowView.layer.mask = shadowMaskLayer
         
-        let shadowMask                          = CGMutablePath()
-        let shadowMaskLayer                     = CAShapeLayer()
-        shadowMask.addPath(outerPath.cgPath)
-        shadowMask.addPath(innerPath.cgPath)
-        shadowMaskLayer.path                    = shadowMask
-        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
-        shadowMaskLayer.shadowOffset.height     = -2.0
-        shadowView.layer.mask = shadowMaskLayer
+        //updateShadowMaskLayer()
         
         // Since we don't know the size of the shadowmask until ViewDidAppear
         // set the shadowView opacity was set to 0 in xib, to be animated up here
@@ -99,6 +103,35 @@ class BlurViewController: UIViewController {
             self.shadowView?.layer.opacity = 1.0
         }
         opacityAnimator?.startAnimation()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        //shadowView?.layer.opacity = 0.0
+       // while animatingStatusHeight {
+
+            updateShadowMaskLayer()
+       // }
+        
+
+//        opacityAnimator2 = UIViewPropertyAnimator(duration: 4.35, curve: .easeIn) {
+//            self.shadowView?.layer.opacity = 1.0
+//        }
+//        opacityAnimator2?.startAnimation()
+        
+    }
+    
+    func updateShadowMaskLayer () {
+        let outerPath = UIBezierPath(rect: outerShadowMask.frame)
+        let innerPath = UIBezierPath(roundedRect: shadowView.frame, cornerRadius: cornerRadius)
+        
+        let shadowMask                          = CGMutablePath()
+        let shadowMaskLayer                     = CAShapeLayer()
+        
+        shadowMask.addPath(outerPath.cgPath)
+        shadowMask.addPath(innerPath.cgPath)
+        shadowMaskLayer.path                    = shadowMask
+        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+        shadowView.layer.mask = shadowMaskLayer
     }
     
     // Set the text for the bubble

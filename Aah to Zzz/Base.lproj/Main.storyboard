@@ -554,8 +554,11 @@
                                 </items>
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nIa-8b-4Cg">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nIa-8b-4Cg" customClass="StatusView" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="125" y="276" width="190" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="ils-zP-s6V"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="wfj-tV-mNT" kind="embed" identifier="BlurredStatusBG" id="Dtg-DK-czb"/>
                                 </connections>
@@ -643,7 +646,6 @@
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pot-2E-FRR"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="top" secondItem="ojv-Vd-35V" secondAttribute="bottom" constant="8" id="qde-c6-hRu"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="318" identifier="inProgessTop" id="qy0-rM-BjO"/>
-                            <constraint firstItem="nIa-8b-4Cg" firstAttribute="top" secondItem="P9D-OZ-Gqm" secondAttribute="top" id="rcI-vW-iBa"/>
                             <constraint firstItem="nIa-8b-4Cg" firstAttribute="trailing" secondItem="P9D-OZ-Gqm" secondAttribute="trailing" id="sN4-4q-NMH"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="z27-At-0xo"/>
                             <constraint firstItem="P9D-OZ-Gqm" firstAttribute="centerX" secondItem="ojv-Vd-35V" secondAttribute="centerX" id="zFU-gH-ByP"/>
@@ -657,6 +659,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="blurredViewHeight" destination="ils-zP-s6V" id="4dr-1T-EnB"/>
                         <outlet property="inProgressLeading" destination="hhu-6t-4DQ" id="xcm-P1-jFC"/>
                         <outlet property="progressLabl" destination="kp7-7N-n01" id="pKF-ZI-LW7"/>
                         <outlet property="proxyTable" destination="4Y4-1f-2hz" id="bQR-QC-2sm"/>
