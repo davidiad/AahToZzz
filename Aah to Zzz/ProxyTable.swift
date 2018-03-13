@@ -14,14 +14,8 @@ class ProxyTable: UITableView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        proxyTableArrow?.alpha = 0.2
         arrowFade(amount: 0.3)
-//        guard let arrow = proxyTableArrow else {
-//            return
-//        }
-//        let opacityAnimator = UIViewPropertyAnimator(duration: 1.0, curve: .easeIn) {
-//            arrow.alpha = 0.3
-//        }
-//        opacityAnimator.startAnimation()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -33,7 +27,7 @@ class ProxyTable: UITableView {
         guard let arrow = proxyTableArrow else {
             return
         }
-        let opacityAnimator = UIViewPropertyAnimator(duration: 1.0, curve: .easeInOut) {
+        let opacityAnimator = UIViewPropertyAnimator(duration: 2.0, curve: .easeOut) {
             arrow.alpha = amount
         }
         opacityAnimator.startAnimation()

@@ -11,7 +11,7 @@ import UIKit
 class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, WordTables {
     // Do we really need WordTables as a protocol, or just the vars?
     var wordTable: UITableView!
-    var proxyTable: UITableView!
+    var proxyTable: ProxyTable!
     var proxyTableArrow: UIImageView!
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
     let popoverDelegate = AtoZPopoverDelegate()
@@ -116,6 +116,8 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
         // TODO: prevent popover from attempting to present twice in a row
     }
     
+    //MARK:- Scrollview delegate
+    //(Tableview inherits from scrollview
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == proxyTable {
             wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
@@ -123,12 +125,18 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
             print("CONTENT OFFSET: \(proxyTable.contentOffset)")
         }
     }
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if let touch = touches.first {
-//            // ...
-//        }
-//        super.touchesBegan(touches, with: event)
-//    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if scrollView == proxyTable {
+            proxyTable.arrowFade(amount: 0.5)
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == proxyTable {
+            proxyTable.arrowFade(amount: 0.0)
+        }
+    }
     
 
     
@@ -233,7 +241,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
 
 protocol WordTables {
     var wordTable: UITableView! {get}
-    var proxyTable: UITableView! {get}
+    var proxyTable: ProxyTable! {get}
     var proxyTableArrow: UIImageView! {get}
     
 }
