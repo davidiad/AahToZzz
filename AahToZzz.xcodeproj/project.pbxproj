@@ -125,6 +125,7 @@
 		63B5C53A1E6E55210031576E /* outline_graph_double_flatbottom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B5C5391E6E55210031576E /* outline_graph_double_flatbottom@3x.png */; };
 		63B5C53C1E6E57D80031576E /* outline_graph_double_flatbottom4@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63B5C53B1E6E57D80031576E /* outline_graph_double_flatbottom4@1x.pdf */; };
 		63B5C53E1E6E5CBF0031576E /* outline_graph_double_flatbottom5@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 63B5C53D1E6E5CBF0031576E /* outline_graph_double_flatbottom5@1x.pdf */; };
+		63BC66C9205749A800803431 /* ProxyTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BC66C8205749A800803431 /* ProxyTable.swift */; };
 		63C17BD920322654007A06B3 /* AtoZViewControllerBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C17BD820322654007A06B3 /* AtoZViewControllerBackup.swift */; };
 		63C449511C98BDD70053BE77 /* merged_small_tiles_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C4494B1C98BDD70053BE77 /* merged_small_tiles_yellow.png */; };
 		63C449521C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C4494C1C98BDD70053BE77 /* merged_small_tiles_yellow@2x.png */; };
@@ -324,6 +325,7 @@
 		63B5C5391E6E55210031576E /* outline_graph_double_flatbottom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outline_graph_double_flatbottom@3x.png"; sourceTree = "<group>"; };
 		63B5C53B1E6E57D80031576E /* outline_graph_double_flatbottom4@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_graph_double_flatbottom4@1x.pdf"; sourceTree = "<group>"; };
 		63B5C53D1E6E5CBF0031576E /* outline_graph_double_flatbottom5@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "outline_graph_double_flatbottom5@1x.pdf"; sourceTree = "<group>"; };
+		63BC66C8205749A800803431 /* ProxyTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyTable.swift; sourceTree = "<group>"; };
 		63C17BD820322654007A06B3 /* AtoZViewControllerBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZViewControllerBackup.swift; sourceTree = "<group>"; };
 		63C17BDA20325FED007A06B3 /* AtoZ_03.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AtoZ_03.xcdatamodel; sourceTree = "<group>"; };
 		63C4494B1C98BDD70053BE77 /* merged_small_tiles_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = merged_small_tiles_yellow.png; sourceTree = "<group>"; };
@@ -685,6 +687,7 @@
 				637AF06C1C83512F005A36BA /* OptionsViewController.swift */,
 				63C449851C9A18F10053BE77 /* RotatingView.swift */,
 				63C449871C9A73B60053BE77 /* ProxyTableCell.swift */,
+				63BC66C8205749A800803431 /* ProxyTable.swift */,
 				637F675F1E20743600347F15 /* ProgressInfoViewController.swift */,
 				633C7B061DB46A060055CD83 /* ProgressViewController.swift */,
 				633C7B0A1DB46A9C0055CD83 /* ExampleTableViewController.swift */,
@@ -1072,6 +1075,7 @@
 				63E4A2C51DC1AF98002BC4CE /* LevelTableViewController.swift in Sources */,
 				63F44983204160DC00837434 /* XibView.swift in Sources */,
 				63854328203379E800252F69 /* GameStateInfo.swift in Sources */,
+				63BC66C9205749A800803431 /* ProxyTable.swift in Sources */,
 				633727601C7EAEA4003E8447 /* Word.swift in Sources */,
 				637AF0691C817F8D005A36BA /* DefinitionPopoverVC.swift in Sources */,
 				63A9FEE81C7AB4B500AE54F1 /* CoreDataStackManager.swift in Sources */,

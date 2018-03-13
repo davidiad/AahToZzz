@@ -16,7 +16,7 @@ class ProxyTableCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //bg.image = UIImage(named: "merged_small_tiles")
+        bg?.image = UIImage(named: "icon_newlist")
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

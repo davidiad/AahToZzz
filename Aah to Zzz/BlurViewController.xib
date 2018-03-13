@@ -23,12 +23,12 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="htV-PF-8kJ">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <view opaque="NO" alpha="0.0" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htV-PF-8kJ">
+                    <rect key="frame" x="0.0" y="23" width="375" height="644"/>
                     <color key="backgroundColor" red="0.98922836780000001" green="0.41531395910000002" blue="0.031820401550000002" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_border.png" translatesAutoresizingMaskIntoConstraints="NO" id="dfq-mH-oJ9">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="info_border.png" translatesAutoresizingMaskIntoConstraints="NO" id="dfq-mH-oJ9">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.88800000000000001" height="0.59999999999999998"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="hQW-jO-iZ3">
@@ -50,11 +50,11 @@
                 <constraint firstItem="htV-PF-8kJ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Qqk-Nr-wY9"/>
                 <constraint firstItem="htV-PF-8kJ" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="R4G-oO-HSJ"/>
                 <constraint firstItem="5ST-Pe-lXa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="-25" id="RV9-G1-8c7"/>
-                <constraint firstItem="htV-PF-8kJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RZK-UX-FGY"/>
+                <constraint firstItem="htV-PF-8kJ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="3" id="RZK-UX-FGY"/>
                 <constraint firstItem="5ST-Pe-lXa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="-25" id="S0N-a1-oqU"/>
                 <constraint firstItem="hQW-jO-iZ3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="7" id="Zfl-7X-t0T"/>
                 <constraint firstItem="5ST-Pe-lXa" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="25" id="aHc-bc-Nnu"/>
-                <constraint firstItem="dfq-mH-oJ9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fbd-FS-O1X"/>
+                <constraint firstItem="dfq-mH-oJ9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="fbd-FS-O1X"/>
                 <constraint firstItem="5ST-Pe-lXa" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="25" id="itf-4r-zQj"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hQW-jO-iZ3" secondAttribute="trailing" constant="24" id="kMh-h3-ULM"/>
                 <constraint firstItem="dfq-mH-oJ9" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lJm-sr-xOW"/>

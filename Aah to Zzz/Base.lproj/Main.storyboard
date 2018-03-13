@@ -472,14 +472,22 @@
                                     <action selector="returnTiles:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rQ6-d8-f39"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="36" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Y4-1f-2hz">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_newlist" highlightedImage="icon_newlist" translatesAutoresizingMaskIntoConstraints="NO" id="MCZ-cS-hza">
+                                <rect key="frame" x="374" y="218" width="40" height="300"/>
+                                <color key="backgroundColor" red="1" green="0.872" blue="0.040000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="iAj-9j-5pS"/>
+                                    <constraint firstAttribute="width" constant="40" id="kcH-jN-ewU"/>
+                                </constraints>
+                            </imageView>
+                            <tableView clipsSubviews="YES" alpha="0.59999999999999998" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="36" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Y4-1f-2hz" customClass="ProxyTable" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="374" y="0.0" width="40" height="736"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="RgN-A6-1Qw"/>
                                 </constraints>
-                                <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="proxycell" id="LLV-Xy-sh9" customClass="ProxyTableCell" customModule="AahToZzz" customModuleProvider="target">
@@ -554,6 +562,14 @@
                                 </items>
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
+                            <imageView autoresizesSubviews="NO" opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="status_bg" translatesAutoresizingMaskIntoConstraints="NO" id="P9D-OZ-Gqm">
+                                <rect key="frame" x="125" y="276" width="190" height="52"/>
+                                <rect key="contentStretch" x="0.0785" y="0.28299999999999997" width="0.84299999999999997" height="0.434"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="4DO-1G-JrI"/>
+                                    <constraint firstAttribute="width" constant="190" id="e6e-rg-gsC"/>
+                                </constraints>
+                            </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nIa-8b-4Cg" customClass="StatusView" customModule="AahToZzz" customModuleProvider="target">
                                 <rect key="frame" x="125" y="276" width="190" height="52"/>
                                 <constraints>
@@ -563,14 +579,6 @@
                                     <segue destination="wfj-tV-mNT" kind="embed" identifier="BlurredStatusBG" id="Dtg-DK-czb"/>
                                 </connections>
                             </containerView>
-                            <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="status_bg" translatesAutoresizingMaskIntoConstraints="NO" id="P9D-OZ-Gqm">
-                                <rect key="frame" x="125" y="276" width="190" height="52"/>
-                                <rect key="contentStretch" x="0.0785" y="0.28299999999999997" width="0.84299999999999997" height="0.434"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="4DO-1G-JrI"/>
-                                    <constraint firstAttribute="width" constant="190" id="e6e-rg-gsC"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word List Completed!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kp7-7N-n01">
                                 <rect key="frame" x="130" y="285.66666666666669" width="180" height="28.333333333333314"/>
                                 <constraints>
@@ -623,6 +631,7 @@
                         <color key="backgroundColor" red="0.50939557690000004" green="0.74680393359999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="0o8-wi-NUA"/>
+                            <constraint firstItem="MCZ-cS-hza" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="1Lf-PW-QL0"/>
                             <constraint firstItem="DVE-Kx-iP4" firstAttribute="bottom" secondItem="jOe-Nl-wN2" secondAttribute="bottom" constant="3" id="22w-TA-8ZC"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="46A-Cs-V45"/>
                             <constraint firstItem="nIa-8b-4Cg" firstAttribute="leading" secondItem="P9D-OZ-Gqm" secondAttribute="leading" id="4tb-cT-hb2"/>
@@ -642,6 +651,7 @@
                             <constraint firstItem="Udf-GC-b5o" firstAttribute="centerY" secondItem="P9D-OZ-Gqm" secondAttribute="bottom" constant="-25" id="hL2-86-i8Z"/>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="135" identifier="inProgressLeading" id="hhu-6t-4DQ"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="qUf-Or-Qu2" secondAttribute="bottom" constant="14" id="iVP-iz-WVU"/>
+                            <constraint firstItem="MCZ-cS-hza" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="nTu-R4-L4f"/>
                             <constraint firstItem="kp7-7N-n01" firstAttribute="centerY" secondItem="P9D-OZ-Gqm" secondAttribute="top" constant="23" id="pgl-g8-hWy"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pot-2E-FRR"/>
                             <constraint firstItem="lJN-X8-6hn" firstAttribute="top" secondItem="ojv-Vd-35V" secondAttribute="bottom" constant="8" id="qde-c6-hRu"/>
@@ -663,6 +673,7 @@
                         <outlet property="inProgressLeading" destination="hhu-6t-4DQ" id="xcm-P1-jFC"/>
                         <outlet property="progressLabl" destination="kp7-7N-n01" id="pKF-ZI-LW7"/>
                         <outlet property="proxyTable" destination="4Y4-1f-2hz" id="bQR-QC-2sm"/>
+                        <outlet property="proxyTableArrow" destination="MCZ-cS-hza" id="VHO-fY-2XL"/>
                         <outlet property="startNewList" destination="Udf-GC-b5o" id="zng-Qk-Zq1"/>
                         <outlet property="statusBgHeight" destination="4DO-1G-JrI" id="X6P-nS-bw6"/>
                         <outlet property="toolbar" destination="jOe-Nl-wN2" id="xaw-MU-B6q"/>

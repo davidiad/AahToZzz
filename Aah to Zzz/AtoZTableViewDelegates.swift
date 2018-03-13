@@ -12,6 +12,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
     // Do we really need WordTables as a protocol, or just the vars?
     var wordTable: UITableView!
     var proxyTable: UITableView!
+    var proxyTableArrow: UIImageView!
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
     let popoverDelegate = AtoZPopoverDelegate()
     //var fillingInBlanks: Bool = false
@@ -118,8 +119,20 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == proxyTable {
             wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
+            
+            print("CONTENT OFFSET: \(proxyTable.contentOffset)")
         }
     }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        if let touch = touches.first {
+//            // ...
+//        }
+//        super.touchesBegan(touches, with: event)
+//    }
+    
+
+    
+    
     
     // MARK:- Helpers
     func configureCell(_ cell: WordListCell, atIndexPath indexPath: IndexPath) {
@@ -221,6 +234,8 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
 protocol WordTables {
     var wordTable: UITableView! {get}
     var proxyTable: UITableView! {get}
+    var proxyTableArrow: UIImageView! {get}
+    
 }
 
 //extension Notification.Name {

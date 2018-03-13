@@ -16,4 +16,6 @@ class AtoZGestureDelegate: NSObject, UIGestureRecognizerDelegate {
             return false
         }
     }
+    
+    
 }

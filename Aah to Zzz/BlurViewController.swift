@@ -106,10 +106,14 @@ class BlurViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         //shadowView?.layer.opacity = 0.0
        // while animatingStatusHeight {
 
+        // 1. start the animation of .4 s from 52 height to 90 (or whatever) of the inner mask path
+        // 2.
             updateShadowMaskLayer()
+        
        // }
         
 
@@ -122,7 +126,8 @@ class BlurViewController: UIViewController {
     
     func updateShadowMaskLayer () {
         let outerPath = UIBezierPath(rect: outerShadowMask.frame)
-        let innerPath = UIBezierPath(roundedRect: shadowView.frame, cornerRadius: cornerRadius)
+        let innerShadowRect = CGRect(x: 0.0, y: -1.0, width: shadowView.frame.width, height: shadowView.frame.height)
+        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: cornerRadius)
         
         let shadowMask                          = CGMutablePath()
         let shadowMaskLayer                     = CAShapeLayer()

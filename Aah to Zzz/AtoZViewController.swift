@@ -43,7 +43,8 @@ class AtoZViewController: UIViewController {
     @IBOutlet weak var startNewList: UIButton!
     @IBOutlet weak var wordTableHolderView: UIView!
     @IBOutlet weak var wordTable: UITableView!
-    @IBOutlet weak var proxyTable: UITableView!
+    @IBOutlet weak var proxyTable: ProxyTable!
+    @IBOutlet weak var proxyTableArrow: UIImageView!
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var inProgressLeading: NSLayoutConstraint!
@@ -264,6 +265,8 @@ class AtoZViewController: UIViewController {
         }
     }
     
+    
+    
     //MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -277,7 +280,10 @@ class AtoZViewController: UIViewController {
         proxyTable.dataSource = tableViewsDelegate
         tableViewsDelegate.wordTable = wordTable
         tableViewsDelegate.proxyTable = proxyTable
+        tableViewsDelegate.proxyTableArrow = proxyTableArrow
         tableViewsDelegate.fetchedResultsController = fetchedResultsController
+        
+        proxyTable.proxyTableArrow = proxyTableArrow
         
         do {
             try fetchedResultsController.performFetch()
@@ -377,6 +383,15 @@ class AtoZViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         uiDynamicsDelegate.lettertiles = lettertiles
+        
+        //setUpProxyTable()
+    }
+    
+    func setUpProxyTable () {
+        let arrowImage = UIImage(named: "icon_newlist")
+        let imageView = UIImageView(image: arrowImage)
+        proxyTable.addSubview(imageView)
+        imageView.contentMode = .redraw
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -1027,19 +1042,19 @@ class AtoZViewController: UIViewController {
     
     func animateStatusHeight(_ ht: CGFloat) {
         animatingStatusHeight = true
-        if self.blurredViews.count > 0 {
-            blurredViews[0].animatingStatusHeight = true
-        }
-        UIView.animate(withDuration: 0.4, animations: {
+//        if self.blurredViews.count > 0 {
+//            blurredViews[0].animatingStatusHeight = true
+//        }
+        UIView.animate(withDuration: 4.4, animations: {
             self.statusBgHeight.constant = ht
             self.blurredViewHeight.constant = ht
             self.view.layoutIfNeeded()
         }, completion: {completion in
-            self.animatingStatusHeight = false
-            print(self.animatingStatusHeight)
-            if self.blurredViews.count > 0 {
-                self.blurredViews[0].animatingStatusHeight = false
-            }
+//            self.animatingStatusHeight = false
+//            print(self.animatingStatusHeight)
+//            if self.blurredViews.count > 0 {
+//                self.blurredViews[0].animatingStatusHeight = false
+//            }
         })
     }
     
