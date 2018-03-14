@@ -29,6 +29,7 @@ class WordListCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         bg.image = UIImage(named: "merged_small_tiles")
+       
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,7 +38,7 @@ class WordListCell: UITableViewCell {
     }
     
     var colorCode: ColorCode?
-    
+   
     var wordtext: String? {
         didSet {
             guard let wordtext = wordtext else {

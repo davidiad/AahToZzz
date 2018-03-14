@@ -11,6 +11,7 @@ import CoreData
 import Alamofire
 
 class AtoZViewController: UIViewController {
+    
     //TODO: should weak optional vars be used for delegatesa?
     let tableViewsDelegate = AtoZTableViewDelegates()
     let uiDynamicsDelegate = AtoZUIDynamicsDelegate()
@@ -21,7 +22,7 @@ class AtoZViewController: UIViewController {
     var wordlist = [String]()
     var positions: [Position]?
     var wordHolderCenter: CGPoint?
-    
+    var mainGradient: CAGradientLayer?
     var game: Game?
     var currentLetterSet: LetterSet?
     var currentWords: [Word]?
@@ -42,6 +43,7 @@ class AtoZViewController: UIViewController {
     @IBOutlet weak var wordInProgress: UILabel!
     @IBOutlet weak var startNewList: UIButton!
     @IBOutlet weak var wordTableHolderView: UIView!
+    @IBOutlet weak var wordTableHeaderView: UIView!
     @IBOutlet weak var wordTable: UITableView!
     @IBOutlet weak var proxyTable: ProxyTable!
     @IBOutlet weak var proxyTableArrow: UIImageView!
@@ -285,6 +287,10 @@ class AtoZViewController: UIViewController {
         
         proxyTable.proxyTableArrow = proxyTableArrow
         
+        //wordTable.tableHeaderView = wordTableHeaderView
+        wordTableHeaderView.backgroundColor = UIColor.cyan
+        tableViewsDelegate.gradient = mainGradient
+        
         do {
             try fetchedResultsController.performFetch()
             
@@ -365,11 +371,14 @@ class AtoZViewController: UIViewController {
         startNewList.alpha = 0
         startNewList.isHidden = true
         
-        let mainGradient = model.yellowPinkBlueGreenGradient()
-        mainGradient.frame = view.bounds
-        mainGradient.zPosition = -1
-        mainGradient.name = "mainGradientLayer"
-        view.layer.addSublayer(mainGradient)
+        mainGradient = model.yellowPinkBlueGreenGradient()
+        mainGradient?.frame = view.bounds
+        mainGradient?.zPosition = -1
+        mainGradient?.name = "mainGradientLayer"
+        view.layer.addSublayer(mainGradient!)
+        tableViewsDelegate.gradient = mainGradient
+        //let indexPath = IndexPath(row: 0, section: 0)
+        //wordTableHeaderView.layer.addSublayer(mainGradient!)
         
         collisionBehavior = UICollisionBehavior(items: [])
         for tile in lettertiles {
@@ -378,6 +387,17 @@ class AtoZViewController: UIViewController {
             }
         }
         animator.addBehavior(collisionBehavior)
+    }
+    
+    func updateSizeForHeaderView(inTableView tableView : UITableView) {
+        let size = wordTableHeaderView.systemLayoutSizeFitting(wordTable.frame.size, withHorizontalFittingPriority: UILayoutPriority.required, verticalFittingPriority: UILayoutPriority.defaultLow)
+        wordTableHeaderView.frame.size = size
+        print(size)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateSizeForHeaderView(inTableView: wordTable)
     }
     
     override func viewWillAppear(_ animated: Bool) {

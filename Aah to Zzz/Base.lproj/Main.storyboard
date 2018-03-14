@@ -273,15 +273,36 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DVE-Kx-iP4">
                                 <rect key="frame" x="3" y="0.0" width="102" height="737"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="36" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iQk-rq-SuY">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VE8-Hj-kp5">
+                                        <rect key="frame" x="0.0" y="0.0" width="6" height="737"/>
+                                        <color key="backgroundColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="6" id="q5j-Gz-DDr"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rxL-uN-hPn">
+                                        <rect key="frame" x="96" y="0.0" width="6" height="737"/>
+                                        <color key="backgroundColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="6" id="fjz-ot-EIP"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="6" id="xaS-gU-aQm"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="36" sectionHeaderHeight="-1" sectionFooterHeight="-1" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQk-rq-SuY">
                                         <rect key="frame" x="6" y="0.0" width="90" height="737"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="1" green="0.872" blue="0.040000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="90" id="6qr-xV-NCv"/>
                                         </constraints>
+                                        <color key="sectionIndexBackgroundColor" red="0.98603981730000001" green="0.0" blue="0.078923560680000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <view key="tableHeaderView" userInteractionEnabled="NO" contentMode="redraw" insetsLayoutMarginsFromSafeArea="NO" id="sId-eF-TfQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="90" height="28"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.98922836780000001" green="0.41531395910000002" blue="0.031820401550000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        </view>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" id="yVc-70-ETY" customClass="WordListCell" customModule="AahToZzz" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="90" height="36"/>
+                                                <rect key="frame" x="0.0" y="56" width="90" height="36"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yVc-70-ETY" id="nST-1A-dcE">
                                                     <rect key="frame" x="0.0" y="0.0" width="90" height="36"/>
@@ -433,15 +454,21 @@
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="rxL-uN-hPn" secondAttribute="bottom" id="59G-Zn-QHo"/>
                                     <constraint firstItem="2Bm-MY-X4I" firstAttribute="bottom" secondItem="DVE-Kx-iP4" secondAttribute="bottom" constant="2" id="5b8-9n-kmC"/>
+                                    <constraint firstItem="VE8-Hj-kp5" firstAttribute="leading" secondItem="DVE-Kx-iP4" secondAttribute="leading" id="8p0-U8-iUQ"/>
                                     <constraint firstAttribute="trailing" secondItem="2Bm-MY-X4I" secondAttribute="trailing" id="GRJ-s8-pdE"/>
                                     <constraint firstItem="iQk-rq-SuY" firstAttribute="bottom" secondItem="DVE-Kx-iP4" secondAttribute="bottom" id="Js3-2d-NG8"/>
                                     <constraint firstItem="iQk-rq-SuY" firstAttribute="top" secondItem="DVE-Kx-iP4" secondAttribute="top" id="LV6-10-tp5"/>
+                                    <constraint firstAttribute="trailing" secondItem="rxL-uN-hPn" secondAttribute="trailing" id="PWD-Ob-7Jh"/>
                                     <constraint firstItem="2Bm-MY-X4I" firstAttribute="leading" secondItem="DVE-Kx-iP4" secondAttribute="leading" id="Ubp-3y-wY7"/>
+                                    <constraint firstAttribute="bottom" secondItem="VE8-Hj-kp5" secondAttribute="bottom" id="Y7e-ZP-wz6"/>
                                     <constraint firstItem="ELs-lh-jFG" firstAttribute="leading" secondItem="DVE-Kx-iP4" secondAttribute="leading" id="YO4-Yf-70H"/>
                                     <constraint firstItem="iQk-rq-SuY" firstAttribute="centerX" secondItem="DVE-Kx-iP4" secondAttribute="centerX" id="eg6-ti-FPn"/>
+                                    <constraint firstItem="rxL-uN-hPn" firstAttribute="top" secondItem="DVE-Kx-iP4" secondAttribute="top" id="hWH-De-eeC"/>
+                                    <constraint firstItem="VE8-Hj-kp5" firstAttribute="top" secondItem="DVE-Kx-iP4" secondAttribute="top" id="k2a-U2-XBF"/>
                                     <constraint firstAttribute="trailing" secondItem="ELs-lh-jFG" secondAttribute="trailing" id="q4n-OJ-omF"/>
                                     <constraint firstAttribute="width" constant="102" id="qC1-bb-SzY"/>
                                     <constraint firstItem="ELs-lh-jFG" firstAttribute="top" secondItem="DVE-Kx-iP4" secondAttribute="top" id="top-qM-q2x"/>
@@ -680,6 +707,7 @@
                         <outlet property="topConstraint" destination="qy0-rM-BjO" id="xW2-dv-5eY"/>
                         <outlet property="wordInProgress" destination="ojv-Vd-35V" id="G6t-Rf-rXA"/>
                         <outlet property="wordTable" destination="iQk-rq-SuY" id="O8c-An-Vq3"/>
+                        <outlet property="wordTableHeaderView" destination="sId-eF-TfQ" id="Z4b-89-j1v"/>
                         <outlet property="wordTableHolderView" destination="DVE-Kx-iP4" id="1z0-bi-AtJ"/>
                     </connections>
                 </viewController>

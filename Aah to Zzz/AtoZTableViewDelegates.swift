@@ -9,6 +9,7 @@ import CoreData
 import UIKit
 
 class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, WordTables {
+    var gradient: CAGradientLayer!
     // Do we really need WordTables as a protocol, or just the vars?
     var wordTable: UITableView!
     var proxyTable: ProxyTable!
@@ -232,6 +233,10 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
             return proxyCell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? WordListCell
+            cell?.backgroundView?.layer.addSublayer(gradient)
+            let rainbow = UIView()
+            rainbow.layer.addSublayer(gradient)
+            cell?.addSubview(rainbow)
             configureCell(cell!, atIndexPath: indexPath)
             return cell!
         }
@@ -243,7 +248,7 @@ protocol WordTables {
     var wordTable: UITableView! {get}
     var proxyTable: ProxyTable! {get}
     var proxyTableArrow: UIImageView! {get}
-    
+    var gradient: CAGradientLayer! {get}
 }
 
 //extension Notification.Name {
