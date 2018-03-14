@@ -12,6 +12,8 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
     var gradient: CAGradientLayer!
     // Do we really need WordTables as a protocol, or just the vars?
     var wordTable: UITableView!
+    var wordTableHeaderCover: UIView!
+    var wordTableHeaderCoverHeight: NSLayoutConstraint!
     var proxyTable: ProxyTable!
     var proxyTableArrow: UIImageView!
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
@@ -125,6 +127,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
             
             print("CONTENT OFFSET: \(proxyTable.contentOffset)")
         }
+        wordTableHeaderCoverHeight.constant = -1 * wordTable.contentOffset.y
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -233,10 +236,21 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
             return proxyCell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? WordListCell
-            cell?.backgroundView?.layer.addSublayer(gradient)
-            let rainbow = UIView()
-            rainbow.layer.addSublayer(gradient)
-            cell?.addSubview(rainbow)
+            
+//            gradient = model.yellowPinkBlueGreenGradient()
+//            gradient.frame = (cell?.bounds)!
+            //mainGradient?.zPosition = -1
+            //mainGradient?.name = "mainGradientLayer"
+           
+            //cell?.backgroundView?.layer.addSublayer(gradient)
+//            let rainbow = UIView()
+//            rainbow.layer.addSublayer(gradient)
+//            cell?.addSubview(rainbow)
+//            gradient = model.yellowPinkBlueGreenGradient()
+//            gradient.frame = tableView.bounds
+//            cell?.bg.layer.addSublayer(gradient)
+            
+            
             configureCell(cell!, atIndexPath: indexPath)
             return cell!
         }
@@ -249,6 +263,8 @@ protocol WordTables {
     var proxyTable: ProxyTable! {get}
     var proxyTableArrow: UIImageView! {get}
     var gradient: CAGradientLayer! {get}
+    var wordTableHeaderCover: UIView! {get}
+    var wordTableHeaderCoverHeight: NSLayoutConstraint! {get}
 }
 
 //extension Notification.Name {

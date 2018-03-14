@@ -44,6 +44,8 @@ class AtoZViewController: UIViewController {
     @IBOutlet weak var startNewList: UIButton!
     @IBOutlet weak var wordTableHolderView: UIView!
     @IBOutlet weak var wordTableHeaderView: UIView!
+    @IBOutlet weak var wordTableHeaderCover: UIView!
+    @IBOutlet weak var wordTableHeaderCoverHeight: NSLayoutConstraint!
     @IBOutlet weak var wordTable: UITableView!
     @IBOutlet weak var proxyTable: ProxyTable!
     @IBOutlet weak var proxyTableArrow: UIImageView!
@@ -281,6 +283,7 @@ class AtoZViewController: UIViewController {
         wordTable.dataSource = tableViewsDelegate
         proxyTable.dataSource = tableViewsDelegate
         tableViewsDelegate.wordTable = wordTable
+        tableViewsDelegate.wordTableHeaderCoverHeight = wordTableHeaderCoverHeight
         tableViewsDelegate.proxyTable = proxyTable
         tableViewsDelegate.proxyTableArrow = proxyTableArrow
         tableViewsDelegate.fetchedResultsController = fetchedResultsController
@@ -288,6 +291,7 @@ class AtoZViewController: UIViewController {
         proxyTable.proxyTableArrow = proxyTableArrow
         
         //wordTable.tableHeaderView = wordTableHeaderView
+        tableViewsDelegate.wordTableHeaderCover = wordTableHeaderCover
         wordTableHeaderView.backgroundColor = UIColor.cyan
         tableViewsDelegate.gradient = mainGradient
         
@@ -376,7 +380,7 @@ class AtoZViewController: UIViewController {
         mainGradient?.zPosition = -1
         mainGradient?.name = "mainGradientLayer"
         view.layer.addSublayer(mainGradient!)
-        tableViewsDelegate.gradient = mainGradient
+        //tableViewsDelegate.gradient = mainGradient
         //let indexPath = IndexPath(row: 0, section: 0)
         //wordTableHeaderView.layer.addSublayer(mainGradient!)
         

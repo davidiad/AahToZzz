@@ -290,7 +290,7 @@
                                     </view>
                                     <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="36" sectionHeaderHeight="-1" sectionFooterHeight="-1" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQk-rq-SuY">
                                         <rect key="frame" x="6" y="0.0" width="90" height="737"/>
-                                        <color key="backgroundColor" red="1" green="0.872" blue="0.040000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="90" id="6qr-xV-NCv"/>
                                         </constraints>
@@ -453,9 +453,17 @@
                                             <constraint firstAttribute="height" constant="124" id="7gV-ib-fLT"/>
                                         </constraints>
                                     </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ssr-sq-ro0">
+                                        <rect key="frame" x="6" y="0.0" width="90" height="28"/>
+                                        <color key="backgroundColor" red="0.58683035714285703" green="0.40975765306122447" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="RM7-yG-KGw"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="ssr-sq-ro0" firstAttribute="top" secondItem="DVE-Kx-iP4" secondAttribute="top" id="0kV-Tv-EIP"/>
                                     <constraint firstAttribute="bottom" secondItem="rxL-uN-hPn" secondAttribute="bottom" id="59G-Zn-QHo"/>
                                     <constraint firstItem="2Bm-MY-X4I" firstAttribute="bottom" secondItem="DVE-Kx-iP4" secondAttribute="bottom" constant="2" id="5b8-9n-kmC"/>
                                     <constraint firstItem="VE8-Hj-kp5" firstAttribute="leading" secondItem="DVE-Kx-iP4" secondAttribute="leading" id="8p0-U8-iUQ"/>
@@ -466,6 +474,8 @@
                                     <constraint firstItem="2Bm-MY-X4I" firstAttribute="leading" secondItem="DVE-Kx-iP4" secondAttribute="leading" id="Ubp-3y-wY7"/>
                                     <constraint firstAttribute="bottom" secondItem="VE8-Hj-kp5" secondAttribute="bottom" id="Y7e-ZP-wz6"/>
                                     <constraint firstItem="ELs-lh-jFG" firstAttribute="leading" secondItem="DVE-Kx-iP4" secondAttribute="leading" id="YO4-Yf-70H"/>
+                                    <constraint firstItem="rxL-uN-hPn" firstAttribute="leading" secondItem="ssr-sq-ro0" secondAttribute="trailing" id="a3z-Ts-LeJ"/>
+                                    <constraint firstItem="ssr-sq-ro0" firstAttribute="leading" secondItem="VE8-Hj-kp5" secondAttribute="trailing" id="cXC-iF-NG9"/>
                                     <constraint firstItem="iQk-rq-SuY" firstAttribute="centerX" secondItem="DVE-Kx-iP4" secondAttribute="centerX" id="eg6-ti-FPn"/>
                                     <constraint firstItem="rxL-uN-hPn" firstAttribute="top" secondItem="DVE-Kx-iP4" secondAttribute="top" id="hWH-De-eeC"/>
                                     <constraint firstItem="VE8-Hj-kp5" firstAttribute="top" secondItem="DVE-Kx-iP4" secondAttribute="top" id="k2a-U2-XBF"/>
@@ -707,6 +717,8 @@
                         <outlet property="topConstraint" destination="qy0-rM-BjO" id="xW2-dv-5eY"/>
                         <outlet property="wordInProgress" destination="ojv-Vd-35V" id="G6t-Rf-rXA"/>
                         <outlet property="wordTable" destination="iQk-rq-SuY" id="O8c-An-Vq3"/>
+                        <outlet property="wordTableHeaderCover" destination="ssr-sq-ro0" id="cmz-Ux-Hii"/>
+                        <outlet property="wordTableHeaderCoverHeight" destination="RM7-yG-KGw" id="Yvb-1m-Xkk"/>
                         <outlet property="wordTableHeaderView" destination="sId-eF-TfQ" id="Z4b-89-j1v"/>
                         <outlet property="wordTableHolderView" destination="DVE-Kx-iP4" id="1z0-bi-AtJ"/>
                     </connections>
