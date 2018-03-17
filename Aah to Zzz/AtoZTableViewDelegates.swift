@@ -14,6 +14,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
     var wordTable: UITableView!
     var wordTableHeaderCover: UIView!
     var wordTableHeaderCoverHeight: NSLayoutConstraint!
+    var wordTableFooterCoverHeight: NSLayoutConstraint!
     var proxyTable: ProxyTable!
     var proxyTableArrow: UIImageView!
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
@@ -125,9 +126,12 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
         if scrollView == proxyTable {
             wordTable.setContentOffset(proxyTable.contentOffset, animated: false)
             
-            print("CONTENT OFFSET: \(proxyTable.contentOffset)")
         }
-        wordTableHeaderCoverHeight.constant = -1 * wordTable.contentOffset.y
+        // cover the ends of the tranparent table with the "background' color. Any
+        // transparent parts will show the gradient underneath
+        let offset = wordTable.contentOffset.y
+        wordTableHeaderCoverHeight.constant = -1 * offset
+        wordTableFooterCoverHeight.constant = offset
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -265,6 +269,7 @@ protocol WordTables {
     var gradient: CAGradientLayer! {get}
     var wordTableHeaderCover: UIView! {get}
     var wordTableHeaderCoverHeight: NSLayoutConstraint! {get}
+    var wordTableFooterCoverHeight: NSLayoutConstraint! {get}
 }
 
 //extension Notification.Name {

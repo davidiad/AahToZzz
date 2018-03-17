@@ -15,6 +15,7 @@ class WordListCell: UITableViewCell {
     @IBOutlet weak var word: UILabel! // should really be named something less confusing like wordLabel
     // do i even still need 'word', the UILabel?
     @IBOutlet weak var bg: UIImageView!
+    @IBOutlet weak var bg2: UIImageView!
     
     @IBOutlet weak var firstLetter: UILabel!
     @IBOutlet weak var secondLetter: UILabel!
@@ -28,7 +29,8 @@ class WordListCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //bg.image = UIImage(named: "merged_small_tiles")
+        bg.image = UIImage(named: "merged_small_tiles_bg")
+        bg2.image = UIImage(named: "celMask")
 //        gradient = model.yellowPinkBlueGreenGradient()
 //        gradient.frame = self.bounds
 //        bg.layer.addSublayer(gradient)

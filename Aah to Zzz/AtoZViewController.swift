@@ -12,7 +12,7 @@ import Alamofire
 
 class AtoZViewController: UIViewController {
     
-    //TODO: should weak optional vars be used for delegatesa?
+    //TODO: should weak optional vars be used for delegates?
     let tableViewsDelegate = AtoZTableViewDelegates()
     let uiDynamicsDelegate = AtoZUIDynamicsDelegate()
     let gestureDelegate = AtoZGestureDelegate()
@@ -46,6 +46,7 @@ class AtoZViewController: UIViewController {
     @IBOutlet weak var wordTableHeaderView: UIView!
     @IBOutlet weak var wordTableHeaderCover: UIView!
     @IBOutlet weak var wordTableHeaderCoverHeight: NSLayoutConstraint!
+    @IBOutlet weak var wordTableFooterCoverHeight: NSLayoutConstraint!
     @IBOutlet weak var wordTable: UITableView!
     @IBOutlet weak var proxyTable: ProxyTable!
     @IBOutlet weak var proxyTableArrow: UIImageView!
@@ -284,6 +285,7 @@ class AtoZViewController: UIViewController {
         proxyTable.dataSource = tableViewsDelegate
         tableViewsDelegate.wordTable = wordTable
         tableViewsDelegate.wordTableHeaderCoverHeight = wordTableHeaderCoverHeight
+        tableViewsDelegate.wordTableFooterCoverHeight = wordTableFooterCoverHeight
         tableViewsDelegate.proxyTable = proxyTable
         tableViewsDelegate.proxyTableArrow = proxyTableArrow
         tableViewsDelegate.fetchedResultsController = fetchedResultsController
@@ -292,7 +294,6 @@ class AtoZViewController: UIViewController {
         
         //wordTable.tableHeaderView = wordTableHeaderView
         tableViewsDelegate.wordTableHeaderCover = wordTableHeaderCover
-        wordTableHeaderView.backgroundColor = UIColor.cyan
         tableViewsDelegate.gradient = mainGradient
         
         do {
@@ -393,16 +394,16 @@ class AtoZViewController: UIViewController {
         animator.addBehavior(collisionBehavior)
     }
     
-    func updateSizeForHeaderView(inTableView tableView : UITableView) {
-        let size = wordTableHeaderView.systemLayoutSizeFitting(wordTable.frame.size, withHorizontalFittingPriority: UILayoutPriority.required, verticalFittingPriority: UILayoutPriority.defaultLow)
-        wordTableHeaderView.frame.size = size
-        print(size)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        updateSizeForHeaderView(inTableView: wordTable)
-    }
+//    func updateSizeForHeaderView(inTableView tableView : UITableView) {
+//        let size = wordTableHeaderView.systemLayoutSizeFitting(wordTable.frame.size, withHorizontalFittingPriority: UILayoutPriority.required, verticalFittingPriority: UILayoutPriority.defaultLow)
+//        wordTableHeaderView.frame.size = size
+//        print(size)
+//    }
+//
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//        updateSizeForHeaderView(inTableView: wordTable)
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
