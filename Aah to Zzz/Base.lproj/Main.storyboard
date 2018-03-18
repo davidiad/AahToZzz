@@ -295,11 +295,6 @@
                                             <constraint firstAttribute="width" constant="90" id="6qr-xV-NCv"/>
                                         </constraints>
                                         <color key="sectionIndexBackgroundColor" red="0.98603981730000001" green="0.0" blue="0.078923560680000004" alpha="1" colorSpace="calibratedRGB"/>
-                                        <view key="tableFooterView" contentMode="scaleToFill" id="5xs-nP-EDI">
-                                            <rect key="frame" x="0.0" y="64" width="90" height="28"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" id="yVc-70-ETY" customClass="WordListCell" customModule="AahToZzz" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="90" height="36"/>
@@ -459,11 +454,11 @@
                                             <constraint firstAttribute="height" id="RM7-yG-KGw"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SBj-0e-XXP">
-                                        <rect key="frame" x="6" y="709" width="90" height="28"/>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SBj-0e-XXP">
+                                        <rect key="frame" x="6" y="737" width="90" height="0.0"/>
                                         <color key="backgroundColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="28" id="UnU-bU-BSZ"/>
+                                            <constraint firstAttribute="height" id="UnU-bU-BSZ"/>
                                         </constraints>
                                     </view>
                                     <imageView userInteractionEnabled="NO" alpha="0.66000000000000003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_up.png" translatesAutoresizingMaskIntoConstraints="NO" id="ELs-lh-jFG">

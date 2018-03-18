@@ -15,6 +15,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
     var wordTableHeaderCover: UIView!
     var wordTableHeaderCoverHeight: NSLayoutConstraint!
     var wordTableFooterCoverHeight: NSLayoutConstraint!
+    var footerGapHeight: CGFloat = 0 // The footer gap to fill, varies with word list length and screen height
     var proxyTable: ProxyTable!
     var proxyTableArrow: UIImageView!
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>?
@@ -51,6 +52,13 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         wordTable.endUpdates()
         proxyTable.endUpdates()
+        // update and apply the footerGapHeight
+        let heightOfCells = 36 * CGFloat(tableView(wordTable, numberOfRowsInSection: 0))
+        if heightOfCells > 0.001 { // conditional to prevent calculation after all rows are removed
+            footerGapHeight = wordTable.bounds.height - heightOfCells
+            wordTableFooterCoverHeight.constant = footerGapHeight
+            print("footerGapHeightfooterGapHeightfooterGapHeight: \(footerGapHeight)")
+        }
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
@@ -131,7 +139,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
         // transparent parts will show the gradient underneath
         let offset = wordTable.contentOffset.y
         wordTableHeaderCoverHeight.constant = -1 * offset
-        wordTableFooterCoverHeight.constant = offset
+        wordTableFooterCoverHeight.constant = footerGapHeight + offset
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

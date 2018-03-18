@@ -1070,7 +1070,7 @@ class AtoZViewController: UIViewController {
 //        if self.blurredViews.count > 0 {
 //            blurredViews[0].animatingStatusHeight = true
 //        }
-        UIView.animate(withDuration: 4.4, animations: {
+        UIView.animate(withDuration: 0.4 , animations: {
             self.statusBgHeight.constant = ht
             self.blurredViewHeight.constant = ht
             self.view.layoutIfNeeded()
