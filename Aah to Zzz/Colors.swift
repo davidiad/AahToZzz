@@ -34,4 +34,8 @@ struct Colors {
     static let darkBrown = UIColor(hue: 38/360, saturation: 0.7, brightness: 0.3, alpha: 1.0)
     static let midBrown = UIColor(hue: 38/360, saturation: 0.75, brightness: 0.7, alpha: 0.7
     )
+    
+    // Background colors
+    static let darkBackground = UIColor(hue: 237/360, saturation: 0.64, brightness: 0.16, alpha: 1.0
+    )
 }

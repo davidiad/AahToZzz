@@ -47,32 +47,50 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         wordTable.beginUpdates()
         proxyTable.beginUpdates()
+        // hide the gap bet. below the cells by temp. setting table bg to a matching dark color
+        wordTable.backgroundColor = Colors.darkBackground
+    }
+    
+    // update and apply the footerGapHeight
+    func updateFooterGapHeight() {
+        let heightOfCells = 36 * CGFloat(tableView(wordTable, numberOfRowsInSection: 0))
+        if heightOfCells > 0.001 { // conditional to prevent calculation after all rows removed
+            footerGapHeight = wordTable.bounds.height - heightOfCells
+            wordTableFooterCoverHeight.constant = footerGapHeight
+        }
+    }
+    
+    // animation to hide the gap when changing # of cells
+    func animateBackground (_ tableview: UITableView) {
+        UIView.animate(withDuration: 0.2, delay: 0.25, options: [.transitionCrossDissolve, .allowAnimatedContent], animations: {
+            tableview.backgroundColor = .clear
+        }) { (_) in
+            UIView.animate(withDuration: 1.0, animations: {
+                //cell.contentView.backgroundColor = self.color1
+            })
+        }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         wordTable.endUpdates()
         proxyTable.endUpdates()
-        // update and apply the footerGapHeight
-        let heightOfCells = 36 * CGFloat(tableView(wordTable, numberOfRowsInSection: 0))
-        if heightOfCells > 0.001 { // conditional to prevent calculation after all rows are removed
-            footerGapHeight = wordTable.bounds.height - heightOfCells
-            wordTableFooterCoverHeight.constant = footerGapHeight
-            print("footerGapHeightfooterGapHeightfooterGapHeight: \(footerGapHeight)")
-        }
+        updateFooterGapHeight()
+        // animate bg color to clear
+        animateBackground(wordTable)
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch (type) {
         case .insert:
             if let indexPath = newIndexPath {
-                wordTable.insertRows(at: [indexPath], with: .fade)
-                proxyTable.insertRows(at: [indexPath], with: .fade)
+                wordTable.insertRows(at: [indexPath], with: .bottom)
+                proxyTable.insertRows(at: [indexPath], with: .none)
             }
             break;
         case .delete:
             if let indexPath = indexPath {
-                wordTable.deleteRows(at: [indexPath], with: .fade)
-                proxyTable.deleteRows(at: [indexPath], with: .fade)
+                wordTable.deleteRows(at: [indexPath], with: .top)
+                proxyTable.deleteRows(at: [indexPath], with: .left)
             }
             break;
         case .update:
@@ -82,13 +100,14 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
             break;
         case .move:
             if let indexPath = indexPath {
-                wordTable.deleteRows(at: [indexPath], with: .fade)
-                proxyTable.deleteRows(at: [indexPath], with: .fade)
+                wordTable.deleteRows(at: [indexPath], with: .left)
+                proxyTable.deleteRows(at: [indexPath], with: .left)
             }
             
+            
             if let newIndexPath = newIndexPath {
-                wordTable.insertRows(at: [newIndexPath], with: .fade)
-                proxyTable.insertRows(at: [newIndexPath], with: .fade)
+                wordTable.insertRows(at: [newIndexPath], with: .left)
+                proxyTable.insertRows(at: [newIndexPath], with: .left)
             }
             break;
         }
