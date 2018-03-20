@@ -47,8 +47,6 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         wordTable.beginUpdates()
         proxyTable.beginUpdates()
-        // hide the gap bet. below the cells by temp. setting table bg to a matching dark color
-        wordTable.backgroundColor = Colors.darkBackground
     }
     
     // update and apply the footerGapHeight
@@ -67,6 +65,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
         }) { (_) in
             UIView.animate(withDuration: 1.0, animations: {
                 //cell.contentView.backgroundColor = self.color1
+                // TODO: need this completion handler or set to nil?
             })
         }
     }
@@ -75,7 +74,7 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
         wordTable.endUpdates()
         proxyTable.endUpdates()
         updateFooterGapHeight()
-        // animate bg color to clear
+        // animate the bg color to back to transparent
         animateBackground(wordTable)
     }
     
@@ -89,6 +88,9 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
             break;
         case .delete:
             if let indexPath = indexPath {
+                // when deleting cells (in prep for a new list), hide the gap below the
+                // cells by temp. setting table bg to a matching dark color
+                wordTable.backgroundColor = Colors.darkBackground
                 wordTable.deleteRows(at: [indexPath], with: .top)
                 proxyTable.deleteRows(at: [indexPath], with: .left)
             }
