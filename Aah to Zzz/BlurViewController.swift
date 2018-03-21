@@ -30,6 +30,7 @@ class BlurViewController: UIViewController {
     var opacityAnimator: UIViewPropertyAnimator?
     var opacityAnimator2: UIViewPropertyAnimator?
     var animatingStatusHeight: Bool = false
+    var textAsButtons: Bool = false
     
     //MARK:- View Lifecycle
     override func viewDidLoad() {
@@ -146,11 +147,22 @@ class BlurViewController: UIViewController {
             
             // create the labels and add them to the stack view
             for t in textLines {
-                let textLine = UILabel()
-                // set the labels' text to the value of textLines[n]
-                textLine.text = t
-                textLine.sizeToFit() // move to formatting
-                stackView.addArrangedSubview(textLine)
+                if textAsButtons == false {
+                    let textLine = UILabel()
+                    // set the labels' text to the value of textLines[n]
+                    textLine.text = t
+                    textLine.sizeToFit() // move to formatting
+                    stackView.addArrangedSubview(textLine)
+                } else {
+                    let textline = UIButton()
+                    textline.setTitle(t, for: .normal)
+                    textline.sizeToFit()
+                    //textline.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
+                    
+                    
+                    stackView.addArrangedSubview(textline)
+                }
+                
                 
                 // add any necessary formatting
             }
