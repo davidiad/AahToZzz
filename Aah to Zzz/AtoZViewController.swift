@@ -360,6 +360,7 @@ class AtoZViewController: UIViewController {
         
         let upperPositionsBg = UIImage(named: "upper_positions_bg") as UIImage?
         let upperPositionsView = UIImageView(image: upperPositionsBg)
+        upperPositionsView.alpha = 0.75
         upperPositionsView.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + 120)
         view.addSubview(upperPositionsView)
         // Make sure all tiles have higher z index than all bg's. Also when tapped

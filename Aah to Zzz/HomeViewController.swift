@@ -12,7 +12,7 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var descriptionView: UIView!
     
-    @IBOutlet weak var buttonHolderView: UIView!
+//    @IBOutlet weak var buttonHolderView: UIView!
     
     @IBOutlet var buttons: [UIButton]!
     @IBAction func playGame(_ sender: AnyObject) {
@@ -49,14 +49,13 @@ class HomeViewController: UIViewController {
             blurredViews[index].textLines.append(BUBBLETEXT1)
             blurredViews[index].textLines.append(BUBBLETEXT2)
             blurredViews[index].textLines.append(BUBBLETEXT3)
-            blurredViews[index].textAsButtons = true
-            blurredViews[index].buttons = buttons
             
         } else if segue.identifier == "Blurred2" {
             blurredViews.append(bubble)
             let index = blurredViews.count - 1
-            blurredViews[index].numLines = NUMLINES2
-            blurredViews[index].textLines.append(BUBBLETEXT4)
+//            blurredViews[index].numLines = NUMLINES2
+//            blurredViews[index].textLines.append(BUBBLETEXT4)
+            blurredViews[index].buttons = buttons
         }
     }
     
@@ -65,10 +64,9 @@ class HomeViewController: UIViewController {
         addGradientBar()
         descriptionView.layer.cornerRadius = 12.0
         descriptionView.layer.masksToBounds = true
-        buttonHolderView.layer.cornerRadius = 12.0
-        buttonHolderView.layer.masksToBounds = true
+//        buttonHolderView.layer.cornerRadius = 12.0
+//        buttonHolderView.layer.masksToBounds = true
 
-        // Do any additional setup after loading the view.
     }
     
     // TODO: repeated in Progress VC. Consolidate.
