@@ -264,6 +264,13 @@
                         <outlet property="buttonHolderView" destination="bDa-bt-Ua3" id="mqJ-cC-npg"/>
                         <outlet property="descriptionView" destination="zqR-lZ-q0o" id="03Q-GE-enf"/>
                         <outlet property="rightSideBar" destination="wHB-FN-ik4" id="mhw-U9-eKR"/>
+                        <outletCollection property="buttons" destination="mwb-MG-8bs" collectionClass="NSMutableArray" id="dhS-Oc-1wk"/>
+                        <outletCollection property="buttons" destination="yNe-vJ-zON" collectionClass="NSMutableArray" id="S43-CP-deQ"/>
+                        <outletCollection property="buttons" destination="z9r-FU-YhZ" collectionClass="NSMutableArray" id="XC5-Uj-NEX"/>
+                        <outletCollection property="buttons" destination="xCH-Co-bR6" collectionClass="NSMutableArray" id="lPI-xp-eBz"/>
+                        <outletCollection property="buttons" destination="Ic2-fx-QBA" collectionClass="NSMutableArray" id="U2s-1u-k1Y"/>
+                        <outletCollection property="buttons" destination="MSt-UW-IVq" collectionClass="NSMutableArray" id="fqM-d2-Nb6"/>
+                        <outletCollection property="buttons" destination="He6-7G-baV" collectionClass="NSMutableArray" id="8cw-O2-Vr8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rk-87-AV6" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -14,11 +14,11 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var buttonHolderView: UIView!
     
+    @IBOutlet var buttons: [UIButton]!
     @IBAction func playGame(_ sender: AnyObject) {
        // performSegueWithIdentifier("PlaySegue", sender:self)
     }
     
-
     @IBOutlet weak var rightSideBar: UIImageView!
     
     //MARK:- Constants
@@ -50,6 +50,7 @@ class HomeViewController: UIViewController {
             blurredViews[index].textLines.append(BUBBLETEXT2)
             blurredViews[index].textLines.append(BUBBLETEXT3)
             blurredViews[index].textAsButtons = true
+            blurredViews[index].buttons = buttons
             
         } else if segue.identifier == "Blurred2" {
             blurredViews.append(bubble)

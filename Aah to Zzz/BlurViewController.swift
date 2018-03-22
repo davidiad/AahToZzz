@@ -23,6 +23,7 @@ class BlurViewController: UIViewController {
     var shadowOpacity: Float    = 0.5
     var shadowRadius: CGFloat   = 6.0
     var borderWidth: CGFloat    = 1.0
+    var buttons: [UIButton]?
     
     //MARK:- Vars
     var blurView: UIVisualEffectView?
@@ -114,10 +115,8 @@ class BlurViewController: UIViewController {
         // 1. start the animation of .4 s from 52 height to 90 (or whatever) of the inner mask path
         // 2.
             updateShadowMaskLayer()
-        
        // }
         
-
 //        opacityAnimator2 = UIViewPropertyAnimator(duration: 4.35, curve: .easeIn) {
 //            self.shadowView?.layer.opacity = 1.0
 //        }
@@ -154,13 +153,26 @@ class BlurViewController: UIViewController {
                     textLine.sizeToFit() // move to formatting
                     stackView.addArrangedSubview(textLine)
                 } else {
-                    let textline = UIButton()
-                    textline.setTitle(t, for: .normal)
-                    textline.sizeToFit()
-                    //textline.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
+//                    let textline = UIButton()
+//                    textline.setTitle(t, for: .normal)
+//                    textline.sizeToFit()
+//                    //textline.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
+//
                     
+                    //stackView.addArrangedSubview(textline)
                     
-                    stackView.addArrangedSubview(textline)
+                    guard let buttons = buttons else {
+                        print("NO BUTTONS IN THIS ONE")
+                        return
+                    }
+                    for button in buttons {
+                        stackView.addArrangedSubview(button)
+                    }
+//                    if buttons != nil {
+//                        for button in buttons! {
+//                            stackView.addArrangedSubview(button)
+//                        }
+//                    }
                 }
                 
                 
