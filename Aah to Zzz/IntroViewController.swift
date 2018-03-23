@@ -11,43 +11,63 @@ import UIKit
 
 class IntroViewController: UIViewController {
 
-    //MARK:- Outlets
+
     //@IBOutlet weak var xibview: XibView!
     //@IBOutlet weak var stackView: UIStackView!
     //@IBOutlet weak var bg: UIImageView!
     //@IBOutlet weak var infoBorder: UIImageView!
     
-    //MARK:- Actions
+
     //@IBAction func play(_ sender: Any) {
         //dismiss(animated: true, completion: nil)
     //}
     
     //MARK:- Constants
     // 1st bubble
-    let NUMLINES1 = 2
-    let BUBBLETEXT1 = "I am the first line!*"
-    let BUBBLETEXT2 = "When is under 1 = 2?"
+    let NUMLINES1 = 3
+    let BUBBLETEXT1 = "Tap or drag tiles"
+    let BUBBLETEXT2 = "to form"
+    let BUBBLETEXT3 = "three letter words"
     
     // 2nd bubble
     let NUMLINES2 = 1
-    let BUBBLETEXT3 = "3 > 1+2!!!"
+    let BUBBLETEXT4 = "Tap a word to see definition"
     
+    // 3rd bubble
+    let NUMLINES3 = 3
+    let BUBBLETEXT5 = "Start a new list of words"
+    let BUBBLETEXT6 = "by tapping the"
+    let BUBBLETEXT7 = "New List button"
+    
+    //MARK:- Outlets
+    @IBOutlet var containers: [UIView]!
+
     //MARK:- Vars
     var blurredViews: [BlurViewController] = []
+    var currentContainerIndex: Int = 0
     
-
+    @objc func handleTap(recognizer: UITapGestureRecognizer) {
+        currentContainerIndex += 1
+        if currentContainerIndex < containers.count {
+            updateContainers()
+        } else {
+            updateContainers() // make the last one fade
+            // add completion handler, so it fades to transparent, and then dismissed
+            dismiss(animated: true, completion: nil)
+        }
+        
+    }
     
-//    var blurView: UIVisualEffectView?
-//    var blurView2: UIVisualEffectView?
-//    var blurView3: UIVisualEffectView?
+    //MARK: - View Lifecycle
     
     // Pass text info to blurred background VC's
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let bubble = segue.destination as? BlurViewController else {
             return
         }
-
+        
         if segue.identifier == "Blurred1" {
+            
             blurredViews.append(bubble)
             // Since we do not know in which order the controllers are added to blurredViews,
             // set the index to the element just added to the array
@@ -55,27 +75,42 @@ class IntroViewController: UIViewController {
             blurredViews[index].numLines = NUMLINES1
             blurredViews[index].textLines.append(BUBBLETEXT1)
             blurredViews[index].textLines.append(BUBBLETEXT2)
+            blurredViews[index].textLines.append(BUBBLETEXT3)
             
         } else if segue.identifier == "Blurred2" {
             blurredViews.append(bubble)
             let index = blurredViews.count - 1
             blurredViews[index].numLines = NUMLINES2
-            blurredViews[index].textLines.append(BUBBLETEXT3)
+            blurredViews[index].textLines.append(BUBBLETEXT4)
+        } else if segue.identifier == "Blurred3" {
+            blurredViews.append(bubble)
+            let index = blurredViews.count - 1
+            blurredViews[index].numLines = NUMLINES3
+            blurredViews[index].textLines.append(BUBBLETEXT5)
+            blurredViews[index].textLines.append(BUBBLETEXT6)
+            blurredViews[index].textLines.append(BUBBLETEXT7)
         }
     }
     
-    @objc func handleTap(recognizer: UITapGestureRecognizer) {
-        dismiss(animated: true, completion: nil)
+    func updateContainers() {
+        for i in 0 ..< containers.count {
+            if i == currentContainerIndex {
+                containers[i].alpha = 1.0
+            } else {
+                containers[i].alpha = 0.0
+            }
+        }
     }
     
-    //MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer: )))
         view.addGestureRecognizer(tapGesture)
         
-        
+        containers[0].alpha = 1.0
+        containers[1].alpha = 0.0
+        containers[2].alpha = 0.0
         
         /*
         blurView3 = UIVisualEffectView(effect: nil)

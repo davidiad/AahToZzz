@@ -15,6 +15,8 @@ class HomeViewController: UIViewController {
 //    @IBOutlet weak var buttonHolderView: UIView!
     
     @IBOutlet var buttons: [UIButton]!
+    
+    
     @IBAction func playGame(_ sender: AnyObject) {
        // performSegueWithIdentifier("PlaySegue", sender:self)
     }

@@ -765,7 +765,7 @@
                                 <rect key="frame" x="0.0" y="28" width="40" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i9a-Rb-KBw" id="T6q-0D-etL">
-                                    <rect key="frame" x="0.0" y="0.0" width="40" height="43.666666666666664"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="40" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9QK-Cn-zaG">
@@ -1230,90 +1230,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-Cn-cTF">
-                                <rect key="frame" x="50" y="50" width="314" height="180"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uRl-0f-iXL">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="132.66666666666666"/>
-                                        <string key="text">Tap or drag the letters to form three letter words.
-Tap on a word to see definition.</string>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jnC-FW-GVe">
-                                        <rect key="frame" x="0.0" y="132.66666666666666" width="314" height="47.333333333333343"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <state key="normal" title="Play"/>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.98603981730000001" green="0.0" blue="0.078923560680000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="ICS-8v-GCh"/>
-                                </constraints>
-                            </stackView>
-                            <imageView hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="small_tile_purple.png" translatesAutoresizingMaskIntoConstraints="NO" id="z7g-jS-JUT" userLabel="Shadow">
-                                <rect key="frame" x="50" y="50" width="314" height="180"/>
-                                <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.92857000000000001" height="0.59999999999999998"/>
-                            </imageView>
-                            <imageView hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_border" translatesAutoresizingMaskIntoConstraints="NO" id="L85-BR-M22">
-                                <rect key="frame" x="50" y="50" width="314" height="180"/>
-                                <rect key="contentStretch" x="0.056000000000000001" y="0.20000000000000001" width="0.92857000000000001" height="0.59999999999999998"/>
-                            </imageView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wordnik" translatesAutoresizingMaskIntoConstraints="NO" id="ynO-mS-lXH">
-                                <rect key="frame" x="-1" y="304" width="416" height="128"/>
-                            </imageView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YD3-gY-eQb" customClass="XibView" customModule="AahToZzz" customModuleProvider="target">
-                                <rect key="frame" x="87" y="275" width="240" height="305"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="nibName" value="BlurBubble"/>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ2-et-PgL">
-                                <rect key="frame" x="9" y="588" width="41" height="128"/>
+                                <rect key="frame" x="112" y="338" width="282" height="134"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="282" id="ixW-X3-TPg"/>
+                                    <constraint firstAttribute="height" constant="134" id="xl1-Kh-LgQ"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="mxI-QG-9Yx" kind="embed" identifier="Blurred1" id="7y2-bk-RDx"/>
                                 </connections>
                             </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8d-qc-6K7">
-                                <rect key="frame" x="118" y="139" width="209" height="505"/>
+                            <containerView opaque="NO" alpha="0.14999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8d-qc-6K7">
+                                <rect key="frame" x="43" y="78" width="261" height="87"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="261" id="t9u-wm-1SE"/>
+                                    <constraint firstAttribute="height" constant="87" id="tuN-VH-6UB"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="Bfw-yD-eiF" kind="embed" identifier="Blurred2" id="uT7-0T-0Hg"/>
                                 </connections>
                             </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G4M-7j-Vuc">
+                                <rect key="frame" x="20" y="522" width="228" height="132"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="228" id="0YV-hN-aOs"/>
+                                    <constraint firstAttribute="height" constant="132" id="erJ-W6-kHu"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="uzH-Aa-Jia" kind="embed" identifier="Blurred3" id="GZE-dG-xVw"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="YD3-gY-eQb" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="67" id="290-e0-ada"/>
-                            <constraint firstItem="cYu-Cn-cTF" firstAttribute="trailing" secondItem="TNc-fb-6pR" secondAttribute="trailing" constant="-50" id="36N-yp-WXL"/>
-                            <constraint firstItem="L85-BR-M22" firstAttribute="trailing" secondItem="z7g-jS-JUT" secondAttribute="trailing" id="5fz-e6-u7z"/>
-                            <constraint firstItem="L85-BR-M22" firstAttribute="leading" secondItem="z7g-jS-JUT" secondAttribute="leading" id="A0I-n3-5hA"/>
-                            <constraint firstItem="YD3-gY-eQb" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="bottom" constant="45" id="A4L-k7-a69"/>
-                            <constraint firstItem="z7g-jS-JUT" firstAttribute="trailing" secondItem="cYu-Cn-cTF" secondAttribute="trailing" id="BcF-3E-lpL"/>
-                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="YD3-gY-eQb" secondAttribute="bottom" constant="156" id="CEX-87-QR8"/>
-                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="20" id="OSi-zr-cYo"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="YD3-gY-eQb" secondAttribute="trailing" constant="67" id="Odt-vi-sJU"/>
-                            <constraint firstItem="eQ2-et-PgL" firstAttribute="top" secondItem="YD3-gY-eQb" secondAttribute="bottom" constant="8" id="Qor-xa-W6l"/>
-                            <constraint firstItem="z7g-jS-JUT" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="top" id="RPi-gH-QRR"/>
-                            <constraint firstItem="z7g-jS-JUT" firstAttribute="leading" secondItem="cYu-Cn-cTF" secondAttribute="leading" id="S3G-Xl-jbd"/>
-                            <constraint firstItem="z7g-jS-JUT" firstAttribute="bottom" secondItem="cYu-Cn-cTF" secondAttribute="bottom" id="T3i-kZ-sXO"/>
-                            <constraint firstItem="eQ2-et-PgL" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="9" id="Vqi-BW-PEK"/>
-                            <constraint firstItem="ynO-mS-lXH" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="-1" id="WW2-tN-HRj"/>
-                            <constraint firstItem="L85-BR-M22" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="top" id="eOH-Ru-BMp"/>
-                            <constraint firstItem="ynO-mS-lXH" firstAttribute="top" secondItem="cYu-Cn-cTF" secondAttribute="bottom" constant="74" id="gXV-5V-zlA"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="trailing" secondItem="TNc-fb-6pR" secondAttribute="trailingMargin" constant="-67" id="gda-A5-o3a"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="ynO-mS-lXH" secondAttribute="bottom" constant="-293" id="hXC-Zx-LL9"/>
-                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="ynO-mS-lXH" secondAttribute="bottom" constant="304" id="lDl-H5-ThN"/>
-                            <constraint firstAttribute="trailing" secondItem="ynO-mS-lXH" secondAttribute="trailing" constant="-1" id="nTE-9g-X29"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="68" id="pDI-qq-3HO"/>
-                            <constraint firstItem="cYu-Cn-cTF" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="50" id="pYT-TC-Tuz"/>
-                            <constraint firstItem="L85-BR-M22" firstAttribute="bottom" secondItem="z7g-jS-JUT" secondAttribute="bottom" id="rIw-bA-NJ3"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="118" id="wrV-kh-xlm"/>
-                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="y8d-qc-6K7" secondAttribute="bottom" constant="92" id="yor-5k-XLy"/>
-                            <constraint firstItem="cYu-Cn-cTF" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="30" id="zXv-qE-tBe"/>
+                            <constraint firstAttribute="trailing" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="20" id="3Ps-sv-0Kv"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="58" id="4cD-5I-Lki"/>
+                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="G4M-7j-Vuc" secondAttribute="bottom" constant="82" id="HLV-Oi-NTs"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="23" id="ICb-Y8-e5C"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" constant="20" id="wiK-d6-RMf"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="50" id="zWW-Zc-Iia"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="414" height="736"/>
+                    <connections>
+                        <outletCollection property="containers" destination="eQ2-et-PgL" collectionClass="NSMutableArray" id="fUv-9s-BWQ"/>
+                        <outletCollection property="containers" destination="y8d-qc-6K7" collectionClass="NSMutableArray" id="Ne8-qI-GeV"/>
+                        <outletCollection property="containers" destination="G4M-7j-Vuc" collectionClass="NSMutableArray" id="wy8-hm-URj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhV-Ay-3EQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1325,7 +1287,7 @@ Tap on a word to see definition.</string>
                 <viewController id="mxI-QG-9Yx" customClass="BlurViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CQn-OV-Jeo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="935" y="1370"/>
+            <point key="canvasLocation" x="1083" y="1432"/>
         </scene>
         <!--Blur View Controller-->
         <scene sceneID="ZI6-ID-pnM">
@@ -1333,7 +1295,7 @@ Tap on a word to see definition.</string>
                 <viewController id="Bfw-yD-eiF" customClass="BlurViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OaM-O9-Vbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1789" y="1370"/>
+            <point key="canvasLocation" x="1892" y="1413"/>
         </scene>
         <!--Blur View Controller-->
         <scene sceneID="0fI-ZK-ev4">
@@ -1359,6 +1321,14 @@ Tap on a word to see definition.</string>
             </objects>
             <point key="canvasLocation" x="-449" y="1553"/>
         </scene>
+        <!--Blur View Controller-->
+        <scene sceneID="QEw-g1-Lo0">
+            <objects>
+                <viewController id="uzH-Aa-Jia" customClass="BlurViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j7H-PS-ANz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1490" y="1432"/>
+        </scene>
     </scenes>
     <resources>
         <image name="celMask" width="90" height="36"/>
@@ -1369,12 +1339,10 @@ Tap on a word to see definition.</string>
         <image name="icon_newlist" width="17" height="26"/>
         <image name="icon_progress" width="25" height="25"/>
         <image name="icon_shuffle" width="26" height="26"/>
-        <image name="info_border" width="360" height="100"/>
         <image name="progress_info_bg.png" width="360" height="100"/>
         <image name="proxy_table_arrow" width="40" height="120"/>
         <image name="shadow_up.png" width="80" height="54"/>
         <image name="shadown_down" width="80" height="54"/>
-        <image name="small_tile_purple.png" width="26" height="26"/>
         <image name="status_bg" width="190" height="52"/>
         <image name="wordnik" width="100" height="20"/>
     </resources>
