@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+//TODO:- animate bubble fade. format text. if poss, add New List icon, and possibly arrows pointing to appropo place
 
 class IntroViewController: UIViewController {
 
@@ -47,15 +47,22 @@ class IntroViewController: UIViewController {
     var currentContainerIndex: Int = 0
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
-        currentContainerIndex += 1
-        if currentContainerIndex < containers.count {
-            updateContainers()
-        } else {
-            updateContainers() // make the last one fade
-            // add completion handler, so it fades to transparent, and then dismissed
-            dismiss(animated: true, completion: nil)
+        fadeOrDismiss()
+    }
+    
+    func fadeOrDismiss() {
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.transitionCrossDissolve, .allowAnimatedContent, .curveEaseInOut], animations: {
+            self.containers[self.currentContainerIndex].alpha = 0.0
+        }) { (_) in
+            self.currentContainerIndex += 1
+            if self.currentContainerIndex >= self.containers.count {
+                self.dismiss(animated: true, completion: nil)
+                return
+            }
+            UIView.animate(withDuration: 1.0, delay: 0.1, options: [.transitionCrossDissolve, .allowAnimatedContent, .curveEaseOut], animations: {
+                    self.containers[self.currentContainerIndex].alpha = 1.0
+            })
         }
-        
     }
     
     //MARK: - View Lifecycle
@@ -89,16 +96,6 @@ class IntroViewController: UIViewController {
             blurredViews[index].textLines.append(BUBBLETEXT5)
             blurredViews[index].textLines.append(BUBBLETEXT6)
             blurredViews[index].textLines.append(BUBBLETEXT7)
-        }
-    }
-    
-    func updateContainers() {
-        for i in 0 ..< containers.count {
-            if i == currentContainerIndex {
-                containers[i].alpha = 1.0
-            } else {
-                containers[i].alpha = 0.0
-            }
         }
     }
     

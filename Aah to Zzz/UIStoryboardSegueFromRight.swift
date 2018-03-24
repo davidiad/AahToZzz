@@ -39,7 +39,7 @@ class UIStoryboardSegueFromRight: UIStoryboardSegue {
     }
     
     deinit {
-        print("DEINIT RUGHT")
+        //print("DEINIT RUGHT")
     }
 }
 
@@ -69,7 +69,7 @@ class UIStoryboardSegueFromLeft: UIStoryboardSegue {
     }
     
     deinit {
-        print("DEINIT Left")
+        //print("DEINIT Left")
     }
 }
 

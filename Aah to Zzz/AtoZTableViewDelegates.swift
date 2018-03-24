@@ -91,6 +91,9 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
                 // when deleting cells (in prep for a new list), hide the gap below the
                 // cells by temp. setting table bg to a matching dark color
                 wordTable.backgroundColor = Colors.darkBackground
+//                if let cell = wordTable.cellForRow(at: indexPath) as? WordListCell {
+//                    cell.outlineView.tintColor = Colors.darkBackground
+//                }
                 wordTable.deleteRows(at: [indexPath], with: .top)
                 proxyTable.deleteRows(at: [indexPath], with: .left)
             }

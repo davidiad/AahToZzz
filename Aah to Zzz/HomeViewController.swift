@@ -26,8 +26,8 @@ class HomeViewController: UIViewController {
     //MARK:- Constants
     // 1st bubble
     let NUMLINES1 = 3
-    let BUBBLETEXT1 = "A fun way to learn 3 letter words."
-    let BUBBLETEXT2 = "Tap or drag the letters to form words."
+    let BUBBLETEXT1 = "Why 3 letter words?"
+    let BUBBLETEXT2 = "A fun way to learn 3 letter words."
     let BUBBLETEXT3 = "Keep going till you find all 1000+ 3 letter words!"
     // 2nd bubble
     let NUMLINES2 = 1
