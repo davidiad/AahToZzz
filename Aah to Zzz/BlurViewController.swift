@@ -139,19 +139,41 @@ class BlurViewController: UIViewController {
         shadowView.layer.mask = shadowMaskLayer
     }
     
+    // Format the text
+    func formatBubbleText(textToFormat: String) -> NSAttributedString {
+        
+        let shadow = NSShadow()
+        shadow.shadowBlurRadius = 3
+        shadow.shadowOffset = CGSize(width: 0, height: 3)
+        shadow.shadowColor = UIColor.gray
+        
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.alignment = .center
+        
+        let multipleAttributes: [NSAttributedStringKey : Any] = [
+            NSAttributedStringKey.font: UIFont(name: "Noteworthy-Bold", size: 18.0)!,
+            NSAttributedStringKey.paragraphStyle: paraStyle,
+            NSAttributedStringKey.shadow: shadow,
+            NSAttributedStringKey.strokeColor: Colors.darkBackground,
+            NSAttributedStringKey.foregroundColor: Colors.lighterDarkBrown,
+            NSAttributedStringKey.strokeWidth: -1.0]
+        
+        return NSAttributedString(string: textToFormat, attributes: multipleAttributes)
+    }
+    
     // Set the text for the bubble
     func initLines() {
         
         if numLines > 0 {
             
             // create the labels and add them to the stack view
+            
             for t in textLines {
                 if textAsButtons == false {
-                    let textLine = UILabel()
-                    // set the labels' text to the value of textLines[n]
-                    textLine.text = t
-                    textLine.sizeToFit() // move to formatting
-                    stackView.addArrangedSubview(textLine)
+                    let textLineLabel = UILabel()
+                    textLineLabel.attributedText = formatBubbleText(textToFormat: t)
+                    textLineLabel.sizeToFit() // move to formatting
+                    stackView.addArrangedSubview(textLineLabel)
                 } else {
 //                    let textline = UIButton()
 //                    textline.setTitle(t, for: .normal)
@@ -159,8 +181,8 @@ class BlurViewController: UIViewController {
 //                    //textline.addTarget(self, action: #selector(action(sender:)), for: .touchUpInside)
 //
                     
-                    //stackView.addArrangedSubview(textline)
                     
+                    // add button collection from storyboard
                     guard let buttons = buttons else {
                         print("NO BUTTONS IN THIS ONE")
                         return

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//TODO:- animate bubble fade. format text. if poss, add New List icon, and possibly arrows pointing to appropo place
+//TODO:- if poss, add New List icon, and possibly arrows pointing to appropo place
 
 class IntroViewController: UIViewController {
 
@@ -34,10 +34,11 @@ class IntroViewController: UIViewController {
     let BUBBLETEXT4 = "Tap a word to see definition"
     
     // 3rd bubble
-    let NUMLINES3 = 3
-    let BUBBLETEXT5 = "Start a new list of words"
-    let BUBBLETEXT6 = "by tapping the"
-    let BUBBLETEXT7 = "New List button"
+    let NUMLINES3 = 4
+    let BUBBLETEXT5 = "Tap"
+    let BUBBLETEXT6 = "the New List button"
+    let BUBBLETEXT7 = "to get"
+    let BUBBLETEXT8 = "new words to find"
     
     //MARK:- Outlets
     @IBOutlet var containers: [UIView]!
@@ -47,18 +48,23 @@ class IntroViewController: UIViewController {
     var currentContainerIndex: Int = 0
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
-        fadeOrDismiss()
+        fadeMessageBubblesOrDismiss()
     }
     
-    func fadeOrDismiss() {
+    func fadeMessageBubblesOrDismiss() {
+        // fade out the current msg bubble
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.transitionCrossDissolve, .allowAnimatedContent, .curveEaseInOut], animations: {
             self.containers[self.currentContainerIndex].alpha = 0.0
         }) { (_) in
+            // set the next message bubble
+            // if the current is the last, then dismiss the entire view controller
+            // and don't proceed
             self.currentContainerIndex += 1
             if self.currentContainerIndex >= self.containers.count {
                 self.dismiss(animated: true, completion: nil)
                 return
             }
+            // fade in the next msg bubble
             UIView.animate(withDuration: 1.0, delay: 0.1, options: [.transitionCrossDissolve, .allowAnimatedContent, .curveEaseOut], animations: {
                     self.containers[self.currentContainerIndex].alpha = 1.0
             })
@@ -96,6 +102,7 @@ class IntroViewController: UIViewController {
             blurredViews[index].textLines.append(BUBBLETEXT5)
             blurredViews[index].textLines.append(BUBBLETEXT6)
             blurredViews[index].textLines.append(BUBBLETEXT7)
+            blurredViews[index].textLines.append(BUBBLETEXT8)
         }
     }
     
@@ -256,13 +263,7 @@ class IntroViewController: UIViewController {
             ])
  */
     }
-    
 
-    
-//    // needed??
-//    override func viewWillLayoutSubviews() {
-//        print("DIM VWLOSV's: \(bg.frame)")
-//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
