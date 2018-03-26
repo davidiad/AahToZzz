@@ -139,8 +139,8 @@ class BlurViewController: UIViewController {
         shadowView.layer.mask = shadowMaskLayer
     }
     
-    // Format the text
-    func formatBubbleText(textToFormat: String) -> NSAttributedString {
+    // Format the text. Underline is none for 0, single for 1
+    func formatBubbleText(textToFormat: String, underline: Int) -> NSAttributedString {
         
         let shadow = NSShadow()
         shadow.shadowBlurRadius = 3
@@ -154,9 +154,10 @@ class BlurViewController: UIViewController {
             NSAttributedStringKey.font: UIFont(name: "Noteworthy-Bold", size: 18.0)!,
             NSAttributedStringKey.paragraphStyle: paraStyle,
             NSAttributedStringKey.shadow: shadow,
-            NSAttributedStringKey.strokeColor: Colors.darkBackground,
-            NSAttributedStringKey.foregroundColor: Colors.lighterDarkBrown,
-            NSAttributedStringKey.strokeWidth: -1.0]
+            NSAttributedStringKey.strokeColor: Colors.lighterDarkBrown,
+            NSAttributedStringKey.strokeWidth: -4.0,
+            NSAttributedStringKey.foregroundColor: Colors.darkBackground,
+            NSAttributedStringKey.underlineStyle: underline]
         
         return NSAttributedString(string: textToFormat, attributes: multipleAttributes)
     }
@@ -167,13 +168,17 @@ class BlurViewController: UIViewController {
         if numLines > 0 {
             
             // create the labels and add them to the stack view
-            
-            for t in textLines {
+            var underlineValue: Int = 0
+            for i in 0 ..< textLines.count {
                 if textAsButtons == false {
                     let textLineLabel = UILabel()
-                    textLineLabel.attributedText = formatBubbleText(textToFormat: t)
+                    if i == textLines.count - 1 {
+                        underlineValue = 1 // underline the last line
+                    }
+                    textLineLabel.attributedText = formatBubbleText(textToFormat: textLines[i], underline: underlineValue)
                     textLineLabel.sizeToFit() // move to formatting
                     stackView.addArrangedSubview(textLineLabel)
+                    print (textLineLabel.frame)
                 } else {
 //                    let textline = UIButton()
 //                    textline.setTitle(t, for: .normal)

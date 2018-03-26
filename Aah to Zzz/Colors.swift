@@ -32,7 +32,7 @@ struct Colors {
     
     // Letter colors
     static let darkBrown = UIColor(hue: 38/360, saturation: 0.7, brightness: 0.3, alpha: 1.0)
-    static let lighterDarkBrown = UIColor(hue: 38/360, saturation: 0.5, brightness: 0.4, alpha: 1.0)
+    static let lighterDarkBrown = UIColor(hue: 38/360, saturation: 0.4, brightness: 0.5, alpha: 1.0)
     static let midBrown = UIColor(hue: 38/360, saturation: 0.75, brightness: 0.7, alpha: 0.7)
     
     // Background colors
