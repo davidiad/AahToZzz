@@ -16,7 +16,7 @@ class BlurViewController: UIViewController {
     @IBOutlet weak var outerShadowMask: UIView!
     
     //MARK: - Properties
-    var numLines: Int           = 0
+    // var numLines: Int           = 0
     var textLines: [String]     = []
     var blurriness: CGFloat     = 0.5
     var cornerRadius: CGFloat   = 20.0
@@ -165,7 +165,7 @@ class BlurViewController: UIViewController {
     // Set the text for the bubble
     func initLines() {
         
-        if numLines > 0 {
+        if textLines.count > 0 {
             
             // create the labels and add them to the stack view
             var underlineValue: Int = 0

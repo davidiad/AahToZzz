@@ -24,21 +24,30 @@ class IntroViewController: UIViewController {
     
     //MARK:- Constants
     // 1st bubble
-    let NUMLINES1 = 3
-    let BUBBLETEXT1 = "Tap or drag tiles"
-    let BUBBLETEXT2 = "to form"
-    let BUBBLETEXT3 = "three letter words"
+    let bubbleText1: [String] = ["Tap or drag tiles",
+                                 "to form",
+                                 "three letter words"]
+    let bubbleText2: [String] = ["Tap a word",
+                                 "to see its definition"]
+    let bubbleText3: [String] = ["Tap",
+                                 "the New List button",
+                                 "to get",
+                                 "new words to find"]
+    
+//    let BUBBLETEXT1 = "Tap or drag tiles"
+//    let BUBBLETEXT2 = "to form"
+//    let BUBBLETEXT3 = "three letter words"
     
     // 2nd bubble
-    let NUMLINES2 = 1
-    let BUBBLETEXT4 = "Tap a word to see definition"
+//    let NUMLINES2 = 1
+//    let BUBBLETEXT4 = "Tap a word to see definition"
     
     // 3rd bubble
-    let NUMLINES3 = 4
-    let BUBBLETEXT5 = "Tap"
-    let BUBBLETEXT6 = "the New List button"
-    let BUBBLETEXT7 = "to get"
-    let BUBBLETEXT8 = "new words to find"
+//    let NUMLINES3 = 4
+//    let BUBBLETEXT5 = "Tap"
+//    let BUBBLETEXT6 = "the New List button"
+//    let BUBBLETEXT7 = "to get"
+//    let BUBBLETEXT8 = "new words to find"
     
     //MARK:- Outlets
     @IBOutlet var containers: [UIView]!
@@ -53,7 +62,7 @@ class IntroViewController: UIViewController {
     
     func fadeMessageBubblesOrDismiss() {
         // fade out the current msg bubble
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.transitionCrossDissolve, .allowAnimatedContent, .curveEaseInOut], animations: {
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.transitionCrossDissolve, .curveEaseInOut], animations: {
             self.containers[self.currentContainerIndex].alpha = 0.0
         }) { (_) in
             // set the next message bubble
@@ -62,11 +71,14 @@ class IntroViewController: UIViewController {
             self.currentContainerIndex += 1
             if self.currentContainerIndex >= self.containers.count {
                 // run the last animation (if any)
-                self.ghostFingerTap(whereToTap: CGPoint(x: 9.0, y: 7.8), completion: nil)
+                self.ghostFingerTap(whereToTap: CGPoint(x: 9.0, y: 7.8), completion: { (finished) in
                 // then, upon completion, dismiss VC (TODO: add completion handler for this)
-                   
-                    self.dismiss(animated: true, completion: nil)
-                    return
+                    // Note: crashing when dismiss inside completion handler
+//                    self.dismiss(animated: true, completion: nil)
+//                    return
+                })
+                self.dismiss(animated: true, completion: nil)
+                return
             }
             // fade in the next msg bubble
             UIView.animate(withDuration: 1.0, delay: 0.1, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
@@ -77,6 +89,7 @@ class IntroViewController: UIViewController {
                 print(finished)
                 // Can now run a subsequent animation
                 self.ghostFingerTap(whereToTap: CGPoint(x: 21.0, y: 22.3), completion: nil)
+
             })
         }
     }
@@ -86,7 +99,7 @@ class IntroViewController: UIViewController {
     // for tutorial, show a ghosted outline of a finger tap
     func ghostFingerTap (whereToTap: CGPoint, completion: ((Bool)->())?) {
         print(whereToTap)
-         completion?(true)
+         //completion?(true)
     }
     
     //MARK: - View Lifecycle
@@ -102,25 +115,18 @@ class IntroViewController: UIViewController {
             blurredViews.append(bubble)
             // Since we do not know in which order the controllers are added to blurredViews,
             // set the index to the element just added to the array
-            let index = blurredViews.count - 1
-            blurredViews[index].numLines = NUMLINES1
-            blurredViews[index].textLines.append(BUBBLETEXT1)
-            blurredViews[index].textLines.append(BUBBLETEXT2)
-            blurredViews[index].textLines.append(BUBBLETEXT3)
-            
+            // let index = blurredViews.count - 1
+            //bubble.numLines = bubbleText1.count
+            bubble.textLines = bubbleText1
+//            blurredViews[index].textLines.append(BUBBLETEXT1)
+//            blurredViews[index].textLines.append(BUBBLETEXT2)
+//            blurredViews[index].textLines.append(BUBBLETEXT3)
         } else if segue.identifier == "Blurred2" {
             blurredViews.append(bubble)
-            let index = blurredViews.count - 1
-            blurredViews[index].numLines = NUMLINES2
-            blurredViews[index].textLines.append(BUBBLETEXT4)
+            bubble.textLines = bubbleText2
         } else if segue.identifier == "Blurred3" {
             blurredViews.append(bubble)
-            let index = blurredViews.count - 1
-            blurredViews[index].numLines = NUMLINES3
-            blurredViews[index].textLines.append(BUBBLETEXT5)
-            blurredViews[index].textLines.append(BUBBLETEXT6)
-            blurredViews[index].textLines.append(BUBBLETEXT7)
-            blurredViews[index].textLines.append(BUBBLETEXT8)
+            bubble.textLines = bubbleText3
         }
     }
     

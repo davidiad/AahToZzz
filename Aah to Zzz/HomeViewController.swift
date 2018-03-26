@@ -25,13 +25,16 @@ class HomeViewController: UIViewController {
     
     //MARK:- Constants
     // 1st bubble
-    let NUMLINES1 = 3
-    let BUBBLETEXT1 = "Why 3 letter words?"
-    let BUBBLETEXT2 = "A fun way to learn 3 letter words."
-    let BUBBLETEXT3 = "Keep going till you find all 1000+ 3 letter words!"
-    // 2nd bubble
-    let NUMLINES2 = 1
-    let BUBBLETEXT4 = "3 > 1+2!!!"
+    let bubbleText1: [String] = ["Why 3 letter words?",
+                                 "A fun way to learn 3 letter words.",
+                                 "Keep going till you find all 1000+ 3 letter words!"]
+//    let NUMLINES1 = 3
+//    let BUBBLETEXT1 = "Why 3 letter words?"
+//    let BUBBLETEXT2 = "A fun way to learn 3 letter words."
+//    let BUBBLETEXT3 = "Keep going till you find all 1000+ 3 letter words!"
+//    // 2nd bubble
+//    let NUMLINES2 = 1
+//    let BUBBLETEXT4 = "3 > 1+2!!!"
     
     //MARK:- Vars
     var blurredViews: [BlurViewController] = []
@@ -44,20 +47,18 @@ class HomeViewController: UIViewController {
         
         if segue.identifier == "Blurred1" {
             blurredViews.append(bubble)
-            // Since we do not know in which order the controllers are added to blurredViews,
-            // set the index to the element just added to the array
-            let index = blurredViews.count - 1
-            blurredViews[index].numLines = NUMLINES1
-            blurredViews[index].textLines.append(BUBBLETEXT1)
-            blurredViews[index].textLines.append(BUBBLETEXT2)
-            blurredViews[index].textLines.append(BUBBLETEXT3)
+            bubble.textLines = bubbleText1
+//            let index = blurredViews.count - 1
+//            blurredViews[index].numLines = NUMLINES1
+//            blurredViews[index].textLines.append(BUBBLETEXT1)
+//            blurredViews[index].textLines.append(BUBBLETEXT2)
+//            blurredViews[index].textLines.append(BUBBLETEXT3)
             
         } else if segue.identifier == "Blurred2" {
             blurredViews.append(bubble)
-            let index = blurredViews.count - 1
-//            blurredViews[index].numLines = NUMLINES2
-//            blurredViews[index].textLines.append(BUBBLETEXT4)
-            blurredViews[index].buttons = buttons
+            //let index = blurredViews.count - 1
+            //blurredViews[index].buttons = buttons
+            bubble.buttons = buttons
         }
     }
     
