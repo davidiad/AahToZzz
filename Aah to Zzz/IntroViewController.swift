@@ -61,14 +61,32 @@ class IntroViewController: UIViewController {
             // and don't proceed
             self.currentContainerIndex += 1
             if self.currentContainerIndex >= self.containers.count {
-                self.dismiss(animated: true, completion: nil)
-                return
+                // run the last animation (if any)
+                self.ghostFingerTap(whereToTap: CGPoint(x: 9.0, y: 7.8), completion: nil)
+                // then, upon completion, dismiss VC (TODO: add completion handler for this)
+                   
+                    self.dismiss(animated: true, completion: nil)
+                    return
             }
             // fade in the next msg bubble
-            UIView.animate(withDuration: 1.0, delay: 0.1, options: [.transitionCrossDissolve, .allowAnimatedContent, .curveEaseOut], animations: {
+            UIView.animate(withDuration: 1.0, delay: 0.1, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
                     self.containers[self.currentContainerIndex].alpha = 1.0
+                
+            }, completion: { (finished) in
+                print("PONYO!!!!!!!!")
+                print(finished)
+                // Can now run a subsequent animation
+                self.ghostFingerTap(whereToTap: CGPoint(x: 21.0, y: 22.3), completion: nil)
             })
         }
+    }
+    
+    //MARK: - Animations
+    
+    // for tutorial, show a ghosted outline of a finger tap
+    func ghostFingerTap (whereToTap: CGPoint, completion: ((Bool)->())?) {
+        print(whereToTap)
+         completion?(true)
     }
     
     //MARK: - View Lifecycle
