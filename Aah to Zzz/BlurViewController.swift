@@ -16,6 +16,8 @@ class BlurViewController: UIViewController {
     @IBOutlet weak var outerShadowMask: UIView!
     
     //MARK: - Properties
+    weak var delegate: ChildToParentProtocol? = nil
+    //var arrowStartPoints: [CGPoint]! // req. by protocol
     // var numLines: Int           = 0
     var textLines: [String]     = []
     var blurriness: CGFloat     = 0.5
@@ -73,8 +75,9 @@ class BlurViewController: UIViewController {
             blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
         
-        initLines()
+       
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         // shadowView.frame size is now set, so it's safe to create the shadowmask
@@ -109,6 +112,7 @@ class BlurViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        initLines()
         //shadowView?.layer.opacity = 0.0
        // while animatingStatusHeight {
 
@@ -178,7 +182,16 @@ class BlurViewController: UIViewController {
                     textLineLabel.attributedText = formatBubbleText(textToFormat: textLines[i], underline: underlineValue)
                     textLineLabel.sizeToFit() // move to formatting
                     stackView.addArrangedSubview(textLineLabel)
-                    print (textLineLabel.frame)
+                    print("")
+                    print("~~~~~~~~~~~~~~~~~~")
+                    delegate?.passInfoToParent(with: textLineLabel.center)
+                    print (textLineLabel.center)
+//                                        let pt = textLineLabel.convert(textLineLabel.center, to: (view.window?.screen.coordinateSpace)!)
+                    let pt = textLineLabel.convert(textLineLabel.center, to: UIApplication.shared.keyWindow)
+                
+                    print ( pt )
+                    print("__________________")
+                    print("")
                 } else {
 //                    let textline = UIButton()
 //                    textline.setTitle(t, for: .normal)
@@ -211,4 +224,13 @@ class BlurViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+}
+
+protocol ChildToParentProtocol:class {
+
+    //var arrowStartPoints: [CGPoint]! {get}
+    
+    func passInfoToParent(with value:CGPoint)
+    
 }

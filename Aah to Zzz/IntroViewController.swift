@@ -23,31 +23,18 @@ class IntroViewController: UIViewController {
     //}
     
     //MARK:- Constants
-    // 1st bubble
+
     let bubbleText1: [String] = ["Tap or drag tiles",
                                  "to form",
                                  "three letter words"]
+    
     let bubbleText2: [String] = ["Tap a word",
                                  "to see its definition"]
+    
     let bubbleText3: [String] = ["Tap",
                                  "the New List button",
                                  "to get",
                                  "new words to find"]
-    
-//    let BUBBLETEXT1 = "Tap or drag tiles"
-//    let BUBBLETEXT2 = "to form"
-//    let BUBBLETEXT3 = "three letter words"
-    
-    // 2nd bubble
-//    let NUMLINES2 = 1
-//    let BUBBLETEXT4 = "Tap a word to see definition"
-    
-    // 3rd bubble
-//    let NUMLINES3 = 4
-//    let BUBBLETEXT5 = "Tap"
-//    let BUBBLETEXT6 = "the New List button"
-//    let BUBBLETEXT7 = "to get"
-//    let BUBBLETEXT8 = "new words to find"
     
     //MARK:- Outlets
     @IBOutlet var containers: [UIView]!
@@ -110,22 +97,14 @@ class IntroViewController: UIViewController {
             return
         }
         
+        blurredViews.append(bubble)
+        bubble.delegate = self
+        
         if segue.identifier == "Blurred1" {
-            
-            blurredViews.append(bubble)
-            // Since we do not know in which order the controllers are added to blurredViews,
-            // set the index to the element just added to the array
-            // let index = blurredViews.count - 1
-            //bubble.numLines = bubbleText1.count
             bubble.textLines = bubbleText1
-//            blurredViews[index].textLines.append(BUBBLETEXT1)
-//            blurredViews[index].textLines.append(BUBBLETEXT2)
-//            blurredViews[index].textLines.append(BUBBLETEXT3)
         } else if segue.identifier == "Blurred2" {
-            blurredViews.append(bubble)
             bubble.textLines = bubbleText2
         } else if segue.identifier == "Blurred3" {
-            blurredViews.append(bubble)
             bubble.textLines = bubbleText3
         }
     }
@@ -294,5 +273,14 @@ class IntroViewController: UIViewController {
     }
     
 
+    
+}
 
+extension IntroViewController:ChildToParentProtocol {
+
+    //var arrowStartPoints: [CGPoint]! {get}
+    
+    func passInfoToParent(with value:CGPoint) {
+        print("Hi I am the parent of: \(value.x) and \(value.y)")
+    }
 }
