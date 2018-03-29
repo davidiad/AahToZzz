@@ -272,7 +272,9 @@ class IntroViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-
+    deinit {
+        print("Intro De-init")
+    }
     
 }
 

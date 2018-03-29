@@ -12,10 +12,11 @@ import Alamofire
 
 class AtoZViewController: UIViewController {
     
-    //TODO: should weak optional vars be used for delegates?
+    //TODO: should weak optional vars be used for delegates? Probably yes, to avoid retain cycles
+    // AtoZ VC is not releasing
     let tableViewsDelegate = AtoZTableViewDelegates()
-    let uiDynamicsDelegate = AtoZUIDynamicsDelegate()
-    let gestureDelegate = AtoZGestureDelegate()
+    weak var uiDynamicsDelegate: AtoZUIDynamicsDelegate?
+    weak var gestureDelegate: AtoZGestureDelegate?
     
     var model = AtoZModel.sharedInstance //why not let?
     var letters: [Letter]! //TODO: why not ? instead of !
@@ -271,14 +272,14 @@ class AtoZViewController: UIViewController {
     }
     
     
-    
     //MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //uiDynamicsDelegate = AtoZUIDynamicsDelegate()
         NotificationCenter.default.addObserver(self, selector: #selector (presentDefinition(_:)), name: NSNotification.Name(rawValue: "PresentDefinition"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector (updateCurrentNumberOfWords(_:)), name: NSNotification.Name(rawValue: "UpdateCNOW"), object: nil)
 
+        //tableViewsDelegate = AtoZTableViewDelegates()
         wordTable.delegate = tableViewsDelegate
         proxyTable.delegate = tableViewsDelegate
         wordTable.dataSource = tableViewsDelegate
@@ -408,7 +409,7 @@ class AtoZViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        uiDynamicsDelegate.lettertiles = lettertiles
+        uiDynamicsDelegate?.lettertiles = lettertiles
         
         //setUpProxyTable()
     }
@@ -455,9 +456,19 @@ class AtoZViewController: UIViewController {
         }
     }
     
+    // note: as of ios 9, supposed to be that observers will be removed automatically
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        //NotificationCenter.default.removeObserver(self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         saveContext()
+    }
+    
+    deinit {
+        print("AtoZ De-init")
     }
     
     //MARK:- Tile Swapping

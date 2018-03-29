@@ -105,5 +105,8 @@ class DefinitionPopoverVC: UIViewController {
             }
         }
     }
-
+    
+    deinit {
+        print("Definition De-init")
+    }
 }

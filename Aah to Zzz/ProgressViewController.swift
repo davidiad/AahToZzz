@@ -562,4 +562,8 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
         //TODO:- Add a conditional -- if GameCenter not available, show local stats instead
         
     }
+    
+    deinit {
+        print("Progress De-init")
+    }
 }

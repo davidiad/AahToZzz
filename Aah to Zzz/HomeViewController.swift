@@ -72,6 +72,10 @@ class HomeViewController: UIViewController {
 
     }
     
+    deinit {
+        print("Home De-init")
+    }
+    
     // TODO: repeated in Progress VC. Consolidate.
     func addGradientBar() {
         let gradient = model.yellowPinkBlueGreenGradient()
