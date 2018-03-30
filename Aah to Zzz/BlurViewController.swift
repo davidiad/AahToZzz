@@ -182,16 +182,20 @@ class BlurViewController: UIViewController {
                     textLineLabel.attributedText = formatBubbleText(textToFormat: textLines[i], underline: underlineValue)
                     textLineLabel.sizeToFit() // move to formatting
                     stackView.addArrangedSubview(textLineLabel)
-                    print("")
-                    print("~~~~~~~~~~~~~~~~~~")
-                    delegate?.passInfoToParent(with: textLineLabel.center)
-                    print (textLineLabel.center)
-//                                        let pt = textLineLabel.convert(textLineLabel.center, to: (view.window?.screen.coordinateSpace)!)
-                    let pt = textLineLabel.convert(textLineLabel.center, to: UIApplication.shared.keyWindow)
+                    if i == textLines.count - 1 {
+                        print("")
+                        print("~~~~~~~~~~~~~~~~~~")
+
+                        print (textLineLabel.center)
+    //                                        let pt = textLineLabel.convert(textLineLabel.center, to: (view.window?.screen.coordinateSpace)!)
+                        let pt = textLineLabel.convert(textLineLabel.center, to: UIApplication.shared.keyWindow)
                 
-                    print ( pt )
-                    print("__________________")
-                    print("")
+                        print ( pt )
+                        print("__________________")
+                        print("")
+                    
+                        delegate?.passInfoToParent(with: pt)
+                    }
                 } else {
 //                    let textline = UIButton()
 //                    textline.setTitle(t, for: .normal)

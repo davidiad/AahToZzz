@@ -42,6 +42,8 @@ class IntroViewController: UIViewController {
     //MARK:- Vars
     var blurredViews: [BlurViewController] = []
     var currentContainerIndex: Int = 0
+    var arrowStartPoints: [CGPoint] = []
+    var arrowEndPoints: [CGPoint] = []
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
         fadeMessageBubblesOrDismiss()
@@ -267,6 +269,15 @@ class IntroViewController: UIViewController {
  */
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let arrowView = ArrowView(frame: CGRect(x: 0,
+                                              y: 0,
+                                              width: 10,
+                                              height: 10), startPoint: arrowStartPoints[2], endPoint: arrowEndPoints[2])
+        
+        self.view.addSubview(arrowView)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -284,5 +295,6 @@ extension IntroViewController:ChildToParentProtocol {
     
     func passInfoToParent(with value:CGPoint) {
         print("Hi I am the parent of: \(value.x) and \(value.y)")
+        arrowStartPoints.append(value)
     }
 }

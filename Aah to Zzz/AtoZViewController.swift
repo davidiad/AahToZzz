@@ -38,6 +38,7 @@ class AtoZViewController: UIViewController {
     var maxTilesToSwap: Int = 0 // temp. diagnostic
     var blurredViews: [BlurViewController] = []
     var animatingStatusHeight: Bool = false
+    var arrowEndPoints: [CGPoint] = []
     
     //MARK:- IBOutlets
     @IBOutlet weak var progressLabl: UILabel!
@@ -445,15 +446,25 @@ class AtoZViewController: UIViewController {
             
 
                 let infoViewController = storyboard?.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
+            
+                // pass end points of arrows in
                 infoViewController.modalPresentationStyle = .overCurrentContext
-           // let time = DispatchTime.now() + 3.35
-          //  DispatchQueue.main.asyncAfter(deadline: time) {
+                infoViewController.arrowEndPoints = arrowEndPoints
+                // let time = DispatchTime.now() + 3.35
+                //  DispatchQueue.main.asyncAfter(deadline: time) {
                 self.present(infoViewController, animated: true)
        // }
 
 
            // }
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        // create arrow end points here
+        arrowEndPoints.append(wordInProgress.center)
+        arrowEndPoints.append(wordTable.center)
+        arrowEndPoints.append(toolbar.center)
     }
     
     // note: as of ios 9, supposed to be that observers will be removed automatically
