@@ -10,8 +10,10 @@ import UIKit
 
 class ArrowView: UIView {
 
-    var startPoint: CGPoint?
-    var endPoint: CGPoint?
+    let STARTOFFSET:    CGFloat = 2.5
+    let ENDOFFSET:      CGFloat = 1.0
+    var startPoint:     CGPoint?
+    var endPoint:       CGPoint?
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -66,9 +68,15 @@ class ArrowView: UIView {
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
-        path.move(to: startPoint)
-        path.addLine(to: endPoint)
-        //path.close()
+        let startPointLeft  = CGPoint(x: startPoint.x - STARTOFFSET, y: startPoint.y)
+        let startPointRight = CGPoint(x: startPoint.x + STARTOFFSET, y: startPoint.y)
+        let endPointLeft    = CGPoint(x: endPoint.x - ENDOFFSET, y: endPoint.y)
+        let endPointRight   = CGPoint(x: endPoint.x + ENDOFFSET, y: endPoint.y)
+        path.move   (to: startPointLeft)
+        path.addLine(to: startPointRight)
+        path.addLine(to: endPointRight)
+        path.addLine(to: endPointLeft)
+        path.close  ()
     }
 
     func createRectangle() {
@@ -94,11 +102,18 @@ class ArrowView: UIView {
     func simpleShapeLayer() {
         self.createArrow()
         
+//        let shapeLayerLower = CAShapeLayer()
+//        shapeLayerLower.path = self.path.cgPath
+//        shapeLayerLower.fillColor = UIColor.clear.cgColor
+//        shapeLayerLower.strokeColor = UIColor.white.cgColor
+//        shapeLayerLower.lineWidth = 1.5
+//        self.layer.addSublayer(shapeLayerLower)
+        
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = self.path.cgPath
-        shapeLayer.fillColor = UIColor.yellow.cgColor
-        shapeLayer.strokeColor = UIColor.brown.cgColor
-        shapeLayer.lineWidth = 13.0
+        shapeLayer.fillColor = Colors.darkBackground.cgColor
+        shapeLayer.strokeColor = Colors.darkBackground.cgColor
+        shapeLayer.lineWidth = 0.75
         self.layer.addSublayer(shapeLayer)
     }
 

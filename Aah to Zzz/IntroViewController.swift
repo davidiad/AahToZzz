@@ -40,10 +40,11 @@ class IntroViewController: UIViewController {
     @IBOutlet var containers: [UIView]!
 
     //MARK:- Vars
-    var blurredViews: [BlurViewController] = []
-    var currentContainerIndex: Int = 0
-    var arrowStartPoints: [CGPoint] = []
-    var arrowEndPoints: [CGPoint] = []
+    var blurredViews:           [BlurViewController]    = []
+    var currentContainerIndex:  Int                     = 0
+    var arrowStartPoints:       [CGPoint]               = []
+    var arrowEndPoints:         [CGPoint]               = []
+    var arrowViews:             [ArrowView]             = []
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
         fadeMessageBubblesOrDismiss()
@@ -53,6 +54,7 @@ class IntroViewController: UIViewController {
         // fade out the current msg bubble
         UIView.animate(withDuration: 0.4, delay: 0.0, options: [.transitionCrossDissolve, .curveEaseInOut], animations: {
             self.containers[self.currentContainerIndex].alpha = 0.0
+            self.arrowViews[self.currentContainerIndex].alpha = 0.0
         }) { (_) in
             // set the next message bubble
             // if the current is the last, then dismiss the entire view controller
@@ -72,6 +74,7 @@ class IntroViewController: UIViewController {
             // fade in the next msg bubble
             UIView.animate(withDuration: 1.0, delay: 0.1, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
                     self.containers[self.currentContainerIndex].alpha = 1.0
+                    self.arrowViews[self.currentContainerIndex].alpha = 1.0
                 
             }, completion: { (finished) in
                 print("PONYO!!!!!!!!")
@@ -268,15 +271,26 @@ class IntroViewController: UIViewController {
             ])
  */
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        for i in 0 ..< containers.count {
+            arrowStartPoints.append( CGPoint(x: containers[i].center.x, y: containers[i].center.y + (containers[i].frame.height * 0.5) ) )
+            
+            let arrowView = ArrowView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
+            arrowViews.append(arrowView) // need a ref so visibility can be controlled
+            if i > 0 {
+                arrowViews[i].alpha = 0.0
+            }
+            self.view.addSubview(arrowView)
+        }
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let arrowView = ArrowView(frame: CGRect(x: 0,
-                                              y: 0,
-                                              width: 10,
-                                              height: 10), startPoint: arrowStartPoints[2], endPoint: arrowEndPoints[2])
-        
-        self.view.addSubview(arrowView)
+//        let arrowView = ArrowView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), startPoint: arrowStartPoints[0], endPoint: arrowEndPoints[0])
+//
+//        self.view.addSubview(arrowView)
     }
 
     override func didReceiveMemoryWarning() {

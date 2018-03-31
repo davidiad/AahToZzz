@@ -19,21 +19,21 @@ class BlurViewController: UIViewController {
     weak var delegate: ChildToParentProtocol? = nil
     //var arrowStartPoints: [CGPoint]! // req. by protocol
     // var numLines: Int           = 0
-    var textLines: [String]     = []
-    var blurriness: CGFloat     = 0.5
-    var cornerRadius: CGFloat   = 20.0
-    var shadowOpacity: Float    = 0.5
-    var shadowRadius: CGFloat   = 6.0
-    var borderWidth: CGFloat    = 1.0
-    var buttons: [UIButton]?
+    var textLines:              [String]    = []
+    var blurriness:             CGFloat     = 0.5
+    var cornerRadius:           CGFloat     = 20.0
+    var shadowOpacity:          Float       = 0.5
+    var shadowRadius:           CGFloat     = 6.0
+    var borderWidth:            CGFloat     = 1.0
+    var buttons:                [UIButton]?
     
     //MARK:- Vars
-    var blurView: UIVisualEffectView?
-    var animator: UIViewPropertyAnimator?
-    var opacityAnimator: UIViewPropertyAnimator?
-    var opacityAnimator2: UIViewPropertyAnimator?
-    var animatingStatusHeight: Bool = false
-    var textAsButtons: Bool = false
+    var blurView:               UIVisualEffectView?
+    var animator:               UIViewPropertyAnimator?
+    var opacityAnimator:        UIViewPropertyAnimator?
+    var opacityAnimator2:       UIViewPropertyAnimator?
+    var animatingStatusHeight:  Bool = false
+    var textAsButtons:          Bool = false
     
     //MARK:- View Lifecycle
     override func viewDidLoad() {
@@ -182,20 +182,19 @@ class BlurViewController: UIViewController {
                     textLineLabel.attributedText = formatBubbleText(textToFormat: textLines[i], underline: underlineValue)
                     textLineLabel.sizeToFit() // move to formatting
                     stackView.addArrangedSubview(textLineLabel)
-                    if i == textLines.count - 1 {
-                        print("")
-                        print("~~~~~~~~~~~~~~~~~~")
-
-                        print (textLineLabel.center)
-    //                                        let pt = textLineLabel.convert(textLineLabel.center, to: (view.window?.screen.coordinateSpace)!)
-                        let pt = textLineLabel.convert(textLineLabel.center, to: UIApplication.shared.keyWindow)
-                
-                        print ( pt )
-                        print("__________________")
-                        print("")
-                    
-                        delegate?.passInfoToParent(with: pt)
-                    }
+//                    if i == textLines.count - 1 {
+//                        print("")
+//                        print("~~~~~~~~~~~~~~~~~~")
+//
+//                        print (textLineLabel.center)
+//                        let pt = textLineLabel.convert(textLineLabel.center, to: UIApplication.shared.keyWindow)
+//
+//                        print ( pt )
+//                        print("__________________")
+//                        print("")
+//
+//                        delegate?.passInfoToParent(with: pt)
+//                    }
                 } else {
 //                    let textline = UIButton()
 //                    textline.setTitle(t, for: .normal)

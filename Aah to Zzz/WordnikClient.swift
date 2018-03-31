@@ -11,21 +11,21 @@
 //import Foundation
 import CoreData
 
-let BASE_URL = "http://api.wordnik.com:80/v4/word.json/"
-
-let METHOD_NAME = "definitions"
-let LIMIT = "25"
-let INCLUDE_RELATED = "false"
-let SOURCE_DICTIONARIES = "all" //"ahd"//(american heritage dictionary)
-let USE_CANONICAL = "true" // tells Wordnik look at the root of the word, for instance, if the word is "AAS", it would look at it as the plural of "AA"
-let INCLUDE_TAGS = "false"
-let API_KEY = "c6c759673ee70a17150040157a20fb5c0cc0963c68720e422" // David's wordnik API key
+let BASE_URL                    = "http://api.wordnik.com:80/v4/word.json/"
+let METHOD_NAME                 = "definitions"
+let LIMIT                       = "25"
+let INCLUDE_RELATED             = "false"
+let SOURCE_DICTIONARIES         = "all" //"ahd"//(american heritage dictionary)
+let USE_CANONICAL               = "true" // tells Wordnik look at the root of the word, for instance, if the word is "AAS", it would look at it as the plural of "AA"
+let INCLUDE_TAGS                = "false"
+let API_KEY                     = "c6c759673ee70a17150040157a20fb5c0cc0963c68720e422" // David's wordnik API key
 
 class WordnikClient: NSObject {
     
     //MARK:- Vars
     static let sharedInstance = WordnikClient() // makes this class a singleton
-    let model = AtoZModel.sharedInstance
+    let model                 = AtoZModel.sharedInstance
+    
     lazy var sharedContext = {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
@@ -35,12 +35,12 @@ class WordnikClient: NSObject {
     
     //  API method arguments
     let methodArguments = [
-        "limit": LIMIT,
-        "includeRelated": INCLUDE_RELATED,
-        "sourceDictionaries" : SOURCE_DICTIONARIES,
-        "useCanonical": USE_CANONICAL,
-        "includeTags": INCLUDE_TAGS,
-        "api_key": API_KEY
+        "limit":                LIMIT,
+        "includeRelated":       INCLUDE_RELATED,
+        "sourceDictionaries":   SOURCE_DICTIONARIES,
+        "useCanonical":         USE_CANONICAL,
+        "includeTags":          INCLUDE_TAGS,
+        "api_key":              API_KEY
         ]
         
         // Initialize session and url

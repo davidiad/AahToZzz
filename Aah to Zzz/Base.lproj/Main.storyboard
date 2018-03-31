@@ -1231,7 +1231,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ2-et-PgL">
-                                <rect key="frame" x="112" y="332" width="282" height="134"/>
+                                <rect key="frame" x="112" y="148" width="282" height="134"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="282" id="ixW-X3-TPg"/>
                                     <constraint firstAttribute="height" constant="134" id="xl1-Kh-LgQ"/>
@@ -1241,22 +1241,13 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" alpha="0.14999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8d-qc-6K7">
-                                <rect key="frame" x="43" y="78" width="261" height="87"/>
+                                <rect key="frame" x="84" y="44" width="261" height="87"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="261" id="t9u-wm-1SE"/>
                                     <constraint firstAttribute="height" constant="87" id="tuN-VH-6UB"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="Bfw-yD-eiF" kind="embed" identifier="Blurred2" id="uT7-0T-0Hg"/>
-                                </connections>
-                            </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G4M-7j-Vuc">
-                                <rect key="frame" x="95" y="526" width="299" height="160"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="160" id="erJ-W6-kHu"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="uzH-Aa-Jia" kind="embed" identifier="Blurred3" id="GZE-dG-xVw"/>
                                 </connections>
                             </containerView>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_newlist" translatesAutoresizingMaskIntoConstraints="NO" id="0Qm-kH-Bap">
@@ -1266,17 +1257,26 @@
                                     <constraint firstAttribute="width" constant="35" id="P2o-m9-bAs"/>
                                 </constraints>
                             </imageView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G4M-7j-Vuc">
+                                <rect key="frame" x="95" y="459" width="299" height="160"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="erJ-W6-kHu"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="uzH-Aa-Jia" kind="embed" identifier="Blurred3" id="GZE-dG-xVw"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="20" id="3Ps-sv-0Kv"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="58" id="4cD-5I-Lki"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="0Qm-kH-Bap" secondAttribute="bottom" constant="-46" id="6Dd-nK-Bo0"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="24" id="4cD-5I-Lki"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="0Qm-kH-Bap" secondAttribute="bottom" constant="-113" id="6Dd-nK-Bo0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0Qm-kH-Bap" secondAttribute="trailing" constant="13" id="CNG-Oo-71G"/>
                             <constraint firstAttribute="trailing" secondItem="G4M-7j-Vuc" secondAttribute="trailing" constant="20" id="Ftf-zU-7JM"/>
-                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="G4M-7j-Vuc" secondAttribute="bottom" constant="50" id="HLV-Oi-NTs"/>
+                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="G4M-7j-Vuc" secondAttribute="bottom" constant="117" id="HLV-Oi-NTs"/>
                             <constraint firstItem="G4M-7j-Vuc" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" priority="999" constant="95" id="HLi-oI-kkC"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="23" id="ICb-Y8-e5C"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="60" id="zWW-Zc-Iia"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="64" id="ICb-Y8-e5C"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="177" id="zWW-Zc-Iia"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="414" height="736"/>
@@ -1296,7 +1296,7 @@
                 <viewController id="mxI-QG-9Yx" customClass="BlurViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CQn-OV-Jeo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1083" y="1432"/>
+            <point key="canvasLocation" x="1916" y="780"/>
         </scene>
         <!--Blur View Controller-->
         <scene sceneID="ZI6-ID-pnM">
@@ -1336,7 +1336,7 @@
                 <viewController id="uzH-Aa-Jia" customClass="BlurViewController" customModule="AahToZzz" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j7H-PS-ANz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1490" y="1432"/>
+            <point key="canvasLocation" x="1891" y="1081"/>
         </scene>
     </scenes>
     <resources>
