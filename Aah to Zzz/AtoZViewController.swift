@@ -464,7 +464,7 @@ class AtoZViewController: UIViewController {
         // create arrow end points here
         arrowEndPoints.append(wordInProgress.center)
         arrowEndPoints.append(wordTable.center)
-        arrowEndPoints.append(toolbar.center)
+        arrowEndPoints.append(CGPoint(x: toolbar.center.x, y: toolbar.center.y - 12.0))
     }
     
     // note: as of ios 9, supposed to be that observers will be removed automatically

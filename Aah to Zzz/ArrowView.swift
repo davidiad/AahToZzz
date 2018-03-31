@@ -10,8 +10,10 @@ import UIKit
 
 class ArrowView: UIView {
 
-    let STARTOFFSET:    CGFloat = 2.5
-    let ENDOFFSET:      CGFloat = 1.0
+    let STARTWIDTH:     CGFloat = 12.0
+    let ENDWIDTH:       CGFloat = 6.0
+    let ARROWWIDTH:     CGFloat = 18.0
+    let ARROWHEIGHT:    CGFloat = 16.0
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
     /*
@@ -63,15 +65,69 @@ class ArrowView: UIView {
 //        self.init(frame: frame)
 //    }
     
+    func createQuadCurveArrow () {
+        path = UIBezierPath()
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return
+        }
+        let startPointLeft      = CGPoint(x: startPoint.x - STARTWIDTH,    y: startPoint.y                          )
+        let startPointRight     = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                          )
+        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT           )
+        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT           )
+        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
+        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
+        let startControlRight   = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                + 40.0    )
+        let insideControlRight  = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
+        let startControlLeft    = CGPoint(x: startPoint.x - STARTWIDTH,    y: startPoint.y                + 40.0    )
+        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
+        
+        path.move       (to: startPoint)
+        path.addLine    (to: startPointRight)
+        path.addCurve   (to: insidePointRight, controlPoint1: startControlRight,  controlPoint2: insideControlRight)
+        path.addLine    (to: outsidePointRight)
+        path.addLine    (to: endPoint)
+        path.addLine    (to: outsidePointLeft)
+        path.addLine    (to: insidePointLeft)
+        path.addCurve   (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
+        path.close      ()
+    }
+    
     func createArrow () {
         path = UIBezierPath()
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
-        let startPointLeft  = CGPoint(x: startPoint.x - STARTOFFSET, y: startPoint.y)
-        let startPointRight = CGPoint(x: startPoint.x + STARTOFFSET, y: startPoint.y)
-        let endPointLeft    = CGPoint(x: endPoint.x - ENDOFFSET, y: endPoint.y)
-        let endPointRight   = CGPoint(x: endPoint.x + ENDOFFSET, y: endPoint.y)
+        let startPointLeft      = CGPoint(x: startPoint.x - STARTWIDTH,    y: startPoint.y                          )
+        let startPointRight     = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                          )
+        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT           )
+        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT           )
+        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
+        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
+        let startControlRight   = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                + 40.0    )
+        let insideControlRight  = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
+        let startControlLeft    = CGPoint(x: startPoint.x - STARTWIDTH,    y: startPoint.y                + 40.0    )
+        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
+        
+        path.move       (to: startPoint)
+        path.addLine    (to: startPointRight)
+        path.addCurve   (to: insidePointRight, controlPoint1: startControlRight,  controlPoint2: insideControlRight)
+        path.addLine    (to: outsidePointRight)
+        path.addLine    (to: endPoint)
+        path.addLine    (to: outsidePointLeft)
+        path.addLine    (to: insidePointLeft)
+        path.addCurve   (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
+        path.close      ()
+    }
+    
+    func createPointer () {
+        path = UIBezierPath()
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return
+        }
+        let startPointLeft  = CGPoint(x: startPoint.x   - STARTWIDTH,   y: startPoint.y)
+        let startPointRight = CGPoint(x: startPoint.x   + STARTWIDTH,   y: startPoint.y)
+        let endPointLeft    = CGPoint(x: endPoint.x     - ENDWIDTH,     y: endPoint.y)
+        let endPointRight   = CGPoint(x: endPoint.x     + ENDWIDTH,     y: endPoint.y)
         path.move   (to: startPointLeft)
         path.addLine(to: startPointRight)
         path.addLine(to: endPointRight)
@@ -102,16 +158,16 @@ class ArrowView: UIView {
     func simpleShapeLayer() {
         self.createArrow()
         
-//        let shapeLayerLower = CAShapeLayer()
-//        shapeLayerLower.path = self.path.cgPath
-//        shapeLayerLower.fillColor = UIColor.clear.cgColor
-//        shapeLayerLower.strokeColor = UIColor.white.cgColor
-//        shapeLayerLower.lineWidth = 1.5
-//        self.layer.addSublayer(shapeLayerLower)
+        let shapeLayerLower = CAShapeLayer()
+        shapeLayerLower.path = self.path.cgPath
+        shapeLayerLower.fillColor = UIColor.clear.cgColor
+        shapeLayerLower.strokeColor = UIColor.white.cgColor
+        shapeLayerLower.lineWidth = 1.5
+        self.layer.addSublayer(shapeLayerLower)
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = self.path.cgPath
-        shapeLayer.fillColor = Colors.darkBackground.cgColor
+        shapeLayer.fillColor = Colors.lightBackground.cgColor
         shapeLayer.strokeColor = Colors.darkBackground.cgColor
         shapeLayer.lineWidth = 0.75
         self.layer.addSublayer(shapeLayer)
