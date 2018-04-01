@@ -10,10 +10,10 @@ import UIKit
 
 class ArrowView: UIView {
 
-    let STARTWIDTH:     CGFloat = 12.0
-    let ENDWIDTH:       CGFloat = 6.0
-    let ARROWWIDTH:     CGFloat = 18.0
-    let ARROWHEIGHT:    CGFloat = 16.0
+    let STARTWIDTH:     CGFloat = 24.0
+    let ENDWIDTH:       CGFloat = 9.0
+    let ARROWWIDTH:     CGFloat = 24.0
+    let ARROWHEIGHT:    CGFloat = 19.0
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
     /*
@@ -65,6 +65,29 @@ class ArrowView: UIView {
 //        self.init(frame: frame)
 //    }
     
+//    func getQuadControl (startPt: CGPoint, endPt: CGPoint) -> CGPoint {
+//        let tanx = (endPt.x - startPt.x) / (startPt.y - endPt.y)
+//        let x    = endPt.x - (endPt.x - startPt.x) * 0.5
+//        let y    = endPt.y + (startPt.y - endPt.y) * 0.5 + (x * tanx)
+//        return CGPoint(x: endPt.x, y: y)
+//    }
+    
+    func getQuadControl (startPt: CGPoint, endPt: CGPoint) -> CGPoint {
+        let pointingRight: Bool = startPt.x < endPt.x ? true : false
+        //let tanx = (endPt.x - startPt.x) / (startPt.y - endPt.y)
+        let midX = (startPt.x - endPt.x) * 0.5
+        let midY = (endPt.y - startPt.y) * 0.5
+        let cpX = startPt.x - midX
+        let cpY = endPt.y - midY
+        //let cp = CGPoint(x: cpX, y: cpY)
+        var cp2X = startPt.x
+        var cp2Y = endPt.y
+        if pointingRight { cp2X = endPt.x + 30.0; cp2Y = startPt.y }
+        
+        let cp2 = CGPoint(x: cp2X, y: cp2Y)
+        return cp2
+    }
+    
     func createQuadCurveArrow () {
         path = UIBezierPath()
         guard let startPoint = startPoint, let endPoint = endPoint else {
@@ -76,20 +99,22 @@ class ArrowView: UIView {
         let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT           )
         let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
         let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
-        let startControlRight   = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                + 40.0    )
-        let insideControlRight  = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
+        //let startControlRight   = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                + 40.0    )
+        //let insideControlRight  = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
         let startControlLeft    = CGPoint(x: startPoint.x - STARTWIDTH,    y: startPoint.y                + 40.0    )
         let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
+        let quadControl = getQuadControl(startPt: startPointRight, endPt: insidePointRight)
         
-        path.move       (to: startPoint)
-        path.addLine    (to: startPointRight)
-        path.addCurve   (to: insidePointRight, controlPoint1: startControlRight,  controlPoint2: insideControlRight)
-        path.addLine    (to: outsidePointRight)
-        path.addLine    (to: endPoint)
-        path.addLine    (to: outsidePointLeft)
-        path.addLine    (to: insidePointLeft)
-        path.addCurve   (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
-        path.close      ()
+        path.move           (to: startPoint)
+        path.addLine        (to: startPointRight)
+        path.addQuadCurve   (to: insidePointRight, controlPoint: quadControl)
+        path.addLine        (to: outsidePointRight)
+        path.addLine        (to: endPoint)
+        path.addLine        (to: outsidePointLeft)
+        path.addLine        (to: insidePointLeft)
+        path.addQuadCurve   (to: startPointLeft, controlPoint: quadControl)
+        //path.addCurve       (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
+        path.close          ()
     }
     
     func createArrow () {
@@ -156,7 +181,7 @@ class ArrowView: UIView {
     }
 
     func simpleShapeLayer() {
-        self.createArrow()
+        self.createQuadCurveArrow()
         
         let shapeLayerLower = CAShapeLayer()
         shapeLayerLower.path = self.path.cgPath
