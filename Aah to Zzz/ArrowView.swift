@@ -8,14 +8,16 @@
 
 import UIKit
 
-class ArrowView: UIView {
+@IBDesignable class ArrowView: UIView {
 
-    let STARTWIDTH:     CGFloat = 24.0
-    let ENDWIDTH:       CGFloat = 9.0
-    let ARROWWIDTH:     CGFloat = 24.0
-    let ARROWHEIGHT:    CGFloat = 19.0
+    let STARTWIDTH:     CGFloat = 16.0
+    let ENDWIDTH:       CGFloat = 7.0
+    let ARROWWIDTH:     CGFloat = 22.0
+    let ARROWHEIGHT:    CGFloat = 16.0
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
+    var cpStrong:       CGFloat = 40.0
+    var cpWeak:         CGFloat = 40.0
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -41,13 +43,14 @@ class ArrowView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        useFrameForPoints()
         
     }
     
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
     }
     
     init(frame: CGRect, startPoint: CGPoint, endPoint: CGPoint) {
@@ -56,6 +59,23 @@ class ArrowView: UIView {
         self.endPoint = endPoint
         super.init(frame: frame)
         simpleShapeLayer()
+    }
+    
+    @IBInspectable var sPt: CGPoint = CGPoint(x: 0, y: 0) {
+        didSet {
+            self.startPoint = self.sPt
+        }
+    }
+    
+    @IBInspectable var ePt: CGPoint = CGPoint(x: 300, y: 200) {
+        didSet {
+            self.endPoint = self.ePt
+        }
+    }
+    
+    func useFrameForPoints () {
+        startPoint = CGPoint(x:0, y:0)
+        endPoint = CGPoint(x: frame.width, y: frame.height)
     }
     
 //    convenience init(frame: CGRect, sPoint: CGPoint, ePoint: CGPoint) {
@@ -71,6 +91,61 @@ class ArrowView: UIView {
 //        let y    = endPt.y + (startPt.y - endPt.y) * 0.5 + (x * tanx)
 //        return CGPoint(x: endPt.x, y: y)
 //    }
+    
+    func createBezierArrow () {
+        path = UIBezierPath()
+        if startPoint == nil {
+            useFrameForPoints()
+        }
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return
+        }
+        adjustControlHt()
+        
+        let startPointLeft      = CGPoint(x: startPoint.x - STARTWIDTH, y: startPoint.y                             )
+        let startPointRight     = CGPoint(x: startPoint.x + STARTWIDTH, y: startPoint.y                             )
+        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWIDTH,   y: endPoint.y    - ARROWHEIGHT              )
+        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWIDTH,   y: endPoint.y    - ARROWHEIGHT              )
+        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWIDTH, y: endPoint.y    - ARROWHEIGHT              )
+        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWIDTH, y: endPoint.y    - ARROWHEIGHT              )
+        let startControlRight   = CGPoint(x: startPoint.x + STARTWIDTH, y: startPoint.y                + cpWeak     )
+        let insideControlRight  = CGPoint(x: endPoint.x   + ENDWIDTH,   y: endPoint.y    - ARROWHEIGHT - cpStrong   )
+        let startControlLeft    = CGPoint(x: startPoint.x - STARTWIDTH, y: startPoint.y                + cpStrong   )
+        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWIDTH,   y: endPoint.y    - ARROWHEIGHT - cpWeak     )
+        
+        path.move       (to: startPoint)
+        path.addLine    (to: startPointRight)
+        path.addCurve   (to: insidePointRight, controlPoint1: startControlRight,  controlPoint2: insideControlRight)
+        path.addLine    (to: outsidePointRight)
+        path.addLine    (to: endPoint)
+        path.addLine    (to: outsidePointLeft)
+        path.addLine    (to: insidePointLeft)
+        path.addCurve   (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
+        path.close      ()
+    }
+    
+    // in case arrow is too short
+    func adjustControlHt() {
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return
+        }
+        let arrowHeight = endPoint.y - startPoint.y
+        if arrowHeight < 2 * cpWeak {
+            cpWeak = arrowHeight * 0.45
+            cpStrong = cpWeak
+        }
+        
+        // adjust the strong control point, depending on the angle of the arrow
+        let rightShift = endPoint.x - startPoint.x
+        if rightShift > 2.0 { // prevent divide by 0
+            let tangent = (endPoint.y - startPoint.y) / rightShift
+            if tangent < 5 { // no adjustment if angle is close to 90°
+                // range 0 to 1.3~
+                let cpFactor = 4 / (10 * tangent)
+                cpStrong *= 1.0 + cpFactor
+            }
+        }
+    }
     
     func getQuadControl (startPt: CGPoint, endPt: CGPoint) -> CGPoint {
         let pointingRight: Bool = startPt.x < endPt.x ? true : false
@@ -181,7 +256,8 @@ class ArrowView: UIView {
     }
 
     func simpleShapeLayer() {
-        self.createQuadCurveArrow()
+        print ("SSSSSS")
+        createBezierArrow()
         
         let shapeLayerLower = CAShapeLayer()
         shapeLayerLower.path = self.path.cgPath

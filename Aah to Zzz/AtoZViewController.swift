@@ -439,24 +439,18 @@ class AtoZViewController: UIViewController {
         // TODO: enable dismiss by tapping anywhere
         // TODO: customize the info vc animation
         // TODO: blur the background behind the info view controller
-        if game?.data?.gameState == 0 {
+        if game?.data?.gameState == 0 || game?.data?.gameState == 1 { // 1 allows showing every time, for testing
             //animator.removeAllBehaviors()
             game?.data?.gameState = 1 // set to state where info window is not shown
             saveContext()
             
-
                 let infoViewController = storyboard?.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
             
                 // pass end points of arrows in
                 infoViewController.modalPresentationStyle = .overCurrentContext
                 infoViewController.arrowEndPoints = arrowEndPoints
-                // let time = DispatchTime.now() + 3.35
-                //  DispatchQueue.main.asyncAfter(deadline: time) {
+
                 self.present(infoViewController, animated: true)
-       // }
-
-
-           // }
         }
     }
     

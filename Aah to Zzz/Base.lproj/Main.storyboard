@@ -1231,10 +1231,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ2-et-PgL">
-                                <rect key="frame" x="112" y="148" width="282" height="134"/>
+                                <rect key="frame" x="112" y="139" width="282" height="102"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="282" id="ixW-X3-TPg"/>
-                                    <constraint firstAttribute="height" constant="134" id="xl1-Kh-LgQ"/>
+                                    <constraint firstAttribute="height" constant="102" id="xl1-Kh-LgQ"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="mxI-QG-9Yx" kind="embed" identifier="Blurred1" id="7y2-bk-RDx"/>
@@ -1266,17 +1266,33 @@
                                     <segue destination="uzH-Aa-Jia" kind="embed" identifier="Blurred3" id="GZE-dG-xVw"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbP-my-Veb" customClass="ArrowView" customModule="AahToZzz" customModuleProvider="target">
+                                <rect key="frame" x="94" y="304" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.98922836780000001" green="0.41531395910000002" blue="0.031820401550000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="sPt">
+                                        <point key="value" x="0.0" y="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="point" keyPath="ePt">
+                                        <point key="value" x="200" y="400"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="20" id="3Ps-sv-0Kv"/>
                             <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="24" id="4cD-5I-Lki"/>
                             <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="0Qm-kH-Bap" secondAttribute="bottom" constant="-113" id="6Dd-nK-Bo0"/>
+                            <constraint firstItem="vbP-my-Veb" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="63" id="6XB-UZ-aBd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0Qm-kH-Bap" secondAttribute="trailing" constant="13" id="CNG-Oo-71G"/>
                             <constraint firstAttribute="trailing" secondItem="G4M-7j-Vuc" secondAttribute="trailing" constant="20" id="Ftf-zU-7JM"/>
                             <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="G4M-7j-Vuc" secondAttribute="bottom" constant="117" id="HLV-Oi-NTs"/>
                             <constraint firstItem="G4M-7j-Vuc" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" priority="999" constant="95" id="HLi-oI-kkC"/>
                             <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="64" id="ICb-Y8-e5C"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="177" id="zWW-Zc-Iia"/>
+                            <constraint firstItem="vbP-my-Veb" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="74" id="W6J-bS-SbK"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="vbP-my-Veb" secondAttribute="bottom" constant="27" id="b5y-Ka-StK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vbP-my-Veb" secondAttribute="trailing" constant="60" id="pF6-9Y-uxz"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="218" id="zWW-Zc-Iia"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="414" height="736"/>

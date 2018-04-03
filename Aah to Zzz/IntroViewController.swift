@@ -274,8 +274,9 @@ class IntroViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        // 0.9 below is only for testing
         for i in 0 ..< containers.count {
-            arrowStartPoints.append( CGPoint(x: containers[i].center.x, y: containers[i].center.y + (containers[i].frame.height * 0.5) ) )
+            arrowStartPoints.append( CGPoint(x: containers[i].center.x * 0.9, y: containers[i].center.y + (containers[i].frame.height * 0.5) ) )
             
             let arrowView = ArrowView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
             arrowViews.append(arrowView) // need a ref so visibility can be controlled
