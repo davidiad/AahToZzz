@@ -187,11 +187,11 @@
                                 </connections>
                             </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XAv-0M-tPX">
-                                <rect key="frame" x="87" y="308" width="240" height="207"/>
+                                <rect key="frame" x="87" y="308" width="240.33333333333337" height="207"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwb-MG-8bs">
-                                        <rect key="frame" x="105" y="0.0" width="30" height="30"/>
+                                        <rect key="frame" x="105.33333333333334" y="0.0" width="30" height="30"/>
                                         <state key="normal" title="Play"/>
                                         <connections>
                                             <action selector="playGame:" destination="6UW-8g-sR0" eventType="touchUpInside" id="km5-7T-Ch3"/>
@@ -199,7 +199,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNe-vJ-zON">
-                                        <rect key="frame" x="104" y="30" width="32" height="30"/>
+                                        <rect key="frame" x="104.33333333333334" y="30" width="32" height="30"/>
                                         <state key="normal" title="Help"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9r-FU-YhZ">
@@ -210,11 +210,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCH-Co-bR6">
-                                        <rect key="frame" x="104" y="90" width="32" height="30"/>
+                                        <rect key="frame" x="104.33333333333334" y="90" width="32" height="30"/>
                                         <state key="normal" title="Rate"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ic2-fx-QBA">
-                                        <rect key="frame" x="64" y="120" width="112" height="30"/>
+                                        <rect key="frame" x="63.999999999999993" y="120" width="112.33333333333331" height="30"/>
                                         <state key="normal" title="Leave Feedback"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSt-UW-IVq">
@@ -222,7 +222,7 @@
                                         <state key="normal" title="Contact"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He6-7G-baV">
-                                        <rect key="frame" x="0.0" y="180" width="240" height="27"/>
+                                        <rect key="frame" x="0.0" y="180" width="240.33333333333334" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="How 3 letter words help score more points"/>
                                     </button>
@@ -1266,32 +1266,16 @@
                                     <segue destination="uzH-Aa-Jia" kind="embed" identifier="Blurred3" id="GZE-dG-xVw"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbP-my-Veb" customClass="ArrowView" customModule="AahToZzz" customModuleProvider="target">
-                                <rect key="frame" x="94" y="304" width="240" height="128"/>
-                                <color key="backgroundColor" red="0.98922836780000001" green="0.41531395910000002" blue="0.031820401550000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="point" keyPath="sPt">
-                                        <point key="value" x="0.0" y="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="point" keyPath="ePt">
-                                        <point key="value" x="200" y="400"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="20" id="3Ps-sv-0Kv"/>
                             <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="24" id="4cD-5I-Lki"/>
                             <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="0Qm-kH-Bap" secondAttribute="bottom" constant="-113" id="6Dd-nK-Bo0"/>
-                            <constraint firstItem="vbP-my-Veb" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="63" id="6XB-UZ-aBd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0Qm-kH-Bap" secondAttribute="trailing" constant="13" id="CNG-Oo-71G"/>
                             <constraint firstAttribute="trailing" secondItem="G4M-7j-Vuc" secondAttribute="trailing" constant="20" id="Ftf-zU-7JM"/>
                             <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="G4M-7j-Vuc" secondAttribute="bottom" constant="117" id="HLV-Oi-NTs"/>
                             <constraint firstItem="G4M-7j-Vuc" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" priority="999" constant="95" id="HLi-oI-kkC"/>
                             <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="64" id="ICb-Y8-e5C"/>
-                            <constraint firstItem="vbP-my-Veb" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="74" id="W6J-bS-SbK"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="vbP-my-Veb" secondAttribute="bottom" constant="27" id="b5y-Ka-StK"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="vbP-my-Veb" secondAttribute="trailing" constant="60" id="pF6-9Y-uxz"/>
                             <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="218" id="zWW-Zc-Iia"/>
                         </constraints>
                     </view>

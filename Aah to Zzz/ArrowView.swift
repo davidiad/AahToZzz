@@ -18,6 +18,10 @@ import UIKit
     var endPoint:       CGPoint?
     var cpStrong:       CGFloat = 40.0
     var cpWeak:         CGFloat = 40.0
+    var arrowBounds:    CGRect?
+    var blurView:       UIVisualEffectView?
+    var blurriness:     CGFloat = 0.5
+    var animator:       UIViewPropertyAnimator?
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -129,6 +133,8 @@ import UIKit
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
+        
+        // if the arrow is too short, reduce control point offsets
         let arrowHeight = endPoint.y - startPoint.y
         if arrowHeight < 2 * cpWeak {
             cpWeak = arrowHeight * 0.45
@@ -137,12 +143,18 @@ import UIKit
         
         // adjust the strong control point, depending on the angle of the arrow
         let rightShift = endPoint.x - startPoint.x
-        if rightShift > 2.0 { // prevent divide by 0
+        if rightShift > 9.0 { // prevent divide by 0
             let tangent = (endPoint.y - startPoint.y) / rightShift
             if tangent < 5 { // no adjustment if angle is close to 90°
-                // range 0 to 1.3~
                 let cpFactor = 4 / (10 * tangent)
                 cpStrong *= 1.0 + cpFactor
+            }
+        } else if rightShift < -1.0 { // arrow points toward left
+            let tangent = (endPoint.y - startPoint.y) / (startPoint.x - endPoint.x)
+            if tangent < 5 { // no adjustment if angle is close to 90°
+                let cpFactor = 4 / (10 * tangent)
+                // switch roles of cpWeak and cpStrong (naming should be improved)
+                cpWeak *= 1.0 + cpFactor
             }
         }
     }
@@ -256,7 +268,7 @@ import UIKit
     }
 
     func simpleShapeLayer() {
-        print ("SSSSSS")
+
         createBezierArrow()
         
         let shapeLayerLower = CAShapeLayer()
@@ -268,10 +280,80 @@ import UIKit
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = self.path.cgPath
-        shapeLayer.fillColor = Colors.lightBackground.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.strokeColor = Colors.darkBackground.cgColor
         shapeLayer.lineWidth = 0.75
         self.layer.addSublayer(shapeLayer)
+        arrowBounds = shapeLayer.path?.boundingBoxOfPath
+        print("position: \(shapeLayer.position)")
+        blurArrow()
     }
+    
+    // blur fx
+    func blurArrow() {
+        var blurEffect: UIBlurEffect
+        if #available(iOS 10.0, *) {
+            blurEffect = UIBlurEffect(style: .prominent)
+        } else {
+            blurEffect = UIBlurEffect(style: .light)
+        }
+        blurView = UIVisualEffectView(effect: nil)
+    
+        guard let blurView = blurView else {
+            return
+        }
+        
+        
+        animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
+            self.blurView?.effect = blurEffect
+            self.animator?.pauseAnimation()
+        }
+        animator?.startAnimation()
+        animator?.fractionComplete = blurriness
+    
+    
+//    animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
+//    self.blurView?.effect = blurEffect
+//    self.animator?.pauseAnimation()
+//    }
+//    animator?.startAnimation()
+//    animator?.fractionComplete = blurriness
+//
+//    blurView.layer.cornerRadius = cornerRadius
+//    blurView.layer.masksToBounds = true
+//    blurView.layer.borderWidth = borderWidth
+//    blurView.layer.borderColor = Colors.bluek.cgColor
+    blurView.translatesAutoresizingMaskIntoConstraints = false
+        guard let arrowBounds = arrowBounds else {
+            return
+        }
+        blurView.frame = arrowBounds
+    //blurView.backgroundColor = UIColor.cyan
+   self.backgroundColor = UIColor.clear
 
+        
+        
+//        let maskLayer = CAShapeLayer()
+//        let maskPath = self.path
+//        maskPath?.append(UIBezierPath(rect: self.bounds))
+//        maskPath?.append(self.path)
+//
+//        maskLayer.fillRule = kCAFillRuleEvenOdd
+//        let maskView = UIView(frame: arrowBounds)
+//        maskView.backgroundColor = UIColor.white
+//        maskView.layer.mask = maskLayer
+//
+//        blurView.mask = maskView
+        
+        
+        
+        //blurView.frame = arrowBounds
+        self.insertSubview(blurView, at: 0)
+        
+    }
+    
+    deinit {
+        //animator?.stopAnimation(false)
+        print("ARROW DEINITS")
+    }
 }

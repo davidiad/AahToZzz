@@ -68,6 +68,16 @@ class IntroViewController: UIViewController {
 //                    self.dismiss(animated: true, completion: nil)
 //                    return
                 })
+                // ensure that all animators are stopped before dismissal
+                for i in 0 ..< self.arrowViews.count {
+                    print(i)
+                    print(":::")
+                    //if self.arrowViews[i].animator?.isRunning == true {
+                        self.arrowViews[i].animator?.stopAnimation(true)
+                        self.arrowViews[i].animator?.finishAnimation(at: UIViewAnimatingPosition(rawValue: 0)!)
+                        
+                    //}
+                }
                 self.dismiss(animated: true, completion: nil)
                 return
             }
@@ -278,7 +288,7 @@ class IntroViewController: UIViewController {
         for i in 0 ..< containers.count {
             arrowStartPoints.append( CGPoint(x: containers[i].center.x * 0.9, y: containers[i].center.y + (containers[i].frame.height * 0.5) ) )
             
-            let arrowView = ArrowView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
+            let arrowView = ArrowView(frame: CGRect(x: 0, y: 0, width: 200, height: 300), startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
             arrowViews.append(arrowView) // need a ref so visibility can be controlled
             if i > 0 {
                 arrowViews[i].alpha = 0.0

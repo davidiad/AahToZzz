@@ -59,20 +59,20 @@ class BlurViewController: UIViewController {
         animator?.startAnimation()
         animator?.fractionComplete = blurriness
         
-        blurView.layer.cornerRadius = cornerRadius
-        blurView.layer.masksToBounds = true
-        blurView.layer.borderWidth = borderWidth
-        blurView.layer.borderColor = Colors.bluek.cgColor
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        blurView.backgroundColor = UIColor.clear
-        view.backgroundColor = UIColor.clear
+        blurView.layer.cornerRadius                         = cornerRadius
+        blurView.layer.masksToBounds                        = true
+        blurView.layer.borderWidth                          = borderWidth
+        blurView.layer.borderColor                          = Colors.bluek.cgColor
+        blurView.translatesAutoresizingMaskIntoConstraints  = false
+        blurView.backgroundColor                            = UIColor.clear
+        view.backgroundColor                                = UIColor.clear
         view.insertSubview(blurView, at: 0)
         
         NSLayoutConstraint.activate([
-            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            blurView.topAnchor.constraint(equalTo: view.topAnchor),
-            blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            blurView.bottomAnchor.constraint    (equalTo: view.bottomAnchor  ),
+            blurView.leadingAnchor.constraint   (equalTo: view.leadingAnchor ),
+            blurView.topAnchor.constraint       (equalTo: view.topAnchor     ),
+            blurView.trailingAnchor.constraint  (equalTo: view.trailingAnchor)
             ])
         
        
@@ -81,11 +81,11 @@ class BlurViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         // shadowView.frame size is now set, so it's safe to create the shadowmask
-        shadowView.layer.cornerRadius = cornerRadius
-        shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowOpacity = shadowOpacity
-        shadowView.layer.shadowRadius = shadowRadius
-        shadowView.layer.masksToBounds = false
+        shadowView.layer.cornerRadius   = cornerRadius
+        shadowView.layer.shadowColor    = UIColor.black.cgColor
+        shadowView.layer.shadowOpacity  = shadowOpacity
+        shadowView.layer.shadowRadius   = shadowRadius
+        shadowView.layer.masksToBounds  = false
 
 //        let outerPath = UIBezierPath(rect: outerShadowMask.frame)
 //        let innerPath = UIBezierPath(roundedRect: shadowView.frame, cornerRadius: cornerRadius)
