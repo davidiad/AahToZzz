@@ -296,7 +296,6 @@ class ArrowView: UIView {
         shapeLayerFrost.lineJoin = kCALineJoinRound
         self.layer.addSublayer(shapeLayer)
         arrowBounds = shapeLayer.path?.boundingBoxOfPath
-        print("position: \(shapeLayer.position)")
         blurArrow()
     }
     
@@ -329,7 +328,7 @@ class ArrowView: UIView {
         }
         blurView.frame              = arrowBounds
         
-        
+        /*
         let maskLayer               = CAShapeLayer()
         
         let arrowBoundsExpanded     = CGRect(x:      arrowBounds.minX    - 20.0,
@@ -351,17 +350,17 @@ class ArrowView: UIView {
      
         
         let mView                = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
-//
+
         mView.layer.addSublayer(maskLayer)
-//
+
         mView.layer.mask = maskLayer
-//
+
         //blurView.mask = maskView
         
 //        blurView.mask = mView
 //        blurView.contentView.layer.mask = maskLayer
         
-        
+        */
         self.insertSubview(blurView, at: 0)
         //self.insertSubview(maskView, at: 1)
         //blurView.layer.mask = maskLayer
@@ -369,38 +368,38 @@ class ArrowView: UIView {
         
     }
     
-//    func addArrowMask() {
-//        let maskLayer               = CAShapeLayer()
-//        
+    func getArrowMask() -> UIView {
+        guard let arrowBounds = arrowBounds else {
+            return self
+        }
+        let maskLayer               = CAShapeLayer()
+        
 //        let arrowBoundsExpanded     = CGRect(x:      (arrowBounds?.minX)!    - 20.0,
 //                                             y:      (arrowBounds?.minY)!    - 20.0,
 //                                             width:  (arrowBounds?.width)!   + 40.0,
 //                                             height: (arrowBounds?.height)!  + 40.0)
-//        
+//
 //        let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
 //        maskPath.append(self.path)
-//        
-//        //        let mPath = CGMutablePath()
-//        //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
-//        //        mPath.addPath(self.path.cgPath)
-//        
-//        
-//        maskLayer.path              = maskPath.cgPath
-//        maskLayer.fillRule          = kCAFillRuleEvenOdd
-//        maskLayer.fillColor         = Colors.bluek.cgColor
-//        
-//        
-//        let mView                = UIView(frame: CGRect(x:0,y:0,width: (arrowBounds?.width)!, height: (arrowBounds?.height)!))
-//        //
-//        mView.layer.addSublayer(maskLayer)
-//        //
-//        mView.layer.mask = maskLayer
-//        //
-//        //blurView.mask = maskView
-//        
-//        blurView?.mask = mView
-//        
-//    }
+        
+        //        let mPath = CGMutablePath()
+        //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
+        //        mPath.addPath(self.path.cgPath)
+        
+        
+        maskLayer.path              = self.path.cgPath  //  maskPath.cgPath
+        maskLayer.fillRule          = kCAFillRuleEvenOdd
+        //maskLayer.fillColor       = Colors.bluek.cgColor
+        
+        let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
+        
+        mView.layer.addSublayer(maskLayer)
+        
+        //mView.layer.mask = maskLayer
+        
+        return mView
+        
+    }
     
     deinit {
         //animator?.stopAnimation(false)
