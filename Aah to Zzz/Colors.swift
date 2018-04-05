@@ -37,5 +37,5 @@ struct Colors {
     
     // Background colors
     static let darkBackground   = UIColor(hue: 237/360, saturation: 0.64, brightness: 0.16, alpha: 1.0)
-    static let lightBackground  = UIColor(hue: 237/360, saturation: 0.00, brightness: 1.00, alpha: 0.5)
+    static let lightBackground  = UIColor(hue: 237/360, saturation: 0.00, brightness: 1.00, alpha: 0.3)
 }

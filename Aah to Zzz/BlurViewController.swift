@@ -138,9 +138,10 @@ class BlurViewController: UIViewController {
         
         shadowMask.addPath(outerPath.cgPath)
         shadowMask.addPath(innerPath.cgPath)
+        
         shadowMaskLayer.path                    = shadowMask
         shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
-        shadowView.layer.mask = shadowMaskLayer
+        shadowView.layer.mask                   = shadowMaskLayer
     }
     
     // Format the text. Underline is none for 0, single for 1

@@ -134,6 +134,8 @@ class IntroViewController: UIViewController {
         containers[1].alpha = 0.0
         containers[2].alpha = 0.0
         
+        //addArrowViews()
+        
         /*
         blurView3 = UIVisualEffectView(effect: nil)
         guard let blurView3 = blurView3 else {
@@ -284,6 +286,21 @@ class IntroViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        addArrowViews()
+//        // 0.9 below is only for testing
+//        for i in 0 ..< containers.count {
+//            arrowStartPoints.append( CGPoint(x: containers[i].center.x * 0.9, y: containers[i].center.y + (containers[i].frame.height * 0.5) ) )
+//
+//            let arrowView = ArrowView(frame: CGRect(x: 0, y: 0, width: 200, height: 300), startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
+//            arrowViews.append(arrowView) // need a ref so visibility can be controlled
+//            if i > 0 {
+//                arrowViews[i].alpha = 0.0
+//            }
+//            self.view.addSubview(arrowView)
+//        }
+    }
+    
+    func addArrowViews() {
         // 0.9 below is only for testing
         for i in 0 ..< containers.count {
             arrowStartPoints.append( CGPoint(x: containers[i].center.x * 0.9, y: containers[i].center.y + (containers[i].frame.height * 0.5) ) )
@@ -299,9 +316,10 @@ class IntroViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        let arrowView = ArrowView(frame: CGRect(x: 0, y: 0, width: 10, height: 10), startPoint: arrowStartPoints[0], endPoint: arrowEndPoints[0])
-//
-//        self.view.addSubview(arrowView)
+
+//        for i in 0 ..< arrowViews.count {
+//            arrowViews[i].addArrowMask()
+//        }
     }
 
     override func didReceiveMemoryWarning() {
