@@ -187,11 +187,11 @@
                                 </connections>
                             </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XAv-0M-tPX">
-                                <rect key="frame" x="87" y="308" width="240.33333333333337" height="207"/>
+                                <rect key="frame" x="87" y="308" width="240" height="207"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwb-MG-8bs">
-                                        <rect key="frame" x="105.33333333333334" y="0.0" width="30" height="30"/>
+                                        <rect key="frame" x="105" y="0.0" width="30" height="30"/>
                                         <state key="normal" title="Play"/>
                                         <connections>
                                             <action selector="playGame:" destination="6UW-8g-sR0" eventType="touchUpInside" id="km5-7T-Ch3"/>
@@ -199,7 +199,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNe-vJ-zON">
-                                        <rect key="frame" x="104.33333333333334" y="30" width="32" height="30"/>
+                                        <rect key="frame" x="104" y="30" width="32" height="30"/>
                                         <state key="normal" title="Help"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9r-FU-YhZ">
@@ -210,11 +210,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCH-Co-bR6">
-                                        <rect key="frame" x="104.33333333333334" y="90" width="32" height="30"/>
+                                        <rect key="frame" x="104" y="90" width="32" height="30"/>
                                         <state key="normal" title="Rate"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ic2-fx-QBA">
-                                        <rect key="frame" x="63.999999999999993" y="120" width="112.33333333333331" height="30"/>
+                                        <rect key="frame" x="64" y="120" width="112" height="30"/>
                                         <state key="normal" title="Leave Feedback"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSt-UW-IVq">
@@ -222,7 +222,7 @@
                                         <state key="normal" title="Contact"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He6-7G-baV">
-                                        <rect key="frame" x="0.0" y="180" width="240.33333333333334" height="27"/>
+                                        <rect key="frame" x="0.0" y="180" width="240" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="How 3 letter words help score more points"/>
                                     </button>
@@ -1231,23 +1231,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ2-et-PgL">
-                                <rect key="frame" x="112" y="139" width="282" height="102"/>
+                                <rect key="frame" x="112" y="395" width="282" height="102"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="282" id="ixW-X3-TPg"/>
                                     <constraint firstAttribute="height" constant="102" id="xl1-Kh-LgQ"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="mxI-QG-9Yx" kind="embed" identifier="Blurred1" id="7y2-bk-RDx"/>
-                                </connections>
-                            </containerView>
-                            <containerView opaque="NO" alpha="0.14999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8d-qc-6K7">
-                                <rect key="frame" x="84" y="44" width="261" height="87"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="261" id="t9u-wm-1SE"/>
-                                    <constraint firstAttribute="height" constant="87" id="tuN-VH-6UB"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="Bfw-yD-eiF" kind="embed" identifier="Blurred2" id="uT7-0T-0Hg"/>
                                 </connections>
                             </containerView>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_newlist" translatesAutoresizingMaskIntoConstraints="NO" id="0Qm-kH-Bap">
@@ -1258,7 +1248,7 @@
                                 </constraints>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G4M-7j-Vuc">
-                                <rect key="frame" x="95" y="459" width="299" height="160"/>
+                                <rect key="frame" x="39" y="505" width="299" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="erJ-W6-kHu"/>
                                 </constraints>
@@ -1266,17 +1256,27 @@
                                     <segue destination="uzH-Aa-Jia" kind="embed" identifier="Blurred3" id="GZE-dG-xVw"/>
                                 </connections>
                             </containerView>
+                            <containerView opaque="NO" alpha="0.14999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8d-qc-6K7">
+                                <rect key="frame" x="157" y="12" width="237" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="237" id="t9u-wm-1SE"/>
+                                    <constraint firstAttribute="height" constant="80" id="tuN-VH-6UB"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Bfw-yD-eiF" kind="embed" identifier="Blurred2" id="uT7-0T-0Hg"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="20" id="3Ps-sv-0Kv"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="24" id="4cD-5I-Lki"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="0Qm-kH-Bap" secondAttribute="bottom" constant="-113" id="6Dd-nK-Bo0"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="-8" id="4cD-5I-Lki"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="0Qm-kH-Bap" secondAttribute="bottom" constant="-67" id="6Dd-nK-Bo0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0Qm-kH-Bap" secondAttribute="trailing" constant="13" id="CNG-Oo-71G"/>
-                            <constraint firstAttribute="trailing" secondItem="G4M-7j-Vuc" secondAttribute="trailing" constant="20" id="Ftf-zU-7JM"/>
-                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="G4M-7j-Vuc" secondAttribute="bottom" constant="117" id="HLV-Oi-NTs"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" priority="999" constant="95" id="HLi-oI-kkC"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="64" id="ICb-Y8-e5C"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="218" id="zWW-Zc-Iia"/>
+                            <constraint firstAttribute="trailing" secondItem="G4M-7j-Vuc" secondAttribute="trailing" constant="76" id="Ftf-zU-7JM"/>
+                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="G4M-7j-Vuc" secondAttribute="bottom" constant="71" id="HLV-Oi-NTs"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" priority="999" constant="39" id="HLi-oI-kkC"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="137" id="ICb-Y8-e5C"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="8" id="zWW-Zc-Iia"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="414" height="736"/>

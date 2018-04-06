@@ -10,61 +10,37 @@ import UIKit
 
 class ArrowView: UIView {
     
-    let STARTWIDTH:     CGFloat = 12.0
-    let ENDWIDTH:       CGFloat = 6.0
-    let ARROWWIDTH:     CGFloat = 16.0
-    let ARROWHEIGHT:    CGFloat = 22.0
+    //MARK: Arrow const's and vars WTH == WIDTH, HT == HEIGHT
+    let STARTWTH:       CGFloat = 12.0
+    let ENDWTH:         CGFloat = 6.0
+    let ARROWWTH:       CGFloat = 16.0
+    let ARROWHT:        CGFloat = 22.0
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
     var cpStrong:       CGFloat = 36.0
     var cpWeak:         CGFloat = 36.0
+    
+    //MARK:- Blur and view vars
     var arrowBounds:    CGRect?
     var blurView:       UIVisualEffectView?
     var blurriness:     CGFloat = 0.5
     var animator:       UIViewPropertyAnimator?
+    var path:           UIBezierPath = UIBezierPath()
+    var lines:          [Line] = [Line]()
     
     struct Line {
-        var lineWidth : CGFloat
-        var color :     UIColor
+        var lineWidth:  CGFloat
+        var color:      UIColor
     }
     
-    var lines:          [Line] = [Line]()
-
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
-//    override func draw(_ rect: CGRect) {
-//        self.createRectangle()
-//
-//        // Specify the fill color and apply it to the path.
-//        UIColor.orange.setFill()
-//        path.fill()
-//
-//        // Specify a border (stroke) color.
-//        UIColor.purple.setStroke()
-//        path.stroke()
-//    }
-    
-    var path: UIBezierPath!
-    
-    
+    //MARK:- init
     override init(frame: CGRect) {
         super.init(frame: frame)
         useFrameForPoints()
-
-        
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
     }
     
     init(frame: CGRect, startPoint: CGPoint, endPoint: CGPoint) {
@@ -76,7 +52,7 @@ class ArrowView: UIView {
         addShapeWithBlur()
     }
     
-    // helper for init
+    // helpers for init
     func addLineProperties() {
         lines.append(Line(lineWidth: 11.0,  color: Colors.veryLight))
         lines.append(Line(lineWidth: 8.5,   color: Colors.veryLight))
@@ -84,6 +60,18 @@ class ArrowView: UIView {
         lines.append(Line(lineWidth: 2.25,  color: .white))
         lines.append(Line(lineWidth: 1.5,   color: Colors.darkBackground))
     }
+    
+    func useFrameForPoints () {
+        startPoint  = CGPoint(x: 0,           y:0            )
+        endPoint    = CGPoint(x: frame.width, y: frame.height)
+    }
+    
+    deinit {
+        //animator?.stopAnimation(false)
+        print("ARROW DEINITS")
+    }
+    
+    //MARK:- Inspectables
     
     @IBInspectable var sPt: CGPoint = CGPoint(x: 0, y: 0) {
         didSet {
@@ -97,10 +85,7 @@ class ArrowView: UIView {
         }
     }
     
-    func useFrameForPoints () {
-        startPoint = CGPoint(x:0, y:0)
-        endPoint = CGPoint(x: frame.width, y: frame.height)
-    }
+
     
 //    convenience init(frame: CGRect, sPoint: CGPoint, ePoint: CGPoint) {
 //
@@ -116,66 +101,121 @@ class ArrowView: UIView {
 //        return CGPoint(x: endPt.x, y: y)
 //    }
     
+    //MARK:- Shape creation
+    
+    // arrowhead points up or down, arrow curves
     func createBezierArrow () {
-        path = UIBezierPath()
+        //path = UIBezierPath()
         if startPoint == nil {
             useFrameForPoints()
         }
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
-        adjustControlHt()
         
-        let startPointLeft      = CGPoint(x: startPoint.x - STARTWIDTH, y: startPoint.y                             )
-        let startPointRight     = CGPoint(x: startPoint.x + STARTWIDTH, y: startPoint.y                             )
-        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWIDTH,   y: endPoint.y    - ARROWHEIGHT              )
-        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWIDTH,   y: endPoint.y    - ARROWHEIGHT              )
-        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWIDTH, y: endPoint.y    - ARROWHEIGHT              )
-        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWIDTH, y: endPoint.y    - ARROWHEIGHT              )
-        let startControlRight   = CGPoint(x: startPoint.x + STARTWIDTH, y: startPoint.y                + cpWeak     )
-        let insideControlRight  = CGPoint(x: endPoint.x   + ENDWIDTH,   y: endPoint.y    - ARROWHEIGHT - cpStrong   )
-        let startControlLeft    = CGPoint(x: startPoint.x - STARTWIDTH, y: startPoint.y                + cpStrong   )
-        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWIDTH,   y: endPoint.y    - ARROWHEIGHT - cpWeak     )
+        var down: Bool = false
+        // Check whether arrow points up or down
+        var d: CGFloat = 1.0
+        if endPoint.y - startPoint.y > 0 {
+            // arrow points down
+            down = true
+            d = -1.0
+
+        }
+        
+        // Check whether arrow points left or right
+        var r: CGFloat = 1.0
+        if startPoint.x - endPoint.x > 0 {
+            // arrow points left
+                r = -1.0
+        }
+        
+        var u: CGFloat = 1.0
+        var ul: CGFloat = 1.0
+        if down == false {
+            u = -1.0
+            if startPoint.x - endPoint.x > 0 {
+                // pointing up and to the left
+                // all control points need to go the opposite way
+                ul = -1.0
+            }
+            
+        }
+        
+        
+        
+        adjustControlPoints()
+        
+        let startPointLeft    = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                                         )
+        let startPointRight   = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                                         )
+        let innerPointRight   = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   + ARROWHT * d                           )
+        let innerPointLeft    = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y   + ARROWHT * d                           )
+        let outerPointRight   = CGPoint(x: endPoint.x   + ARROWWTH, y: endPoint.y   + ARROWHT * d                           )
+        let outerPointLeft    = CGPoint(x: endPoint.x   - ARROWWTH, y: endPoint.y   + ARROWHT * d                           )
+        let startControlRight = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y               + cpWeak * r * ul         )
+        let innerControlRight = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   + ARROWHT * d - cpStrong * d * r * ul   )
+        let startControlLeft  = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y               + cpStrong * -r * u * ul  )
+        let innerControlLeft  = CGPoint(x: endPoint.x   - ENDWTH,  y: endPoint.y    + ARROWHT * d - cpWeak * d * -r * u * ul)
         
         path.move       (to: startPoint)
         path.addLine    (to: startPointRight)
-        path.addCurve   (to: insidePointRight, controlPoint1: startControlRight,  controlPoint2: insideControlRight)
-        path.addLine    (to: outsidePointRight)
+        path.addCurve   (to: innerPointRight, controlPoint1: startControlRight,  controlPoint2: innerControlRight)
+        path.addLine    (to: outerPointRight)
         path.addLine    (to: endPoint)
-        path.addLine    (to: outsidePointLeft)
-        path.addLine    (to: insidePointLeft)
-        path.addCurve   (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
+        path.addLine    (to: outerPointLeft)
+        path.addLine    (to: innerPointLeft)
+        path.addCurve   (to: startPointLeft, controlPoint1: innerControlLeft, controlPoint2: startControlLeft)
         path.close      ()
     }
     
-    // in case arrow is too short
-    func adjustControlHt() {
+    // Adjust based on direction arrow is pointing, and length of arrow
+    func adjustControlPoints() {
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
         
-        // if the arrow is too short, reduce control point offsets
+        // in case where the arrow is too short, reduce control point offsets
         let arrowHeight = endPoint.y - startPoint.y
         if arrowHeight < 2 * cpWeak {
             cpWeak = arrowHeight * 0.45
             cpStrong = cpWeak
         }
         
+        // Check whether arrow points up or down
+        var d: CGFloat = -1.0 // arrow is pointing up
+        if startPoint.y - endPoint.y > 0 {
+            // arrow is pointing up
+            d = 1.0
+        }
+        
         // adjust the strong control point, depending on the angle of the arrow
+        // to make graceful curves, with inner and outer curves matching
+        // 4 cases, arrow point up or down, right or left
         let rightShift = endPoint.x - startPoint.x
-        if rightShift > 9.0 { // prevent divide by 0
-            let tangent = (endPoint.y - startPoint.y) / rightShift
+        // arrow points right
+        if rightShift > 9.0 { // prevent divide by 0 (or close to 0)
+            let tangent = abs((endPoint.y - startPoint.y) / rightShift)
             if tangent < 5 { // no adjustment if angle is close to 90°
                 let cpFactor = 4 / (10 * tangent)
-                cpStrong *= 1.0 + cpFactor
+                cpStrong *= ((1.0 + cpFactor) * d)
             }
-        } else if rightShift < -1.0 { // arrow points toward left
-            let tangent = (endPoint.y - startPoint.y) / (startPoint.x - endPoint.x)
+            
+        // arrow points toward left
+        } else if rightShift < -1.0 {
+            let tangent = abs((endPoint.y - startPoint.y) / (startPoint.x - endPoint.x))
             if tangent < 5 { // no adjustment if angle is close to 90°
                 let cpFactor = 4 / (10 * tangent)
                 // switch roles of cpWeak and cpStrong (naming should be improved)
-                cpWeak *= 1.0 + cpFactor
+                cpWeak *= (1.0 + cpFactor) * d
+                
             }
+        }
+        
+        // if arrow is pointing up, swap the strong and weak sides
+        if d > 0 && rightShift > 0 {
+            let tempStrong  = cpStrong
+            cpStrong        = cpWeak
+            cpWeak          = tempStrong
         }
     }
     
@@ -200,16 +240,16 @@ class ArrowView: UIView {
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
-        let startPointLeft      = CGPoint(x: startPoint.x - STARTWIDTH,    y: startPoint.y                          )
-        let startPointRight     = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                          )
-        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT           )
-        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT           )
-        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
-        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
-        //let startControlRight   = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                + 40.0    )
-        //let insideControlRight  = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
-        let startControlLeft    = CGPoint(x: startPoint.x - STARTWIDTH,    y: startPoint.y                + 40.0    )
-        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
+        let startPointLeft      = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                          )
+        let startPointRight     = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                          )
+        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT           )
+        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT           )
+        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWTH,    y: endPoint.y    - ARROWHT           )
+        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWTH,    y: endPoint.y    - ARROWHT           )
+        //let startControlRight   = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                + 40.0    )
+        //let insideControlRight  = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
+        let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
+        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
         let quadControl = getQuadControl(startPt: startPointRight, endPt: insidePointRight)
         
         path.move           (to: startPoint)
@@ -229,16 +269,16 @@ class ArrowView: UIView {
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
-        let startPointLeft      = CGPoint(x: startPoint.x - STARTWIDTH,    y: startPoint.y                          )
-        let startPointRight     = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                          )
-        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT           )
-        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT           )
-        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
-        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWIDTH,    y: endPoint.y    - ARROWHEIGHT           )
-        let startControlRight   = CGPoint(x: startPoint.x + STARTWIDTH,    y: startPoint.y                + 40.0    )
-        let insideControlRight  = CGPoint(x: endPoint.x   + ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
-        let startControlLeft    = CGPoint(x: startPoint.x - STARTWIDTH,    y: startPoint.y                + 40.0    )
-        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWIDTH,      y: endPoint.y    - ARROWHEIGHT - 40.0    )
+        let startPointLeft      = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                          )
+        let startPointRight     = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                          )
+        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT           )
+        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT           )
+        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWTH,    y: endPoint.y    - ARROWHT           )
+        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWTH,    y: endPoint.y    - ARROWHT           )
+        let startControlRight   = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                + 40.0    )
+        let insideControlRight  = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
+        let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
+        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
         
         path.move       (to: startPoint)
         path.addLine    (to: startPointRight)
@@ -256,10 +296,10 @@ class ArrowView: UIView {
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
-        let startPointLeft  = CGPoint(x: startPoint.x   - STARTWIDTH,   y: startPoint.y)
-        let startPointRight = CGPoint(x: startPoint.x   + STARTWIDTH,   y: startPoint.y)
-        let endPointLeft    = CGPoint(x: endPoint.x     - ENDWIDTH,     y: endPoint.y)
-        let endPointRight   = CGPoint(x: endPoint.x     + ENDWIDTH,     y: endPoint.y)
+        let startPointLeft  = CGPoint(x: startPoint.x   - STARTWTH,   y: startPoint.y)
+        let startPointRight = CGPoint(x: startPoint.x   + STARTWTH,   y: startPoint.y)
+        let endPointLeft    = CGPoint(x: endPoint.x     - ENDWTH,     y: endPoint.y)
+        let endPointRight   = CGPoint(x: endPoint.x     + ENDWTH,     y: endPoint.y)
         path.move   (to: startPointLeft)
         path.addLine(to: startPointRight)
         path.addLine(to: endPointRight)
@@ -340,7 +380,7 @@ class ArrowView: UIView {
     
         blurView.translatesAutoresizingMaskIntoConstraints = false
         
-        arrowBounds = self.path?.cgPath.boundingBoxOfPath
+        arrowBounds = self.path.cgPath.boundingBoxOfPath
         guard let arrowBounds = arrowBounds else {
             return
         }
@@ -417,10 +457,5 @@ class ArrowView: UIView {
         
         return mView
         
-    }
-    
-    deinit {
-        //animator?.stopAnimation(false)
-        print("ARROW DEINITS")
     }
 }
