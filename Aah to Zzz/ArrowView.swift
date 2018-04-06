@@ -9,7 +9,7 @@
 import UIKit
 
 class ArrowView: UIView {
-
+    
     let STARTWIDTH:     CGFloat = 12.0
     let ENDWIDTH:       CGFloat = 6.0
     let ARROWWIDTH:     CGFloat = 16.0
@@ -22,6 +22,15 @@ class ArrowView: UIView {
     var blurView:       UIVisualEffectView?
     var blurriness:     CGFloat = 0.5
     var animator:       UIViewPropertyAnimator?
+    
+    struct Line {
+        var lineWidth : CGFloat
+        var color :     UIColor
+    }
+    
+    var lines:          [Line] = [Line]()
+
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -48,6 +57,7 @@ class ArrowView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         useFrameForPoints()
+
         
     }
     
@@ -62,7 +72,17 @@ class ArrowView: UIView {
         self.startPoint = startPoint
         self.endPoint = endPoint
         super.init(frame: frame)
-        simpleShapeLayer()
+        addLineProperties()
+        addShapeWithBlur()
+    }
+    
+    // helper for init
+    func addLineProperties() {
+        lines.append(Line(lineWidth: 11.0,  color: Colors.veryLight))
+        lines.append(Line(lineWidth: 8.5,   color: Colors.veryLight))
+        lines.append(Line(lineWidth: 5.5,   color: Colors.lightBackground))
+        lines.append(Line(lineWidth: 2.25,  color: .white))
+        lines.append(Line(lineWidth: 1.5,   color: Colors.darkBackground))
     }
     
     @IBInspectable var sPt: CGPoint = CGPoint(x: 0, y: 0) {
@@ -267,36 +287,33 @@ class ArrowView: UIView {
         path.close()
     }
 
-    func simpleShapeLayer() {
+    // called in init
+    func addShapeWithBlur() {
 
         createBezierArrow()
         
-        let shapeLayerFrost = CAShapeLayer()
-        shapeLayerFrost.path = self.path.cgPath
-        shapeLayerFrost.fillColor = UIColor.clear.cgColor
-        shapeLayerFrost.strokeColor = Colors.lightBackground.cgColor
-        shapeLayerFrost.lineWidth = 4.5
-        shapeLayerFrost.lineJoin = kCALineJoinRound
-        self.layer.addSublayer(shapeLayerFrost)
+        for i in 0 ..< lines.count {
+            addSublayerShapeLayer(lineWidth: lines[i].lineWidth, color: lines[i].color)
+        }
+//        addSublayerShapeLayer(lineWidth: 11.0,  color: Colors.veryLight)
+//        // note: added 2nd time to increase opacity and to feather edge
+//        addSublayerShapeLayer(lineWidth: 8.5,   color: Colors.veryLight)
+//        addSublayerShapeLayer(lineWidth: 5.5,   color: Colors.lightBackground)
+//        addSublayerShapeLayer(lineWidth: 2.25,  color: .white)
+//        addSublayerShapeLayer(lineWidth: 1.5,   color: Colors.darkBackground)
         
-        let shapeLayerLower = CAShapeLayer()
-        shapeLayerLower.path = self.path.cgPath
-        shapeLayerLower.fillColor = UIColor.clear.cgColor
-        shapeLayerLower.strokeColor = UIColor.white.cgColor
-        shapeLayerLower.lineWidth = 1.5
-        shapeLayerFrost.lineJoin = kCALineJoinRound
-        self.layer.addSublayer(shapeLayerLower)
-        
-        
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = self.path.cgPath
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = Colors.darkBackground.cgColor
-        shapeLayer.lineWidth = 0.75
-        shapeLayerFrost.lineJoin = kCALineJoinRound
-        self.layer.addSublayer(shapeLayer)
-        arrowBounds = shapeLayer.path?.boundingBoxOfPath
         blurArrow()
+    }
+    
+    func addSublayerShapeLayer (lineWidth: CGFloat, color: UIColor) {
+        let shapeLayer          = CAShapeLayer()
+        shapeLayer.path         = self.path.cgPath
+        shapeLayer.lineWidth    = lineWidth
+        shapeLayer.strokeColor  = color.cgColor
+        shapeLayer.fillColor    = UIColor.clear.cgColor
+        shapeLayer.lineJoin     = kCALineJoinRound
+        
+        self.layer.addSublayer(shapeLayer)
     }
     
     // blur fx
@@ -307,12 +324,12 @@ class ArrowView: UIView {
         } else {
             blurEffect = UIBlurEffect(style: .light)
         }
+        
         blurView = UIVisualEffectView(effect: nil)
     
         guard let blurView = blurView else {
             return
         }
-        
         
         animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
             self.blurView?.effect = blurEffect
@@ -321,8 +338,9 @@ class ArrowView: UIView {
         animator?.startAnimation()
         animator?.fractionComplete = blurriness
     
-    
         blurView.translatesAutoresizingMaskIntoConstraints = false
+        
+        arrowBounds = self.path?.cgPath.boundingBoxOfPath
         guard let arrowBounds = arrowBounds else {
             return
         }
