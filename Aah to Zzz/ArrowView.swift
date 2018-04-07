@@ -15,11 +15,13 @@ class ArrowView: UIView {
     let ENDWTH:         CGFloat = 6.0
     let ARROWWTH:       CGFloat = 16.0
     let ARROWHT:        CGFloat = 22.0
+    let TANGENTLIMIT:   CGFloat = 5.0 // prevents control pt adjustments when close to vertical
+    let CPMULTIPLIER:   CGFloat = 0.4 // empirical const for amount of control pt adjustment
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
-    var cpStrong:       CGFloat = 36.0
-    var cpWeak:         CGFloat = 36.0
-    
+    var cpValue1:       CGFloat = 36.0
+    var cpValue2:       CGFloat = 36.0
+    var d:              CGFloat = 1.0 // arrow direction, 1.0 for down, -1.0 for up
     //MARK:- Blur and view vars
     var arrowBounds:    CGRect?
     var blurView:       UIVisualEffectView?
@@ -113,111 +115,126 @@ class ArrowView: UIView {
             return
         }
         
-        var down: Bool = false
-        // Check whether arrow points up or down
-        var d: CGFloat = 1.0
-        if endPoint.y - startPoint.y > 0 {
-            // arrow points down
-            down = true
-            d = -1.0
-
-        }
-        
-        // Check whether arrow points left or right
-        var r: CGFloat = 1.0
-        if startPoint.x - endPoint.x > 0 {
-            // arrow points left
-                r = -1.0
-        }
-        
-        var u: CGFloat = 1.0
-        var ul: CGFloat = 1.0
-        if down == false {
-            u = -1.0
-            if startPoint.x - endPoint.x > 0 {
-                // pointing up and to the left
-                // all control points need to go the opposite way
-                ul = -1.0
-            }
-            
-        }
-        
-        
-        
         adjustControlPoints()
         
-        let startPointLeft    = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                                         )
-        let startPointRight   = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                                         )
-        let innerPointRight   = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   + ARROWHT * d                           )
-        let innerPointLeft    = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y   + ARROWHT * d                           )
-        let outerPointRight   = CGPoint(x: endPoint.x   + ARROWWTH, y: endPoint.y   + ARROWHT * d                           )
-        let outerPointLeft    = CGPoint(x: endPoint.x   - ARROWWTH, y: endPoint.y   + ARROWHT * d                           )
-        let startControlRight = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y               + cpWeak * r * ul         )
-        let innerControlRight = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   + ARROWHT * d - cpStrong * d * r * ul   )
-        let startControlLeft  = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y               + cpStrong * -r * u * ul  )
-        let innerControlLeft  = CGPoint(x: endPoint.x   - ENDWTH,  y: endPoint.y    + ARROWHT * d - cpWeak * d * -r * u * ul)
+        let startPointLeft    = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                             )
+        let startPointRight   = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                             )
+        let innerPointRight   = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   - ARROWHT * d               )
+        let innerPointLeft    = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y   - ARROWHT * d               )
+        let outerPointRight   = CGPoint(x: endPoint.x   + ARROWWTH, y: endPoint.y   - ARROWHT * d               )
+        let outerPointLeft    = CGPoint(x: endPoint.x   - ARROWWTH, y: endPoint.y   - ARROWHT * d               )
+        let endControlRight   = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   - ARROWHT * d   - cpValue1  )
+        let endControlLeft    = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y   - ARROWHT * d   - cpValue2  )
+        let startControlLeft  = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                 + cpValue1  )
+        let startControlRight = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                 + cpValue2  )
         
         path.move       (to: startPoint)
         path.addLine    (to: startPointRight)
-        path.addCurve   (to: innerPointRight, controlPoint1: startControlRight,  controlPoint2: innerControlRight)
+        path.addCurve   (to: innerPointRight, controlPoint1: startControlRight,  controlPoint2: endControlRight)
         path.addLine    (to: outerPointRight)
         path.addLine    (to: endPoint)
         path.addLine    (to: outerPointLeft)
         path.addLine    (to: innerPointLeft)
-        path.addCurve   (to: startPointLeft, controlPoint1: innerControlLeft, controlPoint2: startControlLeft)
+        path.addCurve   (to: startPointLeft, controlPoint1: endControlLeft, controlPoint2: startControlLeft)
         path.close      ()
     }
     
-    // Adjust based on direction arrow is pointing, and length of arrow
     func adjustControlPoints() {
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
         
         // in case where the arrow is too short, reduce control point offsets
-        let arrowHeight = endPoint.y - startPoint.y
-        if arrowHeight < 2 * cpWeak {
-            cpWeak = arrowHeight * 0.45
-            cpStrong = cpWeak
+        let arrowHeight = abs(endPoint.y - startPoint.y)
+        if arrowHeight < 2 * cpValue1 {
+            cpValue1 = arrowHeight * 0.45
         }
-        
         // Check whether arrow points up or down
-        var d: CGFloat = -1.0 // arrow is pointing up
         if startPoint.y - endPoint.y > 0 {
             // arrow is pointing up
-            d = 1.0
+            d = -1.0
+            cpValue1 *= d
         }
+        // make the values equal for now
+        cpValue2 = cpValue1
         
-        // adjust the strong control point, depending on the angle of the arrow
+        // adjust one control point, depending on the angle of the arrow
         // to make graceful curves, with inner and outer curves matching
-        // 4 cases, arrow point up or down, right or left
-        let rightShift = endPoint.x - startPoint.x
-        // arrow points right
-        if rightShift > 9.0 { // prevent divide by 0 (or close to 0)
-            let tangent = abs((endPoint.y - startPoint.y) / rightShift)
-            if tangent < 5 { // no adjustment if angle is close to 90°
-                let cpFactor = 4 / (10 * tangent)
-                cpStrong *= ((1.0 + cpFactor) * d)
-            }
-            
-        // arrow points toward left
-        } else if rightShift < -1.0 {
-            let tangent = abs((endPoint.y - startPoint.y) / (startPoint.x - endPoint.x))
-            if tangent < 5 { // no adjustment if angle is close to 90°
-                let cpFactor = 4 / (10 * tangent)
-                // switch roles of cpWeak and cpStrong (naming should be improved)
-                cpWeak *= (1.0 + cpFactor) * d
-                
-            }
-        }
+        let xShift = endPoint.x - startPoint.x
         
-        // if arrow is pointing up, swap the strong and weak sides
-        if d > 0 && rightShift > 0 {
-            let tempStrong  = cpStrong
-            cpStrong        = cpWeak
-            cpWeak          = tempStrong
+        // arrow points right
+        if abs(xShift) > TANGENTLIMIT { // prevent divide by 0 (or close to 0)
+            let tangent = abs((endPoint.y - startPoint.y) / xShift)
+            if tangent < TANGENTLIMIT { // no adjustment if angle is close to 90°
+                cpValue1 *= (1.0 + (CPMULTIPLIER / tangent))
+            }
+        } else {
+            // Angle close to vertical, so don't pull out control points
+            cpValue1 = 0.0
+            cpValue2 = 0.0
+        }
+        // arrow points toward left
+        if xShift < -TANGENTLIMIT {
+            swapCPValues()
         }
     }
+    
+    func swapCPValues () {
+        let tempValue   = cpValue1
+        cpValue1        = cpValue2
+        cpValue2        = tempValue
+    }
+    
+    // Adjust based on direction arrow is pointing, and length of arrow
+//    func adjustControlPoints() {
+//        guard let startPoint = startPoint, let endPoint = endPoint else {
+//            return
+//        }
+//
+//        // in case where the arrow is too short, reduce control point offsets
+//        let arrowHeight = endPoint.y - startPoint.y
+//        if arrowHeight < 2 * cpWeak {
+//            cpWeak = arrowHeight * 0.45
+//            cpStrong = cpWeak
+//        }
+//
+//        // Check whether arrow points up or down
+//        var d: CGFloat = -1.0 // arrow is pointing up
+//        if startPoint.y - endPoint.y > 0 {
+//            // arrow is pointing up
+//            d = 1.0
+//        }
+//
+//        // adjust the strong control point, depending on the angle of the arrow
+//        // to make graceful curves, with inner and outer curves matching
+//        // 4 cases, arrow point up or down, right or left
+//        let rightShift = endPoint.x - startPoint.x
+//        // arrow points right
+//        if rightShift > 9.0 { // prevent divide by 0 (or close to 0)
+//            let tangent = abs((endPoint.y - startPoint.y) / rightShift)
+//            if tangent < 5 { // no adjustment if angle is close to 90°
+//                let cpFactor = 4 / (10 * tangent)
+//                cpStrong *= ((1.0 + cpFactor) * d)
+//            }
+//
+//        // arrow points toward left
+//        } else if rightShift < -1.0 {
+//            let tangent = abs((endPoint.y - startPoint.y) / (startPoint.x - endPoint.x))
+//            if tangent < 5 { // no adjustment if angle is close to 90°
+//                let cpFactor = 4 / (10 * tangent)
+//                // switch roles of cpWeak and cpStrong (naming should be improved)
+//                cpWeak *= (1.0 + cpFactor) * d
+//
+//            }
+//        }
+//
+//        // if arrow is pointing up, swap the strong and weak sides
+//        if d > 0 && rightShift > 0 {
+//            let tempStrong  = cpStrong
+//            cpStrong        = cpWeak
+//            cpWeak          = tempStrong
+//        }
+//    }
     
     func getQuadControl (startPt: CGPoint, endPt: CGPoint) -> CGPoint {
         let pointingRight: Bool = startPt.x < endPt.x ? true : false

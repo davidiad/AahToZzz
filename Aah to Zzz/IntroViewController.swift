@@ -302,7 +302,7 @@ class IntroViewController: UIViewController {
     
     func addArrowViews() {
         for i in 0 ..< containers.count {
-            arrowStartPoints.append( CGPoint(x: containers[i].center.x, y: containers[i].center.y - (containers[i].frame.height * 0.5) ) )
+            arrowStartPoints.append( CGPoint(x: containers[i].center.x, y: containers[i].center.y + (containers[i].frame.height * 0.5) ) )
             
             let arrowView = ArrowView(frame: CGRect(x: 0, y: 0, width: 200, height: 300), startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
             // set the mask at this higher level - setting the mask directly on the blur view

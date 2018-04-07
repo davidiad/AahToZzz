@@ -1231,7 +1231,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQ2-et-PgL">
-                                <rect key="frame" x="112" y="395" width="282" height="102"/>
+                                <rect key="frame" x="82" y="299" width="282" height="102"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="282" id="ixW-X3-TPg"/>
                                     <constraint firstAttribute="height" constant="102" id="xl1-Kh-LgQ"/>
@@ -1248,7 +1248,7 @@
                                 </constraints>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G4M-7j-Vuc">
-                                <rect key="frame" x="39" y="505" width="299" height="160"/>
+                                <rect key="frame" x="115" y="479" width="299" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="erJ-W6-kHu"/>
                                 </constraints>
@@ -1257,7 +1257,7 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" alpha="0.14999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8d-qc-6K7">
-                                <rect key="frame" x="157" y="12" width="237" height="80"/>
+                                <rect key="frame" x="97" y="52" width="237" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="237" id="t9u-wm-1SE"/>
                                     <constraint firstAttribute="height" constant="80" id="tuN-VH-6UB"/>
@@ -1268,15 +1268,15 @@
                             </containerView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="20" id="3Ps-sv-0Kv"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="-8" id="4cD-5I-Lki"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="0Qm-kH-Bap" secondAttribute="bottom" constant="-67" id="6Dd-nK-Bo0"/>
+                            <constraint firstAttribute="trailing" secondItem="eQ2-et-PgL" secondAttribute="trailing" constant="50" id="3Ps-sv-0Kv"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="top" secondItem="IBt-Ku-gCU" secondAttribute="bottom" constant="32" id="4cD-5I-Lki"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="0Qm-kH-Bap" secondAttribute="bottom" constant="-93" id="6Dd-nK-Bo0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0Qm-kH-Bap" secondAttribute="trailing" constant="13" id="CNG-Oo-71G"/>
-                            <constraint firstAttribute="trailing" secondItem="G4M-7j-Vuc" secondAttribute="trailing" constant="76" id="Ftf-zU-7JM"/>
-                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="G4M-7j-Vuc" secondAttribute="bottom" constant="71" id="HLV-Oi-NTs"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" priority="999" constant="39" id="HLi-oI-kkC"/>
-                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="137" id="ICb-Y8-e5C"/>
-                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="8" id="zWW-Zc-Iia"/>
+                            <constraint firstAttribute="trailing" secondItem="G4M-7j-Vuc" secondAttribute="trailing" id="Ftf-zU-7JM"/>
+                            <constraint firstItem="Zn1-uu-VLB" firstAttribute="top" secondItem="G4M-7j-Vuc" secondAttribute="bottom" constant="97" id="HLV-Oi-NTs"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leading" priority="999" constant="115" id="HLi-oI-kkC"/>
+                            <constraint firstItem="y8d-qc-6K7" firstAttribute="leading" secondItem="TNc-fb-6pR" secondAttribute="leadingMargin" constant="77" id="ICb-Y8-e5C"/>
+                            <constraint firstItem="G4M-7j-Vuc" firstAttribute="top" secondItem="eQ2-et-PgL" secondAttribute="bottom" constant="78" id="zWW-Zc-Iia"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="414" height="736"/>
