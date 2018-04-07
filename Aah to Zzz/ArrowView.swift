@@ -107,6 +107,7 @@ class ArrowView: UIView {
     
     // arrowhead points up or down, arrow curves
     func createBezierArrow () {
+        rotateArrowHeadToMatch()
         //path = UIBezierPath()
         if startPoint == nil {
             useFrameForPoints()
@@ -168,12 +169,11 @@ class ArrowView: UIView {
             if tangent < TANGENTLIMIT { // no adjustment if angle is close to 90°
                 cpValue1 *= (1.0 + (CPMULTIPLIER / tangent))
             }
-        } else {
-            // Angle close to vertical, so don't pull out control points
+        } else { // Angle close to vertical, so don't pull out control points at all
             cpValue1 = 0.0
             cpValue2 = 0.0
         }
-        // arrow points toward left
+        // arrow points toward left, so skew control points the other way
         if xShift < -TANGENTLIMIT {
             swapCPValues()
         }
@@ -185,56 +185,26 @@ class ArrowView: UIView {
         cpValue2        = tempValue
     }
     
-    // Adjust based on direction arrow is pointing, and length of arrow
-//    func adjustControlPoints() {
-//        guard let startPoint = startPoint, let endPoint = endPoint else {
-//            return
-//        }
-//
-//        // in case where the arrow is too short, reduce control point offsets
-//        let arrowHeight = endPoint.y - startPoint.y
-//        if arrowHeight < 2 * cpWeak {
-//            cpWeak = arrowHeight * 0.45
-//            cpStrong = cpWeak
-//        }
-//
-//        // Check whether arrow points up or down
-//        var d: CGFloat = -1.0 // arrow is pointing up
-//        if startPoint.y - endPoint.y > 0 {
-//            // arrow is pointing up
-//            d = 1.0
-//        }
-//
-//        // adjust the strong control point, depending on the angle of the arrow
-//        // to make graceful curves, with inner and outer curves matching
-//        // 4 cases, arrow point up or down, right or left
-//        let rightShift = endPoint.x - startPoint.x
-//        // arrow points right
-//        if rightShift > 9.0 { // prevent divide by 0 (or close to 0)
-//            let tangent = abs((endPoint.y - startPoint.y) / rightShift)
-//            if tangent < 5 { // no adjustment if angle is close to 90°
-//                let cpFactor = 4 / (10 * tangent)
-//                cpStrong *= ((1.0 + cpFactor) * d)
-//            }
-//
-//        // arrow points toward left
-//        } else if rightShift < -1.0 {
-//            let tangent = abs((endPoint.y - startPoint.y) / (startPoint.x - endPoint.x))
-//            if tangent < 5 { // no adjustment if angle is close to 90°
-//                let cpFactor = 4 / (10 * tangent)
-//                // switch roles of cpWeak and cpStrong (naming should be improved)
-//                cpWeak *= (1.0 + cpFactor) * d
-//
-//            }
-//        }
-//
-//        // if arrow is pointing up, swap the strong and weak sides
-//        if d > 0 && rightShift > 0 {
-//            let tempStrong  = cpStrong
-//            cpStrong        = cpWeak
-//            cpWeak          = tempStrong
-//        }
-//    }
+    func rotateArrowHeadToMatch() -> [CGPoint] {
+        
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return []
+        }
+        // Get the angle amount to rotate
+        let xDistance: CGFloat  = (startPoint.x - endPoint.x)
+        let yDistance: CGFloat  = (endPoint.y - startPoint.y)
+        let hypotenuse: CGFloat = sqrt(pow(xDistance, 2) + pow(yDistance, 2))
+        let rotationAmount      = (asin(xDistance / hypotenuse) * 180.0) / .pi
+        print("rotationAmount in degrees: \(rotationAmount)")
+        // The points before rotation, and before being moved by the height of the arrowhead
+        let outerRight          = CGPoint(x: endPoint.x   + ARROWWTH, y: endPoint.y               )
+        let innerRight          = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y               )
+        let innerLeft           = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y               )
+        let outerLeft           = CGPoint(x: endPoint.x   - ARROWWTH, y: endPoint.y               )
+        let pointsIn: [CGPoint] = [outerRight, outerLeft, innerLeft, innerRight]
+        
+        return pointsIn
+    }
     
     func getQuadControl (startPt: CGPoint, endPt: CGPoint) -> CGPoint {
         let pointingRight: Bool = startPt.x < endPt.x ? true : false
