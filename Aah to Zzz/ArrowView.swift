@@ -47,9 +47,13 @@ class ArrowView: UIView {
         super.init(coder: aDecoder)
     }
     
-    init(frame: CGRect, numTiles: Int) {
-        super.init(frame: frame)
-        createTileHolder(numTiles: numTiles)
+    // init for tile holder (upper positions background)
+    convenience init(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+        let w: CGFloat = CGFloat((numTiles)) * (tileWidth + borderWidth) + borderWidth
+        let h: CGFloat = tileWidth + 2 * borderWidth
+        let frame = CGRect(x: 0, y: 0, width: w, height: h)
+        self.init(frame: frame)
+        createTileHolder(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
         addLineProperties()
         for i in 0 ..< lines.count {
             addSublayerShapeLayer(lineWidth: lines[i].lineWidth, color: lines[i].color)
@@ -117,17 +121,13 @@ class ArrowView: UIView {
     
     //MARK:- Shape creation
     
-    func createTileHolder(numTiles: Int) {
-        // add overall rounded rect 198 x 76
-        // add 3 inner rounded rects 50 x 50
-        let w: CGFloat = CGFloat((numTiles)) * 62.0 + 12.0
-        let r = CGRect(x: 0, y: 0, width: w, height: 74)
-        let outerPath = UIBezierPath(roundedRect: r, cornerRadius: 20.0)
-        //let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
+    func createTileHolder(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+
+        let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: borderWidth + 8.0)
         path.append(outerPath)
         for i in 0 ..< numTiles {
-            let xPos = 12.0 + 62.0 * CGFloat(i)
-            let tileRect = CGRect(x: xPos, y: 12, width: 50.0, height: 50.0)
+            let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
+            let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
             let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
             path.append(innerPath)
         }
@@ -412,7 +412,7 @@ class ArrowView: UIView {
     }
     
     // blur fx
-    func blurArrow()  {
+    func blurArrow() {
         var blurEffect: UIBlurEffect
         if #available(iOS 10.0, *) {
             blurEffect = UIBlurEffect(style: .prominent)

@@ -318,6 +318,7 @@ class AtoZViewController: UIViewController {
         // for 5s:      -500    568
         // for 6:       -530    667
         // for 6s plus: -540    736
+        // for X?
         // TODO: also fine tune horiz. position
         //let vertiShift = -475 - ((view.frame.size.height - 480) * 0.25)
         let vertiShift = (-0.25 * view.frame.size.height) - 355
@@ -361,11 +362,18 @@ class AtoZViewController: UIViewController {
             }
         }
         
+        let upperPositionsView = ArrowView(numTiles: 3, tileWidth: 50, borderWidth: 10)
+        // mask must be called here, from the containing view
+        upperPositionsView.mask = upperPositionsView.getArrowMask()
+        upperPositionsView.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + 120)
+        self.view.addSubview(upperPositionsView)
+        /*
         let upperPositionsBg = UIImage(named: "upper_positions_bg") as UIImage?
         let upperPositionsView = UIImageView(image: upperPositionsBg)
         upperPositionsView.alpha = 0.75
         upperPositionsView.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + 120)
         view.addSubview(upperPositionsView)
+        */
         // Make sure all tiles have higher z index than all bg's. Also when tapped
         for t in lettertiles {
             view.bringSubview(toFront: t)
@@ -412,9 +420,6 @@ class AtoZViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         uiDynamicsDelegate?.lettertiles = lettertiles
-        let tileHold = ArrowView(frame: CGRect(x: 0, y: 0, width: 198, height: 74), numTiles: 4)
-        tileHold.mask = tileHold.getArrowMask()
-        self.view.addSubview(tileHold)
         //setUpProxyTable()
     }
     
