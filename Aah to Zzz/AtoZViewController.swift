@@ -456,8 +456,8 @@ class AtoZViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         // create arrow end points here
-        arrowEndPoints.append(CGPoint( x:wordInProgress.center.x + 80.0, y: wordInProgress.center.y) )
-        arrowEndPoints.append(CGPoint(x: wordTable.center.x, y: wordTable.center.y - 170.0))
+        arrowEndPoints.append(CGPoint( x:wordInProgress.center.x, y: wordInProgress.center.y) )
+        arrowEndPoints.append(CGPoint(x: wordTable.center.x, y: wordTable.center.y - 175.0))
         arrowEndPoints.append(CGPoint(x: toolbar.center.x, y: toolbar.center.y - 12.0))
     }
     

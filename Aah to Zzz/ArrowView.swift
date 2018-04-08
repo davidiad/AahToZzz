@@ -105,10 +105,9 @@ class ArrowView: UIView {
     
     //MARK:- Shape creation
     
-    // arrowhead points up or down, arrow curves
+    // Curved arrow, arrowhead points straight up or down
     func createBezierArrow () {
-        rotateArrowHeadToMatch()
-        //path = UIBezierPath()
+
         if startPoint == nil {
             useFrameForPoints()
         }
@@ -139,6 +138,7 @@ class ArrowView: UIView {
         path.addCurve   (to: startPointLeft, controlPoint1: endControlLeft, controlPoint2: startControlLeft)
         path.close      ()
     }
+    
     
     func adjustControlPoints() {
         guard let startPoint = startPoint, let endPoint = endPoint else {
@@ -185,25 +185,71 @@ class ArrowView: UIView {
         cpValue2        = tempValue
     }
     
-    func rotateArrowHeadToMatch() -> [CGPoint] {
+    func getRotatedArrowheadPts() -> [CGPoint] {
         
+        var pointsOut: [CGPoint] = [CGPoint]()
         guard let startPoint = startPoint, let endPoint = endPoint else {
-            return []
+            return pointsOut
         }
-        // Get the angle amount to rotate
-        let xDistance: CGFloat  = (startPoint.x - endPoint.x)
-        let yDistance: CGFloat  = (endPoint.y - startPoint.y)
-        let hypotenuse: CGFloat = sqrt(pow(xDistance, 2) + pow(yDistance, 2))
-        let rotationAmount      = (asin(xDistance / hypotenuse) * 180.0) / .pi
-        print("rotationAmount in degrees: \(rotationAmount)")
-        // The points before rotation, and before being moved by the height of the arrowhead
-        let outerRight          = CGPoint(x: endPoint.x   + ARROWWTH, y: endPoint.y               )
-        let innerRight          = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y               )
-        let innerLeft           = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y               )
-        let outerLeft           = CGPoint(x: endPoint.x   - ARROWWTH, y: endPoint.y               )
-        let pointsIn: [CGPoint] = [outerRight, outerLeft, innerLeft, innerRight]
         
-        return pointsIn
+        // Check whether arrow points up or down
+        if startPoint.y - endPoint.y > 0 {
+            // arrow is pointing up
+            d = -1.0
+        }
+        
+        // The points before rotation, and before being moved by the height of the arrowhead
+        let outerRight          = CGPoint(x:  ARROWWTH,             y: endPoint.y               )
+        let innerRight          = CGPoint(x:  ENDWTH,               y: endPoint.y               )
+        let innerLeft           = CGPoint(x:  ENDWTH *      -1.0,   y: endPoint.y               )
+        let outerLeft           = CGPoint(x:  ARROWWTH *    -1.0,   y: endPoint.y               )
+        
+        let pointsIn: [CGPoint] = [outerRight, innerRight, innerLeft, outerLeft]
+        
+        // Get the angle amount to rotate
+        let opposite: CGFloat   = startPoint.x - endPoint.x
+        let adjacent: CGFloat   = endPoint.y - startPoint.y
+        let rotationAngle       = atan(opposite / adjacent)
+        
+        // rotate points (around the endpoint of the arrow)
+        // add/subtract the (rotated) height of the arrow (translating back to original coord system)
+        let cosine              = cos(rotationAngle)
+        let sine                = sin(rotationAngle)
+        for i in 0 ..< pointsIn.count {
+            let a               = endPoint.x + pointsIn[i].x * cosine + ARROWHT * sine * d
+            let b               = endPoint.y + pointsIn[i].x * sine   - ARROWHT * cosine * d
+            pointsOut.append(CGPoint(x: a, y: b))
+        }
+    
+        return pointsOut
+    }
+    
+    //let hypotenuse: CGFloat = sqrt(pow(opposite, 2) + pow(adjacent, 2))
+    //let rotationAmount  = (asin(opposite / hypotenuse) * 180.0) / .pi
+    
+    // Curved arrow, arrowhead points straight up or down
+    func createRotatedArrow () {
+        
+        if startPoint == nil {
+            useFrameForPoints()
+        }
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return
+        }
+        
+        let startPointLeft    = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                             )
+        let startPointRight   = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                             )
+        let arrowheadPoints   = getRotatedArrowheadPts()
+        
+        path.move       (to: startPoint)
+        path.addLine    (to: startPointRight)
+        path.addLine    (to: arrowheadPoints[1])
+        path.addLine    (to: arrowheadPoints[0])
+        path.addLine    (to: endPoint)
+        path.addLine    (to: arrowheadPoints[3])
+        path.addLine    (to: arrowheadPoints[2])
+        path.addLine    (to: startPointLeft)
+        path.close      ()
     }
     
     func getQuadControl (startPt: CGPoint, endPt: CGPoint) -> CGPoint {
@@ -317,7 +363,9 @@ class ArrowView: UIView {
     // called in init
     func addShapeWithBlur() {
 
-        createBezierArrow()
+        
+        //createBezierArrow()
+        createRotatedArrow()
         
         for i in 0 ..< lines.count {
             addSublayerShapeLayer(lineWidth: lines[i].lineWidth, color: lines[i].color)
