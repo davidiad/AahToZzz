@@ -10,6 +10,8 @@ import UIKit
 
 class ArrowView: UIView {
     
+    //TODO: As part of init, allow calling the type of shape to create
+    
     //MARK: Arrow const's and vars WTH == WIDTH, HT == HEIGHT
     let STARTWTH:       CGFloat = 12.0
     let ENDWTH:         CGFloat = 6.0
@@ -43,6 +45,16 @@ class ArrowView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    init(frame: CGRect, numTiles: Int) {
+        super.init(frame: frame)
+        createTileHolder(numTiles: numTiles)
+        addLineProperties()
+        for i in 0 ..< lines.count {
+            addSublayerShapeLayer(lineWidth: lines[i].lineWidth, color: lines[i].color)
+        }
+        blurArrow()
     }
     
     init(frame: CGRect, startPoint: CGPoint, endPoint: CGPoint) {
@@ -104,6 +116,23 @@ class ArrowView: UIView {
 //    }
     
     //MARK:- Shape creation
+    
+    func createTileHolder(numTiles: Int) {
+        // add overall rounded rect 198 x 76
+        // add 3 inner rounded rects 50 x 50
+        let w: CGFloat = CGFloat((numTiles)) * 62.0 + 12.0
+        let r = CGRect(x: 0, y: 0, width: w, height: 74)
+        let outerPath = UIBezierPath(roundedRect: r, cornerRadius: 20.0)
+        //let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
+        path.append(outerPath)
+        for i in 0 ..< numTiles {
+            let xPos = 12.0 + 62.0 * CGFloat(i)
+            let tileRect = CGRect(x: xPos, y: 12, width: 50.0, height: 50.0)
+            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
+            path.append(innerPath)
+        }
+        
+    }
     
     // Curved arrow, arrowhead points straight up or down
     func createBezierArrow () {
@@ -341,22 +370,12 @@ class ArrowView: UIView {
     }
 
     func createRectangle() {
-        // Initialize the path.
-        path = UIBezierPath()
         
-        // Specify the point that the path should start get drawn.
+        //path = UIBezierPath()
         path.move(to: CGPoint(x: 0.0, y: 0.0))
-        
-        // Create a line between the starting point and the bottom-left side of the view.
         path.addLine(to: CGPoint(x: 0.0, y: self.frame.size.height))
-        
-        // Create the bottom line (bottom-left to bottom-right).
         path.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height))
-        
-        // Create the vertical line from the bottom-right to the top-right side.
         path.addLine(to: CGPoint(x: self.frame.size.width, y: 0.0))
-        
-        // Close the path. This will create the last line automatically.
         path.close()
     }
 
@@ -366,6 +385,7 @@ class ArrowView: UIView {
         
         //createBezierArrow()
         createRotatedArrow()
+        
         
         for i in 0 ..< lines.count {
             addSublayerShapeLayer(lineWidth: lines[i].lineWidth, color: lines[i].color)
@@ -461,6 +481,7 @@ class ArrowView: UIView {
         
     }
     
+    // Needs to be called from the containing view, otherwise the blur will not work
     func getArrowMask() -> UIView {
         guard let arrowBounds = arrowBounds else {
             return self

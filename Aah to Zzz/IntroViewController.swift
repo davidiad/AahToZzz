@@ -316,6 +316,7 @@ class IntroViewController: UIViewController {
             }
             self.view.addSubview(arrowView)
         }
+
     }
 
     override func viewDidAppear(_ animated: Bool) {

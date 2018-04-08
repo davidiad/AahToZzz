@@ -276,6 +276,7 @@ class AtoZViewController: UIViewController {
     //MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //uiDynamicsDelegate = AtoZUIDynamicsDelegate()
         NotificationCenter.default.addObserver(self, selector: #selector (presentDefinition(_:)), name: NSNotification.Name(rawValue: "PresentDefinition"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector (updateCurrentNumberOfWords(_:)), name: NSNotification.Name(rawValue: "UpdateCNOW"), object: nil)
@@ -411,7 +412,9 @@ class AtoZViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         uiDynamicsDelegate?.lettertiles = lettertiles
-        
+        let tileHold = ArrowView(frame: CGRect(x: 0, y: 0, width: 198, height: 74), numTiles: 4)
+        tileHold.mask = tileHold.getArrowMask()
+        self.view.addSubview(tileHold)
         //setUpProxyTable()
     }
     
