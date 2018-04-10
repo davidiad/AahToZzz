@@ -102,7 +102,7 @@ class BlurViewController: UIViewController {
         //updateShadowMaskLayer()
         
         // Since we don't know the size of the shadowmask until ViewDidAppear
-        // set the shadowView opacity was set to 0 in xib, to be animated up here
+        // the shadowView opacity was set to 0 in xib, to be animated up here
         // (otherwise, the unmasked shadowView would flash before its opacity is set to 0)
         opacityAnimator = UIViewPropertyAnimator(duration: 0.35, curve: .easeOut) {
             self.shadowView?.layer.opacity = 1.0

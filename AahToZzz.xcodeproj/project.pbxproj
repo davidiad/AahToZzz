@@ -120,6 +120,7 @@
 		63854326203346AC00252F69 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63854325203346AC00252F69 /* GameState.swift */; };
 		63854328203379E800252F69 /* GameStateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63854327203379E800252F69 /* GameStateInfo.swift */; };
 		639A4C45206CC1FC0037CC58 /* ArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A4C44206CC1FC0037CC58 /* ArrowView.swift */; };
+		639E2277207CCD7100B01B13 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639E2276207CCD7100B01B13 /* ShapeView.swift */; };
 		63A3A1111C763F6C00F440B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3A1101C763F6C00F440B5 /* AppDelegate.swift */; };
 		63A3A1161C763F6C00F440B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A1141C763F6C00F440B5 /* Main.storyboard */; };
 		63A3A11B1C763F6C00F440B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63A3A11A1C763F6C00F440B5 /* Assets.xcassets */; };
@@ -332,6 +333,7 @@
 		63854325203346AC00252F69 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		63854327203379E800252F69 /* GameStateInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStateInfo.swift; sourceTree = "<group>"; };
 		639A4C44206CC1FC0037CC58 /* ArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowView.swift; sourceTree = "<group>"; };
+		639E2276207CCD7100B01B13 /* ShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
 		63A3A10D1C763F6C00F440B5 /* AahToZzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AahToZzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A3A1101C763F6C00F440B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63A3A1151C763F6C00F440B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -800,6 +802,7 @@
 				63F44984204162BC00837434 /* BlurBubble.xib */,
 				63EB421A204E429400275EB2 /* BlurViewController.xib */,
 				639A4C44206CC1FC0037CC58 /* ArrowView.swift */,
+				639E2276207CCD7100B01B13 /* ShapeView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1139,6 +1142,7 @@
 				637AF06D1C83512F005A36BA /* OptionsViewController.swift in Sources */,
 				635F63E91E986B0A00C48913 /* UIStoryboardSegueFromRight.swift in Sources */,
 				63FD05801EA59106005C8E96 /* AtoZ.xcdatamodeld in Sources */,
+				639E2277207CCD7100B01B13 /* ShapeView.swift in Sources */,
 				6300C6471CA4B07300E3B4D5 /* ColorCode.swift in Sources */,
 				63D57BAA1C8A48AB0046E349 /* Tile.swift in Sources */,
 				63E4A2C11DC0102F002BC4CE /* ProgressTableCell.swift in Sources */,

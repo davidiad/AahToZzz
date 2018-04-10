@@ -362,11 +362,19 @@ class AtoZViewController: UIViewController {
             }
         }
         
-        let upperPositionsView = ArrowView(numTiles: 3, tileWidth: 50, borderWidth: 10)
+        let upperPositionsView = ShapeView(numTiles: 3, tileWidth: 50, borderWidth: 10)
         // mask must be called here, from the containing view
-        upperPositionsView.mask = upperPositionsView.getArrowMask()
+        //upperPositionsView.mask = upperPositionsView.getArrowMask()
         upperPositionsView.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + 120)
         self.view.addSubview(upperPositionsView)
+        /*
+        // add shadow
+        // finish, and use, getShadowMask
+        let upperPositionsShadow = ShapeView(numTiles: 3, tileWidth: 50, borderWidth: 10)
+        upperPositionsShadow.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + 120)
+        view.addSubview(upperPositionsShadow)
+        */
+        
         /*
         let upperPositionsBg = UIImage(named: "upper_positions_bg") as UIImage?
         let upperPositionsView = UIImageView(image: upperPositionsBg)

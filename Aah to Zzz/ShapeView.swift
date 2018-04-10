@@ -1,4 +1,12 @@
 //
+//  ShapeView.swift
+//  AahToZzz
+//
+//  Created by David Fierstein on 4/10/18.
+//  Copyright © 2018 David Fierstein. All rights reserved.
+//
+
+//  Based on:
 //  ArrowView.swift
 //  AahToZzz
 //
@@ -8,7 +16,7 @@
 
 import UIKit
 
-class ArrowView: UIView {
+class ShapeView: UIView {
     
     //TODO: As part of init, allow calling the type of shape to create
     
@@ -31,6 +39,7 @@ class ArrowView: UIView {
     var animator:       UIViewPropertyAnimator?
     var path:           UIBezierPath = UIBezierPath()
     var lineProperties: [LineProperties] = [LineProperties]()
+    var shapeView:      UIView?
     var shadowView:     UIView?
     
     struct LineProperties {
@@ -54,7 +63,8 @@ class ArrowView: UIView {
         let h: CGFloat = tileWidth + 2 * borderWidth
         let frame = CGRect(x: 0, y: 0, width: w, height: h)
         self.init(frame: frame)
-        createTileHolder(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
+        addShapeView(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
+        //createTileHolder(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
         addLineProperties()
         for i in 0 ..< lineProperties.count {
             addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
@@ -107,7 +117,23 @@ class ArrowView: UIView {
     
     //MARK:- Shape creation
     
-    func createTileHolder(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+//    func createTileHolder(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+//        let cornerRadius = borderWidth + 8.0
+//        let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
+//        path.append(outerPath)
+//        for i in 0 ..< numTiles {
+//            let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
+//            let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
+//            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
+//            path.append(innerPath)
+//        }
+//    }
+    
+    func addShapeView(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+        shapeView = UIView(frame: bounds)
+        guard let shapeView = shapeView else {
+            return
+        }
         let cornerRadius = borderWidth + 8.0
         let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
         path.append(outerPath)
@@ -117,11 +143,15 @@ class ArrowView: UIView {
             let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
             path.append(innerPath)
         }
+        
+        self.addSubview(shapeView)
+//        shapeView.mask = getArrowMask()
+        
     }
     
     func addShadowView() {
-        // add shadow view
-        shadowView = UIView(frame: bounds.offsetBy(dx: 5, dy: 30))
+        
+        shadowView = UIView(frame: bounds.offsetBy(dx: 0, dy: 0))
         guard let shadowView = shadowView else {
             return
         }
@@ -154,25 +184,25 @@ class ArrowView: UIView {
     
     // adapted from similar code in BlurViewC and its xib - need to consolidate
     func updateShadowMaskLayer () {
-//        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
-//        let outerPath = UIBezierPath(rect: outerShadowMaskRect)
-//        let innerShadowRect = CGRect(x: 0.0, y: -1.0, width: shadowView.frame.width, height: shadowView.frame.height)
-//        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: cornerRadius)
-//
-//        let shadowMask                          = CGMutablePath()
-//        let shadowMaskLayer                     = CAShapeLayer()
-//
-//        shadowMask.addPath(outerPath.cgPath)
-//        shadowMask.addPath(innerPath.cgPath)
-//
-//        shadowMaskLayer.path                    = shadowMask
-//        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
-//        shadowView.layer.mask                   = shadowMaskLayer
+        //        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
+        //        let outerPath = UIBezierPath(rect: outerShadowMaskRect)
+        //        let innerShadowRect = CGRect(x: 0.0, y: -1.0, width: shadowView.frame.width, height: shadowView.frame.height)
+        //        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: cornerRadius)
+        //
+        //        let shadowMask                          = CGMutablePath()
+        //        let shadowMaskLayer                     = CAShapeLayer()
+        //
+        //        shadowMask.addPath(outerPath.cgPath)
+        //        shadowMask.addPath(innerPath.cgPath)
+        //
+        //        shadowMaskLayer.path                    = shadowMask
+        //        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+        //        shadowView.layer.mask                   = shadowMaskLayer
     }
     
     // Curved arrow, arrowhead points straight up or down
     func createBezierArrow () {
-
+        
         if startPoint == nil {
             useFrameForPoints()
         }
@@ -285,7 +315,7 @@ class ArrowView: UIView {
             let b               = endPoint.y + pointsIn[i].x * sine   - ARROWHT * cosine * d
             pointsOut.append(CGPoint(x: a, y: b))
         }
-    
+        
         return pointsOut
     }
     
@@ -404,7 +434,7 @@ class ArrowView: UIView {
         path.addLine(to: endPointLeft)
         path.close  ()
     }
-
+    
     func createRectangle() {
         
         //path = UIBezierPath()
@@ -414,10 +444,10 @@ class ArrowView: UIView {
         path.addLine(to: CGPoint(x: self.frame.size.width, y: 0.0))
         path.close()
     }
-
+    
     // called in init
     func addShapeWithBlur() {
-
+        
         
         //createBezierArrow()
         createRotatedArrow()
@@ -451,7 +481,7 @@ class ArrowView: UIView {
         }
         
         blurView = UIVisualEffectView(effect: nil)
-    
+        
         guard let blurView = blurView else {
             return
         }
@@ -462,7 +492,7 @@ class ArrowView: UIView {
         }
         animator?.startAnimation()
         animator?.fractionComplete = blurriness
-    
+        
         blurView.translatesAutoresizingMaskIntoConstraints = false
         
         arrowBounds = self.path.cgPath.boundingBoxOfPath
@@ -472,39 +502,44 @@ class ArrowView: UIView {
         blurView.frame              = arrowBounds
         
         /*
-        let maskLayer               = CAShapeLayer()
-        
-        let arrowBoundsExpanded     = CGRect(x:      arrowBounds.minX    - 20.0,
-                                             y:      arrowBounds.minY    - 20.0,
-                                             width:  arrowBounds.width   + 40.0,
-                                             height: arrowBounds.height  + 40.0)
-        
-        let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
-        maskPath.append(self.path)
-        
-//        let mPath = CGMutablePath()
-//        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
-//        mPath.addPath(self.path.cgPath)
-   
-
-        maskLayer.path              = maskPath.cgPath
-        maskLayer.fillRule          = kCAFillRuleEvenOdd
-        maskLayer.fillColor         = Colors.bluek.cgColor
-     
-        
-        let mView                = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
-
-        mView.layer.addSublayer(maskLayer)
-
-        mView.layer.mask = maskLayer
-
-        //blurView.mask = maskView
-        
-//        blurView.mask = mView
-//        blurView.contentView.layer.mask = maskLayer
-        
-        */
-        self.insertSubview(blurView, at: 0)
+         let maskLayer               = CAShapeLayer()
+         
+         let arrowBoundsExpanded     = CGRect(x:      arrowBounds.minX    - 20.0,
+         y:      arrowBounds.minY    - 20.0,
+         width:  arrowBounds.width   + 40.0,
+         height: arrowBounds.height  + 40.0)
+         
+         let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
+         maskPath.append(self.path)
+         
+         //        let mPath = CGMutablePath()
+         //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
+         //        mPath.addPath(self.path.cgPath)
+         
+         
+         maskLayer.path              = maskPath.cgPath
+         maskLayer.fillRule          = kCAFillRuleEvenOdd
+         maskLayer.fillColor         = Colors.bluek.cgColor
+         
+         
+         let mView                = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
+         
+         mView.layer.addSublayer(maskLayer)
+         
+         mView.layer.mask = maskLayer
+         
+         //blurView.mask = maskView
+         
+         //        blurView.mask = mView
+         //        blurView.contentView.layer.mask = maskLayer
+         
+         */
+        let blurSuperView = UIView(frame: bounds)
+        blurSuperView.translatesAutoresizingMaskIntoConstraints = false
+//        blurSuperView.view.maskToBounds = false
+        blurSuperView.mask = getShapeMask() // set mask on containing view
+        self.insertSubview(blurSuperView, at: 0)
+        blurSuperView.insertSubview(blurView, at: 0)
         //self.insertSubview(maskView, at: 1)
         //blurView.layer.mask = maskLayer
         
@@ -513,25 +548,29 @@ class ArrowView: UIView {
     
     func getShadowMask() -> UIView {
         // will return a UIView
-        var sView = getArrowMask()
+        var sView = getShapeMask()
         // invert the mask for use as a shadow mask
         return sView
     }
     
     // Needs to be called from the containing view, otherwise the blur will not work
-    func getArrowMask() -> UIView {
-        guard let arrowBounds = arrowBounds else {
-            return self
-        }
+    func getShapeMask() -> UIView {
+        
+//        guard let arrowBounds = arrowBounds else {
+//            print("COULD NOT let arrowBounds")
+//            return self // causes crash if self is return (circular reference) -- FIX
+//        }
+        
+        
         let maskLayer               = CAShapeLayer()
         
-//        let arrowBoundsExpanded     = CGRect(x:      (arrowBounds?.minX)!    - 20.0,
-//                                             y:      (arrowBounds?.minY)!    - 20.0,
-//                                             width:  (arrowBounds?.width)!   + 40.0,
-//                                             height: (arrowBounds?.height)!  + 40.0)
-//
-//        let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
-//        maskPath.append(self.path)
+        //        let arrowBoundsExpanded     = CGRect(x:      (arrowBounds?.minX)!    - 20.0,
+        //                                             y:      (arrowBounds?.minY)!    - 20.0,
+        //                                             width:  (arrowBounds?.width)!   + 40.0,
+        //                                             height: (arrowBounds?.height)!  + 40.0)
+        //
+        //        let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
+        //        maskPath.append(self.path)
         
         //        let mPath = CGMutablePath()
         //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
@@ -541,8 +580,8 @@ class ArrowView: UIView {
         maskLayer.path              = self.path.cgPath  //  maskPath.cgPath
         maskLayer.fillRule          = kCAFillRuleEvenOdd
         //maskLayer.fillColor       = Colors.bluek.cgColor
-        
-        let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
+        let mView = UIView(frame: CGRect(x:0,y:0,width: bounds.width, height: bounds.height))
+//        let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
         
         mView.layer.addSublayer(maskLayer)
         
@@ -552,3 +591,4 @@ class ArrowView: UIView {
         
     }
 }
+
