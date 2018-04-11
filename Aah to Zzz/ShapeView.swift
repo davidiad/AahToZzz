@@ -25,8 +25,10 @@ class ShapeView: UIView {
     let ENDWTH:         CGFloat = 6.0
     let ARROWWTH:       CGFloat = 16.0
     let ARROWHT:        CGFloat = 22.0
-    let TANGENTLIMIT:   CGFloat = 5.0 // prevents control pt adjustments when close to vertical
-    let CPMULTIPLIER:   CGFloat = 0.4 // empirical const for amount of control pt adjustment
+    let TANGENTLIMIT:   CGFloat = 5.0  // prevents control pt adjustments when close to vertical
+    let CPMULTIPLIER:   CGFloat = 0.4  // empirical const for amount of control pt adjustment
+    let shadowWidth:    CGFloat = 5.0 // only used if there is a shadow. Make optional?
+    var shadowed:       Bool    = false
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
     var cpValue1:       CGFloat = 36.0
@@ -38,6 +40,7 @@ class ShapeView: UIView {
     var blurriness:     CGFloat = 0.5
     var animator:       UIViewPropertyAnimator?
     var path:           UIBezierPath = UIBezierPath()
+    var shadowPath:     UIBezierPath = UIBezierPath() // TODO: should be an optional, as there may not be a shadow
     var lineProperties: [LineProperties] = [LineProperties]()
     var shapeView:      UIView?
     var shadowView:     UIView?
@@ -63,14 +66,18 @@ class ShapeView: UIView {
         let h: CGFloat = tileWidth + 2 * borderWidth
         let frame = CGRect(x: 0, y: 0, width: w, height: h)
         self.init(frame: frame)
+        shadowed = true
         addShapeView(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
-        //createTileHolder(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
         addLineProperties()
         for i in 0 ..< lineProperties.count {
             addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
         }
-        blurArrow()
+        addBlurView()
         addShadowView()
+        guard let shadowView = shadowView else {
+            return
+        }
+        bringSubview(toFront: shadowView)
     }
     
     init(frame: CGRect, startPoint: CGPoint, endPoint: CGPoint) {
@@ -137,50 +144,134 @@ class ShapeView: UIView {
         let cornerRadius = borderWidth + 8.0
         let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
         path.append(outerPath)
+        if shadowed == true {shadowPath.append(outerPath)}
         for i in 0 ..< numTiles {
             let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
             let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
             let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
+            if shadowed == true {shadowPath.append(innerPath)}
             path.append(innerPath)
+            // If shadow will be added,
+            // need to add an additional path inside, so that the shadow is filled correctly
+            // according to kCAFillRuleEvenOdd
+            // if from a point inside, an odd number of lines are crossed to go outside,
+            // the region is filled. Therefore an extra path to cross is needed to make it an even number.
+            if shadowed == true {
+                let inset: CGFloat = 0.5
+                let iWidth = tileWidth - (2 * inset)
+                let innermostTileRect = CGRect(x: xPos + inset, y: borderWidth + inset, width: iWidth, height: iWidth)
+                let innermostPath = UIBezierPath(roundedRect: innermostTileRect, cornerRadius: 8 - inset)
+                shadowPath.append(innermostPath)
+            }
         }
         
+        shapeView.mask = getShapeMask()
         self.addSubview(shapeView)
-//        shapeView.mask = getArrowMask()
+
         
     }
     
-    func addShadowView() {
+    // blur fx
+    func addBlurView() {
+        var blurEffect: UIBlurEffect
+        if #available(iOS 10.0, *) {
+            blurEffect = UIBlurEffect(style: .prominent)
+        } else {
+            blurEffect = UIBlurEffect(style: .light)
+        }
         
-        shadowView = UIView(frame: bounds.offsetBy(dx: 0, dy: 0))
+        blurView = UIVisualEffectView(effect: nil)
+        
+        guard let blurView = blurView else {
+            return
+        }
+        
+        animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
+            self.blurView?.effect = blurEffect
+            self.animator?.pauseAnimation()
+        }
+        animator?.startAnimation()
+        animator?.fractionComplete = blurriness
+        
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        
+        arrowBounds = self.path.cgPath.boundingBoxOfPath
+        guard let arrowBounds = arrowBounds else {
+            return
+        }
+        blurView.frame              = arrowBounds
+        let blurSuperView = UIView(frame: bounds)
+        blurSuperView.translatesAutoresizingMaskIntoConstraints = false
+        blurSuperView.mask = getShapeMask() // set mask on containing view
+        self.insertSubview(blurSuperView, at: 0)
+        blurSuperView.insertSubview(blurView, at: 0)
+    }
+    
+    
+    
+    func addShadowView() {
+        let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
+        shadowView = UIView(frame: shadowRect)
+        
         guard let shadowView = shadowView else {
             return
         }
-        shadowView.backgroundColor      = .red
+        shadowView.backgroundColor      = .black
         shadowView.layer.cornerRadius   = 18.0
         shadowView.layer.shadowColor    = UIColor.black.cgColor
         shadowView.layer.shadowOpacity  = 1.0
-        shadowView.layer.shadowRadius   = 12.0
+        shadowView.layer.shadowRadius   = shadowWidth
+
         shadowView.layer.masksToBounds  = false
+        shadowView.layer.shadowOffset   = CGSize(width: 0, height: 0)
         
+//        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
+//        let outerShadowPath = UIBezierPath(rect: outerShadowMaskRect)
+//        let innerShadowRect = CGRect(x: 0.0, y: 0.0, width: shadowView.frame.width, height: shadowView.frame.height)
+//        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: 18.0)
+//
+//        let shadowMask                          = CGMutablePath()
+//        let shadowMaskLayer                     = CAShapeLayer()
+//
+//        shadowMask.addPath(outerShadowPath.cgPath)
+//        shadowMask.addPath(innerPath.cgPath)
+//
+//        shadowMaskLayer.path                    = shadowMask
+//        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+        shadowView.layer.mask             = getShadowMask()
+        //shadowView.mask                 = getShapeMask()
         
-        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
-        let outerShadowPath = UIBezierPath(rect: outerShadowMaskRect)
-        let innerShadowRect = CGRect(x: 0.0, y: 0.0, width: shadowView.frame.width, height: shadowView.frame.height)
-        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: 18.0)
-        
-        let shadowMask                          = CGMutablePath()
-        let shadowMaskLayer                     = CAShapeLayer()
-        
-        shadowMask.addPath(outerShadowPath.cgPath)
-        shadowMask.addPath(innerPath.cgPath)
-        
-        shadowMaskLayer.path                    = shadowMask
-        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
-        shadowView.layer.mask                   = shadowMaskLayer
-        //shadowView.mask = UIView(frame: bounds.offsetBy(dx: 10, dy: 10))
-        self.addSubview(shadowView)
+        addSubview(shadowView)
+        bringSubview(toFront: shadowView)
     }
     
+    func getShadowMask() -> CAShapeLayer? {
+        // will return a UIView
+        // invert the mask for use as a shadow mask
+        // make a path that is a box larger than the entire view
+        
+        
+        let shadowBounds             = UIBezierPath(rect: bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth))
+        shadowBounds.append(shadowPath)
+        //let shadowMask            = CGMutablePath()//UIBezierPath(rect: shadowBounds).cgPath as! CGMutablePath
+        //shadowMask.addPath(shadowBounds.cgPath)
+        //shadowMask.addPath(self.path.cgPath)
+        let shadowMaskLayer         = CAShapeLayer()
+        shadowMaskLayer.path        = shadowBounds.cgPath
+        shadowMaskLayer.fillRule    = kCAFillRuleEvenOdd
+        shadowView?.layer.shadowPath     = shadowPath.cgPath
+        //
+        //let sView = UIView(frame: CGRect(x:0,y:0,width: bounds.width, height: bounds.height))
+ 
+        
+        //sView.layer.addSublayer(shadowMaskLayer)
+        
+        //mView.layer.mask = maskLayer
+        
+        return shadowMaskLayer
+        
+
+    }
     
     // adapted from similar code in BlurViewC and its xib - need to consolidate
     func updateShadowMaskLayer () {
@@ -457,7 +548,7 @@ class ShapeView: UIView {
             addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
         }
         
-        blurArrow()
+        addBlurView()
     }
     
     func addSublayerShapeLayer (lineWidth: CGFloat, color: UIColor) {
@@ -468,90 +559,84 @@ class ShapeView: UIView {
         shapeLayer.fillColor    = UIColor.clear.cgColor
         shapeLayer.lineJoin     = kCALineJoinRound
         
-        self.layer.addSublayer(shapeLayer)
+        shapeView?.layer.addSublayer(shapeLayer)
     }
     
-    // blur fx
-    func blurArrow() {
-        var blurEffect: UIBlurEffect
-        if #available(iOS 10.0, *) {
-            blurEffect = UIBlurEffect(style: .prominent)
-        } else {
-            blurEffect = UIBlurEffect(style: .light)
-        }
-        
-        blurView = UIVisualEffectView(effect: nil)
-        
-        guard let blurView = blurView else {
-            return
-        }
-        
-        animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
-            self.blurView?.effect = blurEffect
-            self.animator?.pauseAnimation()
-        }
-        animator?.startAnimation()
-        animator?.fractionComplete = blurriness
-        
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        
-        arrowBounds = self.path.cgPath.boundingBoxOfPath
-        guard let arrowBounds = arrowBounds else {
-            return
-        }
-        blurView.frame              = arrowBounds
-        
-        /*
-         let maskLayer               = CAShapeLayer()
-         
-         let arrowBoundsExpanded     = CGRect(x:      arrowBounds.minX    - 20.0,
-         y:      arrowBounds.minY    - 20.0,
-         width:  arrowBounds.width   + 40.0,
-         height: arrowBounds.height  + 40.0)
-         
-         let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
-         maskPath.append(self.path)
-         
-         //        let mPath = CGMutablePath()
-         //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
-         //        mPath.addPath(self.path.cgPath)
-         
-         
-         maskLayer.path              = maskPath.cgPath
-         maskLayer.fillRule          = kCAFillRuleEvenOdd
-         maskLayer.fillColor         = Colors.bluek.cgColor
-         
-         
-         let mView                = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
-         
-         mView.layer.addSublayer(maskLayer)
-         
-         mView.layer.mask = maskLayer
-         
-         //blurView.mask = maskView
-         
-         //        blurView.mask = mView
-         //        blurView.contentView.layer.mask = maskLayer
-         
-         */
-        let blurSuperView = UIView(frame: bounds)
-        blurSuperView.translatesAutoresizingMaskIntoConstraints = false
-//        blurSuperView.view.maskToBounds = false
-        blurSuperView.mask = getShapeMask() // set mask on containing view
-        self.insertSubview(blurSuperView, at: 0)
-        blurSuperView.insertSubview(blurView, at: 0)
-        //self.insertSubview(maskView, at: 1)
-        //blurView.layer.mask = maskLayer
-        
-        
-    }
+//    // blur fx
+//    func blurArrow() {
+//        var blurEffect: UIBlurEffect
+//        if #available(iOS 10.0, *) {
+//            blurEffect = UIBlurEffect(style: .prominent)
+//        } else {
+//            blurEffect = UIBlurEffect(style: .light)
+//        }
+//
+//        blurView = UIVisualEffectView(effect: nil)
+//
+//        guard let blurView = blurView else {
+//            return
+//        }
+//
+//        animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
+//            self.blurView?.effect = blurEffect
+//            self.animator?.pauseAnimation()
+//        }
+//        animator?.startAnimation()
+//        animator?.fractionComplete = blurriness
+//
+//        blurView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        arrowBounds = self.path.cgPath.boundingBoxOfPath
+//        guard let arrowBounds = arrowBounds else {
+//            return
+//        }
+//        blurView.frame              = arrowBounds
+//
+//        /*
+//         let maskLayer               = CAShapeLayer()
+//
+//         let arrowBoundsExpanded     = CGRect(x:      arrowBounds.minX    - 20.0,
+//         y:      arrowBounds.minY    - 20.0,
+//         width:  arrowBounds.width   + 40.0,
+//         height: arrowBounds.height  + 40.0)
+//
+//         let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
+//         maskPath.append(self.path)
+//
+//         //        let mPath = CGMutablePath()
+//         //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
+//         //        mPath.addPath(self.path.cgPath)
+//
+//
+//         maskLayer.path              = maskPath.cgPath
+//         maskLayer.fillRule          = kCAFillRuleEvenOdd
+//         maskLayer.fillColor         = Colors.bluek.cgColor
+//
+//
+//         let mView                = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
+//
+//         mView.layer.addSublayer(maskLayer)
+//
+//         mView.layer.mask = maskLayer
+//
+//         //blurView.mask = maskView
+//
+//         //        blurView.mask = mView
+//         //        blurView.contentView.layer.mask = maskLayer
+//
+//         */
+//        let blurSuperView = UIView(frame: bounds)
+//        blurSuperView.translatesAutoresizingMaskIntoConstraints = false
+////        blurSuperView.view.maskToBounds = false
+//        blurSuperView.mask = getShapeMask() // set mask on containing view
+//        self.insertSubview(blurSuperView, at: 0)
+//        blurSuperView.insertSubview(blurView, at: 0)
+//        //self.insertSubview(maskView, at: 1)
+//        //blurView.layer.mask = maskLayer
+//
+//
+//    }
     
-    func getShadowMask() -> UIView {
-        // will return a UIView
-        var sView = getShapeMask()
-        // invert the mask for use as a shadow mask
-        return sView
-    }
     
     // Needs to be called from the containing view, otherwise the blur will not work
     func getShapeMask() -> UIView {
