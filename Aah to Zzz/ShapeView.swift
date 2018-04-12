@@ -27,7 +27,7 @@ class ShapeView: UIView {
     let ARROWHT:        CGFloat = 22.0
     let TANGENTLIMIT:   CGFloat = 5.0  // prevents control pt adjustments when close to vertical
     let CPMULTIPLIER:   CGFloat = 0.4  // empirical const for amount of control pt adjustment
-    let shadowWidth:    CGFloat = 5.0 // only used if there is a shadow. Make optional?
+    let shadowWidth:    CGFloat = 2.5 // only used if there is a shadow. Make optional?
     var shadowed:       Bool    = false
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
@@ -53,6 +53,7 @@ class ShapeView: UIView {
     //MARK:- init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.isOpaque = false
         useFrameForPoints()
     }
     
@@ -109,8 +110,8 @@ class ShapeView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-
-        self.backgroundColor = UIColor.white
+        
+        self.backgroundColor = UIColor.clear
         self.backgroundColor?.setFill()
         UIGraphicsGetCurrentContext()!.fill(rect);
         addInnerShadow()
@@ -165,7 +166,7 @@ class ShapeView: UIView {
             // if from a point inside, an odd number of lines are crossed to go outside,
             // the region is filled. Therefore an extra path to cross is needed to make it an even number.
             if shadowed == true {
-                let inset: CGFloat = 0.5
+                let inset: CGFloat = 1.25
                 let iWidth = tileWidth - (2 * inset)
                 let innermostTileRect = CGRect(x: xPos + inset, y: borderWidth + inset, width: iWidth, height: iWidth)
                 let innermostPath = UIBezierPath(roundedRect: innermostTileRect, cornerRadius: 8 - inset)
@@ -260,7 +261,7 @@ class ShapeView: UIView {
         let testRect = CGRect(x: 10, y: 10, width: 50, height: 50)
         let testPath = UIBezierPath(roundedRect: testRect, cornerRadius: 8.0).cgPath
         let offset = CGSize(width: 0, height: 0)
-        drawInnerShadowInContext(context: context!, pathShape: testPath, shadColor: Colors.shadowBG.cgColor, offset: offset, blurRad: 41.0)
+        drawInnerShadowInContext(context: context!, pathShape: testPath, shadColor: Colors.shadowBG.cgColor, offset: offset, blurRad: 39)
     }
     
     func getShadowMask() -> CAShapeLayer? {
