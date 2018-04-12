@@ -108,6 +108,14 @@ class ShapeView: UIView {
         print("ARROW DEINITS")
     }
     
+    override func draw(_ rect: CGRect) {
+
+        self.backgroundColor = UIColor.white
+        self.backgroundColor?.setFill()
+        UIGraphicsGetCurrentContext()!.fill(rect);
+        addInnerShadow()
+    }
+    
     //MARK:- Inspectables
     
     @IBInspectable var sPt: CGPoint = CGPoint(x: 0, y: 0) {
@@ -243,6 +251,16 @@ class ShapeView: UIView {
         
         addSubview(shadowView)
         bringSubview(toFront: shadowView)
+        
+//        addInnerShadow()
+    }
+    
+    func addInnerShadow() {
+        let context = UIGraphicsGetCurrentContext()
+        let testRect = CGRect(x: 10, y: 10, width: 50, height: 50)
+        let testPath = UIBezierPath(roundedRect: testRect, cornerRadius: 8.0).cgPath
+        let offset = CGSize(width: 0, height: 0)
+        drawInnerShadowInContext(context: context!, pathShape: testPath, shadColor: Colors.shadowBG.cgColor, offset: offset, blurRad: 41.0)
     }
     
     func getShadowMask() -> CAShapeLayer? {
@@ -675,5 +693,52 @@ class ShapeView: UIView {
         return mView
         
     }
+    
+    // inner shadow
+    func drawInnerShadowInContext(context: CGContext, pathShape: CGPath, shadColor: CGColor, offset: CGSize, blurRad: CGFloat) {
+ 
+        context.saveGState()
+        context.addPath(pathShape)
+        context.clip()
+    
+        guard let opaqueShadowColor = shadColor.copy(alpha: 1.0) else {
+            return
+        }
+        context.setAlpha(shadColor.alpha)
+        context.beginTransparencyLayer(auxiliaryInfo: nil)
+        context.setShadow(offset: offset, blur: blurRad, color: opaqueShadowColor)
+        context.setBlendMode(.sourceOut)
+        context.setFillColor(opaqueShadowColor)
+        context.addPath(pathShape)
+        context.fillPath()
+        context.endTransparencyLayer()
+        context.restoreGState()
+    }
+    // obj-c
+//    - (void)drawInnerShadowInContext:(CGContextRef)context
+//    withPath:(CGPathRef)path
+//    shadowColor:(CGColorRef)shadowColor
+//    offset:(CGSize)offset
+//    blurRadius:(CGFloat)blurRadius {
+//    CGContextSaveGState(context);
+//
+//    CGContextAddPath(context, path);
+//    CGContextClip(context);
+//
+//    CGColorRef opaqueShadowColor = CGColorCreateCopyWithAlpha(shadowColor, 1.0);
+//
+//    CGContextSetAlpha(context, CGColorGetAlpha(shadowColor));
+//    CGContextBeginTransparencyLayer(context, NULL);
+//    CGContextSetShadowWithColor(context, offset, blurRadius, opaqueShadowColor);
+//    CGContextSetBlendMode(context, kCGBlendModeSourceOut);
+//    CGContextSetFillColorWithColor(context, opaqueShadowColor);
+//    CGContextAddPath(context, path);
+//    CGContextFillPath(context);
+//    CGContextEndTransparencyLayer(context);
+//
+//    CGContextRestoreGState(context);
+//
+//    CGColorRelease(opaqueShadowColor);
+//    }
 }
 
