@@ -21,6 +21,9 @@ class ShapeView: UIView {
     //TODO: As part of init, allow calling the type of shape to create
     
     //MARK: Arrow const's and vars WTH == WIDTH, HT == HEIGHT
+    let TILEWTH:        CGFloat = 50.0 // (to do: get from Tile)
+    let TILERADIUS:     CGFloat = 8.0  // (to do: get from Tile)
+    var borderWth:      CGFloat = 10.0 // (to do: get from AtoZ VC)
     let STARTWTH:       CGFloat = 12.0
     let ENDWTH:         CGFloat = 6.0
     let ARROWWTH:       CGFloat = 16.0
@@ -44,6 +47,7 @@ class ShapeView: UIView {
     var lineProperties: [LineProperties] = [LineProperties]()
     var shapeView:      UIView?
     var shadowView:     UIView?
+    var shadowImage:    UIImage? // rendered image of inner shadow of tile holder
     
     struct LineProperties {
         var lineWidth:  CGFloat
@@ -79,6 +83,7 @@ class ShapeView: UIView {
             return
         }
         bringSubview(toFront: shadowView)
+        print("END of tile holder convenience init")
     }
     
     init(frame: CGRect, startPoint: CGPoint, endPoint: CGPoint) {
@@ -110,11 +115,44 @@ class ShapeView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        
-        self.backgroundColor = UIColor.clear
-        self.backgroundColor?.setFill()
-        UIGraphicsGetCurrentContext()!.fill(rect);
-        addInnerShadow()
+        // create inner shadows if needed
+        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+        print("DRAW RECT")
+        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+        if shadowed == true {
+            self.backgroundColor = UIColor.clear
+            self.backgroundColor?.setFill()
+            UIGraphicsGetCurrentContext()!.fill(rect);
+            addInnerShadow()
+        }
+    }
+    
+    func drawInContext(){
+//
+//        let size = CGSize(width: 90, height: 50)
+//
+//        let context = UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+//        // Establish the image context
+////        UIGraphicsBeginImageContextWithOptions(
+////            CGSize(77,212), isOpaque, 0.0);
+//
+//        // Retrieve the current context
+//        //let context = UIGraphicsGetCurrentContext()
+//        UIGraphicsPushContext(context!)
+//        // Perform the drawing
+//        context?.setLineWidth(4)
+//        context?.setStrokeColor(UIColor.gray.cgColor)
+//        context?.strokeEllipse(in: bounds)
+//
+//
+//        // Retrieve the drawn image
+//        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
+//
+//        // End the image context
+//        UIGraphicsEndImageContext();
+//        UIGraphicsPopContext()
     }
     
     //MARK:- Inspectables
@@ -150,14 +188,14 @@ class ShapeView: UIView {
         guard let shapeView = shapeView else {
             return
         }
-        let cornerRadius = borderWidth + 8.0
+        let cornerRadius = borderWidth + TILERADIUS
         let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
         path.append(outerPath)
         if shadowed == true {shadowPath.append(outerPath)}
         for i in 0 ..< numTiles {
             let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
             let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
-            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
+            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: TILERADIUS)
             if shadowed == true {shadowPath.append(innerPath)}
             path.append(innerPath)
             // If shadow will be added,
@@ -166,11 +204,21 @@ class ShapeView: UIView {
             // if from a point inside, an odd number of lines are crossed to go outside,
             // the region is filled. Therefore an extra path to cross is needed to make it an even number.
             if shadowed == true {
+                //drawInContext()
+                print("Adding Inner Tile")
                 let inset: CGFloat = 1.25
                 let iWidth = tileWidth - (2 * inset)
                 let innermostTileRect = CGRect(x: xPos + inset, y: borderWidth + inset, width: iWidth, height: iWidth)
-                let innermostPath = UIBezierPath(roundedRect: innermostTileRect, cornerRadius: 8 - inset)
+                let innermostPath = UIBezierPath(roundedRect: innermostTileRect,
+                                                 cornerRadius: TILERADIUS - inset)
                 shadowPath.append(innermostPath)
+                
+                // add some additional shadow
+                let addShadow = UIView(frame: innermostTileRect)
+                addShadow.backgroundColor = Colors.additionalShadow
+                addSubview(addShadow)
+                
+                
             }
         }
         
@@ -226,7 +274,7 @@ class ShapeView: UIView {
             return
         }
         shadowView.backgroundColor      = .black
-        shadowView.layer.cornerRadius   = 18.0
+        shadowView.layer.cornerRadius   = TILERADIUS + borderWth
         shadowView.layer.shadowColor    = UIColor.black.cgColor
         shadowView.layer.shadowOpacity  = 1.0
         shadowView.layer.shadowRadius   = shadowWidth
@@ -253,15 +301,53 @@ class ShapeView: UIView {
         addSubview(shadowView)
         bringSubview(toFront: shadowView)
         
-//        addInnerShadow()
+        //addInnerShadow()
     }
     
     func addInnerShadow() {
-        let context = UIGraphicsGetCurrentContext()
-        let testRect = CGRect(x: 10, y: 10, width: 50, height: 50)
-        let testPath = UIBezierPath(roundedRect: testRect, cornerRadius: 8.0).cgPath
+        //UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return
+        }
+        //UIGraphicsPushContext(context!)
+        // TODO: move out of draw rect, so can use init vars of tile holder.
+        let testRect = CGRect(x: borderWth, y: borderWth, width: TILEWTH, height: TILEWTH)
+        let testRect2 = CGRect(x: 2 * borderWth + TILEWTH, y: borderWth, width: TILEWTH, height: TILEWTH)
+        let testRect3 = CGRect(x: 3 * borderWth + 2 * TILEWTH, y: borderWth, width: TILEWTH, height: TILEWTH)
+        let testPath = UIBezierPath(roundedRect: testRect, cornerRadius: TILERADIUS)
+        let testPath2 = UIBezierPath(roundedRect: testRect2, cornerRadius: TILERADIUS)
+        let testPath3 = UIBezierPath(roundedRect: testRect3, cornerRadius: TILERADIUS)
+        
+        testPath.append(testPath2)
+        testPath.append(testPath3)
         let offset = CGSize(width: 0, height: 0)
-        drawInnerShadowInContext(context: context!, pathShape: testPath, shadColor: Colors.shadowBG.cgColor, offset: offset, blurRad: 39)
+        drawInnerShadowInContext(context: context, pathShape: testPath.cgPath, shadColor: Colors.shadowBG.cgColor, offset: offset, blurRad: TILEWTH * 0.25)
+        //shadowImage = UIGraphicsGetImageFromCurrentImageContext()
+        //let innerShadowView = UIImageView(image: shadowImage)
+        //shadowView?.addSubview(innerShadowView)
+        //UIGraphicsEndImageContext()
+        //UIGraphicsPushContext(context!)
+    }
+    
+    // inner shadow
+    func drawInnerShadowInContext(context: CGContext, pathShape: CGPath, shadColor: CGColor, offset: CGSize, blurRad: CGFloat) {
+        
+        context.saveGState()
+        context.addPath(pathShape)
+        context.clip()
+        
+        guard let opaqueShadowColor = shadColor.copy(alpha: 1.0) else {
+            return
+        }
+        context.setAlpha(shadColor.alpha)
+        context.beginTransparencyLayer(auxiliaryInfo: nil)
+        context.setShadow(offset: offset, blur: blurRad, color: opaqueShadowColor)
+        context.setBlendMode(.sourceOut)
+        context.setFillColor(opaqueShadowColor)
+        context.addPath(pathShape)
+        context.fillPath()
+        context.endTransparencyLayer()
+        context.restoreGState()
     }
     
     func getShadowMask() -> CAShapeLayer? {
@@ -695,26 +781,6 @@ class ShapeView: UIView {
         
     }
     
-    // inner shadow
-    func drawInnerShadowInContext(context: CGContext, pathShape: CGPath, shadColor: CGColor, offset: CGSize, blurRad: CGFloat) {
- 
-        context.saveGState()
-        context.addPath(pathShape)
-        context.clip()
-    
-        guard let opaqueShadowColor = shadColor.copy(alpha: 1.0) else {
-            return
-        }
-        context.setAlpha(shadColor.alpha)
-        context.beginTransparencyLayer(auxiliaryInfo: nil)
-        context.setShadow(offset: offset, blur: blurRad, color: opaqueShadowColor)
-        context.setBlendMode(.sourceOut)
-        context.setFillColor(opaqueShadowColor)
-        context.addPath(pathShape)
-        context.fillPath()
-        context.endTransparencyLayer()
-        context.restoreGState()
-    }
     // obj-c
 //    - (void)drawInnerShadowInContext:(CGContextRef)context
 //    withPath:(CGPathRef)path

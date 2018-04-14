@@ -33,7 +33,7 @@ class AtoZViewController: UIViewController {
     
     var fillingInBlanks: Bool = false // flag for configuring cells when Fill in the Blanks button is touched
     
-    var lettertiles: [Tile]! // created in code so that autolayout done't interfere with UI Dynamcis
+    var lettertiles: [Tile]! // created in code so that autolayout doesn't interfere with UI Dynamcis
     var tilesToSwap: [Tile]? // an array to temporarilly hold the tiles waiting to be swapped
     var maxTilesToSwap: Int = 0 // temp. diagnostic
     var blurredViews: [BlurViewController] = []
