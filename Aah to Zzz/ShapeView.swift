@@ -30,7 +30,7 @@ class ShapeView: UIView {
     let ARROWHT:        CGFloat = 22.0
     let TANGENTLIMIT:   CGFloat = 5.0  // prevents control pt adjustments when close to vertical
     let CPMULTIPLIER:   CGFloat = 0.4  // empirical const for amount of control pt adjustment
-    let shadowWidth:    CGFloat = 2.5 // only used if there is a shadow. Make optional?
+    let shadowWidth:    CGFloat = 3.5 // only used if there is a shadow. Make optional?
     var shadowed:       Bool    = false
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
@@ -48,6 +48,7 @@ class ShapeView: UIView {
     var shapeView:      UIView?
     var shadowView:     UIView?
     var shadowImage:    UIImage? // rendered image of inner shadow of tile holder
+    var shapeType:      ShapeType = .arrow
     
     struct LineProperties {
         var lineWidth:  CGFloat
@@ -67,10 +68,12 @@ class ShapeView: UIView {
     
     // init for tile holder (upper positions background)
     convenience init(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+        
         let w: CGFloat = CGFloat((numTiles)) * (tileWidth + borderWidth) + borderWidth
         let h: CGFloat = tileWidth + 2 * borderWidth
         let frame = CGRect(x: 0, y: 0, width: w, height: h)
         self.init(frame: frame)
+        shapeType = .tileholder
         shadowed = true
         addShapeView(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
         addLineProperties()
@@ -84,6 +87,44 @@ class ShapeView: UIView {
         }
         bringSubview(toFront: shadowView)
         print("END of tile holder convenience init")
+    }
+    
+    // init for triangle shape to be added to Down Arrow
+    convenience init(frame: CGRect, direction: Directions) {
+        self.init(frame: frame)
+        shapeType = .triangle
+        shadowed = true
+        addLineProperties()
+        addTriangleView(direction: direction)
+        for i in 0 ..< lineProperties.count {
+            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
+        }
+        addBlurView()
+        if shadowed == true {shadowPath.append(path)}
+        let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
+        shadowView = UIView(frame: shadowRect)
+        
+        guard let shadowView = shadowView else {
+            return
+        }
+        shadowView.backgroundColor      = .clear
+        shadowView.layer.shadowColor    = UIColor.black.cgColor
+        shadowView.layer.shadowOpacity  = 1.0
+        shadowView.layer.shadowRadius   = shadowWidth
+        shadowView.layer.masksToBounds  = false
+        shadowView.layer.shadowOffset   = CGSize(width: 0, height: 0)
+        //shadowView.layer.mask             = getShadowMask()
+        //shadowPath = path
+        let shadowBounds             = UIBezierPath(rect: bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth))
+        
+        shadowBounds.append(shadowPath)
+        let shadowMaskLayer         = CAShapeLayer()
+        shadowMaskLayer.path        = shadowBounds.cgPath
+        shadowMaskLayer.fillRule    = kCAFillRuleEvenOdd
+        shadowView.layer.shadowPath     = shadowPath.cgPath
+        shadowView.layer.mask             = shadowMaskLayer
+        addSubview(shadowView)
+        //addShadowView()
     }
     
     init(frame: CGRect, startPoint: CGPoint, endPoint: CGPoint) {
@@ -121,7 +162,7 @@ class ShapeView: UIView {
         print("DRAW RECT")
         print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
         print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        if shadowed == true {
+        if shapeType == .tileholder && shadowed == true {
             self.backgroundColor = UIColor.clear
             self.backgroundColor?.setFill()
             UIGraphicsGetCurrentContext()!.fill(rect);
@@ -183,6 +224,61 @@ class ShapeView: UIView {
 //        }
 //    }
     
+    // for adding the shape to the Down Button
+    func addTriangleView(direction: Directions) {
+//        // set up the points, and their relationship to the direction
+//        let points      = [CGPoint(x:0,           y:0),
+//                           CGPoint(x:frame.width, y:0),
+//                           CGPoint(x:frame.width, y:frame.height),
+//                           CGPoint(x:0,           y:frame.height)]
+//
+//
+//        // get the 2nd and 3rd points
+//        let secondPoint = points[(direction.rawValue + 1) % 4]
+//        let thirdPoint  = points[(direction.rawValue + 2) % 4]
+//        // find midpoint between 2nd and 3rd points
+//        let midPoint    = CGPoint(x: ((secondPoint.x + thirdPoint.x) * 0.5),
+//                                  y: ((secondPoint.y + thirdPoint.y) * 0.5))
+//
+//        path.move       (to: points[direction.rawValue])
+//        path.addLine    (to: midPoint)
+//        path.addLine    (to: points[(direction.rawValue + 3) % 4])
+//        path.close()
+        
+        shapeView = UIView(frame: bounds)
+        guard let shapeView = shapeView else {
+            return
+        }
+        
+        createTriangle(direction: direction)
+        
+        shapeView.mask = getShapeMask()
+        addSubview(shapeView)
+        
+    }
+    
+    func createTriangle(direction: Directions) {
+        // set up the points, and their relationship to the direction
+        let points      = [CGPoint(x:0,           y:0),
+                           CGPoint(x:frame.width, y:0),
+                           CGPoint(x:frame.width, y:frame.height),
+                           CGPoint(x:0,           y:frame.height)]
+        
+        
+        // get the 2nd and 3rd points
+        let secondPoint = points[(direction.rawValue + 1) % 4]
+        let thirdPoint  = points[(direction.rawValue + 2) % 4]
+        // find midpoint between 2nd and 3rd points
+        let midPoint    = CGPoint(x: ((secondPoint.x + thirdPoint.x) * 0.5),
+                                  y: ((secondPoint.y + thirdPoint.y) * 0.5))
+        
+        path.move       (to: points[direction.rawValue])            // starting point
+        path.addLine    (to: midPoint)                              // point of triangle
+        path.addLine    (to: points[(direction.rawValue + 3) % 4])  // final point
+        path.close()
+    }
+    
+    // for adding tile holder shape
     func addShapeView(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
         shapeView = UIView(frame: bounds)
         guard let shapeView = shapeView else {
@@ -646,7 +742,7 @@ class ShapeView: UIView {
         
         
         //createBezierArrow()
-        createRotatedArrow()
+        //createRotatedArrow()
         
         
         for i in 0 ..< lineProperties.count {

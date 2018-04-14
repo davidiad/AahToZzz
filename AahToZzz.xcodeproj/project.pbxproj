@@ -41,6 +41,8 @@
 		6317546A1E39CF37008B359D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631754691E39CF37008B359D /* Game.swift */; };
 		6317546C1E39E059008B359D /* GameTypeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317546B1E39E059008B359D /* GameTypeInfo.swift */; };
 		6319C0821EA345F0004AC9B7 /* GameCenterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6319C0811EA345F0004AC9B7 /* GameCenterExtension.swift */; };
+		631E27E220825C6500E1F6CF /* Directions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E27E120825C6500E1F6CF /* Directions.swift */; };
+		631E27E42082918500E1F6CF /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E27E32082918500E1F6CF /* TriangleView.swift */; };
 		6322E7F61EA9B93700F5100D /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6322E7F51EA9B93700F5100D /* TutorialPageViewController.swift */; };
 		6324A8DE1DFA908600261E64 /* outline_graph_double.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6324A8DD1DFA908600261E64 /* outline_graph_double.pdf */; };
 		6324A8E01DFB49B700261E64 /* outline_graph_double@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6324A8DF1DFB49B700261E64 /* outline_graph_double@3x.png */; };
@@ -252,6 +254,8 @@
 		631754691E39CF37008B359D /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		6317546B1E39E059008B359D /* GameTypeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTypeInfo.swift; sourceTree = "<group>"; };
 		6319C0811EA345F0004AC9B7 /* GameCenterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterExtension.swift; sourceTree = "<group>"; };
+		631E27E120825C6500E1F6CF /* Directions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Directions.swift; sourceTree = "<group>"; };
+		631E27E32082918500E1F6CF /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		6322E7F51EA9B93700F5100D /* TutorialPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
 		6324A8DD1DFA908600261E64 /* outline_graph_double.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = outline_graph_double.pdf; sourceTree = "<group>"; };
 		6324A8DF1DFB49B700261E64 /* outline_graph_double@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outline_graph_double@3x.png"; sourceTree = "<group>"; };
@@ -675,6 +679,7 @@
 				6317546B1E39E059008B359D /* GameTypeInfo.swift */,
 				63854325203346AC00252F69 /* GameState.swift */,
 				63854327203379E800252F69 /* GameStateInfo.swift */,
+				631E27E120825C6500E1F6CF /* Directions.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -803,6 +808,7 @@
 				63EB421A204E429400275EB2 /* BlurViewController.xib */,
 				639A4C44206CC1FC0037CC58 /* ArrowView.swift */,
 				639E2276207CCD7100B01B13 /* ShapeView.swift */,
+				631E27E32082918500E1F6CF /* TriangleView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1153,6 +1159,7 @@
 				6377B8302028E9BA00C42743 /* AtoZPopoverDelegate.swift in Sources */,
 				637AF0781C84297C005A36BA /* FlickrClient.swift in Sources */,
 				633C7B0B1DB46A9C0055CD83 /* ExampleTableViewController.swift in Sources */,
+				631E27E220825C6500E1F6CF /* Directions.swift in Sources */,
 				63854326203346AC00252F69 /* GameState.swift in Sources */,
 				6319C0821EA345F0004AC9B7 /* GameCenterExtension.swift in Sources */,
 				63E4A2C71DC24CBA002BC4CE /* LevelTableCell.swift in Sources */,
@@ -1166,6 +1173,7 @@
 				639A4C45206CC1FC0037CC58 /* ArrowView.swift in Sources */,
 				636240851E308EEE007640DC /* Queue.swift in Sources */,
 				63E4A2C51DC1AF98002BC4CE /* LevelTableViewController.swift in Sources */,
+				631E27E42082918500E1F6CF /* TriangleView.swift in Sources */,
 				63F44983204160DC00837434 /* XibView.swift in Sources */,
 				63854328203379E800252F69 /* GameStateInfo.swift in Sources */,
 				63BC66C9205749A800803431 /* ProxyTable.swift in Sources */,
