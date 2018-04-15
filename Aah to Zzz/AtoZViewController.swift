@@ -419,19 +419,10 @@ class AtoZViewController: UIViewController {
     
     // Helper for ViewDidLoad
     func setupDownButton() {
-        let downButtonStart = CGPoint(x: downButton.center.x,
-                                      y: downButton.center.y - 0.5 * downButton.bounds.height)
-        let downButtonEnd   = CGPoint(x: downButton.center.x,
-                                      y: downButton.center.y + 0.5 * downButton.bounds.height)
-        // add blur/shape view to down button
-//        let downButtonShape = ShapeView(frame: downButton.frame,
-//                                        startPoint: downButtonStart,
-//                                        endPoint: downButtonEnd)
+
         let downButtonShape = ShapeView(frame: downButton.bounds, direction: .down)
-//        downButtonShape.backgroundColor = Colors.purple
         downButtonShape.isUserInteractionEnabled = false
         downButton.addSubview(downButtonShape)
-        
         
     }
     

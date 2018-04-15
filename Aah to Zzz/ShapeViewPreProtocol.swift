@@ -16,7 +16,7 @@
 
 import UIKit
 
-class ShapeView: UIView {
+class ShapeViewPreProtocol: UIView {
     
     //TODO: As part of init, allow calling the type of shape to create
     
@@ -50,10 +50,10 @@ class ShapeView: UIView {
     var shadowImage:    UIImage? // rendered image of inner shadow of tile holder
     var shapeType:      ShapeType = .arrow
     
-//    struct LineProperties {
-//        var lineWidth:  CGFloat
-//        var color:      UIColor
-//    }
+    //    struct LineProperties {
+    //        var lineWidth:  CGFloat
+    //        var color:      UIColor
+    //    }
     
     //MARK:- init
     override init(frame: CGRect) {
@@ -171,29 +171,29 @@ class ShapeView: UIView {
     }
     
     func drawInContext(){
-//
-//        let size = CGSize(width: 90, height: 50)
-//
-//        let context = UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
-//        // Establish the image context
-////        UIGraphicsBeginImageContextWithOptions(
-////            CGSize(77,212), isOpaque, 0.0);
-//
-//        // Retrieve the current context
-//        //let context = UIGraphicsGetCurrentContext()
-//        UIGraphicsPushContext(context!)
-//        // Perform the drawing
-//        context?.setLineWidth(4)
-//        context?.setStrokeColor(UIColor.gray.cgColor)
-//        context?.strokeEllipse(in: bounds)
-//
-//
-//        // Retrieve the drawn image
-//        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
-//
-//        // End the image context
-//        UIGraphicsEndImageContext();
-//        UIGraphicsPopContext()
+        //
+        //        let size = CGSize(width: 90, height: 50)
+        //
+        //        let context = UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        //        // Establish the image context
+        ////        UIGraphicsBeginImageContextWithOptions(
+        ////            CGSize(77,212), isOpaque, 0.0);
+        //
+        //        // Retrieve the current context
+        //        //let context = UIGraphicsGetCurrentContext()
+        //        UIGraphicsPushContext(context!)
+        //        // Perform the drawing
+        //        context?.setLineWidth(4)
+        //        context?.setStrokeColor(UIColor.gray.cgColor)
+        //        context?.strokeEllipse(in: bounds)
+        //
+        //
+        //        // Retrieve the drawn image
+        //        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
+        //
+        //        // End the image context
+        //        UIGraphicsEndImageContext();
+        //        UIGraphicsPopContext()
     }
     
     //MARK:- Inspectables
@@ -212,41 +212,33 @@ class ShapeView: UIView {
     
     //MARK:- Shape creation
     
-//    func createTileHolder(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
-//        let cornerRadius = borderWidth + 8.0
-//        let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
-//        path.append(outerPath)
-//        for i in 0 ..< numTiles {
-//            let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
-//            let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
-//            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
-//            path.append(innerPath)
-//        }
-//    }
+    //    func createTileHolder(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+    //        let cornerRadius = borderWidth + 8.0
+    //        let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
+    //        path.append(outerPath)
+    //        for i in 0 ..< numTiles {
+    //            let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
+    //            let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
+    //            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
+    //            path.append(innerPath)
+    //        }
+    //    }
     
     // for adding the shape to the Down Button
     func addTriangleView(direction: Directions) {
-        // separate really, could be moved
-        // should this be wrapped in createShape? and overridden per type
-        createTriangle(direction: direction) // creates triangle, and stores into 'path' var
         
         shapeView = UIView(frame: bounds)
         guard let shapeView = shapeView else {
             return
         }
+        
+        createTriangle(direction: direction)
+        
         shapeView.mask = getShapeMask()
         addSubview(shapeView)
         
     }
     
-    // basically, creates path, stores in path var. override as needed
-    func createShape() {
-        // add rect as default?
-        // call createTileHolder(), or other shape
-    }
-    
-    // should this be wrapped in createPathShape? and overridden per type
-    // this func moved to TriangleView
     func createTriangle(direction: Directions) {
         // set up the points, and their relationship to the direction
         let points      = [CGPoint(x:0,           y:0),
@@ -265,10 +257,6 @@ class ShapeView: UIView {
         path.addLine    (to: midPoint)                              // point of triangle
         path.addLine    (to: points[(direction.rawValue + 3) % 4])  // final point
         path.close()
-    }
-    
-    func createTileHolder (numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
-        
     }
     
     // for adding tile holder shape
@@ -313,7 +301,7 @@ class ShapeView: UIView {
         
         shapeView.mask = getShapeMask()
         self.addSubview(shapeView)
-
+        
         
     }
     
@@ -353,9 +341,7 @@ class ShapeView: UIView {
         blurSuperView.insertSubview(blurView, at: 0)
     }
     
-    func addShapeView() {
-        // needs to be overridden?
-    }
+    
     
     func addShadowView() {
         let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
@@ -369,23 +355,23 @@ class ShapeView: UIView {
         shadowView.layer.shadowColor    = UIColor.black.cgColor
         shadowView.layer.shadowOpacity  = 1.0
         shadowView.layer.shadowRadius   = shadowWidth
-
+        
         shadowView.layer.masksToBounds  = false
         shadowView.layer.shadowOffset   = CGSize(width: 0, height: 0)
         
-//        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
-//        let outerShadowPath = UIBezierPath(rect: outerShadowMaskRect)
-//        let innerShadowRect = CGRect(x: 0.0, y: 0.0, width: shadowView.frame.width, height: shadowView.frame.height)
-//        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: 18.0)
-//
-//        let shadowMask                          = CGMutablePath()
-//        let shadowMaskLayer                     = CAShapeLayer()
-//
-//        shadowMask.addPath(outerShadowPath.cgPath)
-//        shadowMask.addPath(innerPath.cgPath)
-//
-//        shadowMaskLayer.path                    = shadowMask
-//        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+        //        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
+        //        let outerShadowPath = UIBezierPath(rect: outerShadowMaskRect)
+        //        let innerShadowRect = CGRect(x: 0.0, y: 0.0, width: shadowView.frame.width, height: shadowView.frame.height)
+        //        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: 18.0)
+        //
+        //        let shadowMask                          = CGMutablePath()
+        //        let shadowMaskLayer                     = CAShapeLayer()
+        //
+        //        shadowMask.addPath(outerShadowPath.cgPath)
+        //        shadowMask.addPath(innerPath.cgPath)
+        //
+        //        shadowMaskLayer.path                    = shadowMask
+        //        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
         shadowView.layer.mask             = getShadowMask()
         //shadowView.mask                 = getShapeMask()
         
@@ -452,7 +438,7 @@ class ShapeView: UIView {
         shadowView?.layer.shadowPath    = shadowPath.cgPath
         
         return shadowMaskLayer
-
+        
     }
     
     // adapted from similar code in BlurViewC and its xib - need to consolidate
@@ -743,89 +729,89 @@ class ShapeView: UIView {
         shapeView?.layer.addSublayer(shapeLayer)
     }
     
-//    // blur fx
-//    func blurArrow() {
-//        var blurEffect: UIBlurEffect
-//        if #available(iOS 10.0, *) {
-//            blurEffect = UIBlurEffect(style: .prominent)
-//        } else {
-//            blurEffect = UIBlurEffect(style: .light)
-//        }
-//
-//        blurView = UIVisualEffectView(effect: nil)
-//
-//        guard let blurView = blurView else {
-//            return
-//        }
-//
-//        animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
-//            self.blurView?.effect = blurEffect
-//            self.animator?.pauseAnimation()
-//        }
-//        animator?.startAnimation()
-//        animator?.fractionComplete = blurriness
-//
-//        blurView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        arrowBounds = self.path.cgPath.boundingBoxOfPath
-//        guard let arrowBounds = arrowBounds else {
-//            return
-//        }
-//        blurView.frame              = arrowBounds
-//
-//        /*
-//         let maskLayer               = CAShapeLayer()
-//
-//         let arrowBoundsExpanded     = CGRect(x:      arrowBounds.minX    - 20.0,
-//         y:      arrowBounds.minY    - 20.0,
-//         width:  arrowBounds.width   + 40.0,
-//         height: arrowBounds.height  + 40.0)
-//
-//         let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
-//         maskPath.append(self.path)
-//
-//         //        let mPath = CGMutablePath()
-//         //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
-//         //        mPath.addPath(self.path.cgPath)
-//
-//
-//         maskLayer.path              = maskPath.cgPath
-//         maskLayer.fillRule          = kCAFillRuleEvenOdd
-//         maskLayer.fillColor         = Colors.bluek.cgColor
-//
-//
-//         let mView                = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
-//
-//         mView.layer.addSublayer(maskLayer)
-//
-//         mView.layer.mask = maskLayer
-//
-//         //blurView.mask = maskView
-//
-//         //        blurView.mask = mView
-//         //        blurView.contentView.layer.mask = maskLayer
-//
-//         */
-//        let blurSuperView = UIView(frame: bounds)
-//        blurSuperView.translatesAutoresizingMaskIntoConstraints = false
-////        blurSuperView.view.maskToBounds = false
-//        blurSuperView.mask = getShapeMask() // set mask on containing view
-//        self.insertSubview(blurSuperView, at: 0)
-//        blurSuperView.insertSubview(blurView, at: 0)
-//        //self.insertSubview(maskView, at: 1)
-//        //blurView.layer.mask = maskLayer
-//
-//
-//    }
+    //    // blur fx
+    //    func blurArrow() {
+    //        var blurEffect: UIBlurEffect
+    //        if #available(iOS 10.0, *) {
+    //            blurEffect = UIBlurEffect(style: .prominent)
+    //        } else {
+    //            blurEffect = UIBlurEffect(style: .light)
+    //        }
+    //
+    //        blurView = UIVisualEffectView(effect: nil)
+    //
+    //        guard let blurView = blurView else {
+    //            return
+    //        }
+    //
+    //        animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
+    //            self.blurView?.effect = blurEffect
+    //            self.animator?.pauseAnimation()
+    //        }
+    //        animator?.startAnimation()
+    //        animator?.fractionComplete = blurriness
+    //
+    //        blurView.translatesAutoresizingMaskIntoConstraints = false
+    //
+    //        arrowBounds = self.path.cgPath.boundingBoxOfPath
+    //        guard let arrowBounds = arrowBounds else {
+    //            return
+    //        }
+    //        blurView.frame              = arrowBounds
+    //
+    //        /*
+    //         let maskLayer               = CAShapeLayer()
+    //
+    //         let arrowBoundsExpanded     = CGRect(x:      arrowBounds.minX    - 20.0,
+    //         y:      arrowBounds.minY    - 20.0,
+    //         width:  arrowBounds.width   + 40.0,
+    //         height: arrowBounds.height  + 40.0)
+    //
+    //         let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
+    //         maskPath.append(self.path)
+    //
+    //         //        let mPath = CGMutablePath()
+    //         //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
+    //         //        mPath.addPath(self.path.cgPath)
+    //
+    //
+    //         maskLayer.path              = maskPath.cgPath
+    //         maskLayer.fillRule          = kCAFillRuleEvenOdd
+    //         maskLayer.fillColor         = Colors.bluek.cgColor
+    //
+    //
+    //         let mView                = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
+    //
+    //         mView.layer.addSublayer(maskLayer)
+    //
+    //         mView.layer.mask = maskLayer
+    //
+    //         //blurView.mask = maskView
+    //
+    //         //        blurView.mask = mView
+    //         //        blurView.contentView.layer.mask = maskLayer
+    //
+    //         */
+    //        let blurSuperView = UIView(frame: bounds)
+    //        blurSuperView.translatesAutoresizingMaskIntoConstraints = false
+    ////        blurSuperView.view.maskToBounds = false
+    //        blurSuperView.mask = getShapeMask() // set mask on containing view
+    //        self.insertSubview(blurSuperView, at: 0)
+    //        blurSuperView.insertSubview(blurView, at: 0)
+    //        //self.insertSubview(maskView, at: 1)
+    //        //blurView.layer.mask = maskLayer
+    //
+    //
+    //    }
     
     
     // Needs to be called from the containing view, otherwise the blur will not work
     func getShapeMask() -> UIView {
         
-//        guard let arrowBounds = arrowBounds else {
-//            print("COULD NOT let arrowBounds")
-//            return self // causes crash if self is return (circular reference) -- FIX
-//        }
+        //        guard let arrowBounds = arrowBounds else {
+        //            print("COULD NOT let arrowBounds")
+        //            return self // causes crash if self is return (circular reference) -- FIX
+        //        }
         
         
         let maskLayer               = CAShapeLayer()
@@ -847,7 +833,7 @@ class ShapeView: UIView {
         maskLayer.fillRule          = kCAFillRuleEvenOdd
         //maskLayer.fillColor       = Colors.bluek.cgColor
         let mView = UIView(frame: CGRect(x:0,y:0,width: bounds.width, height: bounds.height))
-//        let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
+        //        let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
         
         mView.layer.addSublayer(maskLayer)
         
@@ -858,55 +844,54 @@ class ShapeView: UIView {
     }
     
     // obj-c
-//    - (void)drawInnerShadowInContext:(CGContextRef)context
-//    withPath:(CGPathRef)path
-//    shadowColor:(CGColorRef)shadowColor
-//    offset:(CGSize)offset
-//    blurRadius:(CGFloat)blurRadius {
-//    CGContextSaveGState(context);
-//
-//    CGContextAddPath(context, path);
-//    CGContextClip(context);
-//
-//    CGColorRef opaqueShadowColor = CGColorCreateCopyWithAlpha(shadowColor, 1.0);
-//
-//    CGContextSetAlpha(context, CGColorGetAlpha(shadowColor));
-//    CGContextBeginTransparencyLayer(context, NULL);
-//    CGContextSetShadowWithColor(context, offset, blurRadius, opaqueShadowColor);
-//    CGContextSetBlendMode(context, kCGBlendModeSourceOut);
-//    CGContextSetFillColorWithColor(context, opaqueShadowColor);
-//    CGContextAddPath(context, path);
-//    CGContextFillPath(context);
-//    CGContextEndTransparencyLayer(context);
-//
-//    CGContextRestoreGState(context);
-//
-//    CGColorRelease(opaqueShadowColor);
-//    }
+    //    - (void)drawInnerShadowInContext:(CGContextRef)context
+    //    withPath:(CGPathRef)path
+    //    shadowColor:(CGColorRef)shadowColor
+    //    offset:(CGSize)offset
+    //    blurRadius:(CGFloat)blurRadius {
+    //    CGContextSaveGState(context);
+    //
+    //    CGContextAddPath(context, path);
+    //    CGContextClip(context);
+    //
+    //    CGColorRef opaqueShadowColor = CGColorCreateCopyWithAlpha(shadowColor, 1.0);
+    //
+    //    CGContextSetAlpha(context, CGColorGetAlpha(shadowColor));
+    //    CGContextBeginTransparencyLayer(context, NULL);
+    //    CGContextSetShadowWithColor(context, offset, blurRadius, opaqueShadowColor);
+    //    CGContextSetBlendMode(context, kCGBlendModeSourceOut);
+    //    CGContextSetFillColorWithColor(context, opaqueShadowColor);
+    //    CGContextAddPath(context, path);
+    //    CGContextFillPath(context);
+    //    CGContextEndTransparencyLayer(context);
+    //
+    //    CGContextRestoreGState(context);
+    //
+    //    CGColorRelease(opaqueShadowColor);
+    //    }
 }
 
-struct LineProperties {
-    var lineWidth:  CGFloat
-    var color:      UIColor
-}
+//struct LineProperties {
+//    var lineWidth:  CGFloat
+//    var color:      UIColor
+//}
 
-protocol ShapeDelegate: class {
-    var shadowed:       Bool { get }
-//    var path:           UIBezierPath { get }// = UIBezierPath()
-//    var shadowPath:     UIBezierPath { get }// = UIBezierPath() // TODO: should be optional, as there may not be a shadow
-//    var lineProperties: [LineProperties] { get }// = [LineProperties]()
-//    var shapeView:      UIView? { get set }
-//    var shadowView:     UIView? { get set }
-//    var shapeType:      ShapeType { get }
-
-
-    
-    func addShapeView() // if implented by its super., doesn't need to be also in the child
-    func addBlurView() // if implented by its super., doesn't need to be also in the child
-    func addShadowView()
-    func addCruft()
-    func createShape() // wrapper for createTriangle etc
-}
+//protocol ShapeDelegate {
+//    var shadowed:       Bool { get }
+//    //    var path:           UIBezierPath { get }// = UIBezierPath()
+//    //    var shadowPath:     UIBezierPath { get }// = UIBezierPath() // TODO: should be optional, as there may not be a shadow
+//    //    var lineProperties: [LineProperties] { get }// = [LineProperties]()
+//    //    var shapeView:      UIView? { get set }
+//    //    var shadowView:     UIView? { get set }
+//    //    var shapeType:      ShapeType { get }
+//
+//
+//
+//    func addShapeView()
+//    func addBlurView()
+//    func addShadowView()
+//    func addCruft()
+//}
 
 //@objc protocol UFCFighter {
 //    var name: String { get }
@@ -916,4 +901,5 @@ protocol ShapeDelegate: class {
 //    func grapple()
 //    @objc optional func trashTalk()
 //}
+
 
