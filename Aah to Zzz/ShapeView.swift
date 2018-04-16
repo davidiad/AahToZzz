@@ -30,7 +30,7 @@ class ShapeView: UIView {
     let ARROWHT:        CGFloat = 22.0
     let TANGENTLIMIT:   CGFloat = 5.0  // prevents control pt adjustments when close to vertical
     let CPMULTIPLIER:   CGFloat = 0.4  // empirical const for amount of control pt adjustment
-    let shadowWidth:    CGFloat = 3.5 // only used if there is a shadow. Make optional?
+    var shadowWidth:    CGFloat = 3.5 // only used if there is a shadow. Make optional?
     var shadowed:       Bool    = false
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
@@ -368,17 +368,28 @@ class ShapeView: UIView {
         blurSuperView.insertSubview(blurView, at: 0)
     }
     
-
     
+//    shadowBounds.append(shadowPath)
+//    let shadowMaskLayer         = CAShapeLayer()
+//    shadowMaskLayer.path        = shadowBounds.cgPath
+//    shadowMaskLayer.fillRule    = kCAFillRuleEvenOdd
+//    shadowView.layer.shadowPath     = shadowPath.cgPath
+//    shadowView.layer.mask             = shadowMaskLayer
+//    addSubview(shadowView)
     func addShadowView() {
+        if shapeType == .triangle && shadowWidth > 0.1 {
+            shadowPath.append(path)
+        }
         let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
         shadowView = UIView(frame: shadowRect)
         
         guard let shadowView = shadowView else {
             return
         }
-        shadowView.backgroundColor      = .black
-        shadowView.layer.cornerRadius   = TILERADIUS + borderWth
+        shadowView.backgroundColor      = .clear
+        if shapeType == .tileholder {
+            shadowView.layer.cornerRadius   = TILERADIUS + borderWth
+        }
         shadowView.layer.shadowColor    = UIColor.black.cgColor
         shadowView.layer.shadowOpacity  = 1.0
         shadowView.layer.shadowRadius   = shadowWidth
@@ -399,11 +410,16 @@ class ShapeView: UIView {
 //
 //        shadowMaskLayer.path                    = shadowMask
 //        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+        //shadowPath.cgPath                 = path.cgPath
         shadowView.layer.mask             = getShadowMask()
         //shadowView.mask                 = getShapeMask()
         
         addSubview(shadowView)
-        bringSubview(toFront: shadowView)
+        
+        
+        
+        
+        //bringSubview(toFront: shadowView)
         
         //addInnerShadow()
     }
@@ -458,6 +474,7 @@ class ShapeView: UIView {
         // invert the mask for use as a shadow mask
         // make a path that is a box larger than the entire view, then append the path
         let shadowInvertedPath          = UIBezierPath(rect: bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth))
+        
         shadowInvertedPath.append(shadowPath)
         let shadowMaskLayer             = CAShapeLayer()
         shadowMaskLayer.path            = shadowInvertedPath.cgPath

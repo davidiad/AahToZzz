@@ -11,30 +11,20 @@ class TriangleView: ShapeView, ShapeDelegate {
     var direction:   Directions = .down
 
     // init for triangle shape to be added to Down Arrow
-    convenience init(frame: CGRect, direction: Directions, blurriness: CGFloat) {
+    convenience init(frame: CGRect, direction: Directions, blurriness: CGFloat, shadowWidth: CGFloat) {
         self.init(frame: frame)
-        shapeType = .triangle
-        self.direction = direction
-        //shadowed = true // make a parameter shadow spread amount (float), with 0 -> no shadow
-//        addLineProperties()
-        //addTriangleView(direction: direction)
+        
+        shapeType           = .triangle
+        self.direction      = direction
+        self.shadowWidth    = shadowWidth
+
         addShapeView()
-//        for i in 0 ..< lineProperties.count {
-//            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
-//        }
-        if blurriness > 0.01 {
-            addBlurView()
-        }
-        if shadowWidth > 0.01 {
-            addShadowView()
-        }
+        if blurriness       > 0.01 { addBlurView()   }
+        if shadowWidth      > 0.01 { addShadowView() }
     }
     
-//    override func addShapeView() {
-//        addTriangleView(direction: direction)
-//    }
     
-    // note: the mask with cut off the outer half of these lines
+    // note: the mask will cut off the outer half of these lines
     override func addLineProperties() {
         lineProperties = LinePropertyStyles.frostedEdgeHighlight
     }

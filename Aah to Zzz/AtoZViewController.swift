@@ -423,7 +423,7 @@ class AtoZViewController: UIViewController {
         let w: CGFloat = 8.0
         let widerBounds = CGRect(x: -w, y: 0, width: downButton.bounds.width + 2 * w, height: downButton.bounds.height)
 //        let downButtonShape = TriangleView(frame: widerBounds, direction: .down)
-        let downButtonShape = TriangleView(frame: widerBounds, direction: .down, blurriness: 0.5)
+        let downButtonShape = TriangleView(frame: widerBounds, direction: .down, blurriness: 0.5, shadowWidth: 0.0)
         downButtonShape.isUserInteractionEnabled = false
         downButton.addSubview(downButtonShape)
         
