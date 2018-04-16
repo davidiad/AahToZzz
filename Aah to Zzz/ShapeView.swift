@@ -138,11 +138,7 @@ class ShapeView: UIView {
     
     // helpers for init
     func addLineProperties() {
-        lineProperties.append(LineProperties(lineWidth: 11.0,  color: Colors.veryLight))
-        lineProperties.append(LineProperties(lineWidth: 8.5,   color: Colors.veryLight))
-        lineProperties.append(LineProperties(lineWidth: 5.5,   color: Colors.lightBackground))
-        lineProperties.append(LineProperties(lineWidth: 2.25,  color: .white))
-        lineProperties.append(LineProperties(lineWidth: 1.5,   color: Colors.darkBackground))
+        lineProperties = LinePropertyStyles.frosted
     }
     
     func useFrameForPoints () {
@@ -364,7 +360,7 @@ class ShapeView: UIView {
         guard let arrowBounds = arrowBounds else {
             return
         }
-        blurView.frame              = arrowBounds
+        blurView.frame              = arrowBounds //TODO:- replace 'arowBounds' with more generic name
         let blurSuperView = UIView(frame: bounds)
         blurSuperView.translatesAutoresizingMaskIntoConstraints = false
         blurSuperView.mask = getShapeMask() // set mask on containing view
@@ -902,10 +898,6 @@ class ShapeView: UIView {
 //    }
 }
 
-struct LineProperties {
-    var lineWidth:  CGFloat
-    var color:      UIColor
-}
 
 protocol ShapeDelegate: class {
     var shadowed:       Bool { get }

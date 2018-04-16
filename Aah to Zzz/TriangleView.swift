@@ -11,7 +11,7 @@ class TriangleView: ShapeView, ShapeDelegate {
     var direction:   Directions = .down
 
     // init for triangle shape to be added to Down Arrow
-    convenience init(frame: CGRect, direction: Directions) {
+    convenience init(frame: CGRect, direction: Directions, blurriness: CGFloat) {
         self.init(frame: frame)
         shapeType = .triangle
         self.direction = direction
@@ -22,7 +22,12 @@ class TriangleView: ShapeView, ShapeDelegate {
 //        for i in 0 ..< lineProperties.count {
 //            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
 //        }
-        addBlurView()
+        if blurriness > 0.01 {
+            addBlurView()
+        }
+        if shadowWidth > 0.01 {
+            addShadowView()
+        }
     }
     
 //    override func addShapeView() {
@@ -31,12 +36,7 @@ class TriangleView: ShapeView, ShapeDelegate {
     
     // note: the mask with cut off the outer half of these lines
     override func addLineProperties() {
-        lineProperties.append(LineProperties(lineWidth: 15.5,  color: Colors.veryLight))
-        lineProperties.append(LineProperties(lineWidth: 13.0,  color: Colors.veryLight))
-        lineProperties.append(LineProperties(lineWidth: 10.0,  color: Colors.lightBackground))
-        lineProperties.append(LineProperties(lineWidth: 6.75,  color: .white))
-        lineProperties.append(LineProperties(lineWidth: 6.0,   color: Colors.darkBackground))
-        lineProperties.append(LineProperties(lineWidth: 3.0,   color: Colors.light_yellow)) // outer 'highlight' line
+        lineProperties = LinePropertyStyles.frostedEdgeHighlight
     }
     
     override func createShape() {
