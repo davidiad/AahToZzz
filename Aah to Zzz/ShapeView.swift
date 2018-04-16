@@ -76,7 +76,7 @@ class ShapeView: UIView {
         shapeType = .tileholder
         shadowed = true
         addShapeView(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
-        addLineProperties()
+        addLineProperties() // populate the line props array
         for i in 0 ..< lineProperties.count {
             addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
         }
@@ -239,6 +239,25 @@ class ShapeView: UIView {
         
     }
     
+    // should work with any shape, and not need to be overridden (but can be if needed)
+    func addShapeView() {
+        // needs to be overridden?
+        
+        shapeView = UIView(frame: bounds)
+        guard let shapeView = shapeView else {
+            return
+        }
+        
+        createShape()
+        addLineProperties() // populate line prop's array
+        for i in 0 ..< lineProperties.count {
+            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
+        }
+
+        shapeView.mask = getShapeMask()
+        addSubview(shapeView)
+    }
+    
     // basically, creates path, stores in path var. override as needed
     func createShape() {
         // add rect as default?
@@ -353,9 +372,7 @@ class ShapeView: UIView {
         blurSuperView.insertSubview(blurView, at: 0)
     }
     
-    func addShapeView() {
-        // needs to be overridden?
-    }
+
     
     func addShadowView() {
         let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
@@ -738,7 +755,7 @@ class ShapeView: UIView {
         shapeLayer.lineWidth    = lineWidth
         shapeLayer.strokeColor  = color.cgColor
         shapeLayer.fillColor    = UIColor.clear.cgColor
-        shapeLayer.lineJoin     = kCALineJoinRound
+        shapeLayer.lineJoin     = kCALineJoinMiter
         
         shapeView?.layer.addSublayer(shapeLayer)
     }

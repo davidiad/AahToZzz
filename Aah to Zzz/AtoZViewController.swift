@@ -419,8 +419,10 @@ class AtoZViewController: UIViewController {
     
     // Helper for ViewDidLoad
     func setupDownButton() {
-
-        let downButtonShape = ShapeView(frame: downButton.bounds, direction: .down)
+        // make the frame slightly wider
+        let w: CGFloat = 8.0
+        let widerBounds = CGRect(x: -w, y: 0, width: downButton.bounds.width + 2 * w, height: downButton.bounds.height)
+        let downButtonShape = TriangleView(frame: widerBounds, direction: .down)
         downButtonShape.isUserInteractionEnabled = false
         downButton.addSubview(downButtonShape)
         
