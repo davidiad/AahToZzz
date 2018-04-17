@@ -21,9 +21,9 @@ class ShapeView: UIView {
     //TODO: As part of init, allow calling the type of shape to create
     
     //MARK: Arrow const's and vars WTH == WIDTH, HT == HEIGHT
-    let TILEWTH:        CGFloat = 50.0 // (to do: get from Tile)
-    let TILERADIUS:     CGFloat = 8.0  // (to do: get from Tile)
-    var borderWth:      CGFloat = 10.0 // (to do: get from AtoZ VC)
+
+    
+    //arrows
     let STARTWTH:       CGFloat = 12.0
     let ENDWTH:         CGFloat = 6.0
     let ARROWWTH:       CGFloat = 16.0
@@ -47,7 +47,6 @@ class ShapeView: UIView {
     var lineProperties: [LineProperties] = [LineProperties]()
     var shapeView:      UIView?
     var shadowView:     UIView?
-    var shadowImage:    UIImage? // rendered image of inner shadow of tile holder
     var shapeType:      ShapeType = .arrow
     
 //    struct LineProperties {
@@ -66,66 +65,66 @@ class ShapeView: UIView {
         super.init(coder: aDecoder)
     }
     
-    // init for tile holder (upper positions background)
-    convenience init(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
-        
-        let w: CGFloat = CGFloat((numTiles)) * (tileWidth + borderWidth) + borderWidth
-        let h: CGFloat = tileWidth + 2 * borderWidth
-        let frame = CGRect(x: 0, y: 0, width: w, height: h)
-        self.init(frame: frame)
-        shapeType = .tileholder
-        shadowed = true
-        addShapeView(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
-        addLineProperties() // populate the line props array
-        for i in 0 ..< lineProperties.count {
-            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
-        }
-        addBlurView()
-        addShadowView()
-        guard let shadowView = shadowView else {
-            return
-        }
-        bringSubview(toFront: shadowView)
-        print("END of tile holder convenience init")
-    }
+//    // init for tile holder (upper positions background)
+//    convenience init(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+//        
+//        let w: CGFloat = CGFloat((numTiles)) * (tileWidth + borderWidth) + borderWidth
+//        let h: CGFloat = tileWidth + 2 * borderWidth
+//        let frame = CGRect(x: 0, y: 0, width: w, height: h)
+//        self.init(frame: frame)
+//        shapeType = .tileholder
+//        shadowed = true
+//        addShapeView(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
+//        addLineProperties() // populate the line props array
+//        for i in 0 ..< lineProperties.count {
+//            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
+//        }
+//        addBlurView()
+//        addShadowView()
+//        guard let shadowView = shadowView else {
+//            return
+//        }
+//        bringSubview(toFront: shadowView)
+//        print("END of tile holder convenience init")
+//    }
     
-    // init for triangle shape to be added to Down Arrow
-    convenience init(frame: CGRect, direction: Directions) {
-        self.init(frame: frame)
-        shapeType = .triangle
-        shadowed = true
-        addLineProperties()
-        addTriangleView(direction: direction)
-        for i in 0 ..< lineProperties.count {
-            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
-        }
-        addBlurView()
-        if shadowed == true {shadowPath.append(path)}
-        let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
-        shadowView = UIView(frame: shadowRect)
-        
-        guard let shadowView = shadowView else {
-            return
-        }
-        shadowView.backgroundColor      = .clear
-        shadowView.layer.shadowColor    = UIColor.black.cgColor
-        shadowView.layer.shadowOpacity  = 1.0
-        shadowView.layer.shadowRadius   = shadowWidth
-        shadowView.layer.masksToBounds  = false
-        shadowView.layer.shadowOffset   = CGSize(width: 0, height: 0)
-        //shadowView.layer.mask             = getShadowMask()
-        //shadowPath = path
-        let shadowBounds             = UIBezierPath(rect: bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth))
-        
-        shadowBounds.append(shadowPath)
-        let shadowMaskLayer         = CAShapeLayer()
-        shadowMaskLayer.path        = shadowBounds.cgPath
-        shadowMaskLayer.fillRule    = kCAFillRuleEvenOdd
-        shadowView.layer.shadowPath     = shadowPath.cgPath
-        shadowView.layer.mask             = shadowMaskLayer
-        addSubview(shadowView)
-        //addShadowView()
-    }
+//    // init for triangle shape to be added to Down Arrow
+//    convenience init(frame: CGRect, direction: Directions) {
+//        self.init(frame: frame)
+//        shapeType = .triangle
+//        shadowed = true
+//        addLineProperties()
+//        addTriangleView(direction: direction)
+//        for i in 0 ..< lineProperties.count {
+//            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
+//        }
+//        addBlurView()
+//        if shadowed == true {shadowPath.append(path)}
+//        let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
+//        shadowView = UIView(frame: shadowRect)
+//
+//        guard let shadowView = shadowView else {
+//            return
+//        }
+//        shadowView.backgroundColor      = .clear
+//        shadowView.layer.shadowColor    = UIColor.black.cgColor
+//        shadowView.layer.shadowOpacity  = 1.0
+//        shadowView.layer.shadowRadius   = shadowWidth
+//        shadowView.layer.masksToBounds  = false
+//        shadowView.layer.shadowOffset   = CGSize(width: 0, height: 0)
+//        //shadowView.layer.mask             = getShadowMask()
+//        //shadowPath = path
+//        let shadowBounds             = UIBezierPath(rect: bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth))
+//
+//        shadowBounds.append(shadowPath)
+//        let shadowMaskLayer         = CAShapeLayer()
+//        shadowMaskLayer.path        = shadowBounds.cgPath
+//        shadowMaskLayer.fillRule    = kCAFillRuleEvenOdd
+//        shadowView.layer.shadowPath     = shadowPath.cgPath
+//        shadowView.layer.mask             = shadowMaskLayer
+//        addSubview(shadowView)
+//        //addShadowView()
+//    }
     
     init(frame: CGRect, startPoint: CGPoint, endPoint: CGPoint) {
         
@@ -149,21 +148,6 @@ class ShapeView: UIView {
     deinit {
         //animator?.stopAnimation(false)
         print("ARROW DEINITS")
-    }
-    
-    override func draw(_ rect: CGRect) {
-        // create inner shadows if needed
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        print("DRAW RECT")
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        if shapeType == .tileholder && shadowed == true {
-            self.backgroundColor = UIColor.clear
-            self.backgroundColor?.setFill()
-            UIGraphicsGetCurrentContext()!.fill(rect);
-            addInnerShadow()
-        }
     }
     
     func drawInContext(){
@@ -220,32 +204,31 @@ class ShapeView: UIView {
 //        }
 //    }
     
-    // for adding the shape to the Down Button
-    func addTriangleView(direction: Directions) {
-        // separate really, could be moved
-        // should this be wrapped in createShape? and overridden per type
-        createTriangle(direction: direction) // creates triangle, and stores into 'path' var
-        
-        shapeView = UIView(frame: bounds)
-        guard let shapeView = shapeView else {
-            return
-        }
-        shapeView.mask = getShapeMask()
-        addSubview(shapeView)
-        
-    }
+//    // for adding the shape to the Down Button
+//    func addTriangleView(direction: Directions) {
+//        // separate really, could be moved
+//        // should this be wrapped in createShape? and overridden per type
+//        createTriangle(direction: direction) // creates triangle, and stores into 'path' var
+//
+//        shapeView = UIView(frame: bounds)
+//        guard let shapeView = shapeView else {
+//            return
+//        }
+//        shapeView.mask = getShapeMask()
+//        addSubview(shapeView)
+//
+//    }
     
     // should work with any shape, and not need to be overridden (but can be if needed)
     func addShapeView() {
-        // needs to be overridden?
         
         shapeView = UIView(frame: bounds)
         guard let shapeView = shapeView else {
             return
         }
         
-        createShape()
-        addLineProperties() // populate line prop's array
+        createShape() // override point for subclasses
+        addLineProperties() // populate line properties array
         for i in 0 ..< lineProperties.count {
             addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
         }
@@ -256,81 +239,81 @@ class ShapeView: UIView {
     
     // basically, creates path, stores in path var. override as needed
     func createShape() {
-        // add rect as default?
         // call createTileHolder(), or other shape
+        // override point for subclasses
     }
     
-    // should this be wrapped in createPathShape? and overridden per type
-    // this func moved to TriangleView
-    func createTriangle(direction: Directions) {
-        // set up the points, and their relationship to the direction
-        let points      = [CGPoint(x:0,           y:0),
-                           CGPoint(x:frame.width, y:0),
-                           CGPoint(x:frame.width, y:frame.height),
-                           CGPoint(x:0,           y:frame.height)]
-        
-        // get the 2nd and 3rd points
-        let secondPoint = points[(direction.rawValue + 1) % 4]
-        let thirdPoint  = points[(direction.rawValue + 2) % 4]
-        // find midpoint between 2nd and 3rd points
-        let midPoint    = CGPoint(x: ((secondPoint.x + thirdPoint.x) * 0.5),
-                                  y: ((secondPoint.y + thirdPoint.y) * 0.5))
-        
-        path.move       (to: points[direction.rawValue])            // starting point
-        path.addLine    (to: midPoint)                              // point of triangle
-        path.addLine    (to: points[(direction.rawValue + 3) % 4])  // final point
-        path.close()
-    }
+//    // should this be wrapped in createPathShape? and overridden per type
+//    // this func moved to TriangleView
+//    func createTriangle(direction: Directions) {
+//        // set up the points, and their relationship to the direction
+//        let points      = [CGPoint(x:0,           y:0),
+//                           CGPoint(x:frame.width, y:0),
+//                           CGPoint(x:frame.width, y:frame.height),
+//                           CGPoint(x:0,           y:frame.height)]
+//
+//        // get the 2nd and 3rd points
+//        let secondPoint = points[(direction.rawValue + 1) % 4]
+//        let thirdPoint  = points[(direction.rawValue + 2) % 4]
+//        // find midpoint between 2nd and 3rd points
+//        let midPoint    = CGPoint(x: ((secondPoint.x + thirdPoint.x) * 0.5),
+//                                  y: ((secondPoint.y + thirdPoint.y) * 0.5))
+//
+//        path.move       (to: points[direction.rawValue])            // starting point
+//        path.addLine    (to: midPoint)                              // point of triangle
+//        path.addLine    (to: points[(direction.rawValue + 3) % 4])  // final point
+//        path.close()
+//    }
     
-    func createTileHolder (numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
-        
-    }
+//    func createTileHolder (numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+//
+//    }
     
-    // for adding tile holder shape
-    func addShapeView(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
-        shapeView = UIView(frame: bounds)
-        guard let shapeView = shapeView else {
-            return
-        }
-        let cornerRadius = borderWidth + TILERADIUS
-        let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
-        path.append(outerPath)
-        if shadowed == true {shadowPath.append(outerPath)}
-        for i in 0 ..< numTiles {
-            let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
-            let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
-            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: TILERADIUS)
-            if shadowed == true {shadowPath.append(innerPath)}
-            path.append(innerPath)
-            // If shadow will be added,
-            // need to add an additional path inside, so that the shadow is filled correctly
-            // according to kCAFillRuleEvenOdd
-            // if from a point inside, an odd number of lines are crossed to go outside,
-            // the region is filled. Therefore an extra path to cross is needed to make it an even number.
-            if shadowed == true {
-                //drawInContext()
-                print("Adding Inner Tile")
-                let inset: CGFloat = 1.25
-                let iWidth = tileWidth - (2 * inset)
-                let innermostTileRect = CGRect(x: xPos + inset, y: borderWidth + inset, width: iWidth, height: iWidth)
-                let innermostPath = UIBezierPath(roundedRect: innermostTileRect,
-                                                 cornerRadius: TILERADIUS - inset)
-                shadowPath.append(innermostPath)
-                
-                // add some additional shadow
-                let addShadow = UIView(frame: innermostTileRect)
-                addShadow.backgroundColor = Colors.additionalShadow
-                addSubview(addShadow)
-                
-                
-            }
-        }
-        
-        shapeView.mask = getShapeMask()
-        self.addSubview(shapeView)
-
-        
-    }
+//    // for adding tile holder shape
+//    func addShapeView(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
+//        shapeView = UIView(frame: bounds)
+//        guard let shapeView = shapeView else {
+//            return
+//        }
+//        let cornerRadius = borderWidth + TILERADIUS
+//        let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
+//        path.append(outerPath)
+//        if shadowed == true {shadowPath.append(outerPath)}
+//        for i in 0 ..< numTiles {
+//            let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
+//            let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
+//            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: TILERADIUS)
+//            if shadowed == true {shadowPath.append(innerPath)}
+//            path.append(innerPath)
+//            // If shadow will be added,
+//            // need to add an additional path inside, so that the shadow is filled correctly
+//            // according to kCAFillRuleEvenOdd
+//            // if from a point inside, an odd number of lines are crossed to go outside,
+//            // the region is filled. Therefore an extra path to cross is needed to make it an even number.
+//            if shadowed == true {
+//                //drawInContext()
+//                print("Adding Inner Tile")
+//                let inset: CGFloat = 1.25
+//                let iWidth = tileWidth - (2 * inset)
+//                let innermostTileRect = CGRect(x: xPos + inset, y: borderWidth + inset, width: iWidth, height: iWidth)
+//                let innermostPath = UIBezierPath(roundedRect: innermostTileRect,
+//                                                 cornerRadius: TILERADIUS - inset)
+//                shadowPath.append(innermostPath)
+//
+//                // add some additional shadow
+//                let addShadow = UIView(frame: innermostTileRect)
+//                addShadow.backgroundColor = Colors.additionalShadow
+//                addSubview(addShadow)
+//
+//
+//            }
+//        }
+//
+//        shapeView.mask = getShapeMask()
+//        self.addSubview(shapeView)
+//
+//
+//    }
     
     // blur fx
     func addBlurView() {
@@ -360,7 +343,7 @@ class ShapeView: UIView {
         guard let arrowBounds = arrowBounds else {
             return
         }
-        blurView.frame              = arrowBounds //TODO:- replace 'arowBounds' with more generic name
+        blurView.frame = arrowBounds //TODO:- replace 'arowBounds' with more generic name
         let blurSuperView = UIView(frame: bounds)
         blurSuperView.translatesAutoresizingMaskIntoConstraints = false
         blurSuperView.mask = getShapeMask() // set mask on containing view
@@ -376,10 +359,16 @@ class ShapeView: UIView {
 //    shadowView.layer.shadowPath     = shadowPath.cgPath
 //    shadowView.layer.mask             = shadowMaskLayer
 //    addSubview(shadowView)
+    
+    // ovverride point for inner shadows or other shadow customization
+    func setShadowPath() {
+        shadowPath.append(path)
+    }
+    
     func addShadowView() {
-        if shapeType == .triangle && shadowWidth > 0.1 {
-            shadowPath.append(path)
-        }
+
+        setShadowPath()
+        
         let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
         shadowView = UIView(frame: shadowRect)
         
@@ -387,9 +376,9 @@ class ShapeView: UIView {
             return
         }
         shadowView.backgroundColor      = .clear
-        if shapeType == .tileholder {
-            shadowView.layer.cornerRadius   = TILERADIUS + borderWth
-        }
+//        if shapeType == .tileholder {
+//            //shadowView.layer.cornerRadius   = TILERADIUS + borderWth
+//        }
         shadowView.layer.shadowColor    = UIColor.black.cgColor
         shadowView.layer.shadowOpacity  = 1.0
         shadowView.layer.shadowRadius   = shadowWidth
@@ -424,51 +413,6 @@ class ShapeView: UIView {
         //addInnerShadow()
     }
     
-    func addInnerShadow() {
-        //UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
-        guard let context = UIGraphicsGetCurrentContext() else {
-            return
-        }
-        //UIGraphicsPushContext(context!)
-        // TODO: move out of draw rect, so can use init vars of tile holder.
-        let testRect = CGRect(x: borderWth, y: borderWth, width: TILEWTH, height: TILEWTH)
-        let testRect2 = CGRect(x: 2 * borderWth + TILEWTH, y: borderWth, width: TILEWTH, height: TILEWTH)
-        let testRect3 = CGRect(x: 3 * borderWth + 2 * TILEWTH, y: borderWth, width: TILEWTH, height: TILEWTH)
-        let testPath = UIBezierPath(roundedRect: testRect, cornerRadius: TILERADIUS)
-        let testPath2 = UIBezierPath(roundedRect: testRect2, cornerRadius: TILERADIUS)
-        let testPath3 = UIBezierPath(roundedRect: testRect3, cornerRadius: TILERADIUS)
-        
-        testPath.append(testPath2)
-        testPath.append(testPath3)
-        let offset = CGSize(width: 0, height: 0)
-        drawInnerShadowInContext(context: context, pathShape: testPath.cgPath, shadColor: Colors.shadowBG.cgColor, offset: offset, blurRad: TILEWTH * 0.25)
-        //shadowImage = UIGraphicsGetImageFromCurrentImageContext()
-        //let innerShadowView = UIImageView(image: shadowImage)
-        //shadowView?.addSubview(innerShadowView)
-        //UIGraphicsEndImageContext()
-        //UIGraphicsPushContext(context!)
-    }
-    
-    // inner shadow
-    func drawInnerShadowInContext(context: CGContext, pathShape: CGPath, shadColor: CGColor, offset: CGSize, blurRad: CGFloat) {
-        
-        context.saveGState()
-        context.addPath(pathShape)
-        context.clip()
-        
-        guard let opaqueShadowColor = shadColor.copy(alpha: 1.0) else {
-            return
-        }
-        context.setAlpha(shadColor.alpha)
-        context.beginTransparencyLayer(auxiliaryInfo: nil)
-        context.setShadow(offset: offset, blur: blurRad, color: opaqueShadowColor)
-        context.setBlendMode(.sourceOut)
-        context.setFillColor(opaqueShadowColor)
-        context.addPath(pathShape)
-        context.fillPath()
-        context.endTransparencyLayer()
-        context.restoreGState()
-    }
     
     func getShadowMask() -> CAShapeLayer? {
         // invert the mask for use as a shadow mask

@@ -16,6 +16,7 @@ class TriangleView: ShapeView, ShapeDelegate {
         
         shapeType           = .triangle
         self.direction      = direction
+        self.blurriness     = blurriness
         self.shadowWidth    = shadowWidth
 
         addShapeView()
@@ -33,8 +34,7 @@ class TriangleView: ShapeView, ShapeDelegate {
         createTriangle(direction: direction)
     }
     
-    // later remove from super, no override
-    override func createTriangle(direction: Directions) {
+    func createTriangle(direction: Directions) {
         // set up the points, and their relationship to the direction
         let points      = [CGPoint(x:0,           y:0),
                            CGPoint(x:frame.width, y:0),

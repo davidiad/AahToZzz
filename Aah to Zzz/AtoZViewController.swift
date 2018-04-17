@@ -363,7 +363,7 @@ class AtoZViewController: UIViewController {
             }
         }
         
-        let upperPositionsView = ShapeView(numTiles: 3, tileWidth: 50, borderWidth: 10)
+        let upperPositionsView = TileHolderView(numTiles: 3, tileWidth: 50, borderWidth: 10, blurriness: 0.5, shadowWidth: 3.5)
         // mask must be called here, from the containing view
         //upperPositionsView.mask = upperPositionsView.getArrowMask()
         upperPositionsView.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + 120)
