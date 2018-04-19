@@ -10,21 +10,31 @@ import UIKit
 
 class ArrowView: UIView {
     
+    // init with just a frame, plus arrowType( .pointer, .straight, .curved), and the start and end points come
+    // from frame -- use default values for arrow width etc
+    // similar when init with just arrowType, and start/end points
+    // also could have a version with arrowType, and startWidth/endWidth
+    // however, for init also with arrowWidth/arrowHeight, could be .straight or .curved, but .pointer doesnt make sense
+    // I guess the arrowWidth/arrowHeight values could be ignored in that case.
+    
     //TODO: As part of init, allow calling the type of shape to create
     
-    //MARK: Arrow const's and vars WTH == WIDTH, HT == HEIGHT
+    //MARK: Settable init Arrow vars
+    // (will need to use var, not let)
+    // WTH == WIDTH, HT == HEIGHT
     let STARTWTH:       CGFloat = 12.0
     let ENDWTH:         CGFloat = 6.0
     let ARROWWTH:       CGFloat = 16.0
     let ARROWHT:        CGFloat = 22.0
-    let TANGENTLIMIT:   CGFloat = 5.0 // prevents control pt adjustments when close to vertical
-    let CPMULTIPLIER:   CGFloat = 0.4 // empirical const for amount of control pt adjustment
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
+    //MARK: Const/vars not settable when init'ing
+    let TANGENTLIMIT:   CGFloat = 5.0 // prevents control pt adjustments when close to vertical
+    let CPMULTIPLIER:   CGFloat = 0.4 // empirical const for amount of control pt adjustment
     var cpValue1:       CGFloat = 36.0
     var cpValue2:       CGFloat = 36.0
     var d:              CGFloat = 1.0 // arrow direction, 1.0 for down, -1.0 for up
-    //MARK:- Blur and view vars
+    //MARK:- Blur and view vars -- will be in superclass ShapeView
     var arrowBounds:    CGRect?
     var blurView:       UIVisualEffectView?
     var blurriness:     CGFloat = 0.5
@@ -32,6 +42,7 @@ class ArrowView: UIView {
     var path:           UIBezierPath = UIBezierPath()
     var lineProperties: [LineProperties] = [LineProperties]()
     var shadowView:     UIView?
+    //var arrowType:      ArrowType = .straight
     
     struct LineProperties {
         var lineWidth:  CGFloat

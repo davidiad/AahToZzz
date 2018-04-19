@@ -415,6 +415,7 @@ class AtoZViewController: UIViewController {
         animator.addBehavior(collisionBehavior)
         
         setupDownButton()
+
     }
     
     // Helper for ViewDidLoad
@@ -426,6 +427,9 @@ class AtoZViewController: UIViewController {
         let downButtonShape = TriangleView(frame: widerBounds, direction: .down, blurriness: 0.5, shadowWidth: 0.0)
         downButtonShape.isUserInteractionEnabled = false
         downButton.addSubview(downButtonShape)
+        let abv = ArrowBlurView(arrowType: .pointer, startPoint: CGPoint(x: 0, y: 0), endPoint: CGPoint(x: 40, y: 67))
+        abv.isUserInteractionEnabled = false
+        downButton.addSubview(abv)
         
     }
     

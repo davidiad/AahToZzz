@@ -47,7 +47,8 @@ class ShapeView: UIView {
     var lineProperties: [LineProperties] = [LineProperties]()
     var shapeView:      UIView?
     var shadowView:     UIView?
-    var shapeType:      ShapeType = .arrow
+    var shapeType:      ShapeType = .arrow  // I think, will be able to eliminate this
+    var arrowType:      ArrowType = .curved // will be moved to ArrowView
     
 //    struct LineProperties {
 //        var lineWidth:  CGFloat
@@ -61,78 +62,13 @@ class ShapeView: UIView {
         useFrameForPoints()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    func useFrameForPoints () {
+        startPoint  = CGPoint(x: frame.minX, y: frame.minY)
+        endPoint    = CGPoint(x: frame.maxX, y: frame.maxY)
     }
     
-//    // init for tile holder (upper positions background)
-//    convenience init(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
-//        
-//        let w: CGFloat = CGFloat((numTiles)) * (tileWidth + borderWidth) + borderWidth
-//        let h: CGFloat = tileWidth + 2 * borderWidth
-//        let frame = CGRect(x: 0, y: 0, width: w, height: h)
-//        self.init(frame: frame)
-//        shapeType = .tileholder
-//        shadowed = true
-//        addShapeView(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
-//        addLineProperties() // populate the line props array
-//        for i in 0 ..< lineProperties.count {
-//            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
-//        }
-//        addBlurView()
-//        addShadowView()
-//        guard let shadowView = shadowView else {
-//            return
-//        }
-//        bringSubview(toFront: shadowView)
-//        print("END of tile holder convenience init")
-//    }
-    
-//    // init for triangle shape to be added to Down Arrow
-//    convenience init(frame: CGRect, direction: Directions) {
-//        self.init(frame: frame)
-//        shapeType = .triangle
-//        shadowed = true
-//        addLineProperties()
-//        addTriangleView(direction: direction)
-//        for i in 0 ..< lineProperties.count {
-//            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
-//        }
-//        addBlurView()
-//        if shadowed == true {shadowPath.append(path)}
-//        let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
-//        shadowView = UIView(frame: shadowRect)
-//
-//        guard let shadowView = shadowView else {
-//            return
-//        }
-//        shadowView.backgroundColor      = .clear
-//        shadowView.layer.shadowColor    = UIColor.black.cgColor
-//        shadowView.layer.shadowOpacity  = 1.0
-//        shadowView.layer.shadowRadius   = shadowWidth
-//        shadowView.layer.masksToBounds  = false
-//        shadowView.layer.shadowOffset   = CGSize(width: 0, height: 0)
-//        //shadowView.layer.mask             = getShadowMask()
-//        //shadowPath = path
-//        let shadowBounds             = UIBezierPath(rect: bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth))
-//
-//        shadowBounds.append(shadowPath)
-//        let shadowMaskLayer         = CAShapeLayer()
-//        shadowMaskLayer.path        = shadowBounds.cgPath
-//        shadowMaskLayer.fillRule    = kCAFillRuleEvenOdd
-//        shadowView.layer.shadowPath     = shadowPath.cgPath
-//        shadowView.layer.mask             = shadowMaskLayer
-//        addSubview(shadowView)
-//        //addShadowView()
-//    }
-    
-    init(frame: CGRect, startPoint: CGPoint, endPoint: CGPoint) {
-        
-        self.startPoint = startPoint
-        self.endPoint = endPoint
-        super.init(frame: frame)
-        addLineProperties()
-        addShapeWithBlur()
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     // helpers for init
@@ -140,41 +76,40 @@ class ShapeView: UIView {
         lineProperties = LinePropertyStyles.frosted
     }
     
-    func useFrameForPoints () {
-        startPoint  = CGPoint(x: 0,           y:0            )
-        endPoint    = CGPoint(x: frame.width, y: frame.height)
-    }
+
     
     deinit {
         //animator?.stopAnimation(false)
-        print("ARROW DEINITS")
+        print("Shape DEINITS")
     }
     
-    func drawInContext(){
-//
+//    func drawInContext(){
+////
 //        let size = CGSize(width: 90, height: 50)
-//
-//        let context = UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
-//        // Establish the image context
-////        UIGraphicsBeginImageContextWithOptions(
-////            CGSize(77,212), isOpaque, 0.0);
-//
-//        // Retrieve the current context
-//        //let context = UIGraphicsGetCurrentContext()
+////
+//        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+//        let context = UIGraphicsGetCurrentContext()
+////        // Establish the image context
+//////        UIGraphicsBeginImageContextWithOptions(
+//////            CGSize(77,212), isOpaque, 0.0);
+////
+////        // Retrieve the current context
+////        //let context = UIGraphicsGetCurrentContext()
 //        UIGraphicsPushContext(context!)
-//        // Perform the drawing
+////        // Perform the drawing
 //        context?.setLineWidth(4)
-//        context?.setStrokeColor(UIColor.gray.cgColor)
+//        context?.setStrokeColor(UIColor.red.cgColor)
 //        context?.strokeEllipse(in: bounds)
 //
+//context?.strokeEllipse(in: bounds)
 //
-//        // Retrieve the drawn image
+////        // Retrieve the drawn image
 //        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
-//
-//        // End the image context
+////
+////        // End the image context
 //        UIGraphicsEndImageContext();
 //        UIGraphicsPopContext()
-    }
+//    }
     
     //MARK:- Inspectables
     
@@ -191,33 +126,6 @@ class ShapeView: UIView {
     }
     
     //MARK:- Shape creation
-    
-//    func createTileHolder(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
-//        let cornerRadius = borderWidth + 8.0
-//        let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
-//        path.append(outerPath)
-//        for i in 0 ..< numTiles {
-//            let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
-//            let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
-//            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
-//            path.append(innerPath)
-//        }
-//    }
-    
-//    // for adding the shape to the Down Button
-//    func addTriangleView(direction: Directions) {
-//        // separate really, could be moved
-//        // should this be wrapped in createShape? and overridden per type
-//        createTriangle(direction: direction) // creates triangle, and stores into 'path' var
-//
-//        shapeView = UIView(frame: bounds)
-//        guard let shapeView = shapeView else {
-//            return
-//        }
-//        shapeView.mask = getShapeMask()
-//        addSubview(shapeView)
-//
-//    }
     
     // should work with any shape, and not need to be overridden (but can be if needed)
     func addShapeView() {
@@ -360,7 +268,7 @@ class ShapeView: UIView {
 //    shadowView.layer.mask             = shadowMaskLayer
 //    addSubview(shadowView)
     
-    // ovverride point for inner shadows or other shadow customization
+    // override point for inner shadows or other shadow customization
     func setShadowPath() {
         shadowPath.append(path)
     }
@@ -640,7 +548,7 @@ class ShapeView: UIView {
     }
     
     func createArrow () {
-        path = UIBezierPath()
+        //path = UIBezierPath()
         guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
@@ -665,23 +573,7 @@ class ShapeView: UIView {
         path.addCurve   (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
         path.close      ()
     }
-    
-    func createPointer () {
-        path = UIBezierPath()
-        guard let startPoint = startPoint, let endPoint = endPoint else {
-            return
-        }
-        let startPointLeft  = CGPoint(x: startPoint.x   - STARTWTH,   y: startPoint.y)
-        let startPointRight = CGPoint(x: startPoint.x   + STARTWTH,   y: startPoint.y)
-        let endPointLeft    = CGPoint(x: endPoint.x     - ENDWTH,     y: endPoint.y)
-        let endPointRight   = CGPoint(x: endPoint.x     + ENDWTH,     y: endPoint.y)
-        path.move   (to: startPointLeft)
-        path.addLine(to: startPointRight)
-        path.addLine(to: endPointRight)
-        path.addLine(to: endPointLeft)
-        path.close  ()
-    }
-    
+        
     func createRectangle() {
         
         path.move(to: CGPoint(x: 0.0, y: 0.0))

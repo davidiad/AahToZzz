@@ -100,6 +100,7 @@
 		636EB880205B97B600CC3A74 /* cellMasked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 636EB87D205B97B500CC3A74 /* cellMasked@2x.png */; };
 		636EB881205B97B600CC3A74 /* cellMasked.png in Resources */ = {isa = PBXBuildFile; fileRef = 636EB87E205B97B500CC3A74 /* cellMasked.png */; };
 		636EB882205B97B600CC3A74 /* cellMasked@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 636EB87F205B97B500CC3A74 /* cellMasked@3x.png */; };
+		637152BA208853A300AD966A /* ArrowBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637152B9208853A300AD966A /* ArrowBlurView.swift */; };
 		637760481E7F9CE400BD59F6 /* ToDoList.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 637760471E7F9CE400BD59F6 /* ToDoList.rtf */; };
 		6377B8302028E9BA00C42743 /* AtoZPopoverDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6377B82F2028E9BA00C42743 /* AtoZPopoverDelegate.swift */; };
 		6377ED571E6F4C800001C080 /* graph_double_flatbottom@1x.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */; };
@@ -318,6 +319,7 @@
 		636EB87D205B97B500CC3A74 /* cellMasked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cellMasked@2x.png"; sourceTree = "<group>"; };
 		636EB87E205B97B500CC3A74 /* cellMasked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellMasked.png; sourceTree = "<group>"; };
 		636EB87F205B97B500CC3A74 /* cellMasked@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cellMasked@3x.png"; sourceTree = "<group>"; };
+		637152B9208853A300AD966A /* ArrowBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowBlurView.swift; sourceTree = "<group>"; };
 		637760471E7F9CE400BD59F6 /* ToDoList.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = ToDoList.rtf; sourceTree = "<group>"; };
 		6377B82F2028E9BA00C42743 /* AtoZPopoverDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtoZPopoverDelegate.swift; sourceTree = "<group>"; };
 		6377ED561E6F4C800001C080 /* graph_double_flatbottom@1x.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "graph_double_flatbottom@1x.pdf"; sourceTree = "<group>"; };
@@ -818,6 +820,7 @@
 				631E27E32082918500E1F6CF /* TriangleView.swift */,
 				63AE92B020832D0200F49913 /* ShapeViewPreProtocol.swift */,
 				63EB253D208688CA0012CAB3 /* TileHolderView.swift */,
+				637152B9208853A300AD966A /* ArrowBlurView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1179,6 +1182,7 @@
 				6342A0C4205479330054D16B /* StatusView.swift in Sources */,
 				630C3D38202CDE2B0026B86D /* AtoZTableViewDelegates.swift in Sources */,
 				636E57122026D04800211944 /* AtoZUIDynamicsDelegate.swift in Sources */,
+				637152BA208853A300AD966A /* ArrowBlurView.swift in Sources */,
 				633C5BED1E7C9D87008E5A43 /* GraphBarView.swift in Sources */,
 				63EA98D71D4F46E000537F2A /* Colors.swift in Sources */,
 				63D57BB61C8C00C80046E349 /* Position.swift in Sources */,

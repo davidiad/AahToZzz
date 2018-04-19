@@ -9,4 +9,4 @@ import UIKit
 
 enum Directions: Int { case right, down, left, up }
 enum ShapeType:  Int { case arrow, curvedArrow, triangle, tileholder }
-
+enum ArrowType:  Int { case curved, straight, pointer }
