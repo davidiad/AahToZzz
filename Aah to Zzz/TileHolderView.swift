@@ -32,7 +32,7 @@ class TileHolderView: ShapeView {
         self.borderWidth = borderWidth
         self.blurriness  = blurriness
         self.shadowWidth = shadowWidth
-        shapeType        = .tileholder
+        //shapeType        = .tileholder
         shadowed         = true // is this var even needed?
         
         addShapeView()

@@ -24,8 +24,8 @@ class ShapeView: UIView {
 
     
     //arrows
-    let STARTWTH:       CGFloat = 12.0
-    let ENDWTH:         CGFloat = 6.0
+    let STARTWTH:       CGFloat = 2.0
+    let ENDWTH:         CGFloat = 26.0
     let ARROWWTH:       CGFloat = 16.0
     let ARROWHT:        CGFloat = 22.0
     let TANGENTLIMIT:   CGFloat = 5.0  // prevents control pt adjustments when close to vertical
@@ -38,7 +38,7 @@ class ShapeView: UIView {
     var cpValue2:       CGFloat = 36.0
     var d:              CGFloat = 1.0 // arrow direction, 1.0 for down, -1.0 for up
     //MARK:- Blur and view vars
-    var arrowBounds:    CGRect?
+   // var arrowBounds:    CGRect?
     var blurView:       UIVisualEffectView?
     var blurriness:     CGFloat = 0.5
     var animator:       UIViewPropertyAnimator?
@@ -47,7 +47,7 @@ class ShapeView: UIView {
     var lineProperties: [LineProperties] = [LineProperties]()
     var shapeView:      UIView?
     var shadowView:     UIView?
-    var shapeType:      ShapeType = .arrow  // I think, will be able to eliminate this
+    //var shapeType:      ShapeType = .arrow  // I think, will be able to eliminate this
     var arrowType:      ArrowType = .curved // will be moved to ArrowView
     
 //    struct LineProperties {
@@ -247,11 +247,11 @@ class ShapeView: UIView {
         
         blurView.translatesAutoresizingMaskIntoConstraints = false
         
-        arrowBounds = self.path.cgPath.boundingBoxOfPath
-        guard let arrowBounds = arrowBounds else {
-            return
-        }
-        blurView.frame = arrowBounds //TODO:- replace 'arowBounds' with more generic name
+//        arrowBounds = self.path.cgPath.boundingBoxOfPath
+//        guard let arrowBounds = arrowBounds else {
+//            return
+//        }
+        blurView.frame = path.cgPath.boundingBoxOfPath//arrowBounds //TODO:- replace 'arowBounds' with more generic name
         let blurSuperView = UIView(frame: bounds)
         blurSuperView.translatesAutoresizingMaskIntoConstraints = false
         blurSuperView.mask = getShapeMask() // set mask on containing view
@@ -274,23 +274,20 @@ class ShapeView: UIView {
     }
     
     func addShadowView() {
-
         setShadowPath()
-        
-        let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
-        shadowView = UIView(frame: shadowRect)
-        
+        shadowView = UIView(frame: bounds)
         guard let shadowView = shadowView else {
             return
         }
+        // path.cgPath.boundingBoxOfPath
+        //shadowView.frame = path.cgPath.boundingBoxOfPath
+        //let shadowRect  = CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width, height: bounds.height)
+        
+
         shadowView.backgroundColor      = .clear
-//        if shapeType == .tileholder {
-//            //shadowView.layer.cornerRadius   = TILERADIUS + borderWth
-//        }
         shadowView.layer.shadowColor    = UIColor.black.cgColor
         shadowView.layer.shadowOpacity  = 1.0
         shadowView.layer.shadowRadius   = shadowWidth
-
         shadowView.layer.masksToBounds  = false
         shadowView.layer.shadowOffset   = CGSize(width: 0, height: 0)
         
@@ -325,6 +322,7 @@ class ShapeView: UIView {
     func getShadowMask() -> CAShapeLayer? {
         // invert the mask for use as a shadow mask
         // make a path that is a box larger than the entire view, then append the path
+        //blurView.frame = path.cgPath.boundingBoxOfPath
         let shadowInvertedPath          = UIBezierPath(rect: bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth))
         
         shadowInvertedPath.append(shadowPath)
@@ -711,13 +709,22 @@ class ShapeView: UIView {
         
         maskLayer.path              = self.path.cgPath  //  maskPath.cgPath
         maskLayer.fillRule          = kCAFillRuleEvenOdd
-        //maskLayer.fillColor       = Colors.bluek.cgColor
-        let mView = UIView(frame: CGRect(x:0,y:0,width: bounds.width, height: bounds.height))
+
+//        let mView = UIView(frame: CGRect(x:0,y:0,width: path.bounds.width, height: path.bounds.height))
 //        let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
         
-        mView.layer.addSublayer(maskLayer)
+        // Update the view's frame to match the path
+//        let updateFrame = CGRect(x: path.bounds.minX,
+//                                 y: path.bounds.minY,
+//                                 width: path.bounds.width,
+//                                 height: path.bounds.height)
+//        arrowBounds = self.path.cgPath.boundingBoxOfPath
+        //let updatedFrame = self.path.cgPath.boundingBoxOfPath
         
-        //mView.layer.mask = maskLayer
+        // update thw frame with the new path's bounds
+        frame  = path.cgPath.boundingBoxOfPath
+        let mView = UIView(frame: bounds)
+        mView.layer.addSublayer(maskLayer)
         
         return mView
         

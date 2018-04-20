@@ -9,12 +9,18 @@ import UIKit
 
 class ArrowBlurView: ShapeView {
     
+    
     convenience init(arrowType: ArrowType, startPoint: CGPoint, endPoint: CGPoint) {
         // Question: does it matter what the size of the frame is?
         // it'd be overly complex to calculate from start/end points
-        self.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        self.init(frame: CGRect(x: 65, y: 20, width: 10, height: 5))
         self.startPoint = startPoint
         self.endPoint   = endPoint
+        
+        addShapeView()
+        addBlurView()
+        addShadowView()
+        
     }
     
     // init for triangle shape to be added to Down Arrow
@@ -40,7 +46,6 @@ class ArrowBlurView: ShapeView {
 //            useFrameForPoints()
 //       // }
         guard let startPoint = startPoint, let endPoint = endPoint else {
-            print("NO POINTS?")
             return
         }
         let startPointLeft  = CGPoint(x: startPoint.x   - STARTWTH,   y: startPoint.y)
