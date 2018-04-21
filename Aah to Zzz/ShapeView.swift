@@ -136,6 +136,7 @@ class ShapeView: UIView {
         }
         
         createShape() // override point for subclasses
+        
         addLineProperties() // populate line properties array
         for i in 0 ..< lineProperties.count {
             addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
@@ -320,6 +321,9 @@ class ShapeView: UIView {
     
     
     func getShadowMask() -> CAShapeLayer? {
+        // reset the bounds to the bounds of the newly created path
+        bounds  = path.cgPath.boundingBoxOfPath
+        
         // invert the mask for use as a shadow mask
         // make a path that is a box larger than the entire view, then append the path
         //blurView.frame = path.cgPath.boundingBoxOfPath
