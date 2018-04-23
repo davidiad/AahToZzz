@@ -1,45 +1,22 @@
-//
 //  ShapeView.swift
 //  AahToZzz
 //
 //  Created by David Fierstein on 4/10/18.
 //  Copyright © 2018 David Fierstein. All rights reserved.
-//
 
-//  Based on:
-//  ArrowView.swift
-//  AahToZzz
-//
-//  Created by David Fierstein on 3/28/18.
-//  Copyright © 2018 David Fierstein. All rights reserved.
-//
 
 import UIKit
 
 class ShapeView: UIView {
+    //TODO:- cut off mask of top of arrowViews, try to blend arrows with text bubbles
+    //TODO:- replace ArrowView with ArrowBlurView, renaming
+    //TODO:- Create a subclass (called TextRectView?) that allows adding text and buttons into a stack view
     
-    //TODO: As part of init, allow calling the type of shape to create
-    
-    //MARK: Arrow const's and vars WTH == WIDTH, HT == HEIGHT
-
-    
-    //arrows
-    //TODO:- make into var's as appropriate and move to Arrow subclass, and create convenience init's
-    let STARTWTH:       CGFloat = 9.0
-    let ENDWTH:         CGFloat = 12.0
-    let ARROWWTH:       CGFloat = 24.0
-    let ARROWHT:        CGFloat = 16.0
-    let TANGENTLIMIT:   CGFloat = 5.0  // prevents control pt adjustments when close to vertical
-    let CPMULTIPLIER:   CGFloat = 0.4  // empirical const for amount of control pt adjustment
-    var shadowWidth:    CGFloat = 3.5 // only used if there is a shadow. Make optional? Needed?
-    var shadowed:       Bool    = false
+    // Currently only used in Arrow views, but might be used in some other shape?
     var startPoint:     CGPoint?
     var endPoint:       CGPoint?
-    var cpValue1:       CGFloat = 36.0
-    var cpValue2:       CGFloat = 36.0
-    var d:              CGFloat = 1.0 // arrow direction, 1.0 for down, -1.0 for up
+
     //MARK:- Blur and view vars
-   // var arrowBounds:    CGRect?
     var blurView:       UIVisualEffectView?
     var blurriness:     CGFloat = 0.5
     var animator:       UIViewPropertyAnimator?
@@ -48,13 +25,7 @@ class ShapeView: UIView {
     var lineProperties: [LineProperties] = [LineProperties]()
     var shapeView:      UIView?
     var shadowView:     UIView?
-    //var shapeType:      ShapeType = .arrow  // I think, will be able to eliminate this
-    //var arrowType:      ArrowType = .curved // will be moved to ArrowView
-    
-//    struct LineProperties {
-//        var lineWidth:  CGFloat
-//        var color:      UIColor
-//    }
+    var shadowWidth:    CGFloat = 3.5 // only used if there is a shadow. Make optional? Needed?
     
     //MARK:- init
     override init(frame: CGRect) {
@@ -76,8 +47,6 @@ class ShapeView: UIView {
     func addLineProperties() {
         lineProperties = LinePropertyStyles.frosted
     }
-    
-
     
     deinit {
         //animator?.stopAnimation(false)
@@ -147,11 +116,12 @@ class ShapeView: UIView {
         addSubview(shapeView)
     }
     
-    // basically, creates path, stores in path var. override as needed
+    // Creates path, stores in path var. Override as needed per type of shape
     func createShape() {
         // call createTileHolder(), or other shape
         // override point for subclasses
         // default?
+        createRectangle()
     }
     
     // blur fx
@@ -177,12 +147,7 @@ class ShapeView: UIView {
         animator?.fractionComplete = blurriness
         
         blurView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        arrowBounds = self.path.cgPath.boundingBoxOfPath
-//        guard let arrowBounds = arrowBounds else {
-//            return
-//        }
-        blurView.frame = path.cgPath.boundingBoxOfPath//arrowBounds //TODO:- replace 'arowBounds' with more generic name
+        blurView.frame = path.cgPath.boundingBoxOfPath
         let blurSuperView = UIView(frame: bounds)
         blurSuperView.translatesAutoresizingMaskIntoConstraints = false
         blurSuperView.mask = getShapeMask() // set mask on containing view
@@ -220,9 +185,8 @@ class ShapeView: UIView {
         
         // invert the mask for use as a shadow mask
         // make a path that is a box larger than the entire view, then append the path
-        //blurView.frame = path.cgPath.boundingBoxOfPath
-        let shadowInvertedPath          = UIBezierPath(rect: bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth))
-        
+        let expandedRect                = getExpandedRect()
+        let shadowInvertedPath          = UIBezierPath(rect: expandedRect)
         shadowInvertedPath.append(shadowPath)
         let shadowMaskLayer             = CAShapeLayer()
         shadowMaskLayer.path            = shadowInvertedPath.cgPath
@@ -230,242 +194,31 @@ class ShapeView: UIView {
         shadowView?.layer.shadowPath    = shadowPath.cgPath
         
         return shadowMaskLayer
-
     }
     
-    // adapted from similar code in BlurViewC and its xib - need to consolidate
-    func updateShadowMaskLayer () {
-        //        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
-        //        let outerPath = UIBezierPath(rect: outerShadowMaskRect)
-        //        let innerShadowRect = CGRect(x: 0.0, y: -1.0, width: shadowView.frame.width, height: shadowView.frame.height)
-        //        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: cornerRadius)
-        //
-        //        let shadowMask                          = CGMutablePath()
-        //        let shadowMaskLayer                     = CAShapeLayer()
-        //
-        //        shadowMask.addPath(outerPath.cgPath)
-        //        shadowMask.addPath(innerPath.cgPath)
-        //
-        //        shadowMaskLayer.path                    = shadowMask
-        //        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
-        //        shadowView.layer.mask                   = shadowMaskLayer
+    // Override this in ArrowView to cut off top of shadow
+    func getExpandedRect() -> CGRect {
+        return bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth)
     }
     
-//    // Curved arrow, arrowhead points straight up or down
-//    func createBezierArrow () {
-//        
-//        if startPoint == nil {
-//            useFrameForPoints()
-//        }
-//        guard let startPoint = startPoint, let endPoint = endPoint else {
-//            return
-//        }
-//        
-//        adjustControlPoints()
-//        
-//        let startPointLeft    = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                             )
-//        let startPointRight   = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                             )
-//        let innerPointRight   = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   - ARROWHT * d               )
-//        let innerPointLeft    = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y   - ARROWHT * d               )
-//        let outerPointRight   = CGPoint(x: endPoint.x   + ARROWWTH, y: endPoint.y   - ARROWHT * d               )
-//        let outerPointLeft    = CGPoint(x: endPoint.x   - ARROWWTH, y: endPoint.y   - ARROWHT * d               )
-//        let endControlRight   = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   - ARROWHT * d   - cpValue1  )
-//        let endControlLeft    = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y   - ARROWHT * d   - cpValue2  )
-//        let startControlLeft  = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                 + cpValue1  )
-//        let startControlRight = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                 + cpValue2  )
-//        
-//        path.move       (to: startPoint)
-//        path.addLine    (to: startPointRight)
-//        path.addCurve   (to: innerPointRight, controlPoint1: startControlRight,  controlPoint2: endControlRight)
-//        path.addLine    (to: outerPointRight)
-//        path.addLine    (to: endPoint)
-//        path.addLine    (to: outerPointLeft)
-//        path.addLine    (to: innerPointLeft)
-//        path.addCurve   (to: startPointLeft, controlPoint1: endControlLeft, controlPoint2: startControlLeft)
-//        path.close      ()
-//    }
-//    
-//    
-//    func adjustControlPoints() {
-//        guard let startPoint = startPoint, let endPoint = endPoint else {
-//            return
-//        }
-//        
-//        // in case where the arrow is too short, reduce control point offsets
-//        let arrowHeight = abs(endPoint.y - startPoint.y)
-//        if arrowHeight < 2 * cpValue1 {
-//            cpValue1 = arrowHeight * 0.45
-//        }
-//        // Check whether arrow points up or down
-//        if startPoint.y - endPoint.y > 0 {
-//            // arrow is pointing up
-//            d = -1.0
-//            cpValue1 *= d
-//        }
-//        // make the values equal for now
-//        cpValue2 = cpValue1
-//        
-//        // adjust one control point, depending on the angle of the arrow
-//        // to make graceful curves, with inner and outer curves matching
-//        let xShift = endPoint.x - startPoint.x
-//        
-//        // arrow points right
-//        if abs(xShift) > TANGENTLIMIT { // prevent divide by 0 (or close to 0)
-//            let tangent = abs((endPoint.y - startPoint.y) / xShift)
-//            if tangent < TANGENTLIMIT { // no adjustment if angle is close to 90°
-//                cpValue1 *= (1.0 + (CPMULTIPLIER / tangent))
-//            }
-//        } else { // Angle close to vertical, so don't pull out control points at all
-//            cpValue1 = 0.0
-//            cpValue2 = 0.0
-//        }
-//        // arrow points toward left, so skew control points the other way
-//        if xShift < -TANGENTLIMIT {
-//            swapCPValues()
-//        }
-//    }
-//    
-//    func swapCPValues () {
-//        let tempValue   = cpValue1
-//        cpValue1        = cpValue2
-//        cpValue2        = tempValue
+//    // adapted from similar code in BlurViewC and its xib - need to consolidate
+//    func updateShadowMaskLayer () {
+//        //        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
+//        //        let outerPath = UIBezierPath(rect: outerShadowMaskRect)
+//        //        let innerShadowRect = CGRect(x: 0.0, y: -1.0, width: shadowView.frame.width, height: shadowView.frame.height)
+//        //        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: cornerRadius)
+//        //
+//        //        let shadowMask                          = CGMutablePath()
+//        //        let shadowMaskLayer                     = CAShapeLayer()
+//        //
+//        //        shadowMask.addPath(outerPath.cgPath)
+//        //        shadowMask.addPath(innerPath.cgPath)
+//        //
+//        //        shadowMaskLayer.path                    = shadowMask
+//        //        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+//        //        shadowView.layer.mask                   = shadowMaskLayer
 //    }
     
-//    func getRotatedArrowheadPts() -> [CGPoint] {
-//        
-//        var pointsOut: [CGPoint] = [CGPoint]()
-//        guard let startPoint = startPoint, let endPoint = endPoint else {
-//            return pointsOut
-//        }
-//        
-//        // Check whether arrow points up or down
-//        if startPoint.y - endPoint.y > 0 {
-//            // arrow is pointing up
-//            d = -1.0
-//        }
-//        
-//        // The points before rotation, and before being moved by the height of the arrowhead
-//        let outerRight          = CGPoint(x:  ARROWWTH,             y: endPoint.y               )
-//        let innerRight          = CGPoint(x:  ENDWTH,               y: endPoint.y               )
-//        let innerLeft           = CGPoint(x:  ENDWTH *      -1.0,   y: endPoint.y               )
-//        let outerLeft           = CGPoint(x:  ARROWWTH *    -1.0,   y: endPoint.y               )
-//        
-//        let pointsIn: [CGPoint] = [outerRight, innerRight, innerLeft, outerLeft]
-//        
-//        // Get the angle amount to rotate
-//        let opposite: CGFloat   = startPoint.x - endPoint.x
-//        let adjacent: CGFloat   = endPoint.y - startPoint.y
-//        let rotationAngle       = atan(opposite / adjacent)
-//        
-//        // rotate points (around the endpoint of the arrow)
-//        // add/subtract the (rotated) height of the arrow (translating back to original coord system)
-//        let cosine              = cos(rotationAngle)
-//        let sine                = sin(rotationAngle)
-//        for i in 0 ..< pointsIn.count {
-//            let a               = endPoint.x + pointsIn[i].x * cosine + ARROWHT * sine * d
-//            let b               = endPoint.y + pointsIn[i].x * sine   - ARROWHT * cosine * d
-//            pointsOut.append(CGPoint(x: a, y: b))
-//        }
-//        
-//        return pointsOut
-//    }
-//    
-//    // Curved arrow, arrowhead points straight up or down
-//    func createRotatedArrow () {
-//        
-//        if startPoint == nil {
-//            useFrameForPoints()
-//        }
-//        guard let startPoint = startPoint, let endPoint = endPoint else {
-//            return
-//        }
-//        
-//        let startPointLeft    = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                             )
-//        let startPointRight   = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                             )
-//        let arrowheadPoints   = getRotatedArrowheadPts()
-//        
-//        path.move       (to: startPoint)
-//        path.addLine    (to: startPointRight)
-//        path.addLine    (to: arrowheadPoints[1])
-//        path.addLine    (to: arrowheadPoints[0])
-//        path.addLine    (to: endPoint)
-//        path.addLine    (to: arrowheadPoints[3])
-//        path.addLine    (to: arrowheadPoints[2])
-//        path.addLine    (to: startPointLeft)
-//        path.close      ()
-//    }
-    
-    func getQuadControl (startPt: CGPoint, endPt: CGPoint) -> CGPoint {
-        let pointingRight: Bool = startPt.x < endPt.x ? true : false
-        //let tanx = (endPt.x - startPt.x) / (startPt.y - endPt.y)
-        let midX = (startPt.x - endPt.x) * 0.5
-        let midY = (endPt.y - startPt.y) * 0.5
-        let cpX = startPt.x - midX
-        let cpY = endPt.y - midY
-        //let cp = CGPoint(x: cpX, y: cpY)
-        var cp2X = startPt.x
-        var cp2Y = endPt.y
-        if pointingRight { cp2X = endPt.x + 30.0; cp2Y = startPt.y }
-        
-        let cp2 = CGPoint(x: cp2X, y: cp2Y)
-        return cp2
-    }
-    
-    func createQuadCurveArrow () {
-        path = UIBezierPath()
-        guard let startPoint = startPoint, let endPoint = endPoint else {
-            return
-        }
-        let startPointLeft      = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                          )
-        let startPointRight     = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                          )
-        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT           )
-        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT           )
-        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWTH,    y: endPoint.y    - ARROWHT           )
-        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWTH,    y: endPoint.y    - ARROWHT           )
-        //let startControlRight   = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                + 40.0    )
-        //let insideControlRight  = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-        let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
-        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-        let quadControl = getQuadControl(startPt: startPointRight, endPt: insidePointRight)
-        
-        path.move           (to: startPoint)
-        path.addLine        (to: startPointRight)
-        path.addQuadCurve   (to: insidePointRight, controlPoint: quadControl)
-        path.addLine        (to: outsidePointRight)
-        path.addLine        (to: endPoint)
-        path.addLine        (to: outsidePointLeft)
-        path.addLine        (to: insidePointLeft)
-        path.addQuadCurve   (to: startPointLeft, controlPoint: quadControl)
-        //path.addCurve       (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
-        path.close          ()
-    }
-    
-//    func createArrow () {
-//        //path = UIBezierPath()
-//        guard let startPoint = startPoint, let endPoint = endPoint else {
-//            return
-//        }
-//        let startPointLeft      = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                          )
-//        let startPointRight     = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                          )
-//        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT           )
-//        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT           )
-//        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWTH,    y: endPoint.y    - ARROWHT           )
-//        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWTH,    y: endPoint.y    - ARROWHT           )
-//        let startControlRight   = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                + 40.0    )
-//        let insideControlRight  = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-//        let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
-//        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-//
-//        path.move       (to: startPoint)
-//        path.addLine    (to: startPointRight)
-//        path.addCurve   (to: insidePointRight, controlPoint1: startControlRight,  controlPoint2: insideControlRight)
-//        path.addLine    (to: outsidePointRight)
-//        path.addLine    (to: endPoint)
-//        path.addLine    (to: outsidePointLeft)
-//        path.addLine    (to: insidePointLeft)
-//        path.addCurve   (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
-//        path.close      ()
-//    }
     
     func createRectangle() {
         
@@ -476,20 +229,20 @@ class ShapeView: UIView {
         path.close()
     }
     
-    // called in init
-    func addShapeWithBlur() {
-        
-        
-        //createBezierArrow()
-        //createRotatedArrow()
-        
-        
-        for i in 0 ..< lineProperties.count {
-            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
-        }
-        
-        addBlurView()
-    }
+//    // called in init
+//    func addShapeWithBlur() {
+//
+//
+//        //createBezierArrow()
+//        //createRotatedArrow()
+//
+//
+//        for i in 0 ..< lineProperties.count {
+//            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
+//        }
+//
+//        addBlurView()
+//    }
     
     func addSublayerShapeLayer (lineWidth: CGFloat, color: UIColor) {
         let shapeLayer          = CAShapeLayer()
@@ -502,127 +255,20 @@ class ShapeView: UIView {
         shapeView?.layer.addSublayer(shapeLayer)
     }
     
-//    // blur fx
-//    func blurArrow() {
-//        var blurEffect: UIBlurEffect
-//        if #available(iOS 10.0, *) {
-//            blurEffect = UIBlurEffect(style: .prominent)
-//        } else {
-//            blurEffect = UIBlurEffect(style: .light)
-//        }
-//
-//        blurView = UIVisualEffectView(effect: nil)
-//
-//        guard let blurView = blurView else {
-//            return
-//        }
-//
-//        animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
-//            self.blurView?.effect = blurEffect
-//            self.animator?.pauseAnimation()
-//        }
-//        animator?.startAnimation()
-//        animator?.fractionComplete = blurriness
-//
-//        blurView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        arrowBounds = self.path.cgPath.boundingBoxOfPath
-//        guard let arrowBounds = arrowBounds else {
-//            return
-//        }
-//        blurView.frame              = arrowBounds
-//
-//        /*
-//         let maskLayer               = CAShapeLayer()
-//
-//         let arrowBoundsExpanded     = CGRect(x:      arrowBounds.minX    - 20.0,
-//         y:      arrowBounds.minY    - 20.0,
-//         width:  arrowBounds.width   + 40.0,
-//         height: arrowBounds.height  + 40.0)
-//
-//         let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
-//         maskPath.append(self.path)
-//
-//         //        let mPath = CGMutablePath()
-//         //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
-//         //        mPath.addPath(self.path.cgPath)
-//
-//
-//         maskLayer.path              = maskPath.cgPath
-//         maskLayer.fillRule          = kCAFillRuleEvenOdd
-//         maskLayer.fillColor         = Colors.bluek.cgColor
-//
-//
-//         let mView                = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
-//
-//         mView.layer.addSublayer(maskLayer)
-//
-//         mView.layer.mask = maskLayer
-//
-//         //blurView.mask = maskView
-//
-//         //        blurView.mask = mView
-//         //        blurView.contentView.layer.mask = maskLayer
-//
-//         */
-//        let blurSuperView = UIView(frame: bounds)
-//        blurSuperView.translatesAutoresizingMaskIntoConstraints = false
-////        blurSuperView.view.maskToBounds = false
-//        blurSuperView.mask = getShapeMask() // set mask on containing view
-//        self.insertSubview(blurSuperView, at: 0)
-//        blurSuperView.insertSubview(blurView, at: 0)
-//        //self.insertSubview(maskView, at: 1)
-//        //blurView.layer.mask = maskLayer
-//
-//
-//    }
-    
-    
+    //TODO:- Add override for arrow views that allows cutting off top line with mask
     // Needs to be called from the containing view, otherwise the blur will not work
     func getShapeMask() -> UIView {
         
-//        guard let arrowBounds = arrowBounds else {
-//            print("COULD NOT let arrowBounds")
-//            return self // causes crash if self is return (circular reference) -- FIX
-//        }
-        
-        
         let maskLayer               = CAShapeLayer()
-        
-        //        let arrowBoundsExpanded     = CGRect(x:      (arrowBounds?.minX)!    - 20.0,
-        //                                             y:      (arrowBounds?.minY)!    - 20.0,
-        //                                             width:  (arrowBounds?.width)!   + 40.0,
-        //                                             height: (arrowBounds?.height)!  + 40.0)
-        //
-        //        let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
-        //        maskPath.append(self.path)
-        
-        //        let mPath = CGMutablePath()
-        //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
-        //        mPath.addPath(self.path.cgPath)
-        
-        
         maskLayer.path              = self.path.cgPath  //  maskPath.cgPath
         maskLayer.fillRule          = kCAFillRuleEvenOdd
-
-//        let mView = UIView(frame: CGRect(x:0,y:0,width: path.bounds.width, height: path.bounds.height))
-//        let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
         
-        // Update the view's frame to match the path
-//        let updateFrame = CGRect(x: path.bounds.minX,
-//                                 y: path.bounds.minY,
-//                                 width: path.bounds.width,
-//                                 height: path.bounds.height)
-//        arrowBounds = self.path.cgPath.boundingBoxOfPath
-        //let updatedFrame = self.path.cgPath.boundingBoxOfPath
-        
-        // update thw frame with the new path's bounds
+        // update the frame with the new path's bounds
         frame  = path.cgPath.boundingBoxOfPath
         let mView = UIView(frame: bounds)
         mView.layer.addSublayer(maskLayer)
         
         return mView
-        
     }
     
     // obj-c
@@ -654,23 +300,23 @@ class ShapeView: UIView {
 }
 
 
-protocol ShapeDelegate: class {
-    var shadowed:       Bool { get }
-//    var path:           UIBezierPath { get }// = UIBezierPath()
-//    var shadowPath:     UIBezierPath { get }// = UIBezierPath() // TODO: should be optional, as there may not be a shadow
-//    var lineProperties: [LineProperties] { get }// = [LineProperties]()
-//    var shapeView:      UIView? { get set }
-//    var shadowView:     UIView? { get set }
-//    var shapeType:      ShapeType { get }
-
-
-    
-    func addShapeView() // if implented by its super., doesn't need to be also in the child
-    func addBlurView() // if implented by its super., doesn't need to be also in the child
-    func addShadowView()
-    func addCruft()
-    func createShape() // wrapper for createTriangle etc
-}
+//protocol ShapeDelegate: class {
+//    var shadowed:       Bool { get }
+////    var path:           UIBezierPath { get }// = UIBezierPath()
+////    var shadowPath:     UIBezierPath { get }// = UIBezierPath() // TODO: should be optional, as there may not be a shadow
+////    var lineProperties: [LineProperties] { get }// = [LineProperties]()
+////    var shapeView:      UIView? { get set }
+////    var shadowView:     UIView? { get set }
+////    var shapeType:      ShapeType { get }
+//
+//
+//
+//    func addShapeView() // if implented by its super., doesn't need to be also in the child
+//    func addBlurView() // if implented by its super., doesn't need to be also in the child
+//    func addShadowView()
+//    func addCruft()
+//    func createShape() // wrapper for createTriangle etc
+//}
 
 //@objc protocol UFCFighter {
 //    var name: String { get }

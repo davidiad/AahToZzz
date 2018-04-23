@@ -33,7 +33,7 @@ class TileHolderView: ShapeView {
         self.blurriness  = blurriness
         self.shadowWidth = shadowWidth
         //shapeType        = .tileholder
-        shadowed         = true // is this var even needed?
+        //shadowed         = true // is this var even needed?
         
         addShapeView()
         if blurriness       > 0.01 { addBlurView()   }
@@ -71,11 +71,6 @@ class TileHolderView: ShapeView {
         
         let offset = CGSize(width: 0, height: 0)
         drawInnerShadowInContext(context: context, pathShape: innerShadowPath.cgPath, shadColor: Colors.shadowBG.cgColor, offset: offset, blurRad: TILEWTH * 0.25)
-        //shadowImage = UIGraphicsGetImageFromCurrentImageContext()
-        //let innerShadowView = UIImageView(image: shadowImage)
-        //shadowView?.addSubview(innerShadowView)
-        //UIGraphicsEndImageContext()
-        //UIGraphicsPushContext(context!)
     }
     
     // inner shadow

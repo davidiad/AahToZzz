@@ -6,7 +6,7 @@
 //  Copyright © 2018 David Fierstein. All rights reserved.
 import UIKit
 
-class TriangleView: ShapeView, ShapeDelegate {
+class TriangleView: ShapeView {
     
     var direction:   Directions = .down
 
