@@ -312,7 +312,9 @@ class IntroViewController: UIViewController {
             arrowView.mask = arrowView.getArrowMask()
             */
             
-            let arrowView = ArrowBlurView(arrowType: .curved, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
+//            let arrowView = ArrowBlurView(arrowType: .curved, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
+            
+            let arrowView = ArrowBlurView(arrowType: .curved, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], startWidth: 18, endWidth: 10, arrowWidth: 33, arrowHeight: 15, blurriness: 0.5, shadowWidth: 9.1, bubbleWidth: 130, bubbleHeight: 300, bubbleType: .quadcurve)
             
             arrowViews.append(arrowView) // need a ref so visibility can be controlled
  

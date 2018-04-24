@@ -8,5 +8,6 @@
 import UIKit
 
 enum Directions: Int { case right, down, left, up }
-enum ShapeType:  Int { case arrow, curvedArrow, triangle, tileholder }
+enum ShapeType:  Int { case arrow, curvedArrow, triangle, tileholder } // not needed?
 enum ArrowType:  Int { case curved, straight, pointer }
+enum BubbleType: Int { case none, rectangle, quadcurve }

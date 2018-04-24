@@ -12,21 +12,23 @@ class ArrowBlurView: ShapeView {
     //MARK: Arrow const's and vars
     //Wth == WIDTH, Ht == HEIGHT
 
-    let TANGENTLIMIT:   CGFloat   = 5.0  // prevents control pt adjustments when close to vertical
-    let CPMULTIPLIER:   CGFloat   = 0.4  // empirical const for amount of control pt adjustment
+    let TANGENTLIMIT:   CGFloat    = 5.0  // prevents control pt adjustments when close to vertical
+    let CPMULTIPLIER:   CGFloat    = 0.4  // empirical const for amount of control pt adjustment
     
-    var startWth:       CGFloat   = 17.0
-    var endWth:         CGFloat   = 9.0
-    var arrowWth:       CGFloat   = 24.0
-    var arrowHt:        CGFloat   = 19.0
-    
+    var startWth:       CGFloat    = 17.0
+    var endWth:         CGFloat    = 9.0
+    var arrowWth:       CGFloat    = 24.0
+    var arrowHt:        CGFloat    = 19.0
     // TODO:- add text bubble size vars (ht and width), with defaults
     // add init's that allow adding text bubble and choosing its shape
+    var bubbleWidth:    CGFloat    = 100.0
+    var bubbleHeight:   CGFloat    = 100.0
     
-    var cpValue1:       CGFloat   = 36.0
-    var cpValue2:       CGFloat   = 36.0
-    var d:              CGFloat   = 1.0  // arrow direction, 1.0 for down, -1.0 for up
-    var arrowType:      ArrowType = .curved
+    var cpValue1:       CGFloat    = 36.0
+    var cpValue2:       CGFloat    = 36.0
+    var d:              CGFloat    = 1.0  // arrow direction, 1.0 for down, -1.0 for up
+    var arrowType:      ArrowType  = .curved
+    var bubbleType:     BubbleType = .none
     
     //MARK:- Convenience init's
     // Get start/end points from frame
@@ -68,10 +70,13 @@ class ArrowBlurView: ShapeView {
     
     // allow control of blur and shadow and all arrow parameters
     convenience init(arrowType: ArrowType,
-                     startPoint: CGPoint, endPoint: CGPoint,
-                     startWidth: CGFloat, endWidth: CGFloat,
-                     arrowWidth: CGFloat, arrowHeight: CGFloat,
-                     blurriness: CGFloat, shadowWidth: CGFloat) {
+                     startPoint:    CGPoint, endPoint:     CGPoint,
+                     startWidth:    CGFloat, endWidth:     CGFloat,
+                     arrowWidth:    CGFloat, arrowHeight:  CGFloat,
+                     blurriness:    CGFloat, shadowWidth:  CGFloat,
+                     bubbleWidth:   CGFloat     = 100.0,
+                     bubbleHeight:  CGFloat     = 100.0,
+                     bubbleType:    BubbleType  = .none ) {
         
         self.init(frame: CGRect(x: 65, y: 20, width: 10, height: 5))
         
@@ -84,6 +89,16 @@ class ArrowBlurView: ShapeView {
         self.arrowHt        = arrowHeight
         self.blurriness     = blurriness
         self.shadowWidth    = shadowWidth
+        // optional parameters
+        self.bubbleType     = bubbleType
+        if self.bubbleType != .none {
+            if bubbleWidth < 0.01 || bubbleHeight < 0.01 {
+                self.bubbleType = .none // bubble dimensions must be > 0
+                // TODO: check other parameter values for validity
+            }
+            self.bubbleWidth  = bubbleWidth
+            self.bubbleHeight = bubbleHeight
+        }
         
         addViews()
     }
@@ -141,10 +156,12 @@ class ArrowBlurView: ShapeView {
         // make an ellipse above
         //TODO:- put all the points into an array
         // then call addQuadCurve for each point in the array
-        path.addQuadCurve(to: CGPoint(x: startPointRight.x + 100, y: startPointRight.y - 50   ), controlPoint: CGPoint(x: startPointRight.x + 100, y: startPointRight.y      ))
-        path.addQuadCurve(to: CGPoint(x: startPoint.x, y: startPoint.y - 100   ), controlPoint: CGPoint(x: startPointRight.x + 100, y: startPointRight.y - 100      ))
-        path.addQuadCurve(to: CGPoint(x: startPointLeft.x - 100, y: startPoint.y - 50   ), controlPoint: CGPoint(x: startPointLeft.x - 100, y: startPoint.y  - 100    ))
-        path.addQuadCurve(to: CGPoint(x: startPointLeft.x, y: startPoint.y   ), controlPoint: CGPoint(x: startPointLeft.x - 100, y: startPoint.y    ))
+        let bw = bubbleWidth  * 0.5
+        let bh = bubbleHeight * 0.5 * d // d is -1.0 when points up
+        path.addQuadCurve(to: CGPoint(x: startPointRight.x + bw, y: startPointRight.y - bh   ), controlPoint: CGPoint(x: startPointRight.x + bw, y: startPointRight.y      ))
+        path.addQuadCurve(to: CGPoint(x: startPoint.x, y: startPoint.y - bubbleHeight   ), controlPoint: CGPoint(x: startPointRight.x + bh, y: startPointRight.y - bubbleHeight      ))
+        path.addQuadCurve(to: CGPoint(x: startPointLeft.x - bw, y: startPoint.y - bh   ), controlPoint: CGPoint(x: startPointLeft.x - bw, y: startPoint.y  - bubbleHeight    ))
+        path.addQuadCurve(to: CGPoint(x: startPointLeft.x, y: startPoint.y   ), controlPoint: CGPoint(x: startPointLeft.x - bw, y: startPoint.y    ))
         // make a rect above
 //        path.addLine(to: CGPoint(x: startPointRight.x + 100, y: startPointRight.y      ))
 //        path.addLine(to: CGPoint(x: startPointRight.x + 100, y: startPointRight.y - 70))
@@ -187,13 +204,20 @@ class ArrowBlurView: ShapeView {
         path.addLine    (to: innerPointLeft)
         path.addCurve   (to: startPointLeft, controlPoint1: endControlLeft, controlPoint2: startControlLeft)
         
-        // make an ellipse above
+        //TODO: Generate the points needed per bubble type and arrow type
+        // add them to arrays
+        // In each create func, add the lines/quadcurves from the arrays per options chosen 
         
-        path.addQuadCurve(to: CGPoint(x: startPointLeft.x - 100, y: startPoint.y - 50   ), controlPoint: CGPoint(x: startPointLeft.x - 100, y: startPoint.y    ))
-        path.addQuadCurve(to: CGPoint(x: startPoint.x, y: startPoint.y - 100   ), controlPoint: CGPoint(x: startPointLeft.x - 100, y: startPoint.y - 100      ))
-        path.addQuadCurve(to: CGPoint(x: startPointRight.x + 100, y: startPointRight.y - 50   ), controlPoint: CGPoint(x: startPointRight.x + 100, y: startPoint.y - 100     ))
-        path.addQuadCurve(to: startPointRight, controlPoint: CGPoint(x: startPointRight.x + 100, y: startPoint.y     ))
-
+        
+        // make an ellipse above
+        if bubbleType == .quadcurve {
+            let bw = bubbleWidth  * 0.5
+            let bh = bubbleHeight * 0.5 * d // d is -1.0 when points up
+        path.addQuadCurve(to: CGPoint(x: startPointLeft.x - bw, y: startPoint.y - bh   ), controlPoint: CGPoint(x: startPointLeft.x - bw, y: startPoint.y    ))
+        path.addQuadCurve(to: CGPoint(x: startPoint.x, y: startPoint.y - bh * 2   ), controlPoint: CGPoint(x: startPointLeft.x - bw, y: startPoint.y - bh * 2      ))
+        path.addQuadCurve(to: CGPoint(x: startPointRight.x + bw, y: startPointRight.y - bh   ), controlPoint: CGPoint(x: startPointRight.x + bw, y: startPoint.y - bh * 2     ))
+        path.addQuadCurve(to: startPointRight, controlPoint: CGPoint(x: startPointRight.x + bw, y: startPoint.y     ))
+        }
 
         //path.addQuadCurve(to: CGPoint(x: startPointLeft.x, y: startPoint.y   ), controlPoint: CGPoint(x: startPointLeft.x - 100, y: startPoint.y    ))
         
