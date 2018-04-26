@@ -29,6 +29,9 @@ class ArrowBlurView: ShapeView {
     var d:              CGFloat    = 1.0  // arrow direction, 1.0 for down, -1.0 for up
     var arrowType:      ArrowType  = .curved
     var bubbleType:     BubbleType = .none
+    var arrowPoints:    [CGPoint]  = []
+    var quadPoints:     [CGPoint]  = []
+    
     
     //MARK:- Convenience init's
     // Get start/end points from frame
@@ -69,11 +72,13 @@ class ArrowBlurView: ShapeView {
     }
     
     // allow control of blur and shadow and all arrow parameters
+    //TODO: consider making more of the parameters optional
     convenience init(arrowType: ArrowType,
                      startPoint:    CGPoint, endPoint:     CGPoint,
                      startWidth:    CGFloat, endWidth:     CGFloat,
                      arrowWidth:    CGFloat, arrowHeight:  CGFloat,
-                     blurriness:    CGFloat, shadowWidth:  CGFloat,
+                     blurriness:    CGFloat     = 0.5,
+                     shadowWidth:   CGFloat     = 3.5,
                      bubbleWidth:   CGFloat     = 100.0,
                      bubbleHeight:  CGFloat     = 100.0,
                      bubbleType:    BubbleType  = .none ) {
@@ -87,9 +92,9 @@ class ArrowBlurView: ShapeView {
         self.endWth         = endWidth
         self.arrowWth       = arrowWidth
         self.arrowHt        = arrowHeight
+        // optional parameters
         self.blurriness     = blurriness
         self.shadowWidth    = shadowWidth
-        // optional parameters
         self.bubbleType     = bubbleType
         if self.bubbleType != .none {
             if bubbleWidth < 0.01 || bubbleHeight < 0.01 {
@@ -114,7 +119,31 @@ class ArrowBlurView: ShapeView {
     // addShapeView() func. Therefore, need another func createArrow(...) that *can* contain
     // parameters specific to this subclass
     override func createShape() {
+        addPoints(arrowType: arrowType, bubbleType: bubbleType)
         createArrow(arrowType: arrowType)
+    }
+    
+    func addPoints(arrowType: ArrowType, bubbleType: BubbleType) {
+        switch arrowType {
+        case .curved:
+            createBezierArrow()
+        case .pointer:
+            guard let startPoint = startPoint, let endPoint = endPoint else {
+                return
+            }
+            // create and add the points in the order they will be used
+            let startPointLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
+            let endPointLeft    = CGPoint(x: endPoint.x     - endWth,     y: endPoint.y)
+            let endPointRight   = CGPoint(x: endPoint.x     + endWth,     y: endPoint.y)
+            let startPointRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
+            arrowPoints.append(startPointLeft)
+            arrowPoints.append(endPointLeft)
+            arrowPoints.append(endPointRight)
+            arrowPoints.append(startPointRight)
+            
+        case .straight:
+            createStraightArrow()
+        }
     }
     
     func createArrow(arrowType: ArrowType) {
@@ -146,16 +175,22 @@ class ArrowBlurView: ShapeView {
         
         //TODO:- put all the points into an array
         // then call addLine for each point in the array
-        path.move   (to: startPointLeft)
-        path.addLine(to: endPointLeft)
-        path.addLine(to: endPointRight)
-        path.addLine(to: startPointRight)
+//        path.move   (to: startPointLeft)
+//        path.addLine(to: endPointLeft)
+//        path.addLine(to: endPointRight)
+//        path.addLine(to: startPointRight)
+        
+        path.move   (to: arrowPoints[0])
+        for i in 1 ..< arrowPoints.count {
+            path.addLine(to: arrowPoints[i])
+        }
         
         // TODO: add a conditional -- check if a text bubble is wanted; and which kind (rect, quad curve, etc)
         // The points for a rect are the control points for a quad curve bubble
         // make an ellipse above
         //TODO:- put all the points into an array
-        // then call addQuadCurve for each point in the array
+        // then call addQuadCurve for each point in the arrayb
+        if bubbleType != .none {
         let bw = bubbleWidth  * 0.5
         let bh = bubbleHeight * 0.5 * d // d is -1.0 when points up
         path.addQuadCurve(to: CGPoint(x: startPointRight.x + bw, y: startPointRight.y - bh   ), controlPoint: CGPoint(x: startPointRight.x + bw, y: startPointRight.y      ))
@@ -167,7 +202,7 @@ class ArrowBlurView: ShapeView {
 //        path.addLine(to: CGPoint(x: startPointRight.x + 100, y: startPointRight.y - 70))
 //        path.addLine(to: CGPoint(x: startPointRight.x - 100, y: startPointRight.y - 70))
 //        path.addLine(to: CGPoint(x: startPointRight.x - 100, y: startPointRight.y      ))
-        
+        }
         path.close()
     }
     
@@ -206,7 +241,7 @@ class ArrowBlurView: ShapeView {
         
         //TODO: Generate the points needed per bubble type and arrow type
         // add them to arrays
-        // In each create func, add the lines/quadcurves from the arrays per options chosen 
+        // In each create func, add the lines/quadcurves from the arrays per options chosen
         
         
         // make an ellipse above
