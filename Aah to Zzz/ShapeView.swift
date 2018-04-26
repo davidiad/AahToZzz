@@ -26,6 +26,7 @@ class ShapeView: UIView {
     var shapeView:      UIView?
     var shadowView:     UIView?
     var shadowWidth:    CGFloat = 3.5 // only used if there is a shadow. Make optional? Needed?
+    var d:              CGFloat = 1.0  // arrow direction, 1.0 for down, -1.0 for up
     
     //MARK:- init
     override init(frame: CGRect) {
@@ -37,6 +38,7 @@ class ShapeView: UIView {
     func useFrameForPoints () {
         startPoint  = CGPoint(x: frame.minX, y: frame.minY)
         endPoint    = CGPoint(x: frame.maxX, y: frame.maxY)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -103,6 +105,14 @@ class ShapeView: UIView {
         shapeView = UIView(frame: bounds)
         guard let shapeView = shapeView else {
             return
+        }
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return
+        }
+        // Check whether arrow points up or down
+        if startPoint.y - endPoint.y > 0 {
+            // arrow is pointing up
+            d = -1.0
         }
         
         createShape() // override point for subclasses

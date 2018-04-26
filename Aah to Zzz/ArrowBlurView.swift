@@ -26,12 +26,12 @@ class ArrowBlurView: ShapeView {
     
     var cpValue1:       CGFloat    = 36.0
     var cpValue2:       CGFloat    = 36.0
-    var d:              CGFloat    = 1.0  // arrow direction, 1.0 for down, -1.0 for up
+
     var arrowType:      ArrowType  = .curved
     var bubbleType:     BubbleType = .none
     var arrowPoints:    [CGPoint]  = []
     var quadPoints:     [CGPoint]  = []
-    
+    var quadCorners:    [CGPoint]  = [] //Control pts for Quadcurve bubbles, same as pts for Rectangle
     
     //MARK:- Convenience init's
     // Get start/end points from frame
@@ -132,15 +132,38 @@ class ArrowBlurView: ShapeView {
                 return
             }
             // create and add the points in the order they will be used
-            let startPointLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
-            let endPointLeft    = CGPoint(x: endPoint.x     - endWth,     y: endPoint.y)
-            let endPointRight   = CGPoint(x: endPoint.x     + endWth,     y: endPoint.y)
-            let startPointRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
-            arrowPoints.append(startPointLeft)
-            arrowPoints.append(endPointLeft)
-            arrowPoints.append(endPointRight)
-            arrowPoints.append(startPointRight)
-            
+            let startLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
+            let endLeft    = CGPoint(x: endPoint.x     - endWth,     y: endPoint.y)
+            let endRight   = CGPoint(x: endPoint.x     + endWth,     y: endPoint.y)
+            let startRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
+            arrowPoints.append(startLeft)
+            arrowPoints.append(endLeft)
+            arrowPoints.append(endRight)
+            arrowPoints.append(startRight)
+            // points for corners of Rectangle bubbles, which are same as quad control pts
+            if bubbleType == .quadcurve || bubbleType == .rectangle {
+                let bx = bubbleWidth  * 0.5
+                let by = bubbleHeight * 0.5 * d // d is -1.0 when arrow points up
+                // points for quad curve bubble
+                let cornerLowerRight = CGPoint(x: startRight.x + bx, y: startRight.y         )
+                let cornerUpperRight = CGPoint(x: startRight.x + bx, y: startRight.y - by * 2)
+                let cornerUpperLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y  - by * 2)
+                let cornerLowerLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y          )
+                quadCorners.append(cornerLowerRight)
+                quadCorners.append(cornerUpperRight)
+                quadCorners.append(cornerUpperLeft)
+                quadCorners.append(cornerLowerLeft)
+          
+                if bubbleType == .quadcurve {
+                    let bubbleRight      = CGPoint(x: startRight.x + bx, y: startRight.y - by    )
+                    let bubbleTop        = CGPoint(x: startPoint.x,      y: startPoint.y - by * 2)
+                    let bubbleLeft       = CGPoint(x: startLeft.x  - bx, y: startPoint.y - by    )
+                    quadPoints.append(bubbleRight)
+                    quadPoints.append(bubbleTop)
+                    quadPoints.append(bubbleLeft)
+                    quadPoints.append(startLeft) // last quad point is back at beginning
+            }
+            }
         case .straight:
             createStraightArrow()
         }
@@ -185,16 +208,27 @@ class ArrowBlurView: ShapeView {
             path.addLine(to: arrowPoints[i])
         }
         
+        if bubbleType == .quadcurve {
+            for i in 0 ..< quadPoints.count {
+                path.addQuadCurve(to: quadPoints[i], controlPoint: quadCorners[i])
+            }
+        } else if bubbleType == .rectangle {
+            for i in 0 ..< quadCorners.count {
+                path.addLine(to: quadCorners[i])
+            }
+        }
+        
         // TODO: add a conditional -- check if a text bubble is wanted; and which kind (rect, quad curve, etc)
         // The points for a rect are the control points for a quad curve bubble
         // make an ellipse above
         //TODO:- put all the points into an array
-        // then call addQuadCurve for each point in the arrayb
+        // then call addQuadCurve for each point in the array
+        /*
         if bubbleType != .none {
         let bw = bubbleWidth  * 0.5
         let bh = bubbleHeight * 0.5 * d // d is -1.0 when points up
         path.addQuadCurve(to: CGPoint(x: startPointRight.x + bw, y: startPointRight.y - bh   ), controlPoint: CGPoint(x: startPointRight.x + bw, y: startPointRight.y      ))
-        path.addQuadCurve(to: CGPoint(x: startPoint.x, y: startPoint.y - bubbleHeight   ), controlPoint: CGPoint(x: startPointRight.x + bh, y: startPointRight.y - bubbleHeight      ))
+        path.addQuadCurve(to: CGPoint(x: startPoint.x, y: startPoint.y - bubbleHeight   ), controlPoint: CGPoint(x: startPointRight.x + bw, y: startPoint.y - bubbleHeight      ))
         path.addQuadCurve(to: CGPoint(x: startPointLeft.x - bw, y: startPoint.y - bh   ), controlPoint: CGPoint(x: startPointLeft.x - bw, y: startPoint.y  - bubbleHeight    ))
         path.addQuadCurve(to: CGPoint(x: startPointLeft.x, y: startPoint.y   ), controlPoint: CGPoint(x: startPointLeft.x - bw, y: startPoint.y    ))
         // make a rect above
@@ -202,7 +236,11 @@ class ArrowBlurView: ShapeView {
 //        path.addLine(to: CGPoint(x: startPointRight.x + 100, y: startPointRight.y - 70))
 //        path.addLine(to: CGPoint(x: startPointRight.x - 100, y: startPointRight.y - 70))
 //        path.addLine(to: CGPoint(x: startPointRight.x - 100, y: startPointRight.y      ))
-        }
+        }*/
+        
+        
+        
+        
         path.close()
     }
     
@@ -271,12 +309,9 @@ class ArrowBlurView: ShapeView {
         if ht < 2 * cpValue1 {
             cpValue1 = ht * 0.45
         }
-        // Check whether arrow points up or down
-        if startPoint.y - endPoint.y > 0 {
-            // arrow is pointing up
-            d = -1.0
-            cpValue1 *= d
-        }
+        // If arrow points up, d will be -1.0  Otherwise d = 1.0
+        cpValue1 *= d
+
         // make the values equal for now
         cpValue2 = cpValue1
         
