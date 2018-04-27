@@ -124,49 +124,65 @@ class ArrowBlurView: ShapeView {
     }
     
     func addPoints(arrowType: ArrowType, bubbleType: BubbleType) {
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return
+        }
+        // startLeft and startRight are needed in all cases
+        let startLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
+        let startRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
+        
+        // this code should be accessible with any of the arrow type options
+        // points for corners of Rectangle bubbles, which are same as quad control pts
+        if bubbleType == .quadcurve || bubbleType == .rectangle {
+            let bx = bubbleWidth  * 0.5
+            let by = bubbleHeight * 0.5 * d // d is -1.0 when arrow points up
+            // points for quad curve bubble
+            let cornerLowerRight = CGPoint(x: startRight.x + bx, y: startRight.y         )
+            let cornerUpperRight = CGPoint(x: startRight.x + bx, y: startRight.y - by * 2)
+            let cornerUpperLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y  - by * 2)
+            let cornerLowerLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y          )
+            quadCorners.append(cornerLowerRight)
+            quadCorners.append(cornerUpperRight)
+            quadCorners.append(cornerUpperLeft)
+            quadCorners.append(cornerLowerLeft)
+            
+            if bubbleType == .quadcurve {
+                let bubbleRight      = CGPoint(x: startRight.x + bx, y: startRight.y - by    )
+                let bubbleTop        = CGPoint(x: startPoint.x,      y: startPoint.y - by * 2)
+                let bubbleLeft       = CGPoint(x: startLeft.x  - bx, y: startPoint.y - by    )
+                quadPoints.append(bubbleRight)
+                quadPoints.append(bubbleTop)
+                quadPoints.append(bubbleLeft)
+                quadPoints.append(startLeft) // last quad point is back at beginning
+            }
+        }
+        
         switch arrowType {
         case .curved:
             createBezierArrow()
         case .pointer:
-            guard let startPoint = startPoint, let endPoint = endPoint else {
-                return
-            }
+
             // create and add the points in the order they will be used
-            let startLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
+//            let startLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
             let endLeft    = CGPoint(x: endPoint.x     - endWth,     y: endPoint.y)
             let endRight   = CGPoint(x: endPoint.x     + endWth,     y: endPoint.y)
-            let startRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
+//            let startRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
             arrowPoints.append(startLeft)
             arrowPoints.append(endLeft)
             arrowPoints.append(endRight)
             arrowPoints.append(startRight)
-            // points for corners of Rectangle bubbles, which are same as quad control pts
-            if bubbleType == .quadcurve || bubbleType == .rectangle {
-                let bx = bubbleWidth  * 0.5
-                let by = bubbleHeight * 0.5 * d // d is -1.0 when arrow points up
-                // points for quad curve bubble
-                let cornerLowerRight = CGPoint(x: startRight.x + bx, y: startRight.y         )
-                let cornerUpperRight = CGPoint(x: startRight.x + bx, y: startRight.y - by * 2)
-                let cornerUpperLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y  - by * 2)
-                let cornerLowerLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y          )
-                quadCorners.append(cornerLowerRight)
-                quadCorners.append(cornerUpperRight)
-                quadCorners.append(cornerUpperLeft)
-                quadCorners.append(cornerLowerLeft)
-          
-                if bubbleType == .quadcurve {
-                    let bubbleRight      = CGPoint(x: startRight.x + bx, y: startRight.y - by    )
-                    let bubbleTop        = CGPoint(x: startPoint.x,      y: startPoint.y - by * 2)
-                    let bubbleLeft       = CGPoint(x: startLeft.x  - bx, y: startPoint.y - by    )
-                    quadPoints.append(bubbleRight)
-                    quadPoints.append(bubbleTop)
-                    quadPoints.append(bubbleLeft)
-                    quadPoints.append(startLeft) // last quad point is back at beginning
-            }
-            }
+
         case .straight:
             createStraightArrow()
         }
+    }
+    
+    func addPointerPoints () {
+        
+    }
+    
+    func addBubblePoints() {
+        
     }
     
     func createArrow(arrowType: ArrowType) {
@@ -182,14 +198,14 @@ class ArrowBlurView: ShapeView {
     
     //MARK:- Pointer
     func createPointer () {
-
-        guard let startPoint = startPoint, let endPoint = endPoint else {
-            return
-        }
-        let startPointLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
-        let startPointRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
-        let endPointLeft    = CGPoint(x: endPoint.x     - endWth,     y: endPoint.y)
-        let endPointRight   = CGPoint(x: endPoint.x     + endWth,     y: endPoint.y)
+//
+//        guard let startPoint = startPoint, let endPoint = endPoint else {
+//            return
+//        }
+//        let startPointLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
+//        let startPointRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
+//        let endPointLeft    = CGPoint(x: endPoint.x     - endWth,     y: endPoint.y)
+//        let endPointRight   = CGPoint(x: endPoint.x     + endWth,     y: endPoint.y)
 //        path.move   (to: startPointLeft)
 //        path.addLine(to: startPointRight)
 //        path.addLine(to: endPointRight)
@@ -208,8 +224,25 @@ class ArrowBlurView: ShapeView {
             path.addLine(to: arrowPoints[i])
         }
         
+        switch bubbleType {
+        case .none:
+            print("do nothing")
+        
+        case .quadcurve:
+            for i in 0 ..< quadPoints.count {
+                // quadPoints are in middle of sides, quadCorners are in the corners
+                path.addQuadCurve(to: quadPoints[i], controlPoint: quadCorners[i])
+            }
+        case .rectangle:
+            for i in 0 ..< quadCorners.count {
+                path.addLine(to: quadCorners[i])
+            }
+        }
+        path.close()
+        /* replaced with switch case statement
         if bubbleType == .quadcurve {
             for i in 0 ..< quadPoints.count {
+                // quadPoints are in middle of sides, quadCorners are in the corners
                 path.addQuadCurve(to: quadPoints[i], controlPoint: quadCorners[i])
             }
         } else if bubbleType == .rectangle {
@@ -217,7 +250,7 @@ class ArrowBlurView: ShapeView {
                 path.addLine(to: quadCorners[i])
             }
         }
-        
+        */
         // TODO: add a conditional -- check if a text bubble is wanted; and which kind (rect, quad curve, etc)
         // The points for a rect are the control points for a quad curve bubble
         // make an ellipse above
@@ -241,7 +274,7 @@ class ArrowBlurView: ShapeView {
         
         
         
-        path.close()
+        
     }
     
     //MARK:- Curved (Bezier) Arrow
@@ -269,7 +302,7 @@ class ArrowBlurView: ShapeView {
         let startControlRight = CGPoint(x: startPoint.x + startWth, y: startPoint.y                 + cpValue2  )
         
         //path.move       (to: startPoint)
-        path.move    (to: startPointRight)
+        path.move       (to: startPointRight)
         path.addCurve   (to: innerPointRight, controlPoint1: startControlRight,  controlPoint2: endControlRight)
         path.addLine    (to: outerPointRight)
         path.addLine    (to: endPoint)
@@ -385,7 +418,8 @@ class ArrowBlurView: ShapeView {
         let innerLeft           = CGPoint(x:  endWth *      -1.0,   y: endPoint.y               )
         let outerLeft           = CGPoint(x:  arrowWth *    -1.0,   y: endPoint.y               )
         
-        let pointsIn: [CGPoint] = [outerRight, innerRight, innerLeft, outerLeft]
+//        let pointsIn: [CGPoint] = [outerRight, innerRight, innerLeft, outerLeft]
+        let pointsIn: [CGPoint] = [outerLeft, innerLeft, innerRight, outerRight]
         
         // Get the angle amount to rotate
         let opposite: CGFloat   = startPoint.x - endPoint.x
@@ -402,6 +436,7 @@ class ArrowBlurView: ShapeView {
             pointsOut.append(CGPoint(x: a, y: b))
         }
         
+        //TODO: reverse to CCW, and add endpoint into the middle of the array
         return pointsOut
     }
     
