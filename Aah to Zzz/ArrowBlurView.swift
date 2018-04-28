@@ -173,7 +173,15 @@ class ArrowBlurView: ShapeView {
             arrowPoints.append(startRight)
 
         case .straight:
-            createStraightArrow()
+            let arrowheadPoints = getRotatedArrowheadPts()
+            arrowPoints.append(startLeft)
+            arrowPoints.append(arrowheadPoints[0])
+            arrowPoints.append(arrowheadPoints[1])
+            arrowPoints.append(endPoint)
+            arrowPoints.append(arrowheadPoints[2])
+            arrowPoints.append(arrowheadPoints[3])
+            arrowPoints.append(startRight)
+            //createStraightArrow()
         }
     }
     
@@ -192,7 +200,9 @@ class ArrowBlurView: ShapeView {
         case .pointer:
             createPointer()
         case .straight:
-            createStraightArrow()
+//            createStraightArrow()
+            // can share the code with Pointer, the diff is the points that have been put in the array
+            createPointer()
         }
     }
     
@@ -419,7 +429,7 @@ class ArrowBlurView: ShapeView {
         let outerLeft           = CGPoint(x:  arrowWth *    -1.0,   y: endPoint.y               )
         
 //        let pointsIn: [CGPoint] = [outerRight, innerRight, innerLeft, outerLeft]
-        let pointsIn: [CGPoint] = [outerLeft, innerLeft, innerRight, outerRight]
+        let pointsIn: [CGPoint] = [innerLeft, outerLeft, outerRight, innerRight]
         
         // Get the angle amount to rotate
         let opposite: CGFloat   = startPoint.x - endPoint.x
