@@ -44,7 +44,7 @@ class IntroViewController: UIViewController {
     var currentContainerIndex:  Int                     = 0
     var arrowStartPoints:       [CGPoint]               = []
     var arrowEndPoints:         [CGPoint]               = []
-    var arrowViews:             [ArrowBlurView]         = []
+    var arrowViews:             [ArrowView]             = []
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
         fadeMessageBubblesOrDismiss()
@@ -314,12 +314,11 @@ class IntroViewController: UIViewController {
             
 //            let arrowView = ArrowBlurView(arrowType: .curved, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
             
-            let arrowView = ArrowBlurView(arrowType: .straight, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], startWidth: 19, endWidth: 4, arrowWidth: 17, arrowHeight: 25, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 130, bubbleHeight: 99, bubbleType: .quadcurve
+            let arrowView = ArrowView(arrowType: .straight, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], startWidth: 19, endWidth: 4, arrowWidth: 17, arrowHeight: 25, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 130, bubbleHeight: 99, bubbleType: .quadcurve
             )
             
             arrowViews.append(arrowView) // need a ref so visibility can be controlled
  
-            
             if i > 0 {
                 arrowViews[i].alpha = 0.0
             }

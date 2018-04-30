@@ -1,189 +1,292 @@
 //
-//  ArrowView.swift
+//  ArrowBlurView.swift
 //  AahToZzz
 //
-//  Created by David Fierstein on 3/28/18.
+//  Created by David Fierstein on 4/18/18.
 //  Copyright © 2018 David Fierstein. All rights reserved.
-//
 
 import UIKit
 
-class ArrowView: UIView {
+class ArrowView: ShapeView {
     
-    // init with just a frame, plus arrowType( .pointer, .straight, .curved), and the start and end points come
-    // from frame -- use default values for arrow width etc
-    // similar when init with just arrowType, and start/end points
-    // also could have a version with arrowType, and startWidth/endWidth
-    // however, for init also with arrowWidth/arrowHeight, could be .straight or .curved, but .pointer doesnt make sense
-    // I guess the arrowWidth/arrowHeight values could be ignored in that case.
+    //MARK: Arrow const's and vars
+    //Wth == WIDTH, Ht == HEIGHT
+
+    let TANGENTLIMIT:   CGFloat     = 5.0  // prevents control pt adjustments when close to vertical
+    let CPMULTIPLIER:   CGFloat     = 0.4  // empirical const for amount of control pt adjustment
     
-    //TODO: As part of init, allow calling the type of shape to create
+    var startWth:       CGFloat     = 17.0
+    var endWth:         CGFloat     = 9.0
+    var arrowWth:       CGFloat     = 24.0
+    var arrowHt:        CGFloat     = 19.0
+    // TODO:- add text bubble size vars (ht and width), with defaults
+    // add init's that allow adding text bubble and choosing its shape
+    var bubbleWidth:    CGFloat     = 100.0
+    var bubbleHeight:   CGFloat     = 100.0
     
-    //MARK: Settable init Arrow vars
-    // (will need to use var, not let)
-    // WTH == WIDTH, HT == HEIGHT
-    let STARTWTH:       CGFloat = 12.0
-    let ENDWTH:         CGFloat = 6.0
-    let ARROWWTH:       CGFloat = 16.0
-    let ARROWHT:        CGFloat = 22.0
-    var startPoint:     CGPoint?
-    var endPoint:       CGPoint?
-    //MARK: Const/vars not settable when init'ing
-    let TANGENTLIMIT:   CGFloat = 5.0 // prevents control pt adjustments when close to vertical
-    let CPMULTIPLIER:   CGFloat = 0.4 // empirical const for amount of control pt adjustment
-    var cpValue1:       CGFloat = 36.0
-    var cpValue2:       CGFloat = 36.0
-    var d:              CGFloat = 1.0 // arrow direction, 1.0 for down, -1.0 for up
-    //MARK:- Blur and view vars -- will be in superclass ShapeView
-    var arrowBounds:    CGRect?
-    var blurView:       UIVisualEffectView?
-    var blurriness:     CGFloat = 0.5
-    var animator:       UIViewPropertyAnimator?
-    var path:           UIBezierPath = UIBezierPath()
-    var lineProperties: [LineProperties] = [LineProperties]()
-    var shadowView:     UIView?
-    //var arrowType:      ArrowType = .straight
+    var cpValue1:       CGFloat     = 36.0
+    var cpValue2:       CGFloat     = 36.0
+
+    var arrowType:      ArrowType   = .curved
+    var bubbleType:     BubbleType  = .none
+    var arrowPoints:    [CGPoint]   = []
+    var quadPoints:     [CGPoint]   = []
+    var quadCorners:    [CGPoint]   = [] //Control pts for Quadcurve bubbles, same as pts for Rectangle
+    var bezierPoints:   [[CGPoint]] = []
     
-    struct LineProperties {
-        var lineWidth:  CGFloat
-        var color:      UIColor
-    }
-    
-    //MARK:- init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        useFrameForPoints()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    // init for tile holder (upper positions background)
-    convenience init(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
-        let w: CGFloat = CGFloat((numTiles)) * (tileWidth + borderWidth) + borderWidth
-        let h: CGFloat = tileWidth + 2 * borderWidth
-        let frame = CGRect(x: 0, y: 0, width: w, height: h)
+    //MARK:- Convenience init's
+    // Get start/end points from frame
+    convenience init(arrowType: ArrowType, frame: CGRect, blurriness: CGFloat, shadowWidth: CGFloat) {
         self.init(frame: frame)
-        createTileHolder(numTiles: numTiles, tileWidth: tileWidth, borderWidth: borderWidth)
-        addLineProperties()
-        for i in 0 ..< lineProperties.count {
-            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
-        }
-        blurArrow()
-        addShadowView()
+        self.arrowType      = arrowType
+        self.blurriness     = blurriness
+        self.shadowWidth    = shadowWidth
+        useFrameForPoints()
+        addViews()
     }
     
-    init(frame: CGRect, startPoint: CGPoint, endPoint: CGPoint) {
-        
+    // use default blur and shadow
+    convenience init(arrowType: ArrowType, startPoint: CGPoint, endPoint: CGPoint) {
+        // Question: does it matter what the size of the frame is?
+        // it'd be overly complex to calculate from start/end points
+        self.init(frame: CGRect(x: 65, y: 20, width: 10, height: 5)) // default frame, because not optional, so always needs to be defined
+        self.arrowType  = arrowType
         self.startPoint = startPoint
-        self.endPoint = endPoint
-        super.init(frame: frame)
-        addLineProperties()
-        addShapeWithBlur()
+        self.endPoint   = endPoint
+        
+        addViews()
     }
     
-    // helpers for init
-    func addLineProperties() {
-        lineProperties.append(LineProperties(lineWidth: 11.0,  color: Colors.veryLight))
-        lineProperties.append(LineProperties(lineWidth: 8.5,   color: Colors.veryLight))
-        lineProperties.append(LineProperties(lineWidth: 5.5,   color: Colors.lightBackground))
-        lineProperties.append(LineProperties(lineWidth: 2.25,  color: .white))
-        lineProperties.append(LineProperties(lineWidth: 1.5,   color: Colors.darkBackground))
+    // allow control of blur and shadow, as well as start/end points
+    convenience init(arrowType: ArrowType,
+                     startPoint: CGPoint, endPoint: CGPoint,
+                     blurriness: CGFloat, shadowWidth: CGFloat) {
+        
+        self.init(frame: CGRect(x: 65, y: 20, width: 10, height: 5)) // default frame, because not optional, so always needs to be defined
+        self.arrowType      = arrowType
+        self.startPoint     = startPoint
+        self.endPoint       = endPoint
+        self.blurriness     = blurriness
+        self.shadowWidth    = shadowWidth
+        
+        addViews()
+        
     }
     
-    func useFrameForPoints () {
-        startPoint  = CGPoint(x: 0,           y:0            )
-        endPoint    = CGPoint(x: frame.width, y: frame.height)
+    func addStackView() {
+        let sv = UIStackView(frame: bounds.insetBy(dx: 35.0, dy: 33.0))
+        
+        
+        let l1 = UILabel(frame: bounds.insetBy(dx: 23.0, dy: 35.0))
+        l1.backgroundColor = .red
+        l1.text = "wer WERTH Jasdfi a a"
+        let l2 = UILabel()
+        l2.backgroundColor = Colors.bluek
+        l2.text = "N BH NA NA A"
+        sv.addArrangedSubview(l1)
+        sv.addArrangedSubview(l2)
+        sv.axis = .vertical
+        addSubview(sv)
+        
     }
     
-    deinit {
-        //animator?.stopAnimation(false)
-        print("ARROW DEINITS")
-    }
-    
-    //MARK:- Inspectables
-    
-    @IBInspectable var sPt: CGPoint = CGPoint(x: 0, y: 0) {
-        didSet {
-            self.startPoint = self.sPt
+    // allow control of blur and shadow and all arrow parameters
+    //TODO: consider making more of the parameters optional
+    convenience init(arrowType: ArrowType,
+                     startPoint:    CGPoint, endPoint:     CGPoint,
+                     startWidth:    CGFloat, endWidth:     CGFloat,
+                     arrowWidth:    CGFloat, arrowHeight:  CGFloat,
+                     blurriness:    CGFloat     = 0.5,
+                     shadowWidth:   CGFloat     = 3.5,
+                     bubbleWidth:   CGFloat     = 100.0,
+                     bubbleHeight:  CGFloat     = 100.0,
+                     bubbleType:    BubbleType  = .none ) {
+        
+        self.init(frame: CGRect(x: 65, y: 20, width: 10, height: 5))
+        
+        self.arrowType      = arrowType
+        self.startPoint     = startPoint
+        self.endPoint       = endPoint
+        self.startWth       = startWidth
+        self.endWth         = endWidth
+        self.arrowWth       = arrowWidth
+        self.arrowHt        = arrowHeight
+        // optional parameters
+        self.blurriness     = blurriness
+        self.shadowWidth    = shadowWidth
+        self.bubbleType     = bubbleType
+        if self.bubbleType != .none {
+            if bubbleWidth < 0.01 || bubbleHeight < 0.01 {
+                self.bubbleType = .none // bubble dimensions must be > 0
+                // TODO: check other parameter values for validity
+            }
+            self.bubbleWidth  = bubbleWidth
+            self.bubbleHeight = bubbleHeight
         }
+        
+        addViews()
+        addStackView()
     }
     
-    @IBInspectable var ePt: CGPoint = CGPoint(x: 300, y: 200) {
-        didSet {
-            self.endPoint = self.ePt
-        }
+    // helper for inits
+    func addViews() {
+        addShapeView()
+        if blurriness   > 0.01 { addBlurView()   }
+        if shadowWidth  > 0.01 { addShadowView() }
     }
     
-    //MARK:- Shape creation
-    
-    func createTileHolder(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat) {
-        let cornerRadius = borderWidth + 8.0
-        let outerPath = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
-        path.append(outerPath)
-        for i in 0 ..< numTiles {
-            let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
-            let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
-            let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: 8.0)
-            path.append(innerPath)
-        }
+    //MARK:- Path and shape creation
+    // createShape has no parameters, so it can be called in the ShapeView superclass in the
+    // addShapeView() func. Therefore, need another func addPoints(...) that *can* contain
+    // parameters specific to this subclass
+    override func createShape() {
+        addPoints(arrowType: arrowType, bubbleType: bubbleType)
+        createPath() // works with all types
     }
     
-    func addShadowView() {
-        // add shadow view
-        shadowView = UIView(frame: bounds.offsetBy(dx: 5, dy: 30))
-        guard let shadowView = shadowView else {
+    func addPoints(arrowType: ArrowType, bubbleType: BubbleType) {
+        
+        /*** Vars needed for all cases ***/
+        // startPoint. endPoint, startLeft and startRight are needed in all cases
+        guard let startPoint = startPoint, let endPoint = endPoint else {
             return
         }
-        shadowView.backgroundColor      = .red
-        shadowView.layer.cornerRadius   = 18.0
-        shadowView.layer.shadowColor    = UIColor.black.cgColor
-        shadowView.layer.shadowOpacity  = 1.0
-        shadowView.layer.shadowRadius   = 12.0
-        shadowView.layer.masksToBounds  = false
+        let startLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
+        let startRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
+        /*** END Vars needed for all cases ***/
+        
+        /*** Bubble points code should be accessible with any of the arrow type options ***/
+        // points for corners of Rectangle bubbles are same as quadcurve control pts
+        if bubbleType == .quadcurve || bubbleType == .rectangle {
+            let bx = bubbleWidth  * 0.5
+            let by = bubbleHeight * 0.5 * d // d is -1.0 when arrow points up
+            // points for quad curve bubble
+            let cornerLowerRight = CGPoint(x: startRight.x + bx, y: startRight.y         )
+            let cornerUpperRight = CGPoint(x: startRight.x + bx, y: startRight.y - by * 2)
+            let cornerUpperLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y  - by * 2)
+            let cornerLowerLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y          )
+            quadCorners.append(cornerLowerRight)
+            quadCorners.append(cornerUpperRight)
+            quadCorners.append(cornerUpperLeft)
+            quadCorners.append(cornerLowerLeft)
+            
+            if bubbleType == .quadcurve {
+                let bubbleRight      = CGPoint(x: startRight.x + bx, y: startRight.y - by    )
+                let bubbleTop        = CGPoint(x: startPoint.x,      y: startPoint.y - by * 2)
+                let bubbleLeft       = CGPoint(x: startLeft.x  - bx, y: startPoint.y - by    )
+                quadPoints.append(bubbleRight)
+                quadPoints.append(bubbleTop)
+                quadPoints.append(bubbleLeft)
+                quadPoints.append(startLeft) // last quad point is back at beginning
+            }
+        }
+        /*** END Bubble points code ***/
         
         
-        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
-        let outerShadowPath = UIBezierPath(rect: outerShadowMaskRect)
-        let innerShadowRect = CGRect(x: 0.0, y: 0.0, width: shadowView.frame.width, height: shadowView.frame.height)
-        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: 18.0)
-        
-        let shadowMask                          = CGMutablePath()
-        let shadowMaskLayer                     = CAShapeLayer()
-        
-        shadowMask.addPath(outerShadowPath.cgPath)
-        shadowMask.addPath(innerPath.cgPath)
-        
-        shadowMaskLayer.path                    = shadowMask
-        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
-        shadowView.layer.mask                   = shadowMaskLayer
-        //shadowView.mask = UIView(frame: bounds.offsetBy(dx: 10, dy: 10))
-        self.addSubview(shadowView)
+        // create and add the points in the order they will be used
+        // put points into their arrays
+        switch arrowType {
+        case .curved:
+            
+            adjustControlPoints()
+            
+            let innerPointRight   = CGPoint(x: endPoint.x   + endWth,   y: endPoint.y   - arrowHt * d               )
+            let innerPointLeft    = CGPoint(x: endPoint.x   - endWth,   y: endPoint.y   - arrowHt * d               )
+            let outerPointRight   = CGPoint(x: endPoint.x   + arrowWth, y: endPoint.y   - arrowHt * d               )
+            let outerPointLeft    = CGPoint(x: endPoint.x   - arrowWth, y: endPoint.y   - arrowHt * d               )
+            let endControlRight   = CGPoint(x: endPoint.x   + endWth,   y: endPoint.y   - arrowHt * d   - cpValue1  )
+            let endControlLeft    = CGPoint(x: endPoint.x   - endWth,   y: endPoint.y   - arrowHt * d   - cpValue2  )
+            let startControlLeft  = CGPoint(x: startPoint.x - startWth, y: startPoint.y                 + cpValue1  )
+            let startControlRight = CGPoint(x: startPoint.x + startWth, y: startPoint.y                 + cpValue2  )
+            
+            arrowPoints.append(startLeft)
+            arrowPoints.append(outerPointLeft)
+            arrowPoints.append(endPoint)
+            arrowPoints.append(outerPointRight)
+            arrowPoints.append(innerPointRight)
+            
+            bezierPoints.append([innerPointLeft, startControlLeft, endControlLeft])
+            bezierPoints.append([startRight, endControlRight, startControlRight])
+            
+        case .pointer:
+            
+            let endLeft           = CGPoint(x: endPoint.x    - endWth,   y: endPoint.y)
+            let endRight          = CGPoint(x: endPoint.x    + endWth,   y: endPoint.y)
+
+            arrowPoints.append(startLeft)
+            arrowPoints.append(endLeft)
+            arrowPoints.append(endRight)
+            arrowPoints.append(startRight)
+
+        case .straight:
+            let arrowheadPoints = getRotatedArrowheadPts()
+            arrowPoints.append(startLeft)
+            arrowPoints.append(arrowheadPoints[0])
+            arrowPoints.append(arrowheadPoints[1])
+            arrowPoints.append(endPoint)
+            arrowPoints.append(arrowheadPoints[2])
+            arrowPoints.append(arrowheadPoints[3])
+            arrowPoints.append(startRight)
+        }
     }
     
     
-    // adapted from similar code in BlurViewC and its xib - need to consolidate
-    func updateShadowMaskLayer () {
-//        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
-//        let outerPath = UIBezierPath(rect: outerShadowMaskRect)
-//        let innerShadowRect = CGRect(x: 0.0, y: -1.0, width: shadowView.frame.width, height: shadowView.frame.height)
-//        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: cornerRadius)
-//
-//        let shadowMask                          = CGMutablePath()
-//        let shadowMaskLayer                     = CAShapeLayer()
-//
-//        shadowMask.addPath(outerPath.cgPath)
-//        shadowMask.addPath(innerPath.cgPath)
-//
-//        shadowMaskLayer.path                    = shadowMask
-//        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
-//        shadowView.layer.mask                   = shadowMaskLayer
+//    // can eliminate this func now that all 3 types use same createPath() func
+//    func createArrow(arrowType: ArrowType) {
+//        switch arrowType {
+//        case .curved:
+//            createPath()
+//            //createBezierArrow()
+//        case .pointer:
+//            createPath()
+//        case .straight:
+////            createStraightArrow()
+//            // can share the code with Pointer, the diff is the points that have been put in the array
+//            createPath()
+//        }
+//    }
+    
+    // Makes path from points stored in arrays
+    func createPath () { // works for .pointer and .straight and .curved
+        
+        // Create the arrow path, open at top to optionally accept adding bubble to path
+        path.move   (to: arrowPoints[0])
+        
+        if arrowType == .curved {
+            path.addCurve(to: bezierPoints[0][0], controlPoint1: bezierPoints[0][1], controlPoint2: bezierPoints[0][2])
+        }
+        
+        for i in 1 ..< arrowPoints.count {
+            path.addLine(to: arrowPoints[i])
+        }
+        
+        if arrowType == .curved {
+            path.addCurve(to: bezierPoints[1][0], controlPoint1: bezierPoints[1][1], controlPoint2: bezierPoints[1][2])
+        }
+        
+        // Add bubble to path (optional)
+        switch bubbleType {
+        case .none:
+            print("do nothing")
+        
+        case .quadcurve:
+            for i in 0 ..< quadPoints.count {
+                // quadPoints are in middle of sides, quadCorners are in the corners
+                path.addQuadCurve(to: quadPoints[i], controlPoint: quadCorners[i])
+            }
+        case .rectangle:
+            for i in 0 ..< quadCorners.count {
+                path.addLine(to: quadCorners[i])
+            }
+        }
+        
+        path.close()
     }
     
+    /* // Curved (Bezier) Arrow
     // Curved arrow, arrowhead points straight up or down
     func createBezierArrow () {
-
+        
         if startPoint == nil {
             useFrameForPoints()
         }
@@ -193,28 +296,47 @@ class ArrowView: UIView {
         
         adjustControlPoints()
         
-        let startPointLeft    = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                             )
-        let startPointRight   = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                             )
-        let innerPointRight   = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   - ARROWHT * d               )
-        let innerPointLeft    = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y   - ARROWHT * d               )
-        let outerPointRight   = CGPoint(x: endPoint.x   + ARROWWTH, y: endPoint.y   - ARROWHT * d               )
-        let outerPointLeft    = CGPoint(x: endPoint.x   - ARROWWTH, y: endPoint.y   - ARROWHT * d               )
-        let endControlRight   = CGPoint(x: endPoint.x   + ENDWTH,   y: endPoint.y   - ARROWHT * d   - cpValue1  )
-        let endControlLeft    = CGPoint(x: endPoint.x   - ENDWTH,   y: endPoint.y   - ARROWHT * d   - cpValue2  )
-        let startControlLeft  = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                 + cpValue1  )
-        let startControlRight = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                 + cpValue2  )
+        let startPointLeft    = CGPoint(x: startPoint.x - startWth, y: startPoint.y                             )
+        let startPointRight   = CGPoint(x: startPoint.x + startWth, y: startPoint.y                             )
+        let innerPointRight   = CGPoint(x: endPoint.x   + endWth,   y: endPoint.y   - arrowHt * d               )
+        let innerPointLeft    = CGPoint(x: endPoint.x   - endWth,   y: endPoint.y   - arrowHt * d               )
+        let outerPointRight   = CGPoint(x: endPoint.x   + arrowWth, y: endPoint.y   - arrowHt * d               )
+        let outerPointLeft    = CGPoint(x: endPoint.x   - arrowWth, y: endPoint.y   - arrowHt * d               )
+        let endControlRight   = CGPoint(x: endPoint.x   + endWth,   y: endPoint.y   - arrowHt * d   - cpValue1  )
+        let endControlLeft    = CGPoint(x: endPoint.x   - endWth,   y: endPoint.y   - arrowHt * d   - cpValue2  )
+        let startControlLeft  = CGPoint(x: startPoint.x - startWth, y: startPoint.y                 + cpValue1  )
+        let startControlRight = CGPoint(x: startPoint.x + startWth, y: startPoint.y                 + cpValue2  )
         
-        path.move       (to: startPoint)
-        path.addLine    (to: startPointRight)
+        //path.move       (to: startPoint)
+        path.move       (to: startPointRight)
         path.addCurve   (to: innerPointRight, controlPoint1: startControlRight,  controlPoint2: endControlRight)
         path.addLine    (to: outerPointRight)
         path.addLine    (to: endPoint)
         path.addLine    (to: outerPointLeft)
         path.addLine    (to: innerPointLeft)
         path.addCurve   (to: startPointLeft, controlPoint1: endControlLeft, controlPoint2: startControlLeft)
+        
+     
+        // add them to arrays
+        // In each create func, add the lines/quadcurves from the arrays per options chosen
+        
+        
+        // make an ellipse above
+        if bubbleType == .quadcurve {
+            let bw = bubbleWidth  * 0.5
+            let bh = bubbleHeight * 0.5 * d // d is -1.0 when points up
+        path.addQuadCurve(to: CGPoint(x: startPointLeft.x - bw, y: startPoint.y - bh   ), controlPoint: CGPoint(x: startPointLeft.x - bw, y: startPoint.y    ))
+        path.addQuadCurve(to: CGPoint(x: startPoint.x, y: startPoint.y - bh * 2   ), controlPoint: CGPoint(x: startPointLeft.x - bw, y: startPoint.y - bh * 2      ))
+        path.addQuadCurve(to: CGPoint(x: startPointRight.x + bw, y: startPointRight.y - bh   ), controlPoint: CGPoint(x: startPointRight.x + bw, y: startPoint.y - bh * 2     ))
+        path.addQuadCurve(to: startPointRight, controlPoint: CGPoint(x: startPointRight.x + bw, y: startPoint.y     ))
+        }
+
+        //path.addQuadCurve(to: CGPoint(x: startPointLeft.x, y: startPoint.y   ), controlPoint: CGPoint(x: startPointLeft.x - 100, y: startPoint.y    ))
+        
+        
         path.close      ()
     }
-    
+    */
     
     func adjustControlPoints() {
         guard let startPoint = startPoint, let endPoint = endPoint else {
@@ -222,16 +344,13 @@ class ArrowView: UIView {
         }
         
         // in case where the arrow is too short, reduce control point offsets
-        let arrowHeight = abs(endPoint.y - startPoint.y)
-        if arrowHeight < 2 * cpValue1 {
-            cpValue1 = arrowHeight * 0.45
+        let ht = abs(endPoint.y - startPoint.y)
+        if ht < 2 * cpValue1 {
+            cpValue1 = ht * 0.45
         }
-        // Check whether arrow points up or down
-        if startPoint.y - endPoint.y > 0 {
-            // arrow is pointing up
-            d = -1.0
-            cpValue1 *= d
-        }
+        // If arrow points up, d will be -1.0  Otherwise d = 1.0
+        cpValue1 *= d
+
         // make the values equal for now
         cpValue2 = cpValue1
         
@@ -261,6 +380,32 @@ class ArrowView: UIView {
         cpValue2        = tempValue
     }
     
+    /* Straight (Rotated) Arrow
+    func createStraightArrow () {
+        
+        if startPoint == nil {
+            useFrameForPoints()
+        }
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return
+        }
+        
+        let startPointLeft    = CGPoint(x: startPoint.x - startWth, y: startPoint.y                             )
+        let startPointRight   = CGPoint(x: startPoint.x + startWth, y: startPoint.y                             )
+        let arrowheadPoints   = getRotatedArrowheadPts()
+        
+        path.move       (to: startPoint)
+        path.addLine    (to: startPointRight)
+        path.addLine    (to: arrowheadPoints[1])
+        path.addLine    (to: arrowheadPoints[0])
+        path.addLine    (to: endPoint)
+        path.addLine    (to: arrowheadPoints[3])
+        path.addLine    (to: arrowheadPoints[2])
+        path.addLine    (to: startPointLeft)
+        path.close      ()
+    }
+    */
+    
     func getRotatedArrowheadPts() -> [CGPoint] {
         
         var pointsOut: [CGPoint] = [CGPoint]()
@@ -275,12 +420,13 @@ class ArrowView: UIView {
         }
         
         // The points before rotation, and before being moved by the height of the arrowhead
-        let outerRight          = CGPoint(x:  ARROWWTH,             y: endPoint.y               )
-        let innerRight          = CGPoint(x:  ENDWTH,               y: endPoint.y               )
-        let innerLeft           = CGPoint(x:  ENDWTH *      -1.0,   y: endPoint.y               )
-        let outerLeft           = CGPoint(x:  ARROWWTH *    -1.0,   y: endPoint.y               )
+        let outerRight          = CGPoint(x:  arrowWth,             y: endPoint.y               )
+        let innerRight          = CGPoint(x:  endWth,               y: endPoint.y               )
+        let innerLeft           = CGPoint(x:  endWth *      -1.0,   y: endPoint.y               )
+        let outerLeft           = CGPoint(x:  arrowWth *    -1.0,   y: endPoint.y               )
         
-        let pointsIn: [CGPoint] = [outerRight, innerRight, innerLeft, outerLeft]
+//        let pointsIn: [CGPoint] = [outerRight, innerRight, innerLeft, outerLeft]
+        let pointsIn: [CGPoint] = [innerLeft, outerLeft, outerRight, innerRight]
         
         // Get the angle amount to rotate
         let opposite: CGFloat   = startPoint.x - endPoint.x
@@ -292,274 +438,20 @@ class ArrowView: UIView {
         let cosine              = cos(rotationAngle)
         let sine                = sin(rotationAngle)
         for i in 0 ..< pointsIn.count {
-            let a               = endPoint.x + pointsIn[i].x * cosine + ARROWHT * sine * d
-            let b               = endPoint.y + pointsIn[i].x * sine   - ARROWHT * cosine * d
+            let a               = endPoint.x + pointsIn[i].x * cosine + arrowHt * sine * d
+            let b               = endPoint.y + pointsIn[i].x * sine   - arrowHt * cosine * d
             pointsOut.append(CGPoint(x: a, y: b))
         }
-    
+        
         return pointsOut
     }
     
-    //let hypotenuse: CGFloat = sqrt(pow(opposite, 2) + pow(adjacent, 2))
-    //let rotationAmount  = (asin(opposite / hypotenuse) * 180.0) / .pi
+    // Uncomment to cut off the top of the shadow if desired
+//    override func getExpandedRect() -> CGRect {
+//        var expandedRect = bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth)
+//        expandedRect.origin.y += 2.15 * shadowWidth * d // d is 1 for down pointing, and -1 for up
+//        return expandedRect
+//    }
     
-    // Curved arrow, arrowhead points straight up or down
-    func createRotatedArrow () {
-        
-        if startPoint == nil {
-            useFrameForPoints()
-        }
-        guard let startPoint = startPoint, let endPoint = endPoint else {
-            return
-        }
-        
-        let startPointLeft    = CGPoint(x: startPoint.x - STARTWTH, y: startPoint.y                             )
-        let startPointRight   = CGPoint(x: startPoint.x + STARTWTH, y: startPoint.y                             )
-        let arrowheadPoints   = getRotatedArrowheadPts()
-        
-        path.move       (to: startPoint)
-        path.addLine    (to: startPointRight)
-        path.addLine    (to: arrowheadPoints[1])
-        path.addLine    (to: arrowheadPoints[0])
-        path.addLine    (to: endPoint)
-        path.addLine    (to: arrowheadPoints[3])
-        path.addLine    (to: arrowheadPoints[2])
-        path.addLine    (to: startPointLeft)
-        path.close      ()
-    }
-    
-    func getQuadControl (startPt: CGPoint, endPt: CGPoint) -> CGPoint {
-        let pointingRight: Bool = startPt.x < endPt.x ? true : false
-        //let tanx = (endPt.x - startPt.x) / (startPt.y - endPt.y)
-        let midX = (startPt.x - endPt.x) * 0.5
-        let midY = (endPt.y - startPt.y) * 0.5
-        let cpX = startPt.x - midX
-        let cpY = endPt.y - midY
-        //let cp = CGPoint(x: cpX, y: cpY)
-        var cp2X = startPt.x
-        var cp2Y = endPt.y
-        if pointingRight { cp2X = endPt.x + 30.0; cp2Y = startPt.y }
-        
-        let cp2 = CGPoint(x: cp2X, y: cp2Y)
-        return cp2
-    }
-    
-    func createQuadCurveArrow () {
-        path = UIBezierPath()
-        guard let startPoint = startPoint, let endPoint = endPoint else {
-            return
-        }
-        let startPointLeft      = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                          )
-        let startPointRight     = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                          )
-        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT           )
-        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT           )
-        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWTH,    y: endPoint.y    - ARROWHT           )
-        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWTH,    y: endPoint.y    - ARROWHT           )
-        //let startControlRight   = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                + 40.0    )
-        //let insideControlRight  = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-        let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
-        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-        let quadControl = getQuadControl(startPt: startPointRight, endPt: insidePointRight)
-        
-        path.move           (to: startPoint)
-        path.addLine        (to: startPointRight)
-        path.addQuadCurve   (to: insidePointRight, controlPoint: quadControl)
-        path.addLine        (to: outsidePointRight)
-        path.addLine        (to: endPoint)
-        path.addLine        (to: outsidePointLeft)
-        path.addLine        (to: insidePointLeft)
-        path.addQuadCurve   (to: startPointLeft, controlPoint: quadControl)
-        //path.addCurve       (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
-        path.close          ()
-    }
-    
-    func createArrow () {
-        path = UIBezierPath()
-        guard let startPoint = startPoint, let endPoint = endPoint else {
-            return
-        }
-        let startPointLeft      = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                          )
-        let startPointRight     = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                          )
-        let insidePointRight    = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT           )
-        let insidePointLeft     = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT           )
-        let outsidePointRight   = CGPoint(x: endPoint.x   + ARROWWTH,    y: endPoint.y    - ARROWHT           )
-        let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWTH,    y: endPoint.y    - ARROWHT           )
-        let startControlRight   = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                + 40.0    )
-        let insideControlRight  = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-        let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
-        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-        
-        path.move       (to: startPoint)
-        path.addLine    (to: startPointRight)
-        path.addCurve   (to: insidePointRight, controlPoint1: startControlRight,  controlPoint2: insideControlRight)
-        path.addLine    (to: outsidePointRight)
-        path.addLine    (to: endPoint)
-        path.addLine    (to: outsidePointLeft)
-        path.addLine    (to: insidePointLeft)
-        path.addCurve   (to: startPointLeft, controlPoint1: insideControlLeft, controlPoint2: startControlLeft)
-        path.close      ()
-    }
-    
-    func createPointer () {
-        path = UIBezierPath()
-        guard let startPoint = startPoint, let endPoint = endPoint else {
-            return
-        }
-        let startPointLeft  = CGPoint(x: startPoint.x   - STARTWTH,   y: startPoint.y)
-        let startPointRight = CGPoint(x: startPoint.x   + STARTWTH,   y: startPoint.y)
-        let endPointLeft    = CGPoint(x: endPoint.x     - ENDWTH,     y: endPoint.y)
-        let endPointRight   = CGPoint(x: endPoint.x     + ENDWTH,     y: endPoint.y)
-        path.move   (to: startPointLeft)
-        path.addLine(to: startPointRight)
-        path.addLine(to: endPointRight)
-        path.addLine(to: endPointLeft)
-        path.close  ()
-    }
-
-    func createRectangle() {
-        
-        //path = UIBezierPath()
-        path.move(to: CGPoint(x: 0.0, y: 0.0))
-        path.addLine(to: CGPoint(x: 0.0, y: self.frame.size.height))
-        path.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height))
-        path.addLine(to: CGPoint(x: self.frame.size.width, y: 0.0))
-        path.close()
-    }
-
-    // called in init
-    func addShapeWithBlur() {
-
-        
-        //createBezierArrow()
-        createRotatedArrow()
-        
-        
-        for i in 0 ..< lineProperties.count {
-            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
-        }
-        
-        blurArrow()
-    }
-    
-    func addSublayerShapeLayer (lineWidth: CGFloat, color: UIColor) {
-        let shapeLayer          = CAShapeLayer()
-        shapeLayer.path         = self.path.cgPath
-        shapeLayer.lineWidth    = lineWidth
-        shapeLayer.strokeColor  = color.cgColor
-        shapeLayer.fillColor    = UIColor.clear.cgColor
-        shapeLayer.lineJoin     = kCALineJoinRound
-        
-        self.layer.addSublayer(shapeLayer)
-    }
-    
-    // blur fx
-    func blurArrow() {
-        var blurEffect: UIBlurEffect
-        if #available(iOS 10.0, *) {
-            blurEffect = UIBlurEffect(style: .prominent)
-        } else {
-            blurEffect = UIBlurEffect(style: .light)
-        }
-        
-        blurView = UIVisualEffectView(effect: nil)
-    
-        guard let blurView = blurView else {
-            return
-        }
-        
-        animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
-            self.blurView?.effect = blurEffect
-            self.animator?.pauseAnimation()
-        }
-        animator?.startAnimation()
-        animator?.fractionComplete = blurriness
-    
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        
-        arrowBounds = self.path.cgPath.boundingBoxOfPath
-        guard let arrowBounds = arrowBounds else {
-            return
-        }
-        blurView.frame              = arrowBounds
-        
-        /*
-        let maskLayer               = CAShapeLayer()
-        
-        let arrowBoundsExpanded     = CGRect(x:      arrowBounds.minX    - 20.0,
-                                             y:      arrowBounds.minY    - 20.0,
-                                             width:  arrowBounds.width   + 40.0,
-                                             height: arrowBounds.height  + 40.0)
-        
-        let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
-        maskPath.append(self.path)
-        
-//        let mPath = CGMutablePath()
-//        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
-//        mPath.addPath(self.path.cgPath)
-   
-
-        maskLayer.path              = maskPath.cgPath
-        maskLayer.fillRule          = kCAFillRuleEvenOdd
-        maskLayer.fillColor         = Colors.bluek.cgColor
-     
-        
-        let mView                = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
-
-        mView.layer.addSublayer(maskLayer)
-
-        mView.layer.mask = maskLayer
-
-        //blurView.mask = maskView
-        
-//        blurView.mask = mView
-//        blurView.contentView.layer.mask = maskLayer
-        
-        */
-        self.insertSubview(blurView, at: 0)
-        //self.insertSubview(maskView, at: 1)
-        //blurView.layer.mask = maskLayer
-        
-        
-    }
-    
-    func getShadowMask() -> UIView {
-        // will return a UIView
-        var sView = getArrowMask()
-        // invert the mask for use as a shadow mask
-        return sView
-    }
-    
-    // Needs to be called from the containing view, otherwise the blur will not work
-    func getArrowMask() -> UIView {
-        guard let arrowBounds = arrowBounds else {
-            return self
-        }
-        let maskLayer               = CAShapeLayer()
-        
-//        let arrowBoundsExpanded     = CGRect(x:      (arrowBounds?.minX)!    - 20.0,
-//                                             y:      (arrowBounds?.minY)!    - 20.0,
-//                                             width:  (arrowBounds?.width)!   + 40.0,
-//                                             height: (arrowBounds?.height)!  + 40.0)
-//
-//        let maskPath                = UIBezierPath(rect: arrowBoundsExpanded)
-//        maskPath.append(self.path)
-        
-        //        let mPath = CGMutablePath()
-        //        mPath.addPath(UIBezierPath(rect: arrowBoundsExpanded).cgPath)
-        //        mPath.addPath(self.path.cgPath)
-        
-        
-        maskLayer.path              = self.path.cgPath  //  maskPath.cgPath
-        maskLayer.fillRule          = kCAFillRuleEvenOdd
-        //maskLayer.fillColor       = Colors.bluek.cgColor
-        
-        let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))
-        
-        mView.layer.addSublayer(maskLayer)
-        
-        //mView.layer.mask = maskLayer
-        
-        return mView
-        
-    }
 }
+
