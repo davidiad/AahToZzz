@@ -9,6 +9,10 @@ import UIKit
 
 class ArrowView: ShapeView {
     
+    let bubbleText1: [String] = ["Tap or drag tiles",
+                                 "to form",
+                                 "three letter words"]
+    
     //MARK: Arrow const's and vars
     //Wth == WIDTH, Ht == HEIGHT
 
@@ -73,18 +77,41 @@ class ArrowView: ShapeView {
         
     }
     
+    func calculateBubbleSizeFromText (textArray: [String]) {
+        let lineHeightFactor: CGFloat   = 27.0
+        let textWidthFactor:  CGFloat   =  6.0
+        bubbleHeight = CGFloat(textArray.count + 1) * lineHeightFactor
+        // assuming the largest strings have been put in the middle, shorts on the outside (to fit in a bubble)
+        var maxLength = 0
+        for s in textArray {
+            if s.count > maxLength {
+                maxLength = s.count
+            }
+        }
+        bubbleWidth = CGFloat(maxLength + 10) * textWidthFactor
+    }
+    
+    //TODO:- Put stackivew/label functionality into a protocol
     func addStackView() {
-        let sv = UIStackView(frame: bounds.insetBy(dx: 35.0, dy: 33.0))
+        let sv = UIStackView(frame: CGRect(x: bounds.minX + 20.0, y: bounds.minY + 12.0, width: bubbleWidth, height: bubbleHeight - 24.0))
+        sv.spacing = 8.3
         
-        
-        let l1 = UILabel(frame: bounds.insetBy(dx: 23.0, dy: 35.0))
+        let l1 = UILabel()
         l1.backgroundColor = .red
-        l1.text = "wer WERTH Jasdfi a a"
+        l1.textAlignment = .center
+        l1.numberOfLines = 1
+        l1.text = bubbleText1[0]
         let l2 = UILabel()
         l2.backgroundColor = Colors.bluek
-        l2.text = "N BH NA NA A"
+        l2.text = bubbleText1[1]
+        l2.textAlignment = .center
+        let l3 = UILabel()
+        l3.backgroundColor = UIColor.orange
+        l3.text = bubbleText1[2]
+        l3.textAlignment = .center
         sv.addArrangedSubview(l1)
         sv.addArrangedSubview(l2)
+        sv.addArrangedSubview(l3)
         sv.axis = .vertical
         addSubview(sv)
         
@@ -123,7 +150,7 @@ class ArrowView: ShapeView {
             self.bubbleWidth  = bubbleWidth
             self.bubbleHeight = bubbleHeight
         }
-        
+        calculateBubbleSizeFromText(textArray: bubbleText1) // bubble dimensions must be determined before creating views
         addViews()
         addStackView()
     }
@@ -229,22 +256,6 @@ class ArrowView: ShapeView {
             arrowPoints.append(startRight)
         }
     }
-    
-    
-//    // can eliminate this func now that all 3 types use same createPath() func
-//    func createArrow(arrowType: ArrowType) {
-//        switch arrowType {
-//        case .curved:
-//            createPath()
-//            //createBezierArrow()
-//        case .pointer:
-//            createPath()
-//        case .straight:
-////            createStraightArrow()
-//            // can share the code with Pointer, the diff is the points that have been put in the array
-//            createPath()
-//        }
-//    }
     
     // Makes path from points stored in arrays
     func createPath () { // works for .pointer and .straight and .curved
