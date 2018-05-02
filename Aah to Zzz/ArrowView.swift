@@ -10,8 +10,8 @@ import UIKit
 class ArrowView: ShapeView {
     
     let bubbleText1: [String] = ["Tap or drag tiles",
-                                 "to form",
-                                 "three letter words"]
+                                 "to create a beautiful formation",
+                                 "of three letter words"]
     
     //MARK: Arrow const's and vars
     //Wth == WIDTH, Ht == HEIGHT
@@ -19,8 +19,8 @@ class ArrowView: ShapeView {
     let TANGENTLIMIT:   CGFloat     = 5.0  // prevents control pt adjustments when close to vertical
     let CPMULTIPLIER:   CGFloat     = 0.4  // empirical const for amount of control pt adjustment
     
-    var startWth:       CGFloat     = 17.0
-    var endWth:         CGFloat     = 9.0
+    var startWth:       CGFloat     = 3.0
+    var endWth:         CGFloat     = 19.0
     var arrowWth:       CGFloat     = 24.0
     var arrowHt:        CGFloat     = 19.0
     // TODO:- add text bubble size vars (ht and width), with defaults
@@ -79,7 +79,7 @@ class ArrowView: ShapeView {
     
     func calculateBubbleSizeFromText (textArray: [String]) {
         let lineHeightFactor: CGFloat   = 27.0
-        let textWidthFactor:  CGFloat   =  6.0
+        let textWidthFactor:  CGFloat   =  5.0
         bubbleHeight = CGFloat(textArray.count + 1) * lineHeightFactor
         // assuming the largest strings have been put in the middle, shorts on the outside (to fit in a bubble)
         var maxLength = 0
@@ -88,12 +88,20 @@ class ArrowView: ShapeView {
                 maxLength = s.count
             }
         }
-        bubbleWidth = CGFloat(maxLength + 10) * textWidthFactor
+        bubbleWidth = CGFloat(maxLength + 6) * textWidthFactor
     }
     
     //TODO:- Put stackivew/label functionality into a protocol
     func addStackView() {
-        let sv = UIStackView(frame: CGRect(x: bounds.minX + 20.0, y: bounds.minY + 12.0, width: bubbleWidth, height: bubbleHeight - 24.0))
+         // need to ensure we don't try to access out of array bounds
+        let inset: CGFloat = 8.0
+        var corner = CGPoint()
+        if quadCorners.count > 3 {
+            if d > 0 { corner = quadCorners[2] }
+            else     { corner = quadCorners[3] }
+        }
+        let stackViewFrame = CGRect(x: corner.x + inset, y: corner.y + inset, width: bubbleWidth + 2 * startWth - (2 * inset), height: bubbleHeight - 2 * inset)
+        let sv = UIStackView(frame: stackViewFrame.insetBy(dx: inset, dy: inset))
         sv.spacing = 8.3
         
         let l1 = UILabel()
@@ -104,15 +112,19 @@ class ArrowView: ShapeView {
         let l2 = UILabel()
         l2.backgroundColor = Colors.bluek
         l2.text = bubbleText1[1]
+        l2.adjustsFontSizeToFitWidth = true
         l2.textAlignment = .center
         let l3 = UILabel()
         l3.backgroundColor = UIColor.orange
         l3.text = bubbleText1[2]
         l3.textAlignment = .center
+        sv.axis = .vertical
+        sv.alignment = .center
+        sv.distribution = .fillEqually
         sv.addArrangedSubview(l1)
         sv.addArrangedSubview(l2)
         sv.addArrangedSubview(l3)
-        sv.axis = .vertical
+
         addSubview(sv)
         
     }
