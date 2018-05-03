@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ArrowView: ShapeView {
+class ArrowView: ShapeView, Bubble {
     
-    let bubbleText1: [String] = ["Tap or drag tiles",
+    var bubbleText: [String] = ["Tap or drag tiles",
                                  "to create a beautiful formation",
                                  "of three letter words"]
     
@@ -93,37 +93,32 @@ class ArrowView: ShapeView {
     
     //TODO:- Put stackivew/label functionality into a protocol
     func addStackView() {
-         // need to ensure we don't try to access out of array bounds
+        
         let inset: CGFloat = 8.0
         var corner = CGPoint()
-        if quadCorners.count > 3 {
-            if d > 0 { corner = quadCorners[2] }
-            else     { corner = quadCorners[3] }
+        if quadCorners.count > 3 { // need to ensure we don't try to access out of array bounds
+            if d > 0 { corner = quadCorners[2] } // arrow points down, upper left corner is quadCorners[2]
+            else     { corner = quadCorners[3] } // arrow points up, upper left corner is quadCorners[3]
+        } else {
+            print("No quadCorners defined for use by stack view")
+            return
         }
         let stackViewFrame = CGRect(x: corner.x + inset, y: corner.y + inset, width: bubbleWidth + 2 * startWth - (2 * inset), height: bubbleHeight - 2 * inset)
         let sv = UIStackView(frame: stackViewFrame.insetBy(dx: inset, dy: inset))
-        sv.spacing = 8.3
+        sv.spacing          = 8.3
+        sv.axis             = .vertical
+        sv.alignment        = .center
+        sv.distribution     = .fillEqually
         
-        let l1 = UILabel()
-        l1.backgroundColor = .red
-        l1.textAlignment = .center
-        l1.numberOfLines = 1
-        l1.text = bubbleText1[0]
-        let l2 = UILabel()
-        l2.backgroundColor = Colors.bluek
-        l2.text = bubbleText1[1]
-        l2.adjustsFontSizeToFitWidth = true
-        l2.textAlignment = .center
-        let l3 = UILabel()
-        l3.backgroundColor = UIColor.orange
-        l3.text = bubbleText1[2]
-        l3.textAlignment = .center
-        sv.axis = .vertical
-        sv.alignment = .center
-        sv.distribution = .fillEqually
-        sv.addArrangedSubview(l1)
-        sv.addArrangedSubview(l2)
-        sv.addArrangedSubview(l3)
+        for s in bubbleText {
+            let label = UILabel()
+            label.text = s
+            label.backgroundColor = UIColor.purple
+            label.textAlignment = .center
+            label.numberOfLines = 1
+            sv.addArrangedSubview(label)
+            
+        }
 
         addSubview(sv)
         
@@ -162,7 +157,7 @@ class ArrowView: ShapeView {
             self.bubbleWidth  = bubbleWidth
             self.bubbleHeight = bubbleHeight
         }
-        calculateBubbleSizeFromText(textArray: bubbleText1) // bubble dimensions must be determined before creating views
+        calculateBubbleSizeFromText(textArray: bubbleText) // bubble dimensions must be determined before creating views
         addViews()
         addStackView()
     }
@@ -478,3 +473,17 @@ class ArrowView: ShapeView {
     
 }
 
+protocol Bubble: class {
+    var bubbleText:     [String] { get set }
+//    var shadowed:       Bool { get }
+//    var path:           UIBezierPath { get }// = UIBezierPath()
+//    var shadowPath:     UIBezierPath { get }// = UIBezierPath() // TODO: should be optional, as there may not be a shadow
+//    var lineProperties: [LineProperties] { get }// = [LineProperties]()
+//    var shapeView:      UIView? { get set }
+//    var shadowView:     UIView? { get set }
+//    var shapeType:      ShapeType { get }
+
+
+
+    func addStackView() // if implented by its super., doesn't need to be also in the child
+}
