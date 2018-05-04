@@ -7,11 +7,9 @@
 
 import UIKit
 
-class ArrowView: ShapeView, Bubble {
+class ArrowView: ShapeView {
     
-    var bubbleText: [String] = ["Tap or drag tiles",
-                                 "to create a beautiful formation",
-                                 "of three letter words"]
+    weak var bubbleDelegate: BubbleDelegate?
     
     //MARK: Arrow const's and vars
     //Wth == WIDTH, Ht == HEIGHT
@@ -77,52 +75,9 @@ class ArrowView: ShapeView, Bubble {
         
     }
     
-    func calculateBubbleSizeFromText (textArray: [String]) {
-        let lineHeightFactor: CGFloat   = 27.0
-        let textWidthFactor:  CGFloat   =  5.0
-        bubbleHeight = CGFloat(textArray.count + 1) * lineHeightFactor
-        // assuming the largest strings have been put in the middle, shorts on the outside (to fit in a bubble)
-        var maxLength = 0
-        for s in textArray {
-            if s.count > maxLength {
-                maxLength = s.count
-            }
-        }
-        bubbleWidth = CGFloat(maxLength + 6) * textWidthFactor
-    }
-    
-    //TODO:- Put stackivew/label functionality into a protocol
-    func addStackView() {
-        
-        let inset: CGFloat = 8.0
-        var corner = CGPoint()
-        if quadCorners.count > 3 { // need to ensure we don't try to access out of array bounds
-            if d > 0 { corner = quadCorners[2] } // arrow points down, upper left corner is quadCorners[2]
-            else     { corner = quadCorners[3] } // arrow points up, upper left corner is quadCorners[3]
-        } else {
-            print("No quadCorners defined for use by stack view")
-            return
-        }
-        let stackViewFrame = CGRect(x: corner.x + inset, y: corner.y + inset, width: bubbleWidth + 2 * startWth - (2 * inset), height: bubbleHeight - 2 * inset)
-        let sv = UIStackView(frame: stackViewFrame.insetBy(dx: inset, dy: inset))
-        sv.spacing          = 8.3
-        sv.axis             = .vertical
-        sv.alignment        = .center
-        sv.distribution     = .fillEqually
-        
-        for s in bubbleText {
-            let label = UILabel()
-            label.text = s
-            label.backgroundColor = UIColor.purple
-            label.textAlignment = .center
-            label.numberOfLines = 1
-            sv.addArrangedSubview(label)
-            
-        }
 
-        addSubview(sv)
-        
-    }
+    
+
     
     // allow control of blur and shadow and all arrow parameters
     //TODO: consider making more of the parameters optional
@@ -157,9 +112,21 @@ class ArrowView: ShapeView, Bubble {
             self.bubbleWidth  = bubbleWidth
             self.bubbleHeight = bubbleHeight
         }
-        calculateBubbleSizeFromText(textArray: bubbleText) // bubble dimensions must be determined before creating views
+        
+        // use text to calculate bubble size, supercedeing the above
+        if bubbleDelegate != nil {
+                guard let bubbleSize = bubbleDelegate?.getBubbleSize() else {
+                return // should return? what if there is no bubble? still want to add views with existing bubble size
+            }
+            self.bubbleWidth     = bubbleSize.width
+            self.bubbleHeight    = bubbleSize.height
+        }
+        // calculateBubbleSizeFromText(textArray: bubbleText) // bubble dimensions must be determined before creating views
         addViews()
-        addStackView()
+        
+        if bubbleDelegate != nil {
+            bubbleDelegate?.addStackView()
+        }
     }
     
     // helper for inits
@@ -473,7 +440,7 @@ class ArrowView: ShapeView, Bubble {
     
 }
 
-protocol Bubble: class {
+protocol Bubble: AnyObject {
     var bubbleText:     [String] { get set }
 //    var shadowed:       Bool { get }
 //    var path:           UIBezierPath { get }// = UIBezierPath()
@@ -484,6 +451,6 @@ protocol Bubble: class {
 //    var shapeType:      ShapeType { get }
 
 
-
+    func getBubbleSize()
     func addStackView() // if implented by its super., doesn't need to be also in the child
 }
