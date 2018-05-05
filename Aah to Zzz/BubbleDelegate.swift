@@ -8,10 +8,14 @@
 import UIKit
 
 class BubbleDelegate: Bubble {
+    
     var bubbleText: [String] = ["Tap or drag tiles",
                                 "to create a beautiful formation",
                                 "of three letter words"]
     
+    var startPoint: CGPoint?
+    var bubbleSize: CGSize?
+    var d: CGFloat = 1.0
     
     //TODO:- Put stackivew/label functionality into a protocol
     func addStackView() -> UIStackView {
@@ -46,7 +50,11 @@ class BubbleDelegate: Bubble {
     
     // wrapper with no parameters
     func getBubbleSize() -> CGSize {
-        return calculateBubbleSizeFromText(textArray: bubbleText)
+        bubbleSize = calculateBubbleSizeFromText(textArray: bubbleText)
+        guard let bubbleSize = bubbleSize else {
+            return CGSize(width: 100, height: 100) // default values
+        }
+        return bubbleSize
     }
     
     func calculateBubbleSizeFromText (textArray: [String]) -> CGSize {
@@ -63,5 +71,67 @@ class BubbleDelegate: Bubble {
         let bubbleWidth = CGFloat(maxLength + 6) * textWidthFactor
     
         return CGSize(width: bubbleWidth, height: bubbleHeight)
+    }
+    
+    func getQuadCorners() -> [CGPoint] {
+        guard let startPoint = startPoint, let bubbleSize = bubbleSize else {
+            return []
+        }
+        let bx = bubbleSize.width  * 0.5
+        let by = bubbleSize.height * 0.5 * d // d is -1.0 when arrow points up
+        // points for quad curve bubble
+        let cornerLowerRight = CGPoint(x: startPoint.x  + bx, y: startPoint.y         )
+        let cornerUpperRight = CGPoint(x: startPoint.x  + bx, y: startPoint.y - by * 2)
+        let cornerUpperLeft  = CGPoint(x: startPoint.x  - bx, y: startPoint.y - by * 2)
+        let cornerLowerLeft  = CGPoint(x: startPoint.x  - bx, y: startPoint.y          )
+//        let cornerLowerRight = CGPoint(x: startRight.x + bx, y: startRight.y         )
+//        let cornerUpperRight = CGPoint(x: startRight.x + bx, y: startRight.y - by * 2)
+//        let cornerUpperLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y  - by * 2)
+//        let cornerLowerLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y          )
+        
+        var quadCorners: [CGPoint] = []
+        quadCorners.append(cornerLowerRight)
+        quadCorners.append(cornerUpperRight)
+        quadCorners.append(cornerUpperLeft)
+        quadCorners.append(cornerLowerLeft)
+        
+        return quadCorners
+        
+    }
+    
+    func getQuadPoints() { // return quadPoints
+        
+    }
+    
+    func piyouy(){
+        
+        // points for corners of Rectangle bubbles are same as quadcurve control pts
+        if bubbleType == .quadcurve || bubbleType == .rectangle {
+            let bx = bubbleWidth  * 0.5
+            let by = bubbleHeight * 0.5 * d // d is -1.0 when arrow points up
+            // points for quad curve bubble
+            let cornerLowerRight = CGPoint(x: startRight.x + bx, y: startRight.y         )
+            let cornerUpperRight = CGPoint(x: startRight.x + bx, y: startRight.y - by * 2)
+            let cornerUpperLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y  - by * 2)
+            let cornerLowerLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y          )
+            quadCorners.append(cornerLowerRight)
+            quadCorners.append(cornerUpperRight)
+            quadCorners.append(cornerUpperLeft)
+            quadCorners.append(cornerLowerLeft)
+            
+            if bubbleType == .quadcurve {
+                let bubbleRight      = CGPoint(x: startRight.x + bx, y: startRight.y - by    )
+                let bubbleTop        = CGPoint(x: startPoint.x,      y: startPoint.y - by * 2)
+                let bubbleLeft       = CGPoint(x: startLeft.x  - bx, y: startPoint.y - by    )
+                quadPoints.append(bubbleRight)
+                quadPoints.append(bubbleTop)
+                quadPoints.append(bubbleLeft)
+                quadPoints.append(startLeft) // last quad point is back at beginning
+            }
+        }
+        /*** END Bubble points code ***/
+        
+        
+        
     }
 }

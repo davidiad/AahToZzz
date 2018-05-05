@@ -112,28 +112,38 @@ class ArrowView: ShapeView {
             self.bubbleWidth  = bubbleWidth
             self.bubbleHeight = bubbleHeight
         }
-        
-        // use text to calculate bubble size, supercedeing the above
-        if bubbleDelegate != nil {
-                guard let bubbleSize = bubbleDelegate?.getBubbleSize() else {
+        // use the bubble's text to calculate bubble size, supercedeing the above
+        if self.bubbleType != .none {
+            bubbleDelegate  = BubbleDelegate()
+            bubbleDelegate?.startPoint = self.startPoint
+            guard let bubbleSize = bubbleDelegate?.getBubbleSize() else {
                 return // should return? what if there is no bubble? still want to add views with existing bubble size
             }
             self.bubbleWidth     = bubbleSize.width
             self.bubbleHeight    = bubbleSize.height
         }
-        // calculateBubbleSizeFromText(textArray: bubbleText) // bubble dimensions must be determined before creating views
+        // calculateBubbleSizeFromText(textArray: bubbleText): bubble dimensions must be determined before creating views
         addViews()
         
-        if bubbleDelegate != nil {
-            bubbleDelegate?.addStackView()
-        }
+
     }
     
     // helper for inits
     func addViews() {
-        addShapeView()
+        addShapeView() // d is set here (1.0 or -1.0)
         if blurriness   > 0.01 { addBlurView()   }
         if shadowWidth  > 0.01 { addShadowView() }
+        
+        //TODO: move to separate func
+        if bubbleDelegate != nil {
+            // the value of d (up or down) has now been set. So pass it to the bubble delegate
+            bubbleDelegate?.d = d
+            // What other values need to be passed to bubbleDelegate? startPoint, startWth, quadCorners( can be made in delegate)
+            guard let sv = bubbleDelegate?.addStackView() else { // returns the stack view, need to add it here
+                return
+            }
+            addSubview(sv)
+        }
     }
     
     //MARK:- Path and shape creation
@@ -155,6 +165,10 @@ class ArrowView: ShapeView {
         let startLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
         let startRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
         /*** END Vars needed for all cases ***/
+        
+        // use bubbleDelegate to get loaded quadPoints and quadCorners arrays
+//        quadPoints = bubbleDelegate?.quadPoints
+//        quadCorners = bubbleDelegate?.quadCorners
         
         /*** Bubble points code should be accessible with any of the arrow type options ***/
         // points for corners of Rectangle bubbles are same as quadcurve control pts
@@ -442,6 +456,8 @@ class ArrowView: ShapeView {
 
 protocol Bubble: AnyObject {
     var bubbleText:     [String] { get set }
+    var d:              CGFloat  { get set }
+    var startPoint:     CGPoint  { get set }
 //    var shadowed:       Bool { get }
 //    var path:           UIBezierPath { get }// = UIBezierPath()
 //    var shadowPath:     UIBezierPath { get }// = UIBezierPath() // TODO: should be optional, as there may not be a shadow
@@ -451,6 +467,6 @@ protocol Bubble: AnyObject {
 //    var shapeType:      ShapeType { get }
 
 
-    func getBubbleSize()
-    func addStackView() // if implented by its super., doesn't need to be also in the child
+    func getBubbleSize() -> CGSize
+    func addStackView() -> UIStackView // if implented by its super., doesn't need to be also in the child
 }
