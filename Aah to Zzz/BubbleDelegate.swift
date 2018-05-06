@@ -11,7 +11,9 @@ class BubbleDelegate: Bubble {
     
     var bubbleText: [String] = ["Tap or drag tiles",
                                 "to create a beautiful formation",
-                                "of three letter words"]
+                                "of three letter words",
+                                "three letter words",
+                                "3 letters"]
     
     var startPoint: CGPoint?
     var startWth:   CGFloat     = 3.0
@@ -33,7 +35,7 @@ class BubbleDelegate: Bubble {
 //            else     { corner = quadCorners[3] } // arrow points up, upper left corner is quadCorners[3]
 //        }
         
-        let stackViewFrame = CGRect(x: corner.x + inset, y: corner.y + inset, width: bubbleWidth + 2 * startWth - (2 * inset), height: bubbleHeight - 2 * inset)
+        let stackViewFrame = CGRect(x: corner.x + inset, y: corner.y + inset, width: bubbleWidth - (2 * inset), height: bubbleHeight - 2 * inset)
         let sv = UIStackView(frame: stackViewFrame.insetBy(dx: inset, dy: inset))
         sv.spacing          = 8.3
         sv.axis             = .vertical

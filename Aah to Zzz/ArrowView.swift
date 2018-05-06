@@ -17,7 +17,7 @@ class ArrowView: ShapeView {
     let TANGENTLIMIT:   CGFloat     = 5.0  // prevents control pt adjustments when close to vertical
     let CPMULTIPLIER:   CGFloat     = 0.4  // empirical const for amount of control pt adjustment
     
-    var startWth:       CGFloat     = 3.0
+    var startWth:       CGFloat     = 33.0
     var endWth:         CGFloat     = 19.0
     var arrowWth:       CGFloat     = 24.0
     var arrowHt:        CGFloat     = 19.0
@@ -85,14 +85,16 @@ class ArrowView: ShapeView {
                      startPoint:    CGPoint, endPoint:     CGPoint,
                      startWidth:    CGFloat, endWidth:     CGFloat,
                      arrowWidth:    CGFloat, arrowHeight:  CGFloat,
-                     blurriness:    CGFloat     = 0.5,
-                     shadowWidth:   CGFloat     = 3.5,
-                     bubbleWidth:   CGFloat     = 100.0,
-                     bubbleHeight:  CGFloat     = 100.0,
-                     bubbleType:    BubbleType  = .none ) {
+                     blurriness:    CGFloat         = 0.5,
+                     shadowWidth:   CGFloat         = 3.5,
+                     bubbleWidth:   CGFloat         = 100.0,
+                     bubbleHeight:  CGFloat         = 100.0,
+                     bubbleType:    BubbleType      = .none,
+                     bubbleDelegate:BubbleDelegate? = nil
+                     ) {
         
         self.init(frame: CGRect(x: 65, y: 20, width: 10, height: 5))
-        
+        self.bubbleDelegate = bubbleDelegate
         self.arrowType      = arrowType
         self.startPoint     = startPoint
         self.endPoint       = endPoint
@@ -104,7 +106,7 @@ class ArrowView: ShapeView {
         self.blurriness     = blurriness
         self.shadowWidth    = shadowWidth
         self.bubbleType     = bubbleType
-        
+        self.bubbleDelegate = bubbleDelegate
         getDirection() // sets d to -1, if up, or 1 if down
         
         if self.bubbleType != .none {
@@ -117,15 +119,16 @@ class ArrowView: ShapeView {
         }
         // use the bubble's text to calculate bubble size, supercedeing the above
         if self.bubbleType != .none {
-
-            self.bubbleDelegate        = BubbleDelegate()
-            bubbleDelegate?.startPoint = self.startPoint
-            bubbleDelegate?.startWth   = self.startWth
-            bubbleDelegate?.d          = d
-            print("BD: \(bubbleDelegate)")
-            guard let bubbleSize = bubbleDelegate?.getBubbleSize() else {
-                return // should return? what if there is no bubble? still want to add views with existing bubble size
+            guard let bubbleDelegate = bubbleDelegate else {
+                return
             }
+            bubbleDelegate.startPoint = self.startPoint
+            bubbleDelegate.startWth   = self.startWth
+            bubbleDelegate.d          = d
+            let bubbleSize = bubbleDelegate.getBubbleSize()
+//            guard let bubbleSize = bubbleDelegate?.getBubbleSize() else {
+//                return // should return? what if there is no bubble? still want to add views with existing bubble size
+//            }
             self.bubbleWidth     = bubbleSize.width
             self.bubbleHeight    = bubbleSize.height
         }
@@ -195,6 +198,7 @@ class ArrowView: ShapeView {
         }
         if bubbleType == .quadcurve || bubbleType == .rectangle {
             quadCorners = bubbleDelegate.getQuadCorners()
+            print("QC: \(quadCorners)")
 //            let bx = bubbleWidth  * 0.5
 //            let by = bubbleHeight * 0.5 * d // d is -1.0 when arrow points up
 //            // points for quad curve bubble
