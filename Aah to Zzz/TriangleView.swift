@@ -54,7 +54,4 @@ class TriangleView: ShapeView {
         path.close()
     }
     
-    func addCruft() {
-        print ("CRUFT")
-    }
 }

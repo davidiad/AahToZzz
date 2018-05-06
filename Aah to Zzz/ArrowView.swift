@@ -28,7 +28,7 @@ class ArrowView: ShapeView {
     
     var cpValue1:       CGFloat     = 36.0
     var cpValue2:       CGFloat     = 36.0
-
+    var d:              CGFloat     = 1.0 // arrow direction, 1.0 for down, -1.0 for up
     var arrowType:      ArrowType   = .curved
     var bubbleType:     BubbleType  = .none
     var arrowPoints:    [CGPoint]   = []
@@ -104,8 +104,11 @@ class ArrowView: ShapeView {
         self.blurriness     = blurriness
         self.shadowWidth    = shadowWidth
         self.bubbleType     = bubbleType
+        
+        getDirection() // sets d to -1, if up, or 1 if down
+        
         if self.bubbleType != .none {
-            if bubbleWidth < 0.01 || bubbleHeight < 0.01 {
+            if bubbleWidth < 0.1 || bubbleHeight < 0.1 {
                 self.bubbleType = .none // bubble dimensions must be > 0
                 // TODO: check other parameter values for validity
             }
@@ -114,8 +117,12 @@ class ArrowView: ShapeView {
         }
         // use the bubble's text to calculate bubble size, supercedeing the above
         if self.bubbleType != .none {
-            bubbleDelegate  = BubbleDelegate()
+
+            self.bubbleDelegate        = BubbleDelegate()
             bubbleDelegate?.startPoint = self.startPoint
+            bubbleDelegate?.startWth   = self.startWth
+            bubbleDelegate?.d          = d
+            print("BD: \(bubbleDelegate)")
             guard let bubbleSize = bubbleDelegate?.getBubbleSize() else {
                 return // should return? what if there is no bubble? still want to add views with existing bubble size
             }
@@ -128,6 +135,17 @@ class ArrowView: ShapeView {
 
     }
     
+    func getDirection () { // default d = 1.0, meaning down
+        guard let startPoint = startPoint, let endPoint = endPoint else {
+            return
+        }
+        // Check whether arrow points up or down
+        if startPoint.y - endPoint.y > 0 {
+            // arrow is pointing up
+            d = -1.0
+        }
+    }
+    
     // helper for inits
     func addViews() {
         addShapeView() // d is set here (1.0 or -1.0)
@@ -136,8 +154,8 @@ class ArrowView: ShapeView {
         
         //TODO: move to separate func
         if bubbleDelegate != nil {
-            // the value of d (up or down) has now been set. So pass it to the bubble delegate
-            bubbleDelegate?.d = d
+//            // the value of d (up or down) has now been set. So pass it to the bubble delegate
+//            bubbleDelegate?.d = d
             // What other values need to be passed to bubbleDelegate? startPoint, startWth, quadCorners( can be made in delegate)
             guard let sv = bubbleDelegate?.addStackView() else { // returns the stack view, need to add it here
                 return
@@ -172,27 +190,32 @@ class ArrowView: ShapeView {
         
         /*** Bubble points code should be accessible with any of the arrow type options ***/
         // points for corners of Rectangle bubbles are same as quadcurve control pts
+        guard let bubbleDelegate = bubbleDelegate else {
+            return
+        }
         if bubbleType == .quadcurve || bubbleType == .rectangle {
-            let bx = bubbleWidth  * 0.5
-            let by = bubbleHeight * 0.5 * d // d is -1.0 when arrow points up
-            // points for quad curve bubble
-            let cornerLowerRight = CGPoint(x: startRight.x + bx, y: startRight.y         )
-            let cornerUpperRight = CGPoint(x: startRight.x + bx, y: startRight.y - by * 2)
-            let cornerUpperLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y  - by * 2)
-            let cornerLowerLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y          )
-            quadCorners.append(cornerLowerRight)
-            quadCorners.append(cornerUpperRight)
-            quadCorners.append(cornerUpperLeft)
-            quadCorners.append(cornerLowerLeft)
+            quadCorners = bubbleDelegate.getQuadCorners()
+//            let bx = bubbleWidth  * 0.5
+//            let by = bubbleHeight * 0.5 * d // d is -1.0 when arrow points up
+//            // points for quad curve bubble
+//            let cornerLowerRight = CGPoint(x: startRight.x + bx, y: startRight.y         )
+//            let cornerUpperRight = CGPoint(x: startRight.x + bx, y: startRight.y - by * 2)
+//            let cornerUpperLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y  - by * 2)
+//            let cornerLowerLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y          )
+//            quadCorners.append(cornerLowerRight)
+//            quadCorners.append(cornerUpperRight)
+//            quadCorners.append(cornerUpperLeft)
+//            quadCorners.append(cornerLowerLeft)
             
             if bubbleType == .quadcurve {
-                let bubbleRight      = CGPoint(x: startRight.x + bx, y: startRight.y - by    )
-                let bubbleTop        = CGPoint(x: startPoint.x,      y: startPoint.y - by * 2)
-                let bubbleLeft       = CGPoint(x: startLeft.x  - bx, y: startPoint.y - by    )
-                quadPoints.append(bubbleRight)
-                quadPoints.append(bubbleTop)
-                quadPoints.append(bubbleLeft)
-                quadPoints.append(startLeft) // last quad point is back at beginning
+                quadPoints = bubbleDelegate.getQuadPoints()
+//                let bubbleRight      = CGPoint(x: startRight.x + bx, y: startRight.y - by    )
+//                let bubbleTop        = CGPoint(x: startPoint.x,      y: startPoint.y - by * 2)
+//                let bubbleLeft       = CGPoint(x: startLeft.x  - bx, y: startPoint.y - by    )
+//                quadPoints.append(bubbleRight)
+//                quadPoints.append(bubbleTop)
+//                quadPoints.append(bubbleLeft)
+//                quadPoints.append(startLeft) // last quad point is back at beginning
             }
         }
         /*** END Bubble points code ***/
@@ -454,10 +477,11 @@ class ArrowView: ShapeView {
     
 }
 
-protocol Bubble: AnyObject {
+protocol Bubble: class {
     var bubbleText:     [String] { get set }
     var d:              CGFloat  { get set }
-    var startPoint:     CGPoint  { get set }
+    var startPoint:     CGPoint? { get set }
+    var startWth:       CGFloat  { get set }
 //    var shadowed:       Bool { get }
 //    var path:           UIBezierPath { get }// = UIBezierPath()
 //    var shadowPath:     UIBezierPath { get }// = UIBezierPath() // TODO: should be optional, as there may not be a shadow
