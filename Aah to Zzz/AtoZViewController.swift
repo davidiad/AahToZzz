@@ -480,16 +480,28 @@ class AtoZViewController: UIViewController {
                 // pass end points of arrows in
                 infoViewController.modalPresentationStyle = .overCurrentContext
                 infoViewController.arrowEndPoints = arrowEndPoints
+            
 
                 self.present(infoViewController, animated: true)
+            
+            // TO Implement here: Instantiate TutorialViewController (on first open, and user request)
+            // and pass in the arrowEndPoints
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        // create arrow end points here
-        arrowEndPoints.append(CGPoint( x:wordInProgress.center.x, y: wordInProgress.center.y) )
+    func setArrowEndPoints() {
+        // call in viewDidLayoutSubviews, to get arrow endpoints for tutorial
+        arrowEndPoints.append(CGPoint(x: wordInProgress.center.x, y: wordInProgress.center.y) )
         arrowEndPoints.append(CGPoint(x: wordTable.center.x, y: wordTable.center.y - 175.0))
         arrowEndPoints.append(CGPoint(x: toolbar.center.x, y: toolbar.center.y - 12.0))
+    }
+    
+    override func viewDidLayoutSubviews() {
+        // create arrow end points here (for use in tutorial)
+        // Is there a way to make this conditional, or to call only when the tutorial is requested?
+        // Tutorial only happens first time, or when user requests by tapping button
+        setArrowEndPoints()
+
     }
     
     // note: as of ios 9, supposed to be that observers will be removed automatically

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ArrowView: ShapeView {
+@IBDesignable class ArrowView: ShapeView {
     
     weak var bubbleDelegate: BubbleDelegate?
     
