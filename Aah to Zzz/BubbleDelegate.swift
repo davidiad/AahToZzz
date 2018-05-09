@@ -8,14 +8,14 @@
 import UIKit
 
 class BubbleDelegate: Bubble {
-    
+    // to replace with bubbleData.text
     var bubbleText: [String] = ["Tap or drag tiles",
                                 "to create a beautiful formation",
                                 "of three letter words",
                                 "three letter words",
                                 "3 letters"]
-    
-    var startPoint: CGPoint?
+    var bubbleData: BubbleData?
+    //var startPoint: CGPoint? // to replace with bubbleData.startPoint
     var startWth:   CGFloat     = 3.0
     var d:          CGFloat     = 1.0
     
@@ -42,10 +42,13 @@ class BubbleDelegate: Bubble {
         sv.alignment        = .center
         sv.distribution     = .fillEqually
         
-        for s in bubbleText {
+        guard let bubbleData = bubbleData else {
+            return UIStackView()
+        }
+        for s in bubbleData.text {
             let label = UILabel()
             label.text = s
-            label.backgroundColor = UIColor.purple
+            label.backgroundColor = UIColor.cyan
             label.textAlignment = .center
             label.numberOfLines = 1
             sv.addArrangedSubview(label)
@@ -58,7 +61,11 @@ class BubbleDelegate: Bubble {
     
     // wrapper with no parameters
     func getBubbleSize() -> CGSize {
-        bubbleSize = calculateBubbleSizeFromText(textArray: bubbleText)
+        guard let bt = bubbleData else {
+            return CGSize.zero
+        }
+        bubbleSize = calculateBubbleSizeFromText(textArray: bt.text)
+        print (bt.text)
         guard let bubbleSize = bubbleSize else {
             return CGSize(width: 100, height: 100) // default values
         }
@@ -67,7 +74,7 @@ class BubbleDelegate: Bubble {
     
     func calculateBubbleSizeFromText (textArray: [String]) -> CGSize {
         let lineHeightFactor: CGFloat   = 27.0
-        let textWidthFactor:  CGFloat   =  5.0
+        let textWidthFactor:  CGFloat   =  9.0
         let bubbleHeight = CGFloat(textArray.count + 1) * lineHeightFactor
         // assuming the largest strings have been put in the middle, shorts on the outside (to fit in a bubble)
         var maxLength = 0
@@ -82,7 +89,7 @@ class BubbleDelegate: Bubble {
     }
     
     func getQuadCorners() -> [CGPoint] {
-        guard let startPoint = startPoint, let bubbleSize = bubbleSize else {
+        guard let startPoint = bubbleData?.startPoint, let bubbleSize = bubbleSize else {
             return []
         }
         let bx = bubbleSize.width  * 0.5
@@ -111,7 +118,7 @@ class BubbleDelegate: Bubble {
     }
     
     func getQuadPoints() -> [CGPoint] { // return quadPoints
-        guard let startPoint = startPoint, let bubbleSize = bubbleSize else {
+        guard let startPoint = bubbleData?.startPoint, let bubbleSize = bubbleSize else {
             return []
         }
         let bx = bubbleSize.width  * 0.5

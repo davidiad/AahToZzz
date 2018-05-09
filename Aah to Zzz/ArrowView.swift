@@ -90,7 +90,8 @@ import UIKit
                      bubbleWidth:   CGFloat         = 100.0,
                      bubbleHeight:  CGFloat         = 100.0,
                      bubbleType:    BubbleType      = .none,
-                     bubbleDelegate:BubbleDelegate? = nil
+                     bubbleDelegate:BubbleDelegate? = nil,
+                     bubbleData:    BubbleData?     = nil
                      ) {
         
         self.init(frame: CGRect(x: 65, y: 20, width: 10, height: 5))
@@ -122,7 +123,8 @@ import UIKit
             guard let bubbleDelegate = bubbleDelegate else {
                 return
             }
-            bubbleDelegate.startPoint = self.startPoint
+            bubbleDelegate.bubbleData = bubbleData
+            //bubbleDelegate.startPoint = self.startPoint
             bubbleDelegate.startWth   = self.startWth
             bubbleDelegate.d          = d
             let bubbleSize = bubbleDelegate.getBubbleSize()
@@ -482,10 +484,11 @@ import UIKit
 }
 
 protocol Bubble: class {
-    var bubbleText:     [String] { get set }
-    var d:              CGFloat  { get set }
-    var startPoint:     CGPoint? { get set }
-    var startWth:       CGFloat  { get set }
+    var bubbleData:     BubbleData?  { get set }
+    var bubbleText:     [String]    { get set } // being replace by bubbleData
+    var d:              CGFloat     { get set }
+    //var startPoint:     CGPoint?    { get set }
+    var startWth:       CGFloat     { get set }
 //    var shadowed:       Bool { get }
 //    var path:           UIBezierPath { get }// = UIBezierPath()
 //    var shadowPath:     UIBezierPath { get }// = UIBezierPath() // TODO: should be optional, as there may not be a shadow
