@@ -19,13 +19,20 @@ class TutorialViewController: UIViewController {
         let bubbleMessages = getBubbleMessages()
         //getArrowStartPoints() // not yet implemented
         //if arrowEndPoints.count == bubbleMessages.count {
+        print("COUNTING: \(arrowEndPoints.count)")
             for i in 0 ..< arrowEndPoints.count {
-                // generate the start points
-                let startPoint = CGPoint(x: arrowEndPoints[i].x - 20.0,
-                                         y: arrowEndPoints[i].y - 40.0)
-                arrowStartPoints.append(startPoint)
-                let data = BubbleData(startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], text: bubbleMessages[i])
-                bubbleData.append(data)
+                if i < 3 { // temp check TODO: fix -- finding 12 end points?
+                    
+                
+                    // generate the start points
+                    let startPoint = CGPoint(x: arrowEndPoints[i].x - 30.0,
+                                         y: arrowEndPoints[i].y - 70.0)
+                    arrowStartPoints.append(startPoint)
+                    let data = BubbleData(startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], text: bubbleMessages[i])
+                    bubbleData.append(data)
+                    let arrowBubble = ArrowView(arrowType: .straight, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], startWidth: 11, endWidth: 5, arrowWidth: 25, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .rectangle, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[i])
+                    view.addSubview(arrowBubble)
+                }
             }
         //}
         
@@ -41,11 +48,12 @@ class TutorialViewController: UIViewController {
     }
 
     // Set the text for the messages
+    // could move to a static struct?
     func getBubbleMessages() -> [[String]] {
         var bubbleMessages: [[String]] = [[]]
         bubbleMessages.append(["First", "Second Line", "third"])
         bubbleMessages.append(["Tap", "New List Button", "to get new words"])
-        bubbleMessages.append(["Tap", "a word", "to get definition"])
+        bubbleMessages.append(["a word"])
         
         return bubbleMessages
     }

@@ -9,11 +9,11 @@ import UIKit
 
 class BubbleDelegate: Bubble {
     // to replace with bubbleData.text
-    var bubbleText: [String] = ["Tap or drag tiles",
-                                "to create a beautiful formation",
-                                "of three letter words",
-                                "three letter words",
-                                "3 letters"]
+//    var bubbleText: [String] = ["Tap or drag tiles",
+//                                "to create a beautiful formation",
+//                                "of three letter words",
+//                                "three letter words",
+//                                "3 letters"]
     var bubbleData: BubbleData?
     //var startPoint: CGPoint? // to replace with bubbleData.startPoint
     var startWth:   CGFloat     = 3.0
@@ -73,8 +73,8 @@ class BubbleDelegate: Bubble {
     }
     
     func calculateBubbleSizeFromText (textArray: [String]) -> CGSize {
-        let lineHeightFactor: CGFloat   = 27.0
-        let textWidthFactor:  CGFloat   =  9.0
+        let lineHeightFactor: CGFloat   = 34.0
+        let textWidthFactor:  CGFloat   =  8.0
         let bubbleHeight = CGFloat(textArray.count + 1) * lineHeightFactor
         // assuming the largest strings have been put in the middle, shorts on the outside (to fit in a bubble)
         var maxLength = 0

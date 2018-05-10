@@ -485,7 +485,7 @@ import UIKit
 
 protocol Bubble: class {
     var bubbleData:     BubbleData?  { get set }
-    var bubbleText:     [String]    { get set } // being replace by bubbleData
+//    var bubbleText:     [String]    { get set } // being replace by bubbleData
     var d:              CGFloat     { get set }
     //var startPoint:     CGPoint?    { get set }
     var startWth:       CGFloat     { get set }

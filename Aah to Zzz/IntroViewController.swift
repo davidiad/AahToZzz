@@ -69,6 +69,8 @@ class IntroViewController: UIViewController {
 //                    return
                 })
                 // ensure that all animators are stopped before dismissal
+                // (otherwise this crash:
+                // 'NSInternalInconsistencyException', reason: 'It is an error to release a paused or stopped property animator. Property animators must either finish animating or be explicitly stopped and finished before they can be released.'
                 for i in 0 ..< self.arrowViews.count {
                     print(i)
                     print(":::")
@@ -87,8 +89,7 @@ class IntroViewController: UIViewController {
                     self.arrowViews[self.currentContainerIndex].alpha = 1.0
                 
             }, completion: { (finished) in
-                print("PONYO!!!!!!!!")
-                print(finished)
+
                 // Can now run a subsequent animation
                 self.ghostFingerTap(whereToTap: CGPoint(x: 21.0, y: 22.3), completion: nil)
 

@@ -50,7 +50,10 @@ class ShapeView: UIView {
     }
     
     deinit {
-        //animator?.stopAnimation(false)
+        // ensure that all animators are stopped before dismissal
+        // (otherwise this crash: 'NSInternalInconsistencyException', reason: 'It is an error to release a paused or stopped property animator. Property animators must either finish animating or be explicitly stopped and finished before they can be released.')
+        animator?.stopAnimation(true)
+        animator?.finishAnimation(at: UIViewAnimatingPosition(rawValue: 0)!)
         print("Shape DEINITS")
     }
     

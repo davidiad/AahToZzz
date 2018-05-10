@@ -474,26 +474,29 @@ class AtoZViewController: UIViewController {
             //animator.removeAllBehaviors()
             game?.data?.gameState = 1 // set to state where info window is not shown
             saveContext()
-            
+            /*
                 let infoViewController = storyboard?.instantiateViewController(withIdentifier: "Intro") as! IntroViewController
             
                 // pass end points of arrows in
                 infoViewController.modalPresentationStyle = .overCurrentContext
                 infoViewController.arrowEndPoints = arrowEndPoints
-            
-
                 self.present(infoViewController, animated: true)
-            
+            */
             // TO Implement here: Instantiate TutorialViewController (on first open, and user request)
             // and pass in the arrowEndPoints
+            let tutorial = TutorialViewController()
+            tutorial.modalPresentationStyle = .overCurrentContext
+            tutorial.arrowEndPoints = setArrowEndPoints()
+            self.present(tutorial, animated: true)
         }
     }
     
-    func setArrowEndPoints() {
+    func setArrowEndPoints() -> [CGPoint] {
         // call in viewDidLayoutSubviews, to get arrow endpoints for tutorial
         arrowEndPoints.append(CGPoint(x: wordInProgress.center.x, y: wordInProgress.center.y) )
         arrowEndPoints.append(CGPoint(x: wordTable.center.x, y: wordTable.center.y - 175.0))
         arrowEndPoints.append(CGPoint(x: toolbar.center.x, y: toolbar.center.y - 12.0))
+        return arrowEndPoints
     }
     
     override func viewDidLayoutSubviews() {
