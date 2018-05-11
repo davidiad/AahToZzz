@@ -16,12 +16,19 @@ class TutorialViewController: UIViewController {
     // Consider adding an offset to the Struct, whch would dictate the position of start (relative to end)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Add a dismiss button
+        addDismissButton()
+        // add gesture to display the next bubble
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer: )))
+        view.addGestureRecognizer(tapGesture)
+        
         let bubbleMessages = getBubbleMessages()
         //getArrowStartPoints() // not yet implemented
         //if arrowEndPoints.count == bubbleMessages.count {
         print("COUNTING: \(arrowEndPoints.count)")
             for i in 0 ..< arrowEndPoints.count {
-                if i < 3 { // temp check TODO: fix -- finding 12 end points?
+              //  if i < 3 { // temp check TODO: fix -- finding 12 end points?
                     
                 
                     // generate the start points
@@ -30,16 +37,43 @@ class TutorialViewController: UIViewController {
                     arrowStartPoints.append(startPoint)
                     let data = BubbleData(startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], text: bubbleMessages[i])
                     bubbleData.append(data)
+                
+                // move this next to instantiate with each subsequent click
                     let arrowBubble = ArrowView(arrowType: .straight, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], startWidth: 11, endWidth: 5, arrowWidth: 25, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .rectangle, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[i])
                     view.addSubview(arrowBubble)
+                
                 }
-            }
+           // }
         //}
         
         // create a new ArrowView using each bubbleData in the array BubbleData, and add to view
         // Later, instead of adding to view, animate each one in separately, on a click
         // Add an X or Done button to dismiss the tutorial at any time
         
+    }
+    
+    func addDismissButton() {
+        let buttonWidth: CGFloat = 210.0
+        let buttonFrame = CGRect(x: 0.5 * (view.bounds.width - buttonWidth), y: 12, width: buttonWidth, height: 36.0)
+        let dismiss = UIButton(frame: buttonFrame)
+        dismiss.setTitle("Close Tutorial", for: .normal)
+        dismiss.backgroundColor = .green
+    
+        dismiss.addTarget(self, action: #selector(dismissThis(sender:)), for: .touchUpInside)
+
+        view.addSubview(dismiss)
+    }
+    
+    @objc func dismissThis(sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleTap(recognizer: UITapGestureRecognizer) {
+        displayNextBubble()
+    }
+    
+    func displayNextBubble() {
+        print ("NEXT BUBBLE")
     }
     
     func getArrowStartPoints() {

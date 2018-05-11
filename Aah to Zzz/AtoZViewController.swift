@@ -493,6 +493,7 @@ class AtoZViewController: UIViewController {
     
     func setArrowEndPoints() -> [CGPoint] {
         // call in viewDidLayoutSubviews, to get arrow endpoints for tutorial
+        arrowEndPoints.removeAll()
         arrowEndPoints.append(CGPoint(x: wordInProgress.center.x, y: wordInProgress.center.y) )
         arrowEndPoints.append(CGPoint(x: wordTable.center.x, y: wordTable.center.y - 175.0))
         arrowEndPoints.append(CGPoint(x: toolbar.center.x, y: toolbar.center.y - 12.0))
@@ -503,7 +504,7 @@ class AtoZViewController: UIViewController {
         // create arrow end points here (for use in tutorial)
         // Is there a way to make this conditional, or to call only when the tutorial is requested?
         // Tutorial only happens first time, or when user requests by tapping button
-        setArrowEndPoints()
+        arrowEndPoints = setArrowEndPoints() // need to avoid runnung multiple times
 
     }
     
