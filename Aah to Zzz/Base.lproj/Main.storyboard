@@ -187,11 +187,11 @@
                                 </connections>
                             </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XAv-0M-tPX">
-                                <rect key="frame" x="87" y="308" width="240.33333333333337" height="207"/>
+                                <rect key="frame" x="87" y="308" width="240" height="207"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwb-MG-8bs">
-                                        <rect key="frame" x="105.33333333333334" y="0.0" width="30" height="30"/>
+                                        <rect key="frame" x="105" y="0.0" width="30" height="30"/>
                                         <state key="normal" title="Play"/>
                                         <connections>
                                             <action selector="playGame:" destination="6UW-8g-sR0" eventType="touchUpInside" id="km5-7T-Ch3"/>
@@ -199,30 +199,30 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNe-vJ-zON">
-                                        <rect key="frame" x="104.33333333333334" y="30" width="32" height="30"/>
+                                        <rect key="frame" x="104" y="30" width="32" height="30"/>
                                         <state key="normal" title="Help"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9r-FU-YhZ">
-                                        <rect key="frame" x="94.666666666666671" y="60" width="51.000000000000014" height="30"/>
+                                        <rect key="frame" x="94.333333333333329" y="60" width="51.333333333333329" height="30"/>
                                         <state key="normal" title="Tutorial"/>
                                         <connections>
                                             <segue destination="NaI-Fe-NAV" kind="presentation" customClass="UIStoryboardSegueFromRight" customModule="AahToZzz" customModuleProvider="target" id="6WT-BM-oCC"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCH-Co-bR6">
-                                        <rect key="frame" x="104.33333333333334" y="90" width="32" height="30"/>
+                                        <rect key="frame" x="104" y="90" width="32" height="30"/>
                                         <state key="normal" title="Rate"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ic2-fx-QBA">
-                                        <rect key="frame" x="63.999999999999993" y="120" width="112.33333333333331" height="30"/>
+                                        <rect key="frame" x="64" y="120" width="112" height="30"/>
                                         <state key="normal" title="Leave Feedback"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSt-UW-IVq">
-                                        <rect key="frame" x="92.666666666666671" y="150" width="55.000000000000014" height="30"/>
+                                        <rect key="frame" x="92.333333333333329" y="150" width="55.333333333333329" height="30"/>
                                         <state key="normal" title="Contact"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He6-7G-baV">
-                                        <rect key="frame" x="0.0" y="180" width="240.33333333333334" height="27"/>
+                                        <rect key="frame" x="0.0" y="180" width="240" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="How 3 letter words help score more points"/>
                                     </button>

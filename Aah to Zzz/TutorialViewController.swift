@@ -11,8 +11,12 @@ import UIKit
 class TutorialViewController: UIViewController {
     
     var bubbleData:             [BubbleData]            = []
+    var bubbleIndex:            Int                     = 0
+    var numBubbles:             Int                     = 0
     var arrowStartPoints:       [CGPoint]               = []
     var arrowEndPoints:         [CGPoint]               = [] // load from main VC on instantiation
+    weak var currentBubble:     ArrowView?
+    
     // Consider adding an offset to the Struct, whch would dictate the position of start (relative to end)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,31 +28,33 @@ class TutorialViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         
         let bubbleMessages = getBubbleMessages()
-        //getArrowStartPoints() // not yet implemented
-        //if arrowEndPoints.count == bubbleMessages.count {
-        print("COUNTING: \(arrowEndPoints.count)")
-            for i in 0 ..< arrowEndPoints.count {
-              //  if i < 3 { // temp check TODO: fix -- finding 12 end points?
-                    
-                
-                    // generate the start points
-                    let startPoint = CGPoint(x: arrowEndPoints[i].x - 30.0,
-                                         y: arrowEndPoints[i].y - 70.0)
-                    arrowStartPoints.append(startPoint)
-                    let data = BubbleData(startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], text: bubbleMessages[i])
-                    bubbleData.append(data)
-                
-                // move this next to instantiate with each subsequent click
-                    let arrowBubble = ArrowView(arrowType: .straight, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], startWidth: 11, endWidth: 5, arrowWidth: 25, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .rectangle, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[i])
-                    view.addSubview(arrowBubble)
-                
-                }
-           // }
-        //}
+        print("BM COUHNT: \(bubbleMessages.count)")
         
-        // create a new ArrowView using each bubbleData in the array BubbleData, and add to view
-        // Later, instead of adding to view, animate each one in separately, on a click
-        // Add an X or Done button to dismiss the tutorial at any time
+        print("BBMSSG!-------\(bubbleMessages)")
+        //getArrowStartPoints() // not yet implemented
+
+        print("COUNTING: \(arrowEndPoints.count)")
+        
+        // Set the number of bubbles to the lesser of # endpts, or # messages
+        numBubbles = arrowEndPoints.count
+        print("BM COUHNT: \(bubbleMessages.count)")
+        if bubbleMessages.count < numBubbles {
+            numBubbles = bubbleMessages.count
+        }
+    
+        for i in 0 ..< numBubbles {
+
+            // generate the start points
+            let startPoint = CGPoint(x: arrowEndPoints[i].x - 30.0,
+                                     y: arrowEndPoints[i].y - 70.0)
+            arrowStartPoints.append(startPoint)
+                
+            let data = BubbleData(startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], text: bubbleMessages[i])
+            bubbleData.append(data)
+            
+        }
+        
+        displayNextBubble()
         
     }
     
@@ -74,6 +80,37 @@ class TutorialViewController: UIViewController {
     
     func displayNextBubble() {
         print ("NEXT BUBBLE")
+        // nedd to display  first bubb
+        // get the current bubble index -- set to 0 as default at start
+        
+        if bubbleIndex > 0  && bubbleIndex < numBubbles {
+            // remove the current bubble
+            currentBubble?.removeFromSuperview()
+        }
+        // check if the index is the last one. If so, dismiss the view controller
+        if bubbleIndex == numBubbles {
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        // create and load the new current bubble
+        if bubbleIndex < numBubbles {
+            displayBubble(index: bubbleIndex)
+            // increment the index
+            bubbleIndex += 1
+        }
+
+    }
+    
+    func displayBubble(index: Int) {
+        let arrowBubble = ArrowView(arrowType: .straight, startPoint: arrowStartPoints[index], endPoint: arrowEndPoints[index], startWidth: 11, endWidth: 5, arrowWidth: 25, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .rectangle, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[index])
+
+//        guard let currentBubble = self.currentBubble else {
+//            return
+//        }
+        currentBubble = arrowBubble
+
+        view.addSubview(arrowBubble)
+
     }
     
     func getArrowStartPoints() {
@@ -84,7 +121,7 @@ class TutorialViewController: UIViewController {
     // Set the text for the messages
     // could move to a static struct?
     func getBubbleMessages() -> [[String]] {
-        var bubbleMessages: [[String]] = [[]]
+        var bubbleMessages = [[String]]()
         bubbleMessages.append(["First", "Second Line", "third"])
         bubbleMessages.append(["Tap", "New List Button", "to get new words"])
         bubbleMessages.append(["a word"])

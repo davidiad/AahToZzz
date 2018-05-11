@@ -273,11 +273,15 @@ class AtoZViewController: UIViewController {
         }
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        print (":::::::A TO Z VC INIT:::::::")
+    }
     
     //MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("VDL VDL VDL VDL VDL VDL VDL VDL")
         //uiDynamicsDelegate = AtoZUIDynamicsDelegate()
         NotificationCenter.default.addObserver(self, selector: #selector (presentDefinition(_:)), name: NSNotification.Name(rawValue: "PresentDefinition"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector (updateCurrentNumberOfWords(_:)), name: NSNotification.Name(rawValue: "UpdateCNOW"), object: nil)
@@ -504,6 +508,7 @@ class AtoZViewController: UIViewController {
         // create arrow end points here (for use in tutorial)
         // Is there a way to make this conditional, or to call only when the tutorial is requested?
         // Tutorial only happens first time, or when user requests by tapping button
+        // viewDidLayoutSubviews gets called multiple times -- how to make it call only once?
         arrowEndPoints = setArrowEndPoints() // need to avoid runnung multiple times
 
     }
