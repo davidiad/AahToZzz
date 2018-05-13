@@ -38,7 +38,7 @@ class AtoZViewController: UIViewController {
     var maxTilesToSwap: Int = 0 // temp. diagnostic
     var blurredViews: [BlurViewController] = []
     var animatingStatusHeight: Bool = false
-    var arrowEndPoints: [CGPoint] = []
+    var arrowEndPoints:  [CGPoint] = []
     
     //MARK:- IBOutlets
     @IBOutlet weak var progressLabl: UILabel!
@@ -490,17 +490,18 @@ class AtoZViewController: UIViewController {
             // and pass in the arrowEndPoints
             let tutorial = TutorialViewController()
             tutorial.modalPresentationStyle = .overCurrentContext
-            tutorial.arrowEndPoints = setArrowEndPoints()
+            tutorial.arrowEndPoints = setArrowPoints()
             self.present(tutorial, animated: true)
         }
     }
     
-    func setArrowEndPoints() -> [CGPoint] {
+    func setArrowPoints() -> [CGPoint] {
         // call in viewDidLayoutSubviews, to get arrow endpoints for tutorial
         arrowEndPoints.removeAll()
         arrowEndPoints.append(CGPoint(x: wordInProgress.center.x, y: wordInProgress.center.y) )
         arrowEndPoints.append(CGPoint(x: wordTable.center.x, y: wordTable.center.y - 175.0))
         arrowEndPoints.append(CGPoint(x: toolbar.center.x, y: toolbar.center.y - 12.0))
+        
         return arrowEndPoints
     }
     
@@ -509,7 +510,7 @@ class AtoZViewController: UIViewController {
         // Is there a way to make this conditional, or to call only when the tutorial is requested?
         // Tutorial only happens first time, or when user requests by tapping button
         // viewDidLayoutSubviews gets called multiple times -- how to make it call only once?
-        arrowEndPoints = setArrowEndPoints() // need to avoid runnung multiple times
+        arrowEndPoints = setArrowPoints() // need to avoid runnung multiple times
 
     }
     

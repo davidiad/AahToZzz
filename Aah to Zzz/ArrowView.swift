@@ -82,7 +82,7 @@ import UIKit
     // allow control of blur and shadow and all arrow parameters
     //TODO: consider making more of the parameters optional
     convenience init(arrowType: ArrowType,
-                     startPoint:    CGPoint, endPoint:     CGPoint,
+                     endPoint:     CGPoint,
                      startWidth:    CGFloat, endWidth:     CGFloat,
                      arrowWidth:    CGFloat, arrowHeight:  CGFloat,
                      blurriness:    CGFloat         = 0.5,
@@ -97,7 +97,7 @@ import UIKit
         self.init(frame: CGRect(x: 65, y: 20, width: 10, height: 5))
         self.bubbleDelegate = bubbleDelegate
         self.arrowType      = arrowType
-        self.startPoint     = startPoint
+        self.startPoint     = bubbleData?.startPoint
         self.endPoint       = endPoint
         self.startWth       = startWidth
         self.endWth         = endWidth

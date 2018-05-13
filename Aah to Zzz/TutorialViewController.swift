@@ -15,6 +15,7 @@ class TutorialViewController: UIViewController {
     var numBubbles:             Int                     = 0
     var arrowStartPoints:       [CGPoint]               = []
     var arrowEndPoints:         [CGPoint]               = [] // load from main VC on instantiation
+    var arrowDirections:        [ArrowDirection]        = []
     weak var currentBubble:     ArrowView?
     
     // Consider adding an offset to the Struct, whch would dictate the position of start (relative to end)
@@ -41,15 +42,18 @@ class TutorialViewController: UIViewController {
         if bubbleMessages.count < numBubbles {
             numBubbles = bubbleMessages.count
         }
-    
+        arrowDirections.append(.downright)
+        arrowDirections.append(.upleft)
+        arrowDirections.append(.down)
+        
         for i in 0 ..< numBubbles {
 
-            // generate the start points
-            let startPoint = CGPoint(x: arrowEndPoints[i].x - 30.0,
-                                     y: arrowEndPoints[i].y - 70.0)
-            arrowStartPoints.append(startPoint)
-                
-            let data = BubbleData(startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], text: bubbleMessages[i])
+//            // generate the start points
+//            let startPoint = CGPoint(x: arrowEndPoints[i].x - 30.0,
+//                                     y: arrowEndPoints[i].y - 70.0)
+//            arrowStartPoints.append(startPoint)
+            
+            let data = BubbleData(text: bubbleMessages[i], endPoint: arrowEndPoints[i], direction: arrowDirections[i]  )
             bubbleData.append(data)
             
         }
@@ -102,7 +106,7 @@ class TutorialViewController: UIViewController {
     }
     
     func displayBubble(index: Int) {
-        let arrowBubble = ArrowView(arrowType: .straight, startPoint: arrowStartPoints[index], endPoint: arrowEndPoints[index], startWidth: 11, endWidth: 5, arrowWidth: 25, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .rectangle, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[index])
+        let arrowBubble = ArrowView(arrowType: .straight, endPoint: arrowEndPoints[index], startWidth: 10, endWidth: 4, arrowWidth: 19, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .rectangle, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[index])
 
 //        guard let currentBubble = self.currentBubble else {
 //            return

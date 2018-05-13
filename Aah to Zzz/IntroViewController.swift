@@ -315,8 +315,8 @@ class IntroViewController: UIViewController {
             
 //            let arrowView = ArrowBlurView(arrowType: .curved, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i])
 //            let bd = BubbleDelegate()
-            let bubdata = BubbleData(startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], text: ["NO!", "The Ounce, a noble Cat, Once", "OKAYs!"])
-            let arrowView = ArrowView(arrowType: .straight, startPoint: arrowStartPoints[i], endPoint: arrowEndPoints[i], startWidth: 17, endWidth: 5, arrowWidth: 24, arrowHeight: 20, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 290, bubbleHeight: 99, bubbleType: .quadcurve, bubbleDelegate: BubbleDelegate(),
+            let bubdata = BubbleData(text: ["NO!", "The Ounce, a noble Cat, Once", "OKAYs!"], endPoint: arrowEndPoints[i], direction: .left)
+            let arrowView = ArrowView(arrowType: .straight, endPoint: arrowEndPoints[i], startWidth: 17, endWidth: 5, arrowWidth: 24, arrowHeight: 20, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 290, bubbleHeight: 99, bubbleType: .quadcurve, bubbleDelegate: BubbleDelegate(),
                                       bubbleData: bubdata
             )
             
