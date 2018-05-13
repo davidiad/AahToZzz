@@ -499,7 +499,7 @@ class AtoZViewController: UIViewController {
         // call in viewDidLayoutSubviews, to get arrow endpoints for tutorial
         arrowEndPoints.removeAll()
         arrowEndPoints.append(CGPoint(x: wordInProgress.center.x, y: wordInProgress.center.y) )
-        arrowEndPoints.append(CGPoint(x: wordTable.center.x, y: wordTable.center.y - 175.0))
+        arrowEndPoints.append(CGPoint(x: wordTable.center.x + 32.0, y: wordTable.center.y - 120.0))
         arrowEndPoints.append(CGPoint(x: toolbar.center.x, y: toolbar.center.y - 12.0))
         
         return arrowEndPoints

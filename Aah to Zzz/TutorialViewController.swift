@@ -10,12 +10,13 @@ import UIKit
 
 class TutorialViewController: UIViewController {
     
-    var bubbleData:             [BubbleData]            = []
-    var bubbleIndex:            Int                     = 0
-    var numBubbles:             Int                     = 0
-    var arrowStartPoints:       [CGPoint]               = []
-    var arrowEndPoints:         [CGPoint]               = [] // load from main VC on instantiation
-    var arrowDirections:        [ArrowDirection]        = []
+    var bubbleData:             [BubbleData]               = []
+    var bubbleIndex:            Int                        = 0
+    var numBubbles:             Int                        = 0
+    var arrowStartPoints:       [CGPoint]                  = []
+    var arrowEndPoints:         [CGPoint]                  = [] // load from main VC on instantiation
+    var arrowDirections:        [ArrowDirection]           = []
+    var adjustFactors:          [(x: CGFloat, y: CGFloat)] = []
     weak var currentBubble:     ArrowView?
     
     // Consider adding an offset to the Struct, whch would dictate the position of start (relative to end)
@@ -43,8 +44,11 @@ class TutorialViewController: UIViewController {
             numBubbles = bubbleMessages.count
         }
         arrowDirections.append(.downright)
-        arrowDirections.append(.upleft)
+        adjustFactors.append((1,1))
+        arrowDirections.append(.downleft)
+        adjustFactors.append((1.8,0.5))
         arrowDirections.append(.down)
+        adjustFactors.append((1,1))
         
         for i in 0 ..< numBubbles {
 
@@ -53,7 +57,10 @@ class TutorialViewController: UIViewController {
 //                                     y: arrowEndPoints[i].y - 70.0)
 //            arrowStartPoints.append(startPoint)
             
-            let data = BubbleData(text: bubbleMessages[i], endPoint: arrowEndPoints[i], direction: arrowDirections[i]  )
+            let data = BubbleData(text: bubbleMessages[i],
+                                  endPoint: arrowEndPoints[i],
+                                  direction: arrowDirections[i],
+                                  adjustFactor: adjustFactors[i] )
             bubbleData.append(data)
             
         }
@@ -106,7 +113,7 @@ class TutorialViewController: UIViewController {
     }
     
     func displayBubble(index: Int) {
-        let arrowBubble = ArrowView(arrowType: .straight, endPoint: arrowEndPoints[index], startWidth: 10, endWidth: 4, arrowWidth: 19, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .rectangle, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[index])
+        let arrowBubble = ArrowView(arrowType: .straight, endPoint: arrowEndPoints[index], startWidth: 10, endWidth: 4, arrowWidth: 19, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .quadcurve, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[index])
 
 //        guard let currentBubble = self.currentBubble else {
 //            return
@@ -126,9 +133,9 @@ class TutorialViewController: UIViewController {
     // could move to a static struct?
     func getBubbleMessages() -> [[String]] {
         var bubbleMessages = [[String]]()
-        bubbleMessages.append(["First", "Second Line", "third"])
-        bubbleMessages.append(["Tap", "New List Button", "to get new words"])
-        bubbleMessages.append(["a word"])
+        bubbleMessages.append(["First", "Second Line", "third", "fourth"])
+        bubbleMessages.append(["Tap a word", "to see its definition"])
+        bubbleMessages.append(["Tap", "the New List Button", "for new words"])
         
         return bubbleMessages
     }

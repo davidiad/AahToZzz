@@ -73,8 +73,8 @@ class BubbleDelegate: Bubble {
     }
     
     func calculateBubbleSizeFromText (textArray: [String]) -> CGSize {
-        let lineHeightFactor: CGFloat   = 34.0
-        let textWidthFactor:  CGFloat   =  8.0
+        let lineHeightFactor: CGFloat   = 25.0
+        let textWidthFactor:  CGFloat   =  7.5
         let bubbleHeight = CGFloat(textArray.count + 1) * lineHeightFactor
         // assuming the largest strings have been put in the middle, shorts on the outside (to fit in a bubble)
         var maxLength = 0
@@ -109,12 +109,22 @@ class BubbleDelegate: Bubble {
         quadCorners.append(cornerUpperRight)
         quadCorners.append(cornerUpperLeft)
         quadCorners.append(cornerLowerLeft)
-        if quadCorners.count > 3 { // need to ensure we don't try to access out of array bounds
+        if quadCorners.count > 3 { // ensure we don't try to access out of array bounds
             if d > 0 { corner = quadCorners[2] } // arrow points down, upper left corner is quadCorners[2]
             else     { corner = quadCorners[3] } // arrow points up,   upper left corner is quadCorners[3]
         }
+        stayInBounds()
         return quadCorners
         
+    }
+    
+    func stayInBounds() {
+    
+    // To adjust so bubble is always in bounds:
+    // Get the bounds
+    // check if any quadcorners are out of bounds, and by how much
+    // Adjust startPoint, and bubbleData.startPoint, by that amount, plus a buffer
+    // Proceed to calculating the corners and points
     }
     
     func getQuadPoints() -> [CGPoint] { // return quadPoints
