@@ -484,6 +484,7 @@ import UIKit
 }
 
 protocol Bubble: class {
+    var viewSize:       CGSize       { get set }
     var bubbleData:     BubbleData?  { get set }
 //    var bubbleText:     [String]    { get set } // being replace by bubbleData
     var d:              CGFloat     { get set }

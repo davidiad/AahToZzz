@@ -30,16 +30,10 @@ class TutorialViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         
         let bubbleMessages = getBubbleMessages()
-        print("BM COUHNT: \(bubbleMessages.count)")
-        
-        print("BBMSSG!-------\(bubbleMessages)")
-        //getArrowStartPoints() // not yet implemented
-
-        print("COUNTING: \(arrowEndPoints.count)")
         
         // Set the number of bubbles to the lesser of # endpts, or # messages
         numBubbles = arrowEndPoints.count
-        print("BM COUHNT: \(bubbleMessages.count)")
+
         if bubbleMessages.count < numBubbles {
             numBubbles = bubbleMessages.count
         }
@@ -51,11 +45,6 @@ class TutorialViewController: UIViewController {
         adjustFactors.append((1,1))
         
         for i in 0 ..< numBubbles {
-
-//            // generate the start points
-//            let startPoint = CGPoint(x: arrowEndPoints[i].x - 30.0,
-//                                     y: arrowEndPoints[i].y - 70.0)
-//            arrowStartPoints.append(startPoint)
             
             let data = BubbleData(text: bubbleMessages[i],
                                   endPoint: arrowEndPoints[i],
