@@ -96,10 +96,26 @@ class BubbleDelegate: Bubble {
         let bx = bubbleSize.width  * 0.5
         let by = bubbleSize.height * 0.5 * d // d is -1.0 when arrow points up
         // points for quad curve bubble
-        let cornerLowerRight = CGPoint(x: startPoint.x  + bx, y: startPoint.y         )
-        let cornerUpperRight = CGPoint(x: startPoint.x  + bx, y: startPoint.y - by * 2)
-        let cornerUpperLeft  = CGPoint(x: startPoint.x  - bx, y: startPoint.y - by * 2)
-        let cornerLowerLeft  = CGPoint(x: startPoint.x  - bx, y: startPoint.y          )
+        var cornerLowerRight = CGPoint(x: startPoint.x  + bx, y: startPoint.y         )
+        var cornerUpperRight = CGPoint(x: startPoint.x  + bx, y: startPoint.y - by * 2)
+        var cornerUpperLeft  = CGPoint(x: startPoint.x  - bx, y: startPoint.y - by * 2)
+        var cornerLowerLeft  = CGPoint(x: startPoint.x  - bx, y: startPoint.y         )
+        
+        // check if bubble is near or over the edge of the screen.
+        // if so, shift the startPoint  and reset the corners
+        var shift: CGPoint? = shiftIfOutOfBounds(corners: [cornerLowerRight, cornerUpperLeft])
+        if shift != nil {
+            if let sx = shift?.x, let sy = shift?.y {
+                let shiftStart = CGPoint(x: startPoint.x + sx, y: startPoint.y + sy)
+                // reset the shifted corner points
+                cornerLowerRight = CGPoint(x: shiftStart.x  + bx, y: shiftStart.y         )
+                cornerUpperRight = CGPoint(x: shiftStart.x  + bx, y: shiftStart.y - by * 2)
+                cornerUpperLeft  = CGPoint(x: shiftStart.x  - bx, y: shiftStart.y - by * 2)
+                cornerLowerLeft  = CGPoint(x: shiftStart.x  - bx, y: shiftStart.y         )
+                
+                bubbleData?.startPoint = shiftStart
+            }
+        }
         
         var quadCorners: [CGPoint] = []
         quadCorners.append(cornerLowerRight)
@@ -110,38 +126,53 @@ class BubbleDelegate: Bubble {
             if d > 0 { corner = quadCorners[2] } // arrow points down, upper left corner is quadCorners[2]
             else     { corner = quadCorners[3] } // arrow points up,   upper left corner is quadCorners[3]
         }
-        shiftIfOutOfBounds(corners: quadCorners)
+        
         return quadCorners
         
     }
     
-    func shiftIfOutOfBounds(corners: [CGPoint]) {
-    
-    // To adjust so bubble is always in bounds:
-    // Get the bounds
-        let buffer: CGFloat = 12
+    // To adjust so bubble never runs offscreen
+    func shiftIfOutOfBounds(corners: [CGPoint]) -> CGPoint? {
+
+        var isShift = false // test to return nil if no shift is needed
+        let bufferX: CGFloat = 12
+        let bufferY: CGFloat = 50
         let w = UIScreen.main.bounds.width
         let h = UIScreen.main.bounds.height
         var shiftX: CGFloat = 0 // amount to shift the startPoint in x
         var shiftY: CGFloat = 0 // amount to shift the startPoint in y
-    // check if any quadcorners are out of bounds, and by how much
-    // check if < 0 in either x or y
-    // if < 0, add x (or y), + buffer, to x or y of startPoint
-    // check if > width or height - as above
+
         // check opposite corners
-        
-        if corners[0].x < buffer {
+        if corners[1].x < bufferX {
             // get the shiftX (positive)
-            shiftX = -corners[0].x + buffer
+            shiftX = -corners[1].x + bufferX
+            isShift = true
+        }
+        let maxX = w - bufferX
+        if corners[0].x > maxX {
+            // Add the negative shiftX (note that if both sides are past the buffer, the bubble may still go past buffer)
+            shiftX += maxX - corners[0].x
+            isShift = true
+        }
+        // If both are true, the bubble might extend pass edge of screen on both sides)
+        
+        if corners[1].y < bufferY {
+            // get the shiftX (positive)
+            shiftY = -corners[1].y + bufferY
+            isShift = true
+        }
+        let maxY = h - bufferY
+        if corners[0].y > maxY {
+            // Add the negative shiftX (note that if both sides are past the buffer, the bubble may still go past buffer)
+            shiftY += maxY - corners[0].y
+            isShift = true
         }
         
-        let maxX = w - buffer
-        if corners[2].x > maxX {
-            // get the shiftX (negative)
-            shiftX = maxX - corners[2].x
+        if (isShift == true) {
+            return CGPoint(x: shiftX, y: shiftY)
         }
-       
-        // what if both are true? (Bubble extends out on both sides of screen)
+        return nil
+
         
     // Adjust startPoint, and bubbleData.startPoint, by that amount, plus a buffer
     // Proceed to calculating the corners and points

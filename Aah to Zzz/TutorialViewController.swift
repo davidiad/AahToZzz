@@ -37,9 +37,9 @@ class TutorialViewController: UIViewController {
         if bubbleMessages.count < numBubbles {
             numBubbles = bubbleMessages.count
         }
-        arrowDirections.append(.downright)
+        arrowDirections.append(.upright)
         adjustFactors.append((1,1))
-        arrowDirections.append(.downleft)
+        arrowDirections.append(.upleft)
         adjustFactors.append((1.8,0.5))
         arrowDirections.append(.down)
         adjustFactors.append((1,1))

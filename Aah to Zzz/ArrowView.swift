@@ -25,7 +25,7 @@ import UIKit
     // add init's that allow adding text bubble and choosing its shape
     var bubbleWidth:    CGFloat     = 100.0
     var bubbleHeight:   CGFloat     = 100.0
-    
+//    var bubbleData:     BubbleData?
     var cpValue1:       CGFloat     = 36.0
     var cpValue2:       CGFloat     = 36.0
     var d:              CGFloat     = 1.0 // arrow direction, 1.0 for down, -1.0 for up
@@ -95,7 +95,6 @@ import UIKit
                      ) {
         
         self.init(frame: CGRect(x: 65, y: 20, width: 10, height: 5))
-        self.bubbleDelegate = bubbleDelegate
         self.arrowType      = arrowType
         self.startPoint     = bubbleData?.startPoint
         self.endPoint       = endPoint
@@ -180,14 +179,6 @@ import UIKit
     
     func addPoints(arrowType: ArrowType, bubbleType: BubbleType) {
         
-        /*** Vars needed for all cases ***/
-        // startPoint. endPoint, startLeft and startRight are needed in all cases
-        guard let startPoint = startPoint, let endPoint = endPoint else {
-            return
-        }
-        let startLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
-        let startRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
-        /*** END Vars needed for all cases ***/
         
         // use bubbleDelegate to get loaded quadPoints and quadCorners arrays
 //        quadPoints = bubbleDelegate?.quadPoints
@@ -226,6 +217,16 @@ import UIKit
         }
         /*** END Bubble points code ***/
         
+        /*** Vars needed for all cases ***/
+        // startPoint. endPoint, startLeft and startRight are needed in all cases
+        guard let startPoint = bubbleDelegate.bubbleData?.startPoint, let endPoint = bubbleDelegate.bubbleData?.endPoint else {
+            return
+        }
+        self.startPoint     = startPoint
+        self.endPoint       = endPoint
+        /*** END Vars needed for all cases ***/
+        let startLeft  = CGPoint(x: startPoint.x   - startWth,   y: startPoint.y)
+        let startRight = CGPoint(x: startPoint.x   + startWth,   y: startPoint.y)
         
         // create and add the points in the order they will be used
         // put points into their arrays
