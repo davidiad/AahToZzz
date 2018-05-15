@@ -8,6 +8,7 @@
 import UIKit
 
 class BubbleDelegate: Bubble {
+    
     // to replace with bubbleData.text
 //    var bubbleText: [String] = ["Tap or drag tiles",
 //                                "to create a beautiful formation",
@@ -99,10 +100,6 @@ class BubbleDelegate: Bubble {
         let cornerUpperRight = CGPoint(x: startPoint.x  + bx, y: startPoint.y - by * 2)
         let cornerUpperLeft  = CGPoint(x: startPoint.x  - bx, y: startPoint.y - by * 2)
         let cornerLowerLeft  = CGPoint(x: startPoint.x  - bx, y: startPoint.y          )
-//        let cornerLowerRight = CGPoint(x: startRight.x + bx, y: startRight.y         )
-//        let cornerUpperRight = CGPoint(x: startRight.x + bx, y: startRight.y - by * 2)
-//        let cornerUpperLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y  - by * 2)
-//        let cornerLowerLeft  = CGPoint(x: startLeft.x  - bx, y: startLeft.y          )
         
         var quadCorners: [CGPoint] = []
         quadCorners.append(cornerLowerRight)
@@ -113,19 +110,51 @@ class BubbleDelegate: Bubble {
             if d > 0 { corner = quadCorners[2] } // arrow points down, upper left corner is quadCorners[2]
             else     { corner = quadCorners[3] } // arrow points up,   upper left corner is quadCorners[3]
         }
-        stayInBounds()
+        shiftIfOutOfBounds(corners: quadCorners)
         return quadCorners
         
     }
     
-    func stayInBounds() {
+    func shiftIfOutOfBounds(corners: [CGPoint]) {
     
     // To adjust so bubble is always in bounds:
     // Get the bounds
+        let buffer: CGFloat = 12
+        let w = UIScreen.main.bounds.width
+        let h = UIScreen.main.bounds.height
+        var shiftX: CGFloat = 0 // amount to shift the startPoint in x
+        var shiftY: CGFloat = 0 // amount to shift the startPoint in y
     // check if any quadcorners are out of bounds, and by how much
+    // check if < 0 in either x or y
+    // if < 0, add x (or y), + buffer, to x or y of startPoint
+    // check if > width or height - as above
+        // check opposite corners
+        
+        if corners[0].x < buffer {
+            // get the shiftX (positive)
+            shiftX = -corners[0].x + buffer
+        }
+        
+        let maxX = w - buffer
+        if corners[2].x > maxX {
+            // get the shiftX (negative)
+            shiftX = maxX - corners[2].x
+        }
+       
+        // what if both are true? (Bubble extends out on both sides of screen)
+        
     // Adjust startPoint, and bubbleData.startPoint, by that amount, plus a buffer
     // Proceed to calculating the corners and points
     }
+    
+//    func getMin(value1: CGFloat, value2: CGFloat) -> CGFloat {
+//        if value1 < value2 {
+//            return value1
+//        } else {
+//            return value2
+//        }
+//    }
+    
     
     func getQuadPoints() -> [CGPoint] { // return quadPoints
         guard let startPoint = bubbleData?.startPoint, let bubbleSize = bubbleSize else {

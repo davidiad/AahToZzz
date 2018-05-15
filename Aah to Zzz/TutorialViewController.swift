@@ -123,8 +123,8 @@ class TutorialViewController: UIViewController {
     func getBubbleMessages() -> [[String]] {
         var bubbleMessages = [[String]]()
         bubbleMessages.append(["First", "Second Line", "third", "fourth"])
-        bubbleMessages.append(["Tap a word", "to see its definition"])
-        bubbleMessages.append(["Tap", "the New List Button", "for new words"])
+        bubbleMessages.append(["Tap a word", "to see its definition this line is too long"])
+        bubbleMessages.append(["Tap", "the New List Button", "for new words a very long line!"])
         
         return bubbleMessages
     }
