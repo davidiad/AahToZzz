@@ -38,7 +38,7 @@ class BubbleDelegate: Bubble {
         
         let stackViewFrame = CGRect(x: corner.x + inset, y: corner.y + inset, width: bubbleWidth - (2 * inset), height: bubbleHeight - 2 * inset)
         let sv = UIStackView(frame: stackViewFrame.insetBy(dx: inset, dy: inset))
-        sv.spacing          = 8.3
+        sv.spacing          = 1.3
         sv.axis             = .vertical
         sv.alignment        = .center
         sv.distribution     = .fillEqually
@@ -49,10 +49,12 @@ class BubbleDelegate: Bubble {
         for s in bubbleData.text {
             let label = UILabel()
             label.attributedText = formatText(textToFormat: s)
-            label.text = s
+            label.clipsToBounds = false
+            //label.text = s
             //let unconstrainedSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
             //label.heightAnchor.constraint(equalToConstant: label.sizeThatFits(unconstrainedSize).height).isActive = true
-            label.lineBreakMode = .byCharWrapping
+            //label.lineBreakMode = .byCharWrapping
+            //label.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 700), for: .vertical)
 //            label.backgroundColor = UIColor.cyan
 //            label.textAlignment = .center
 //            label.numberOfLines = 1
@@ -105,13 +107,12 @@ class BubbleDelegate: Bubble {
         paraStyle.alignment = .center
         
         let multipleAttributes: [NSAttributedStringKey : Any] = [
-            NSAttributedStringKey.font: UIFont(name: "Noteworthy-Bold", size: 18.0)!,
+            NSAttributedStringKey.font: UIFont(name: "Noteworthy-Bold", size: 16.0)!,
             NSAttributedStringKey.paragraphStyle: paraStyle,
             NSAttributedStringKey.shadow: shadow,
             NSAttributedStringKey.strokeColor: Colors.lighterDarkBrown,
             NSAttributedStringKey.strokeWidth: -4.0,
-            NSAttributedStringKey.foregroundColor: Colors.darkBackground,
-            NSAttributedStringKey.backgroundColor: UIColor.cyan]
+            NSAttributedStringKey.foregroundColor: Colors.darkBackground]
         
         return NSAttributedString(string: textToFormat, attributes: multipleAttributes)
     }
