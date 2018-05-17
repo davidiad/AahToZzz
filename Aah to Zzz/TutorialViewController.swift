@@ -37,10 +37,24 @@ class TutorialViewController: UIViewController {
         if bubbleMessages.count < numBubbles {
             numBubbles = bubbleMessages.count
         }
+        arrowDirections.append(.downright)
+        adjustFactors.append((1,1))
         arrowDirections.append(.upright)
         adjustFactors.append((1,1))
         arrowDirections.append(.upleft)
-        adjustFactors.append((1.8,0.5))
+        adjustFactors.append((2.3,1))
+        arrowDirections.append(.upleft)
+        adjustFactors.append((1.5,1))
+        arrowDirections.append(.downleft)
+        adjustFactors.append((2,1))
+        arrowDirections.append(.downright)
+        adjustFactors.append((2,1))
+        arrowDirections.append(.down)
+        adjustFactors.append((1,1))
+        arrowDirections.append(.down)
+        adjustFactors.append((1,1))
+        arrowDirections.append(.down)
+        adjustFactors.append((1,1))
         arrowDirections.append(.down)
         adjustFactors.append((1,1))
         
@@ -56,6 +70,23 @@ class TutorialViewController: UIViewController {
         
         displayNextBubble()
         
+    }
+    
+    // Set the text for the messages
+    // could move to a static struct?
+    func getBubbleMessages() -> [[String]] {
+        var bubbleMessages = [[String]]()
+        bubbleMessages.append(["Find all the", "3 letter words", "in these 7 tiles"])
+        bubbleMessages.append(["Tap the tiles,", "or drag to here,", "to form words"])
+        bubbleMessages.append(["If your word", "is valid", "it's moved to your", "found word list"])
+        bubbleMessages.append(["Tap a word", "to see its definition"])
+        bubbleMessages.append(["You can", "scroll up or down", "to see all the words", "in your list"])
+        bubbleMessages.append(["You can also", "scroll the word list", "by dragging up or down", "on the right edge", "of the screen"])
+        bubbleMessages.append(["Tap", "the Cheat Button", "to fill in the words automatically", "(You will lose points!)"])
+        bubbleMessages.append(["Tap", "the New List Button", "for a new list of words to find"])
+        bubbleMessages.append(["Tap", "the Progress Button", "to see your progress graph", "and to check Leaderboards"])
+        bubbleMessages.append(["Tap", "the Jumble Button", "to rearrange the tiles"])
+        return bubbleMessages
     }
     
     func addDismissButton() {
@@ -79,7 +110,6 @@ class TutorialViewController: UIViewController {
     }
     
     func displayNextBubble() {
-        print ("NEXT BUBBLE")
         // nedd to display  first bubb
         // get the current bubble index -- set to 0 as default at start
         
@@ -111,22 +141,6 @@ class TutorialViewController: UIViewController {
 
         view.addSubview(arrowBubble)
 
-    }
-    
-    func getArrowStartPoints() {
-        // Use the end points to get the start points
-        // should have overrides for customization
-    }
-
-    // Set the text for the messages
-    // could move to a static struct?
-    func getBubbleMessages() -> [[String]] {
-        var bubbleMessages = [[String]]()
-        bubbleMessages.append(["First", "Second Line", "third", "fourth"])
-        bubbleMessages.append(["Tap a word", "to see its definition this line is too long"])
-        bubbleMessages.append(["Tap", "the New List Button", "for new words a very long lo line!"])
-        
-        return bubbleMessages
     }
     
 

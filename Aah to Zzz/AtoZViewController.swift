@@ -281,8 +281,6 @@ class AtoZViewController: UIViewController {
     //MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("VDL VDL VDL VDL VDL VDL VDL VDL")
-        //uiDynamicsDelegate = AtoZUIDynamicsDelegate()
         NotificationCenter.default.addObserver(self, selector: #selector (presentDefinition(_:)), name: NSNotification.Name(rawValue: "PresentDefinition"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector (updateCurrentNumberOfWords(_:)), name: NSNotification.Name(rawValue: "UpdateCNOW"), object: nil)
 
@@ -498,9 +496,19 @@ class AtoZViewController: UIViewController {
     func setArrowPoints() -> [CGPoint] {
         // call in viewDidLayoutSubviews, to get arrow endpoints for tutorial
         arrowEndPoints.removeAll()
+        if let ps = positions {
+            arrowEndPoints.append((ps[6].position))
+        }
+        let offset = toolbar.bounds.width * 0.18
         arrowEndPoints.append(CGPoint(x: wordInProgress.center.x, y: wordInProgress.center.y) )
-        arrowEndPoints.append(CGPoint(x: wordTable.center.x + 32.0, y: wordTable.center.y - 120.0))
+        arrowEndPoints.append(CGPoint(x: wordTable.center.x + 50, y: 90.0))
+        arrowEndPoints.append(CGPoint(x: wordTable.center.x, y: 90.0))
+        arrowEndPoints.append(CGPoint(x: wordTable.center.x, y: wordTable.center.y))
+        arrowEndPoints.append(CGPoint(x: UIScreen.main.bounds.width - 12, y: wordTable.center.y))
+        arrowEndPoints.append(CGPoint(x: toolbar.center.x - offset, y: toolbar.center.y - 12.0))
         arrowEndPoints.append(CGPoint(x: toolbar.center.x, y: toolbar.center.y - 12.0))
+        arrowEndPoints.append(CGPoint(x: toolbar.center.x + offset, y: toolbar.center.y - 12.0))
+        arrowEndPoints.append(CGPoint(x: toolbar.center.x + 2 * offset, y: toolbar.center.y - 12.0))
         
         return arrowEndPoints
     }
