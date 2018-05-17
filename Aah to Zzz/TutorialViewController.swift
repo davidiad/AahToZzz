@@ -103,7 +103,7 @@ class TutorialViewController: UIViewController {
     
     func displayBubble(index: Int) {
         let arrowBubble = ArrowView(arrowType: .straight, endPoint: arrowEndPoints[index], startWidth: 10, endWidth: 4, arrowWidth: 19, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .quadcurve, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[index])
-
+        //arrowBubble.bubbleDelegate?.formatText(textToFormat: bubbleData.tex)
 //        guard let currentBubble = self.currentBubble else {
 //            return
 //        }
@@ -124,7 +124,7 @@ class TutorialViewController: UIViewController {
         var bubbleMessages = [[String]]()
         bubbleMessages.append(["First", "Second Line", "third", "fourth"])
         bubbleMessages.append(["Tap a word", "to see its definition this line is too long"])
-        bubbleMessages.append(["Tap", "the New List Button", "for new words a very long line!"])
+        bubbleMessages.append(["Tap", "the New List Button", "for new words a very long lo line!"])
         
         return bubbleMessages
     }

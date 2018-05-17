@@ -48,10 +48,14 @@ class BubbleDelegate: Bubble {
         }
         for s in bubbleData.text {
             let label = UILabel()
+            label.attributedText = formatText(textToFormat: s)
             label.text = s
-            label.backgroundColor = UIColor.cyan
-            label.textAlignment = .center
-            label.numberOfLines = 1
+            //let unconstrainedSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+            //label.heightAnchor.constraint(equalToConstant: label.sizeThatFits(unconstrainedSize).height).isActive = true
+            label.lineBreakMode = .byCharWrapping
+//            label.backgroundColor = UIColor.cyan
+//            label.textAlignment = .center
+//            label.numberOfLines = 1
             sv.addArrangedSubview(label)
             
         }
@@ -74,7 +78,7 @@ class BubbleDelegate: Bubble {
     }
     
     func calculateBubbleSizeFromText (textArray: [String]) -> CGSize {
-        let lineHeightFactor: CGFloat   = 25.0
+        let lineHeightFactor: CGFloat   = 29.0
         let textWidthFactor:  CGFloat   =  7.5
         let bubbleHeight = CGFloat(textArray.count + 1) * lineHeightFactor
         // assuming the largest strings have been put in the middle, shorts on the outside (to fit in a bubble)
@@ -87,6 +91,29 @@ class BubbleDelegate: Bubble {
         let bubbleWidth = CGFloat(maxLength + 6) * textWidthFactor
     
         return CGSize(width: bubbleWidth, height: bubbleHeight)
+    }
+    
+    // Format the text
+    func formatText(textToFormat: String) -> NSAttributedString {
+        
+        let shadow = NSShadow()
+        shadow.shadowBlurRadius = 3
+        shadow.shadowOffset = CGSize(width: 0, height: 3)
+        shadow.shadowColor = UIColor.gray
+        
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.alignment = .center
+        
+        let multipleAttributes: [NSAttributedStringKey : Any] = [
+            NSAttributedStringKey.font: UIFont(name: "Noteworthy-Bold", size: 18.0)!,
+            NSAttributedStringKey.paragraphStyle: paraStyle,
+            NSAttributedStringKey.shadow: shadow,
+            NSAttributedStringKey.strokeColor: Colors.lighterDarkBrown,
+            NSAttributedStringKey.strokeWidth: -4.0,
+            NSAttributedStringKey.foregroundColor: Colors.darkBackground,
+            NSAttributedStringKey.backgroundColor: UIColor.cyan]
+        
+        return NSAttributedString(string: textToFormat, attributes: multipleAttributes)
     }
     
     func getQuadCorners() -> [CGPoint] {
