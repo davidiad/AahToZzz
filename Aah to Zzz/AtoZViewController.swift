@@ -321,10 +321,12 @@ class AtoZViewController: UIViewController {
         // for 5s:      -500    568
         // for 6:       -530    667
         // for 6s plus: -540    736
-        // for X?
+        // for X?       -588
         // TODO: also fine tune horiz. position
         //let vertiShift = -475 - ((view.frame.size.height - 480) * 0.25)
+        
         let vertiShift = (-0.25 * view.frame.size.height) - 355
+        print ("VERTIFSHIFT: \(vertiShift)")
         let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width + 90.0, areaHeight: view.frame.size.height, vertiShift: vertiShift)
         model.updateLetterPositions() // needed to get the view bounds first, and then go back to the model to update the Positions
         // Set positions here, to the sorted array position from the model

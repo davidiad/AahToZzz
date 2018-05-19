@@ -107,7 +107,7 @@ class BubbleDelegate: Bubble {
         paraStyle.alignment = .center
         
         let multipleAttributes: [NSAttributedStringKey : Any] = [
-            NSAttributedStringKey.font: UIFont(name: "Noteworthy-Bold", size: 16.0)!,
+            NSAttributedStringKey.font: UIFont(name: "Noteworthy-Bold", size: 18.0)!,
             NSAttributedStringKey.paragraphStyle: paraStyle,
             NSAttributedStringKey.shadow: shadow,
             NSAttributedStringKey.strokeColor: Colors.lighterDarkBrown,
