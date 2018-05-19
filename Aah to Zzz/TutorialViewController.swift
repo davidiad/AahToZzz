@@ -50,13 +50,13 @@ class TutorialViewController: UIViewController {
         arrowDirections.append(.downright)
         adjustFactors.append((2,1))
         arrowDirections.append(.down)
-        adjustFactors.append((1,1))
+        adjustFactors.append((1,1.15))
         arrowDirections.append(.down)
-        adjustFactors.append((1,1))
+        adjustFactors.append((1,1.15))
         arrowDirections.append(.down)
-        adjustFactors.append((1,1))
+        adjustFactors.append((1,1.15))
         arrowDirections.append(.down)
-        adjustFactors.append((1,1))
+        adjustFactors.append((1,1.15))
         
         for i in 0 ..< numBubbles {
             
@@ -77,11 +77,11 @@ class TutorialViewController: UIViewController {
     func getBubbleMessages() -> [[String]] {
         var bubbleMessages = [[String]]()
         bubbleMessages.append(["Find all the", "3 letter words", "in these 7 tiles"])
-        bubbleMessages.append(["Tap the tiles,", "or drag to here,", "to form words"])
-        bubbleMessages.append(["If your word", "is valid", "it's moved to your", "found word list"])
-        bubbleMessages.append(["Tap a word", "to see its definition"])
-        bubbleMessages.append(["You can", "scroll up or down", "to see all the words", "in your list"])
-        bubbleMessages.append(["You can also", "scroll the word list", "by dragging up or down", "on the right edge", "of the screen"])
+        bubbleMessages.append(["Tap or drag", "the tiles", "to form words"])
+        bubbleMessages.append(["Valid words", "are moved", "to the", "found word list"])
+        bubbleMessages.append(["Tap a word", "to see definition"])
+        bubbleMessages.append(["Scroll up or down", "to see", "all the words", "in your list"])
+        bubbleMessages.append(["Dragging up or down", "on the right edge", "of the screen", "also scrolls the word list" ])
         bubbleMessages.append(["Tap", "the Cheat Button", "to fill in the words automatically", "(You will lose points!)"])
         bubbleMessages.append(["Tap", "the New List Button", "for a new list of words to find"])
         bubbleMessages.append(["Tap", "the Progress Button", "to see your progress graph", "and to check Leaderboards"])
@@ -92,13 +92,17 @@ class TutorialViewController: UIViewController {
     func addDismissButton() {
         let buttonWidth: CGFloat = 210.0
         let buttonFrame = CGRect(x: 0.5 * (view.bounds.width - buttonWidth), y: 12, width: buttonWidth, height: 36.0)
+        let buttonView = ShapeView(frame: buttonFrame, blurriness: 0.8, shadowWidth: 1.3)
         let dismiss = UIButton(frame: buttonFrame)
-        dismiss.setTitle("Close Tutorial", for: .normal)
-        dismiss.backgroundColor = .green
+        dismiss.setTitleColor(.black, for: .normal)
+        dismiss.setTitleColor(Colors.sat_blue, for: .highlighted)
+        dismiss.setTitle("Close Tutorial  x", for: .normal)
+        //dismiss.backgroundColor = .green
     
         dismiss.addTarget(self, action: #selector(dismissThis(sender:)), for: .touchUpInside)
-
-        view.addSubview(dismiss)
+        buttonView.addSubview(dismiss)
+        view.addSubview(buttonView)
+        
     }
     
     @objc func dismissThis(sender: UIButton) {
@@ -132,7 +136,7 @@ class TutorialViewController: UIViewController {
     }
     
     func displayBubble(index: Int) {
-        let arrowBubble = ArrowView(arrowType: .straight, endPoint: arrowEndPoints[index], startWidth: 10, endWidth: 4, arrowWidth: 19, arrowHeight: 12, blurriness: 0.5, shadowWidth: 2.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .quadcurve, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[index])
+        let arrowBubble = ArrowView(arrowType: .straight, endPoint: arrowEndPoints[index], startWidth: 12, endWidth: 4, arrowWidth: 16, arrowHeight: 29, blurriness: 0.55, shadowWidth: 12.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .rectangle, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[index])
         //arrowBubble.bubbleDelegate?.formatText(textToFormat: bubbleData.tex)
 //        guard let currentBubble = self.currentBubble else {
 //            return

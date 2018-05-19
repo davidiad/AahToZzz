@@ -31,6 +31,7 @@ class ShapeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.isOpaque = false
+        print("BUTTONFRAME1: \(frame)")
         useFrameForPoints()
     }
     
@@ -38,6 +39,21 @@ class ShapeView: UIView {
         startPoint  = CGPoint(x: frame.minX, y: frame.minY)
         endPoint    = CGPoint(x: frame.maxX, y: frame.maxY)
         
+    }
+    
+    // Makes a rectangle
+    convenience init(frame: CGRect, blurriness: CGFloat, shadowWidth: CGFloat) {
+        
+        self.init(frame: frame)
+        self.blurriness  = blurriness
+        self.shadowWidth = shadowWidth
+        addShapeView()
+        if blurriness       > 0.01 { addBlurView()   }
+        if shadowWidth      > 0.01 { addShadowView() }
+//        guard let shadowView = shadowView else {
+//            return
+//        }
+//        bringSubview(toFront: shadowView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -234,10 +250,10 @@ class ShapeView: UIView {
     
     func createRectangle() {
         
-        path.move(to: CGPoint(x: 0.0, y: 0.0))
-        path.addLine(to: CGPoint(x: 0.0, y: self.frame.size.height))
-        path.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height))
-        path.addLine(to: CGPoint(x: self.frame.size.width, y: 0.0))
+        path.move(to: CGPoint(x: frame.minX, y: frame.minY))
+        path.addLine(to: CGPoint(x: frame.maxX, y: frame.minY))
+        path.addLine(to: CGPoint(x: frame.maxX, y: frame.maxY))
+        path.addLine(to: CGPoint(x: frame.minX, y: frame.maxY))
         path.close()
     }
     
