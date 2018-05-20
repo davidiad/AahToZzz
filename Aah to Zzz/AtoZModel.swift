@@ -720,7 +720,7 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
                     position.index = Int16(i)
                     position.game = newGameData //store positions in Game instead?
                     positions?.append(position)
-                    updateLetterPosition(i) // setting the coordinates
+                    updateLetterPosition(i, letterShiftX: 0.0) // setting the coordinates. if iPhoneX, letterShiftX = 30
 //                    let pos = generateLetterPosition(i)
 //                    position.xPos = Float(pos.x)
 //                    position.yPos = Float(pos.y)
@@ -744,15 +744,16 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
         }
     }
     
-    func updateLetterPosition(_ posIndex: Int) {
-        let pos = generateLetterPosition(posIndex)
+    func updateLetterPosition(_ posIndex: Int, letterShiftX: CGFloat) {
+        let pos = generateLetterPosition(posIndex, letterShiftX: letterShiftX) // TODO:-?need to pass in param here?
         positions![posIndex].xPos = Float(pos.x)
         positions![posIndex].yPos = Float(pos.y)
     }
     
-    func updateLetterPositions() {
+    // Called from View Controller. vertiShiftX is an adjustment for iPhone X
+    func updateLetterPositions(letterShiftX: CGFloat) {
         for i in 0 ..< 10 {
-            updateLetterPosition(i)
+            updateLetterPosition(i, letterShiftX: letterShiftX)
         }
         saveContext()
     }
@@ -837,13 +838,13 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
 //    }
     
     // find the point from which to anchor the tiles and associated views
-    func calculateAnchor(_ areaWidth: CGFloat, areaHeight: CGFloat, vertiShift: CGFloat, horizShift: CGFloat=0) -> CGPoint {
+    func calculateAnchor(_ areaWidth: CGFloat, areaHeight: CGFloat, vertiShift: CGFloat, horizShift: CGFloat = 0) -> CGPoint {
         anchorPoint =  (CGPoint( x: areaWidth * 0.5 + horizShift, y: areaHeight + vertiShift ) )
-        updateLetterPositions()
+        //updateLetterPositions()
         return anchorPoint! // TODO: should not need to both return, and set the anchorPoint var
     }
     
-    func generateLetterPosition(_ tileNum: Int) -> CGPoint {
+    func generateLetterPosition(_ tileNum: Int, letterShiftX: CGFloat) -> CGPoint {
         var xpos: CGFloat
         var ypos: CGFloat
         
@@ -851,30 +852,32 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
             anchorPoint = CGPoint(x: 130.0, y: 200.0)
         }
         
+        //let vertiShiftX: CGFloat = 30.0
+        
         switch tileNum {
             
         // counting from the bottom to the top
         case 0, 2:
             xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 59.0)
-            ypos = anchorPoint!.y + CGFloat(330.0)
+            ypos = anchorPoint!.y + CGFloat(330.0 + letterShiftX)
         case 1:
             xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 59.0)
-            ypos = anchorPoint!.y + CGFloat(330.0) + 40.0
+            ypos = anchorPoint!.y + CGFloat(330.0 + letterShiftX) + 40.0
         case 3, 5:
             xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 64.0)
-            ypos = anchorPoint!.y + CGFloat(270.0)
+            ypos = anchorPoint!.y + CGFloat(270.0 + letterShiftX)
         case 4:
             xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 64.0)
-            ypos = anchorPoint!.y + CGFloat(270.0) + 42.0
+            ypos = anchorPoint!.y + CGFloat(270.0 + letterShiftX) + 42.0
         case 6:
             xpos = anchorPoint!.x
-            ypos = anchorPoint!.y + CGFloat(210.0) + 35.0
+            ypos = anchorPoint!.y + CGFloat(210.0 + letterShiftX) + 35.0
         case 7, 8, 9:
             xpos = anchorPoint!.x + CGFloat(tileNum - 8) * 60.0
-            ypos = anchorPoint!.y + CGFloat(120.0)
+            ypos = anchorPoint!.y + CGFloat(120.0 + letterShiftX * 1.45)
         default:
             xpos = anchorPoint!.x
-            ypos = anchorPoint!.y + CGFloat(200.0)
+            ypos = anchorPoint!.y + CGFloat(200.0 + letterShiftX)
         }
         
         return CGPoint(x: xpos, y: ypos)

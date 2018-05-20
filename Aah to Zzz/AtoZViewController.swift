@@ -324,10 +324,23 @@ class AtoZViewController: UIViewController {
         // for X?       -588
         // TODO: also fine tune horiz. position
         //let vertiShift = -475 - ((view.frame.size.height - 480) * 0.25)
+        let safeHeight = view.frame.size.height
+        // check and adjust for iPhone X (height affected by notch, and safe areas are not set until ViewDidAppear)
+        //if safeHeight > 800.0 { safeHeight = 734.0 }
+
         
-        let vertiShift = (-0.25 * view.frame.size.height) - 355
-//        print ("VERTIFSHIFT: \(vertiShift)")
-//        print(view.frame.size.height)
+        let vertiShift: CGFloat = (-0.25 * safeHeight) - 355
+        let vertiShiftX: CGFloat = 43.5 // adjustment for iPhone X
+        var vertiShiftUpperPositions: CGFloat = 120.0
+        var letterShiftX: CGFloat = 0.0
+        // adjustments for iPhone X
+        if safeHeight > 800.0 {
+            vertiShiftUpperPositions += vertiShiftX
+            letterShiftX = 30.0
+        }
+        print ("VERTIFSHIFT: \(vertiShift)")
+        print(view.frame.size.height)
+        print(safeHeight)
 //        if #available(iOS 11.0, *) {
 //            let guide = view.safeAreaLayoutGuide
 //            let height = guide.layoutFrame.size.height
@@ -336,8 +349,8 @@ class AtoZViewController: UIViewController {
 //            // Fallback on earlier versions
 //        }
 
-        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width + 90.0, areaHeight: view.frame.size.height, vertiShift: vertiShift)
-        model.updateLetterPositions() // needed to get the view bounds first, and then go back to the model to update the Positions
+        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width + 90.0, areaHeight: safeHeight, vertiShift: vertiShift)
+        model.updateLetterPositions(letterShiftX: letterShiftX) // needed to get the view bounds first, and then go back to the model to update the Positions
         // Set positions here, to the sorted array position from the model
         //(Confusing because model.game.positions is a Set
         positions = model.positions
@@ -377,9 +390,8 @@ class AtoZViewController: UIViewController {
         }
         
         let upperPositionsView = TileHolderView(numTiles: 3, tileWidth: 50, borderWidth: 10, blurriness: 0.5, shadowWidth: 3.5)
-        // mask must be called here, from the containing view
-        //upperPositionsView.mask = upperPositionsView.getArrowMask()
-        upperPositionsView.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + 120)
+
+        upperPositionsView.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + vertiShiftUpperPositions)
         self.view.addSubview(upperPositionsView)
         /*
         // add shadow
@@ -433,10 +445,6 @@ class AtoZViewController: UIViewController {
     
     // Helper for ViewDidLoad
     func setupDownButton() {
-//        // make the frame slightly wider (needed to look right visually, due to extra lines that make button look inset
-//        let w: CGFloat = 8.0
-//        let widerBounds = CGRect(x: -w, y: 0, width: downButton.bounds.width + 2 * w, height: downButton.bounds.height)
-
         let downButtonShape = TriangleView(frame: downButton.bounds, direction: .down, blurriness: 0.5, shadowWidth: 0.0)
         downButtonShape.isUserInteractionEnabled = false
         downButton.addSubview(downButtonShape)
@@ -468,6 +476,15 @@ class AtoZViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        print(view.frame.size.height)
+        if #available(iOS 11.0, *) {
+            let guide = view.safeAreaLayoutGuide
+            let height = guide.layoutFrame.size.height
+            print (height)
+        } else {
+            // Fallback on earlier versions
+        }
+
         if game?.data?.fillingInBlanks == true {
             fillingInBlanks = true
             updateProgress("Filled")
