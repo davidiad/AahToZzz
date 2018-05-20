@@ -326,7 +326,16 @@ class AtoZViewController: UIViewController {
         //let vertiShift = -475 - ((view.frame.size.height - 480) * 0.25)
         
         let vertiShift = (-0.25 * view.frame.size.height) - 355
-        print ("VERTIFSHIFT: \(vertiShift)")
+//        print ("VERTIFSHIFT: \(vertiShift)")
+//        print(view.frame.size.height)
+//        if #available(iOS 11.0, *) {
+//            let guide = view.safeAreaLayoutGuide
+//            let height = guide.layoutFrame.size.height
+//            print (height)
+//        } else {
+//            // Fallback on earlier versions
+//        }
+
         let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width + 90.0, areaHeight: view.frame.size.height, vertiShift: vertiShift)
         model.updateLetterPositions() // needed to get the view bounds first, and then go back to the model to update the Positions
         // Set positions here, to the sorted array position from the model
@@ -424,11 +433,11 @@ class AtoZViewController: UIViewController {
     
     // Helper for ViewDidLoad
     func setupDownButton() {
-        // make the frame slightly wider
-        let w: CGFloat = 8.0
-        let widerBounds = CGRect(x: -w, y: 0, width: downButton.bounds.width + 2 * w, height: downButton.bounds.height)
-//        let downButtonShape = TriangleView(frame: widerBounds, direction: .down)
-        let downButtonShape = TriangleView(frame: widerBounds, direction: .down, blurriness: 0.5, shadowWidth: 0.0)
+//        // make the frame slightly wider (needed to look right visually, due to extra lines that make button look inset
+//        let w: CGFloat = 8.0
+//        let widerBounds = CGRect(x: -w, y: 0, width: downButton.bounds.width + 2 * w, height: downButton.bounds.height)
+
+        let downButtonShape = TriangleView(frame: downButton.bounds, direction: .down, blurriness: 0.5, shadowWidth: 0.0)
         downButtonShape.isUserInteractionEnabled = false
         downButton.addSubview(downButtonShape)
     }
@@ -466,7 +475,7 @@ class AtoZViewController: UIViewController {
         } else {
             updateProgress(nil)
         }
-        // Thank you Aaron Douglas for showing how to turn on the cool fields of lines that visualize UIFieldBehaviors!
+        // credit to Aaron Douglas for showing how to turn on the fields of lines that visualize UIFieldBehaviors
         // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
         //animator.setValue(true, forKey: "debugEnabled")
         

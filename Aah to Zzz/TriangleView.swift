@@ -14,7 +14,6 @@ class TriangleView: ShapeView {
     convenience init(frame: CGRect, direction: Directions, blurriness: CGFloat, shadowWidth: CGFloat) {
         self.init(frame: frame)
         
-       // shapeType           = .triangle
         self.direction      = direction
         self.blurriness     = blurriness
         self.shadowWidth    = shadowWidth
