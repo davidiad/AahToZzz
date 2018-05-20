@@ -68,7 +68,7 @@ class TutorialViewController: UIViewController {
             
         }
         
-        displayNextBubble()
+        displayBubble(index: 0)
         
     }
     
@@ -109,59 +109,18 @@ class TutorialViewController: UIViewController {
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
         displayNextBubble()
-        //fadeMessageBubblesOrDismiss()
-    }
-    
-    func fadeMessageBubblesOrDismiss() {
-        // fade out the current msg bubble
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.transitionCrossDissolve, .curveEaseInOut], animations: {
-            self.currentBubble?.alpha = 0.0
-            //self.arrowViews[self.currentContainerIndex].alpha = 0.0
-        }) { (_) in
-            // set the next message bubble
-            // if the current is the last, then dismiss the entire view controller
-            // and don't proceed
-            //self.currentContainerIndex += 1
-//            if self.currentContainerIndex >= self.containers.count {
-//
-//                for i in 0 ..< self.arrowViews.count {
-//                    print(i)
-//                    print(":::")
-//                    //if self.arrowViews[i].animator?.isRunning == true {
-//                    self.arrowViews[i].animator?.stopAnimation(true)
-//                    self.arrowViews[i].animator?.finishAnimation(at: UIViewAnimatingPosition(rawValue: 0)!)
-//
-//                    //}
-//                }
-//                self.dismiss(animated: true, completion: nil)
-//                return
-//            }
-            // fade in the next msg bubble
-            UIView.animate(withDuration: 1.0, delay: 0.1, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
-                //self.containers[self.currentContainerIndex].alpha = 1.0
-                //self.arrowViews[self.currentContainerIndex].alpha = 1.0
-                
-            }, completion: { (finished) in
-                
-                // Can now run a subsequent animation
-               // self.ghostFingerTap(whereToTap: CGPoint(x: 21.0, y: 22.3), completion: nil)
-                
-            })
-        }
     }
     
     func displayNextBubble() {
-        // need to display  first bubb
-        // get the current bubble index -- set to 0 as default at start
-        
-        if bubbleIndex > 0  && bubbleIndex < numBubbles {
+
+        if bubbleIndex < numBubbles {
             // fade out the current msg bubble
-            UIView.animate(withDuration: 3.4, delay: 0.0, options: [.transitionCrossDissolve, .curveEaseInOut], animations: {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: [.transitionCrossDissolve, .curveEaseInOut], animations: {
                 self.currentBubble?.alpha = 0.0
             }) { (_) in
-            // remove the current bubble
-                
+                // remove the current bubble and add the next one
                 self.currentBubble?.removeFromSuperview()
+                self.displayBubble(index: self.bubbleIndex)
             }
         }
         // check if the index is the last one. If so, dismiss the view controller
@@ -169,43 +128,18 @@ class TutorialViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
             return
         }
-        // create and load the new current bubble
-        if bubbleIndex < numBubbles {
-            displayBubble(index: bubbleIndex)
-            UIView.animate(withDuration: 0.4, delay: 0.0, options: [.transitionCrossDissolve, .curveEaseInOut], animations: {
-                self.currentBubble?.alpha = 1.0
-            })
-            // increment the index
-            bubbleIndex += 1
-        }
-
     }
     
     func displayBubble(index: Int) {
         let arrowBubble = ArrowView(arrowType: .straight, endPoint: arrowEndPoints[index], startWidth: 12, endWidth: 4, arrowWidth: 16, arrowHeight: 29, blurriness: 0.55, shadowWidth: 12.5, bubbleWidth: 20, bubbleHeight: 80, bubbleType: .rectangle, bubbleDelegate: BubbleDelegate(), bubbleData: bubbleData[index])
-        //arrowBubble.bubbleDelegate?.formatText(textToFormat: bubbleData.tex)
-//        guard let currentBubble = self.currentBubble else {
-//            return
-//        }
-        arrowBubble.alpha = 0.0
-        currentBubble = arrowBubble
         
+        currentBubble = arrowBubble
+        arrowBubble.alpha = 0.0
         view.addSubview(arrowBubble)
         // fade in the bubble
-//        UIView.animate(withDuration: 0.4, delay: 0.0, options: [.transitionCrossDissolve, .curveEaseInOut], animations: {
-//            self.currentBubble?.alpha = 1.0
-//        })
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: [.transitionCrossDissolve, .curveEaseInOut], animations: {
+            arrowBubble.alpha = 1.0
+        })
+        bubbleIndex += 1 // get ready for the next bubb
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
