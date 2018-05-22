@@ -352,8 +352,12 @@ class AtoZViewController: UIViewController {
 //        } else {
 //            // Fallback on earlier versions
 //        }
-
-        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width + 90.0, areaHeight: safeHeight, vertiShift: vertiShift)
+        print("view.frame.size.width")
+        print(view.frame.size.width)
+        print("view.frame.size.width")
+        var anchorPointShiftX: CGFloat = 90.0
+        if view.frame.size.width < 321.0 { anchorPointShiftX = 104.5 } // shift for iPhone 5s, SE
+        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width + anchorPointShiftX, areaHeight: safeHeight, vertiShift: vertiShift)
         model.updateLetterPositions(letterShiftX: letterShiftX) // needed to get the view bounds first, and then go back to the model to update the Positions
         // Set positions here, to the sorted array position from the model
         //(Confusing because model.game.positions is a Set

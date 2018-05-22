@@ -858,17 +858,17 @@ class AtoZModel: NSObject, NSFetchedResultsControllerDelegate {
             
         // counting from the bottom to the top
         case 0, 2:
-            xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 59.0)
-            ypos = anchorPoint!.y + CGFloat(330.0 + letterShiftX)
+            xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 64.0)
+            ypos = anchorPoint!.y + CGFloat(336.0 + letterShiftX)
         case 1:
-            xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 59.0)
-            ypos = anchorPoint!.y + CGFloat(330.0 + letterShiftX) + 40.0
+            xpos = anchorPoint!.x + (CGFloat(tileNum - 1) * 64.0)
+            ypos = anchorPoint!.y + CGFloat(333.0 + letterShiftX) + 45.0
         case 3, 5:
-            xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 64.0)
-            ypos = anchorPoint!.y + CGFloat(270.0 + letterShiftX)
+            xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 69.0)
+            ypos = anchorPoint!.y + CGFloat(272.0 + letterShiftX)
         case 4:
-            xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 64.0)
-            ypos = anchorPoint!.y + CGFloat(270.0 + letterShiftX) + 42.0
+            xpos = anchorPoint!.x + (CGFloat(tileNum - 4) * 65.0)
+            ypos = anchorPoint!.y + CGFloat(272.0 + letterShiftX) + 42.0
         case 6:
             xpos = anchorPoint!.x
             ypos = anchorPoint!.y + CGFloat(210.0 + letterShiftX) + 35.0
