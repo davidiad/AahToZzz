@@ -327,7 +327,7 @@ class AtoZViewController: UIViewController {
         //let vertiShift = -475 - ((view.frame.size.height - 480) * 0.25)
         let safeHeight = view.frame.size.height
         // check and adjust for iPhone X (height affected by notch, and safe areas are not set until ViewDidAppear)
-        //if safeHeight > 800.0 { safeHeight = 734.0 }
+        //if safeHeight > 800.0 { safeHeight = 734.0 } // won't work til ViewDidAppear
 
         
         let vertiShift: CGFloat = (-0.25 * safeHeight) - 355
@@ -372,14 +372,15 @@ class AtoZViewController: UIViewController {
         animator = UIDynamicAnimator(referenceView: view)
         animator.delegate = uiDynamicsDelegate
         
-        let bgImage = UIImage(named: "tile_bg") as UIImage?
+        //let bgImage = UIImage(named: "tile_bg") as UIImage?
         
         for i in 0 ..< 7 {
             //TODO: move some of this stuff to init for Tile
             //TODO: use the eventual tile positions
             if let tilePos = positions?[i].position {
                 let tile = Tile(frame: CGRect(x: tilePos.x, y: tilePos.y * CGFloat(i), width: 50, height: 50))
-                let bgView = UIImageView(image: bgImage)
+                //let bgView = UIImageView(image: bgImage)
+                let bgView = TileHolderView(numTiles: 1, tileWidth: 50, borderWidth: 4.2, blurriness: 0.1, shadowWidth: 1.5)
                 bgView.tag = 2000 + i
                 bgView.center = tilePos
                 

@@ -20,6 +20,7 @@ class Tile: UIButton {
     var letter: Letter? // letter.position.position would remove the need for the CGPoint position
     //var animator: UIDynamicAnimator?  // or use animator in view file?
     var boundingPath: UIBezierPath? // used for collision boundary
+    // TODO: outline tile path in code for higher res
     //MARK:- Private vars
     //private var offset: CGPoint = CGPoint(x: 0, y: 0)
     

@@ -203,7 +203,7 @@
                                         <state key="normal" title="Help"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9r-FU-YhZ">
-                                        <rect key="frame" x="94.666666666666671" y="60" width="51.000000000000014" height="30"/>
+                                        <rect key="frame" x="94.333333333333329" y="60" width="51.333333333333329" height="30"/>
                                         <state key="normal" title="Tutorial"/>
                                         <connections>
                                             <segue destination="NaI-Fe-NAV" kind="presentation" customClass="UIStoryboardSegueFromRight" customModule="AahToZzz" customModuleProvider="target" id="6WT-BM-oCC"/>
@@ -218,7 +218,7 @@
                                         <state key="normal" title="Leave Feedback"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSt-UW-IVq">
-                                        <rect key="frame" x="92.666666666666671" y="150" width="55.000000000000014" height="30"/>
+                                        <rect key="frame" x="92.333333333333329" y="150" width="55.333333333333329" height="30"/>
                                         <state key="normal" title="Contact"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He6-7G-baV">
