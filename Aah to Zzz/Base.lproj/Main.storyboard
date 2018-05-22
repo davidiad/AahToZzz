@@ -187,11 +187,11 @@
                                 </connections>
                             </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XAv-0M-tPX">
-                                <rect key="frame" x="87" y="308" width="240.33333333333337" height="207"/>
+                                <rect key="frame" x="87" y="308" width="240" height="207"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwb-MG-8bs">
-                                        <rect key="frame" x="105.33333333333334" y="0.0" width="30" height="30"/>
+                                        <rect key="frame" x="105" y="0.0" width="30" height="30"/>
                                         <state key="normal" title="Play"/>
                                         <connections>
                                             <action selector="playGame:" destination="6UW-8g-sR0" eventType="touchUpInside" id="km5-7T-Ch3"/>
@@ -199,7 +199,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNe-vJ-zON">
-                                        <rect key="frame" x="104.33333333333334" y="30" width="32" height="30"/>
+                                        <rect key="frame" x="104" y="30" width="32" height="30"/>
                                         <state key="normal" title="Help"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9r-FU-YhZ">
@@ -210,11 +210,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCH-Co-bR6">
-                                        <rect key="frame" x="104.33333333333334" y="90" width="32" height="30"/>
+                                        <rect key="frame" x="104" y="90" width="32" height="30"/>
                                         <state key="normal" title="Rate"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ic2-fx-QBA">
-                                        <rect key="frame" x="63.999999999999993" y="120" width="112.33333333333331" height="30"/>
+                                        <rect key="frame" x="64" y="120" width="112" height="30"/>
                                         <state key="normal" title="Leave Feedback"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSt-UW-IVq">
@@ -222,7 +222,7 @@
                                         <state key="normal" title="Contact"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He6-7G-baV">
-                                        <rect key="frame" x="0.0" y="180" width="240.33333333333334" height="27"/>
+                                        <rect key="frame" x="0.0" y="180" width="240" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="How 3 letter words help score more points"/>
                                     </button>
@@ -280,17 +280,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DVE-Kx-iP4">
-                                <rect key="frame" x="3" y="0.0" width="102" height="779"/>
+                                <rect key="frame" x="3" y="0.0" width="102" height="812"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VE8-Hj-kp5">
-                                        <rect key="frame" x="0.0" y="0.0" width="6" height="779"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="6" height="812"/>
                                         <color key="backgroundColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="6" id="q5j-Gz-DDr"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rxL-uN-hPn">
-                                        <rect key="frame" x="96" y="0.0" width="6" height="779"/>
+                                        <rect key="frame" x="96" y="0.0" width="6" height="812"/>
                                         <color key="backgroundColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="6" id="fjz-ot-EIP"/>
@@ -298,7 +298,7 @@
                                         </constraints>
                                     </view>
                                     <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="36" sectionHeaderHeight="-1" sectionFooterHeight="-1" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQk-rq-SuY">
-                                        <rect key="frame" x="6" y="0.0" width="90" height="779"/>
+                                        <rect key="frame" x="6" y="0.0" width="90" height="812"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="90" id="6qr-xV-NCv"/>
@@ -437,7 +437,7 @@
                                                         <constraint firstItem="aFZ-ZV-JSF" firstAttribute="centerX" secondItem="nST-1A-dcE" secondAttribute="centerX" id="yEs-sM-G1I"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
-                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.21040501846764695" green="0.2265338124551789" blue="0.33075573979591838" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <inset key="separatorInset" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                                                 <connections>
                                                     <outlet property="bg" destination="Ych-MU-hz3" id="C5d-hx-UyC"/>
@@ -464,7 +464,7 @@
                                         </constraints>
                                     </view>
                                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SBj-0e-XXP">
-                                        <rect key="frame" x="6" y="779" width="90" height="0.0"/>
+                                        <rect key="frame" x="6" y="812" width="90" height="0.0"/>
                                         <color key="backgroundColor" red="0.056404989209999999" green="0.062285825609999998" blue="0.1582513452" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="UnU-bU-BSZ"/>
@@ -477,7 +477,7 @@
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" alpha="0.66000000000000003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadown_down" translatesAutoresizingMaskIntoConstraints="NO" id="2Bm-MY-X4I">
-                                        <rect key="frame" x="0.0" y="657" width="102" height="124"/>
+                                        <rect key="frame" x="0.0" y="690" width="102" height="124"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="124" id="7gV-ib-fLT"/>
                                         </constraints>
@@ -694,7 +694,7 @@
                         <constraints>
                             <constraint firstItem="ojv-Vd-35V" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="0o8-wi-NUA"/>
                             <constraint firstItem="MCZ-cS-hza" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="1Lf-PW-QL0"/>
-                            <constraint firstItem="DVE-Kx-iP4" firstAttribute="bottom" secondItem="jOe-Nl-wN2" secondAttribute="bottom" constant="3" id="22w-TA-8ZC"/>
+                            <constraint firstItem="DVE-Kx-iP4" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" constant="34" id="22w-TA-8ZC"/>
                             <constraint firstItem="4Y4-1f-2hz" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="46A-Cs-V45"/>
                             <constraint firstItem="nIa-8b-4Cg" firstAttribute="leading" secondItem="P9D-OZ-Gqm" secondAttribute="leading" id="4tb-cT-hb2"/>
                             <constraint firstItem="jOe-Nl-wN2" firstAttribute="top" secondItem="3tH-ng-G60" secondAttribute="bottom" constant="14" id="AqJ-A3-BDe"/>
@@ -732,6 +732,7 @@
                     </view>
                     <connections>
                         <outlet property="blurredViewHeight" destination="ils-zP-s6V" id="4dr-1T-EnB"/>
+                        <outlet property="bottomConstraint" destination="22w-TA-8ZC" id="TQF-ue-yqD"/>
                         <outlet property="downButton" destination="lJN-X8-6hn" id="uZs-wB-ny7"/>
                         <outlet property="inProgressLeading" destination="hhu-6t-4DQ" id="xcm-P1-jFC"/>
                         <outlet property="progressLabl" destination="kp7-7N-n01" id="pKF-ZI-LW7"/>

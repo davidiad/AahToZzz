@@ -54,6 +54,7 @@ class AtoZViewController: UIViewController {
     @IBOutlet weak var proxyTableArrow: UIImageView!
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var inProgressLeading: NSLayoutConstraint!
     @IBOutlet weak var statusBgHeight: NSLayoutConstraint!
     @IBOutlet weak var blurredViewHeight: NSLayoutConstraint!
@@ -337,6 +338,9 @@ class AtoZViewController: UIViewController {
         if safeHeight > 800.0 {
             vertiShiftUpperPositions += vertiShiftX
             letterShiftX = 30.0
+            bottomConstraint.constant = 34.0 // aligns table holder to bottom in iPhone X
+        } else {
+            bottomConstraint.constant = 0.0
         }
         print ("VERTIFSHIFT: \(vertiShift)")
         print(view.frame.size.height)
