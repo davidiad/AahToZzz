@@ -17,6 +17,7 @@ class TutorialViewController: UIViewController {
     var arrowEndPoints:         [CGPoint]                  = [] // load from main VC on instantiation
     var arrowDirections:        [ArrowDirection]           = []
     var adjustFactors:          [(x: CGFloat, y: CGFloat)] = []
+    var buttonCenter:           CGFloat?
     weak var currentBubble:     ArrowView?
     
     // Consider adding an offset to the Struct, whch would dictate the position of start (relative to end)
@@ -90,10 +91,13 @@ class TutorialViewController: UIViewController {
     }
     
     func addDismissButton() {
-        let buttonWidth: CGFloat = 150.0
+        guard let buttonCenter = buttonCenter else {
+            return
+        }
+        let buttonWidth: CGFloat = 200.0
         var vertiShiftX: CGFloat = 0.0
-        if view.frame.size.height > 800 { vertiShiftX = 22.0 }// adjust for iPhone X
-        let buttonFrame = CGRect(x: 0.5 * (view.bounds.width - buttonWidth), y: 12 + vertiShiftX, width: buttonWidth, height: 36.0)
+        if view.frame.size.height > 800 { vertiShiftX = 26.0 }// adjust for iPhone X
+        let buttonFrame = CGRect(x: buttonCenter - (0.5 * buttonWidth), y: 8 + vertiShiftX, width: buttonWidth, height: 36.0)
         let buttonView = ShapeView(frame: buttonFrame, blurriness: 0.8, shadowWidth: 1.3)
         let dismiss = UIButton(frame: buttonFrame)
         dismiss.setTitleColor(.black, for: .normal)

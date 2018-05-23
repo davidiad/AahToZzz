@@ -39,6 +39,7 @@ class AtoZViewController: UIViewController {
     var blurredViews: [BlurViewController] = []
     var animatingStatusHeight: Bool = false
     var arrowEndPoints:  [CGPoint] = []
+
     
     //MARK:- IBOutlets
     @IBOutlet weak var progressLabl: UILabel!
@@ -352,12 +353,15 @@ class AtoZViewController: UIViewController {
 //        } else {
 //            // Fallback on earlier versions
 //        }
-        print("view.frame.size.width")
-        print(view.frame.size.width)
-        print("view.frame.size.width")
-        var anchorPointShiftX: CGFloat = 90.0
-        if view.frame.size.width < 321.0 { anchorPointShiftX = 104.5 } // shift for iPhone 5s, SE
-        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width + anchorPointShiftX, areaHeight: safeHeight, vertiShift: vertiShift)
+
+//        var anchorPointShiftX: CGFloat = 90.0
+//        if view.frame.size.width < 321.0 { anchorPointShiftX = 104.5 } // shift for iPhone 5s, SE
+
+        let wordTableWidth = wordTableHolderView.frame.size.width + 3.0 // There's a 3 px inset from left
+        let tilesAnchorPoint = model.calculateAnchor(view.frame.size.width - wordTableWidth,
+                                                     areaHeight: safeHeight,
+                                                     vertiShift: vertiShift,
+                                                     horizShift: wordTableWidth)
         model.updateLetterPositions(letterShiftX: letterShiftX) // needed to get the view bounds first, and then go back to the model to update the Positions
         // Set positions here, to the sorted array position from the model
         //(Confusing because model.game.positions is a Set
@@ -524,6 +528,7 @@ class AtoZViewController: UIViewController {
             // TO Implement here: Instantiate TutorialViewController (on first open, and user request)
             // and pass in the arrowEndPoints
             let tutorial = TutorialViewController()
+            tutorial.buttonCenter = downButton.center.x
             tutorial.modalPresentationStyle = .overCurrentContext
             tutorial.arrowEndPoints = setArrowPoints()
             self.present(tutorial, animated: true)
