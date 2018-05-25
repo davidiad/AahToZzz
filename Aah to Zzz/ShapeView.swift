@@ -7,7 +7,8 @@
 
 import UIKit
 
-class ShapeView: UIView {
+@IBDesignable class ShapeView: UIView {
+    
     //TODO:- cut off mask of top of arrowViews, try to blend arrows with text bubbles
     //TODO:- replace ArrowView with ArrowBlurView, renaming
     //TODO:- Create a subclass (called TextRectView?) that allows adding text and buttons into a stack view
@@ -23,6 +24,7 @@ class ShapeView: UIView {
     var path:           UIBezierPath = UIBezierPath()
     var shadowPath:     UIBezierPath = UIBezierPath() // TODO: should be an optional, as there may not be a shadow
     var lineProperties: [LineProperties] = [LineProperties]()
+    var lineType:       Int = 0 //TODO:- convert to enum. Allow setting of line properties
     var shapeView:      UIView?
     var shadowView:     UIView?
     var shadowWidth:    CGFloat = 3.5 // only used if there is a shadow. Make optional? Needed?
@@ -58,11 +60,23 @@ class ShapeView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.blurriness  = 0.5
+        self.shadowWidth = 0.05
+        lineType = 1
+        addShapeView() // why, when remove this line, the shape moves down and right???
+        addBlurView()
+        
+        addShadowView()
+        print("SHAPE VIEW IN SB???)")
     }
     
     // helpers for init
     func addLineProperties() {
-        lineProperties = LinePropertyStyles.frosted
+        if lineType == 0 {
+            lineProperties = LinePropertyStyles.frosted
+        } else if lineType == 1 {
+            lineProperties = LinePropertyStyles.frostedEdgeHighlight
+        }
     }
     
     deinit {
@@ -102,6 +116,11 @@ class ShapeView: UIView {
 //    }
     
     //MARK:- Inspectables
+    @IBInspectable var lType: Int = 0 {
+        didSet {
+            self.lineType = self.lType
+        }
+    }
     
     @IBInspectable var sPt: CGPoint = CGPoint(x: 0, y: 0) {
         didSet {
@@ -113,6 +132,10 @@ class ShapeView: UIView {
         didSet {
             self.endPoint = self.ePt
         }
+    }
+    
+    @IBInspectable var cornerRadius: CGFloat = 0.0 {
+        didSet { self.layer.cornerRadius = cornerRadius }
     }
     
     //MARK:- Shape creation
@@ -149,6 +172,7 @@ class ShapeView: UIView {
         // call createTileHolder(), or other shape
         // override point for subclasses
         // default?
+        
         createRectangle()
     }
     
@@ -249,7 +273,8 @@ class ShapeView: UIView {
     
     
     func createRectangle() {
-        
+        //TODO:- instead of creating points, create a rectangle (could be rounded)
+        // and set the path equal to the rectangle's path
         path.move(to: CGPoint(x: frame.minX, y: frame.minY))
         path.addLine(to: CGPoint(x: frame.maxX, y: frame.minY))
         path.addLine(to: CGPoint(x: frame.maxX, y: frame.maxY))
