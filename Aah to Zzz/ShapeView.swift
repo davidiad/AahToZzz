@@ -25,7 +25,8 @@ import UIKit
     var shadowPath:     UIBezierPath = UIBezierPath() // TODO: should be an optional, as there may not be a shadow
     var lineProperties: [LineProperties] = [LineProperties]()
     var lineType:       Int = 0 //TODO:- convert to enum. Allow setting of line properties
-    var shapeView:      UIView?
+    //var cornerRadius:   CGFloat = 0.0
+var shapeView:      UIView?
     var shadowView:     UIView?
     var shadowWidth:    CGFloat = 3.5 // only used if there is a shadow. Make optional? Needed?
     
@@ -61,13 +62,20 @@ import UIKit
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.blurriness  = 0.5
-        self.shadowWidth = 0.05
-        lineType = 1
-        addShapeView() // why, when remove this line, the shape moves down and right???
-        addBlurView()
+        self.shadowWidth = 0.015
+
+
+
+    }
+    
+    override func awakeFromNib() {
+        self.lineType = lType
+        self.layer.cornerRadius = cornerRadius
+        print("CCCCC RRRRR: \(cornerRadius)")
+        addShapeView()
+        if blurriness       > 0.01 { addBlurView()   }
+        if shadowWidth      > 0.01 { addShadowView() }//why, when remove this line, the shape moves down and right twice what it should be, from 0,0???
         
-        addShadowView()
-        print("SHAPE VIEW IN SB???)")
     }
     
     // helpers for init
@@ -118,7 +126,7 @@ import UIKit
     //MARK:- Inspectables
     @IBInspectable var lType: Int = 0 {
         didSet {
-            self.lineType = self.lType
+            self.lineType = lType
         }
     }
     
@@ -214,7 +222,7 @@ import UIKit
     
     func addShadowView() {
         setShadowPath()
-        shadowView = UIView(frame: bounds)
+        shadowView = UIView()
         guard let shadowView = shadowView else {
             return
         }
@@ -225,7 +233,7 @@ import UIKit
         shadowView.layer.shadowRadius   = shadowWidth
         shadowView.layer.masksToBounds  = false
         shadowView.layer.shadowOffset   = CGSize(width: 0, height: 0)
-        shadowView.layer.mask             = getShadowMask()
+        shadowView.layer.mask           = getShadowMask()
         
         addSubview(shadowView)
     }
@@ -233,7 +241,7 @@ import UIKit
     
     func getShadowMask() -> CAShapeLayer? {
         // reset the bounds to the bounds of the newly created path
-        bounds  = path.cgPath.boundingBoxOfPath
+        bounds = path.cgPath.boundingBoxOfPath
         
         // invert the mask for use as a shadow mask
         // make a path that is a box larger than the entire view, then append the path
@@ -253,24 +261,6 @@ import UIKit
         return bounds.insetBy(dx: -2 * shadowWidth, dy: -2 * shadowWidth)
     }
     
-//    // adapted from similar code in BlurViewC and its xib - need to consolidate
-//    func updateShadowMaskLayer () {
-//        //        let outerShadowMaskRect = CGRect(x: bounds.minX - 25, y: bounds.minY - 25, width: bounds.width + 50, height: bounds.height + 50)
-//        //        let outerPath = UIBezierPath(rect: outerShadowMaskRect)
-//        //        let innerShadowRect = CGRect(x: 0.0, y: -1.0, width: shadowView.frame.width, height: shadowView.frame.height)
-//        //        let innerPath = UIBezierPath(roundedRect: innerShadowRect, cornerRadius: cornerRadius)
-//        //
-//        //        let shadowMask                          = CGMutablePath()
-//        //        let shadowMaskLayer                     = CAShapeLayer()
-//        //
-//        //        shadowMask.addPath(outerPath.cgPath)
-//        //        shadowMask.addPath(innerPath.cgPath)
-//        //
-//        //        shadowMaskLayer.path                    = shadowMask
-//        //        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
-//        //        shadowView.layer.mask                   = shadowMaskLayer
-//    }
-    
     
     func createRectangle() {
         //TODO:- instead of creating points, create a rectangle (could be rounded)
@@ -281,21 +271,6 @@ import UIKit
         path.addLine(to: CGPoint(x: frame.minX, y: frame.maxY))
         path.close()
     }
-    
-//    // called in init
-//    func addShapeWithBlur() {
-//
-//
-//        //createBezierArrow()
-//        //createRotatedArrow()
-//
-//
-//        for i in 0 ..< lineProperties.count {
-//            addSublayerShapeLayer(lineWidth: lineProperties[i].lineWidth, color: lineProperties[i].color)
-//        }
-//
-//        addBlurView()
-//    }
     
     func addSublayerShapeLayer (lineWidth: CGFloat, color: UIColor) {
         let shapeLayer          = CAShapeLayer()
@@ -317,7 +292,7 @@ import UIKit
         maskLayer.fillRule          = kCAFillRuleEvenOdd
         
         // update the frame with the new path's bounds
-        frame  = path.cgPath.boundingBoxOfPath
+        frame = path.cgPath.boundingBoxOfPath
         let mView = UIView(frame: bounds)
         mView.layer.addSublayer(maskLayer)
         
