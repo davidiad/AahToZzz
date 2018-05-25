@@ -24,7 +24,7 @@ import UIKit
     var path:           UIBezierPath = UIBezierPath()
     var shadowPath:     UIBezierPath = UIBezierPath() // TODO: should be an optional, as there may not be a shadow
     var lineProperties: [LineProperties] = [LineProperties]()
-    var lineType:       Int = 0 //TODO:- convert to enum. Allow setting of line properties
+    var linePropertyStyle:       LinePropertyStyle = .frosted //TODO:- convert to enum. Allow setting of line properties
     //var cornerRadius:   CGFloat = 0.0
 var shapeView:      UIView?
     var shadowView:     UIView?
@@ -63,15 +63,11 @@ var shapeView:      UIView?
         super.init(coder: aDecoder)
         self.blurriness  = 0.5
         self.shadowWidth = 0.015
-
-
-
     }
     
     override func awakeFromNib() {
-        self.lineType = lType
+        self.linePropertyStyle = LinePropertyStyle(rawValue: lineStyle)!
         self.layer.cornerRadius = cornerRadius
-        print("CCCCC RRRRR: \(cornerRadius)")
         addShapeView()
         if blurriness       > 0.01 { addBlurView()   }
         if shadowWidth      > 0.01 { addShadowView() }//why, when remove this line, the shape moves down and right twice what it should be, from 0,0???
@@ -80,9 +76,9 @@ var shapeView:      UIView?
     
     // helpers for init
     func addLineProperties() {
-        if lineType == 0 {
+        if linePropertyStyle.rawValue == 0 {
             lineProperties = LinePropertyStyles.frosted
-        } else if lineType == 1 {
+        } else if linePropertyStyle.rawValue == 1 {
             lineProperties = LinePropertyStyles.frostedEdgeHighlight
         }
     }
@@ -124,9 +120,9 @@ var shapeView:      UIView?
 //    }
     
     //MARK:- Inspectables
-    @IBInspectable var lType: Int = 0 {
+    @IBInspectable var lineStyle: Int = 0 {
         didSet {
-            self.lineType = lType
+            self.linePropertyStyle = LinePropertyStyle(rawValue: lineStyle)!
         }
     }
     
@@ -265,11 +261,12 @@ var shapeView:      UIView?
     func createRectangle() {
         //TODO:- instead of creating points, create a rectangle (could be rounded)
         // and set the path equal to the rectangle's path
-        path.move(to: CGPoint(x: frame.minX, y: frame.minY))
-        path.addLine(to: CGPoint(x: frame.maxX, y: frame.minY))
-        path.addLine(to: CGPoint(x: frame.maxX, y: frame.maxY))
-        path.addLine(to: CGPoint(x: frame.minX, y: frame.maxY))
-        path.close()
+        path = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
+//        path.move   (to: CGPoint(x: frame.minX, y: frame.minY))
+//        path.addLine(to: CGPoint(x: frame.maxX, y: frame.minY))
+//        path.addLine(to: CGPoint(x: frame.maxX, y: frame.maxY))
+//        path.addLine(to: CGPoint(x: frame.minX, y: frame.maxY))
+//        path.close  ()
     }
     
     func addSublayerShapeLayer (lineWidth: CGFloat, color: UIColor) {

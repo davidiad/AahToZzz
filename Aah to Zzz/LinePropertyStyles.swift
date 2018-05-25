@@ -32,4 +32,6 @@ struct LinePropertyStyles {
         LineProperties(lineWidth: 3.0,   color: Colors.light_yellow)]
 }
 
+enum LinePropertyStyle: Int { case frosted, frostedEdgeHighlight }
+
 
