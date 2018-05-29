@@ -26,7 +26,7 @@ import UIKit
     var lineProperties: [LineProperties] = [LineProperties]()
     var linePropertyStyle:       LinePropertyStyle = .frosted //TODO:- convert to enum. Allow setting of line properties
     //var cornerRadius:   CGFloat = 0.0
-var shapeView:      UIView?
+    var shapeView:      UIView?
     var shadowView:     UIView?
     var shadowWidth:    CGFloat = 3.5 // only used if there is a shadow. Make optional? Needed?
     
@@ -71,7 +71,7 @@ var shapeView:      UIView?
         addShapeView()
         if blurriness       > 0.01 { addBlurView()   }
         if shadowWidth      > 0.01 { addShadowView() }//why, when remove this line, the shape moves down and right twice what it should be, from 0,0???
-        
+       
     }
     
     // helpers for init
@@ -81,6 +81,49 @@ var shapeView:      UIView?
         } else if linePropertyStyle.rawValue == 1 {
             lineProperties = LinePropertyStyles.frostedEdgeHighlight
         }
+    }
+    
+    func animateShape() {
+        let shapeLayer      = CAShapeLayer()
+        let maskLayer       = CAShapeLayer()
+        let animation       = CABasicAnimation(keyPath: "path")
+        animation.duration  = 2
+        
+        shapeView?.layer.addSublayer(shapeLayer)
+        shapeLayer.backgroundColor = Colors.bluek.cgColor
+        // Your new shape here
+        let highPath = UIBezierPath(roundedRect: frame.insetBy(dx: 0, dy: 12), cornerRadius: cornerRadius)
+        animation.fromValue = path.cgPath
+        animation.toValue   = highPath.cgPath
+        
+//        let animation = CABasicAnimation(keyPath: "path")
+//        animation.toValue = endShape
+//        animation.duration = 1 // duration is 1 sec
+        
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        
+        // The next two line preserves the final shape of animation,
+        // if you remove it the shape will return to the original shape after the animation finished
+        animation.fillMode = kCAFillModeForwards
+        //animation.isRemovedOnCompletion = false
+        
+        shapeLayer.add(animation, forKey: animation.keyPath)
+        shapeView?.mask?.layer.add(animation, forKey: nil)
+        
+        print("ANIMATESHAPE")
+//        animator = UIViewPropertyAnimator(duration: 3, curve: .linear) {
+//
+//            self.animator?.pauseAnimation()
+//        }
+//        animator?.startAnimation()
+//        UIView.animate(withDuration: 2.35, delay: 0.25, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
+        
+//            self.path = highPath
+//
+//        }, nil)
+        
+        
+        
     }
     
     deinit {
@@ -232,6 +275,8 @@ var shapeView:      UIView?
         shadowView.layer.mask           = getShadowMask()
         
         addSubview(shadowView)
+        
+        animateShape()
     }
     
     

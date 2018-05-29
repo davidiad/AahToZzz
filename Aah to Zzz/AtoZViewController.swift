@@ -59,6 +59,7 @@ class AtoZViewController: UIViewController {
     @IBOutlet weak var inProgressLeading: NSLayoutConstraint!
     @IBOutlet weak var statusBgHeight: NSLayoutConstraint!
     @IBOutlet weak var blurredViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var statusBg: ShapeView!
     @IBOutlet weak var downButton: UIButton!
     
     //MARK:- IBActions
@@ -509,6 +510,8 @@ class AtoZViewController: UIViewController {
         // https://astralbodi.es/2015/07/16/uikit-dynamics-turning-on-debug-mode/
         //animator.setValue(true, forKey: "debugEnabled")
         
+
+        
         // When first loading, add a basic info panel about the game, with a dismiss button
         // TODO: enable dismiss by tapping anywhere
         // TODO: customize the info vc animation
@@ -533,6 +536,7 @@ class AtoZViewController: UIViewController {
             tutorial.arrowEndPoints = setArrowPoints()
             self.present(tutorial, animated: true)
         }
+        
     }
     
     func setArrowPoints() -> [CGPoint] {
@@ -764,10 +768,12 @@ class AtoZViewController: UIViewController {
             }, completion: { (finished: Bool) -> Void in
                 
         })
+
     }
     
     func wordListCompleted () {
-        animateStatusHeight(80.0)
+        statusBg.animateShape()
+        //animateStatusHeight(80.0)
         progressLabl.text = "Word List Completed!"
         animateNewListButton()
     }

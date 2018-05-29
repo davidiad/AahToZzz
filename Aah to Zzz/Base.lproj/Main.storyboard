@@ -659,7 +659,7 @@
                                     <segue destination="wfj-tV-mNT" kind="embed" identifier="BlurredStatusBG" id="Dtg-DK-czb"/>
                                 </connections>
                             </containerView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word List Completed!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kp7-7N-n01">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word List Completed!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kp7-7N-n01">
                                 <rect key="frame" x="130" y="309.66666666666669" width="180" height="28.333333333333314"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="5Ev-oS-NIM"/>
@@ -759,6 +759,7 @@
                         <outlet property="proxyTable" destination="4Y4-1f-2hz" id="bQR-QC-2sm"/>
                         <outlet property="proxyTableArrow" destination="MCZ-cS-hza" id="VHO-fY-2XL"/>
                         <outlet property="startNewList" destination="Udf-GC-b5o" id="zng-Qk-Zq1"/>
+                        <outlet property="statusBg" destination="2t6-bU-R4s" id="mtz-LN-6TS"/>
                         <outlet property="statusBgHeight" destination="4DO-1G-JrI" id="X6P-nS-bw6"/>
                         <outlet property="toolbar" destination="jOe-Nl-wN2" id="xaw-MU-B6q"/>
                         <outlet property="topConstraint" destination="qy0-rM-BjO" id="xW2-dv-5eY"/>
