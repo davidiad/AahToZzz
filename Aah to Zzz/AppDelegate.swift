@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CoreDataStackManager.sharedInstance().managedObjectContext
     }()
 
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]? = [:]) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = [:]) -> Bool {
         window?.makeKeyAndVisible()
         window?.restorationIdentifier = "MainWindow"
         application.isStatusBarHidden = true
@@ -29,14 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //MARK:- Game Center
     
     func authPlayer() {
-        let localPlayer = GKLocalPlayer.localPlayer()
+        let localPlayer = GKLocalPlayer.local
         let viewController = self.window!.rootViewController! as UIViewController
         localPlayer.authenticateHandler = {
             (view, error) in
             if view != nil {
                 viewController.present(view!, animated: true, completion: nil)
             } else {
-                print("Game Center authenticated?: \(GKLocalPlayer.localPlayer().isAuthenticated)")
+                print("Game Center authenticated?: \(GKLocalPlayer.local.isAuthenticated)")
             }
         }
     }

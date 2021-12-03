@@ -115,6 +115,8 @@ class AtoZTableViewDelegates: NSObject, NSFetchedResultsControllerDelegate, UITa
                 proxyTable.insertRows(at: [newIndexPath], with: .left)
             }
             break;
+        @unknown default:
+            print("error")
         }
     }
     

@@ -10,6 +10,8 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet weak var titleViewHolder: UIView!
+    
     @IBOutlet weak var descriptionView: UIView!
     
 //    @IBOutlet weak var buttonHolderView: UIView!
@@ -67,9 +69,46 @@ class HomeViewController: UIViewController {
         addGradientBar()
         descriptionView.layer.cornerRadius = 12.0
         descriptionView.layer.masksToBounds = true
-//        buttonHolderView.layer.cornerRadius = 12.0
-//        buttonHolderView.layer.masksToBounds = true
 
+        let aaView = TileHolderView(numTiles: 6, tileWidth: 50, borderWidth: 3.0, blurriness: 0.5, shadowWidth: 2.5, isTheTitleHolder: true)
+        //let zzzView = TileHolderView(numTiles: 3, tileWidth: 50, borderWidth: 3.0, blurriness: 0.0, shadowWidth: 2.5)
+        
+        titleViewHolder.addSubview(aaView)
+    
+        //titleViewHolder.addSubview(zzzView)
+        
+        aaView.center = CGPoint(x: titleViewHolder.center.x, y: 30)
+        //zzzView.center = CGPoint(x: titleViewHolder.center.x + 50.0, y: 30)
+        
+        let a1 = Tile(frame: CGRect(x: 3.0, y: 3.0, width: 50, height: 50))
+        let a2 = Tile(frame: CGRect(x: 56.0, y: 3.0, width: 50, height: 50))
+        let z1 = Tile(frame: CGRect(x: 159.0, y: 3.0, width: 50, height: 50))
+        let z2 = Tile(frame: CGRect(x: 212.0, y: 3.0, width: 50, height: 50))
+        let z3 = Tile(frame: CGRect(x: 265.0, y: 3.0, width: 50, height: 50))
+        
+//        aaView.addSubview(a1)
+//        aaView.addSubview(a2)
+//        aaView.addSubview(z1)
+//        aaView.addSubview(z2)
+//        aaView.addSubview(z3)
+        
+        let attributes: [NSAttributedString.Key: Any] =  [.font: UIFont(name: "EuphemiaUCAS-Bold", size: 48.0)!,
+                                                .foregroundColor: Colors.midBrown,
+                                                .strokeWidth: -3.0 as AnyObject,
+                                                .strokeColor: UIColor.black]
+
+
+            
+        // TODO: set the attributed title in Tile.swift instead
+        let titleA = NSAttributedString(string: "A", attributes: attributes)
+        let titleZ = NSAttributedString(string: "Z", attributes: attributes)
+            
+        a1.setAttributedTitle(titleA, for: UIControl.State())
+        a2.setAttributedTitle(titleA, for: UIControl.State())
+        z1.setAttributedTitle(titleZ, for: UIControl.State())
+        z2.setAttributedTitle(titleZ, for: UIControl.State())
+        z3.setAttributedTitle(titleZ, for: UIControl.State())
+        
     }
     
     deinit {

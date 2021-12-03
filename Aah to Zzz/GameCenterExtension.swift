@@ -11,7 +11,7 @@ import GameKit
 extension UIViewController: GKGameCenterControllerDelegate {
     
     func reportScores(_ levelNumber: Float, percentage: Float, numberOfLists: Int, numberOfWords: Int) {
-        if GKLocalPlayer.localPlayer().isAuthenticated {
+        if GKLocalPlayer.local.isAuthenticated {
 //            let scoreReporter = GKScore(leaderboardIdentifier: "atozleaderboard")
 //            scoreReporter.value = Int64(number)
 //            let scoreArray: [GKScore] = [scoreReporter]

@@ -62,7 +62,7 @@ class Tile: UIButton {
 //        setAttributedTitle(title, forState: .Normal)
         
         let image = UIImage(named: "tile") as UIImage?
-        setBackgroundImage(image, for: UIControlState())
+        setBackgroundImage(image, for: UIControl.State())
         
         
     }

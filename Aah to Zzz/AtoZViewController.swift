@@ -162,7 +162,7 @@ class AtoZViewController: UIViewController {
             tile.layer.shadowRadius = 24.0
             tile.layer.shadowColor = UIColor.black.cgColor
             
-            UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
+            UIView.animate(withDuration: 1.0, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: { () -> Void in
                 
                 tile.transform = s
                 
@@ -249,7 +249,12 @@ class AtoZViewController: UIViewController {
     lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Word")
-        fetchRequest.predicate = NSPredicate(format: "inCurrentList == %@", true as CVarArg)
+        
+        //TODO: next line causing crash after upgrrde to swift 4. But commenting out line leaves the word feedback box blank
+//        fetchRequest.predicate = NSPredicate(format: "inCurrentList == %@", true as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "inCurrentList == %@", NSNumber(value: true))
+        
+        //fetchRequest.predicate = NSPredicate(format: "inCurrentList == true")
         // Add Sort Descriptors
         let sortDescriptor = NSSortDescriptor(key: "word", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -389,21 +394,23 @@ class AtoZViewController: UIViewController {
             if let tilePos = positions?[i].position {
                 let tile = Tile(frame: CGRect(x: tilePos.x, y: tilePos.y * CGFloat(i), width: 50, height: 50))
                 //let bgView = UIImageView(image: bgImage)
-                let bgView = TileHolderView(numTiles: 1, tileWidth: 50, borderWidth: 4.2, blurriness: 0.1, shadowWidth: 1.5)
+                let bgView = TileHolderView(numTiles: 1, tileWidth: 50, borderWidth: 4.2, blurriness: 0.1, shadowWidth: 1.5, isTheTitleHolder: false)
                 bgView.tag = 2000 + i
                 bgView.center = tilePos
                 
-                tile.setTitle("Q", for: UIControlState()) // Q is placeholder value
+                tile.setTitle("Q", for: UIControl.State()) // Q is placeholder value
                 tile.tag = 1000 + i
                 
                 lettertiles.append(tile)
                 setupGestureRecognizers(tile)
                 view.addSubview(bgView)
                 view.addSubview(tile)
+                
+                
             }
         }
         
-        let upperPositionsView = TileHolderView(numTiles: 3, tileWidth: 50, borderWidth: 10, blurriness: 0.5, shadowWidth: 3.5)
+        let upperPositionsView = TileHolderView(numTiles: 3, tileWidth: 50, borderWidth: 10.0, blurriness: 0.5, shadowWidth: 3.5, isTheTitleHolder: false)
 
         upperPositionsView.center = CGPoint(x: tilesAnchorPoint.x, y: tilesAnchorPoint.y + vertiShiftUpperPositions)
         self.view.addSubview(upperPositionsView)
@@ -424,7 +431,7 @@ class AtoZViewController: UIViewController {
         */
         // Make sure all tiles have higher z index than all bg's. Also when tapped
         for t in lettertiles {
-            view.bringSubview(toFront: t)
+            view.bringSubviewToFront(t)
         }
         // reference for memory leak bug, and fix:
         // http://stackoverflow.com/questions/34075326/swift-2-iboutlet-collection-uibutton-leaks-memory
@@ -511,7 +518,10 @@ class AtoZViewController: UIViewController {
         //animator.setValue(true, forKey: "debugEnabled")
         
 
+        // Disable the Tutorial until bugs are fixed (appears at correct times, and animation backgrounds are fixed)
         
+        
+        /*
         // When first loading, add a basic info panel about the game, with a dismiss button
         // TODO: enable dismiss by tapping anywhere
         // TODO: customize the info vc animation
@@ -536,7 +546,7 @@ class AtoZViewController: UIViewController {
             tutorial.arrowEndPoints = setArrowPoints()
             self.present(tutorial, animated: true)
         }
-        
+        */
     }
     
     func setArrowPoints() -> [CGPoint] {
@@ -758,10 +768,13 @@ class AtoZViewController: UIViewController {
 //                    animateNewListButton()
                 } else {
                     progressLabl.text = "\(numFound) of \(currentNumberOfWords! - model.inactiveCount!) words found"
+                    print("progressLabl.text:  \(String(describing: progressLabl.text))")
                 }
+                print("progressLabl.text:  \(progressLabl.text ?? "default")")
+                print(progressLabl.alpha)
             }
         }
-        UIView.animate(withDuration: 2.35, delay: 0.25, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
+        UIView.animate(withDuration: 2.35, delay: 0.25, options: UIView.AnimationOptions.curveEaseOut, animations: { () -> Void in
             
             self.progressLabl.alpha = 0.85
             
@@ -841,7 +854,7 @@ class AtoZViewController: UIViewController {
         currentLetterSet = model.generateLetterSet() // new set of letters created and saved to context
         
         // converting the new LetterSet to an array, for use in this class
-        letters = currentLetterSet?.letters?.allObjects as! [Letter]
+        letters = currentLetterSet?.letters?.allObjects as? [Letter]
         updateTiles()
         //printTileDiagram()
         currentWords = model.generateWords(letters)
@@ -948,8 +961,8 @@ class AtoZViewController: UIViewController {
                 if wordIsNew == true {
                     updateProgress(nil)
                 }
-                wordTable.scrollToRow(at: indexPath, at: UITableViewScrollPosition.middle, animated: true)
-                proxyTable.scrollToRow(at: indexPath, at: UITableViewScrollPosition.middle, animated: true)
+                wordTable.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.middle, animated: true)
+                proxyTable.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.middle, animated: true)
                 
                 return true
             }
@@ -1025,19 +1038,19 @@ class AtoZViewController: UIViewController {
     
     func updateTiles () {
         // convert the LetterSet into an array
-        letters = currentLetterSet?.letters?.allObjects as! [Letter]
+        letters = currentLetterSet?.letters?.allObjects as? [Letter]
         
         // Safeguard in case the correct number of letters has not been saved properly
         if letters.count != lettertiles.count {
             currentLetterSet = model.generateLetterSet()
             saveContext()
-            letters = currentLetterSet?.letters?.allObjects as! [Letter]
+            letters = currentLetterSet?.letters?.allObjects as? [Letter]
         }
         
         // Possible fonts
         //BanglaSangamMN-Bold //EuphemiaUCAS-Bold //GillSans-SemiBold //Copperplate-Bold
         
-        let attributes: [NSAttributedStringKey: Any] =  [.font: UIFont(name: "EuphemiaUCAS-Bold", size: 30.0)!,
+        let attributes: [NSAttributedString.Key: Any] =  [.font: UIFont(name: "EuphemiaUCAS-Bold", size: 30.0)!,
                                                 .foregroundColor: Colors.midBrown,
                                                 .strokeWidth: -3.0 as AnyObject,
                                                 .strokeColor: UIColor.black]
@@ -1046,7 +1059,7 @@ class AtoZViewController: UIViewController {
             
             // TODO: set the attributed title in Tile.swift instead
             let title = NSAttributedString(string: letters[i].letter!, attributes: attributes)
-            lettertiles[i].setAttributedTitle(title, for: UIControlState())
+            lettertiles[i].setAttributedTitle(title, for: UIControl.State())
             lettertiles[i].letter = letters[i]
             lettertiles[i].position = letters[i].position?.position
             
@@ -1125,12 +1138,12 @@ class AtoZViewController: UIViewController {
             print("Began pan")
             //animator?.removeBehavior(t.snapBehavior!) //TODO: behavior not being removed, and fighting with pan.
             //TODO:-- each remove behavior, and/or, use attachment behavior instead of pan, as in WWDC video
-            t.superview?.bringSubview(toFront: t) // Make this Tile float above the other tiles
+            t.superview?.bringSubviewToFront(t) // Make this Tile float above the other tiles
             t.layer.shadowOpacity = 0.85
             let scale = CGAffineTransform(scaleX: 1.25, y: 1.25)
             let move = CGAffineTransform(translationX: 0.0, y: -58.0)
 
-            UIView.animate(withDuration: 0.15, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
+            UIView.animate(withDuration: 0.15, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: { () -> Void in
                 
                 t.transform = scale.concatenating(move)
                 

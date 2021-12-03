@@ -7,7 +7,8 @@
 
 import UIKit
 
-@IBDesignable class ShapeView: UIView {
+//@IBDesignable class ShapeView: UIView {
+class ShapeView: UIView {
     
     //TODO:- cut off mask of top of arrowViews, try to blend arrows with text bubbles
     //TODO:- replace ArrowView with ArrowBlurView, renaming
@@ -85,7 +86,10 @@ import UIKit
     
     func animateShape() {
         let shapeLayer      = CAShapeLayer()
-        let maskLayer       = CAShapeLayer()
+        
+        //Initialization of immutable value 'maskLayer' was never used; consider replacing with assignment to '_' or removing it
+        //let maskLayer       = CAShapeLayer()
+        
         let animation       = CABasicAnimation(keyPath: "path")
         animation.duration  = 2
         
@@ -100,11 +104,11 @@ import UIKit
 //        animation.toValue = endShape
 //        animation.duration = 1 // duration is 1 sec
         
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         
         // The next two line preserves the final shape of animation,
         // if you remove it the shape will return to the original shape after the animation finished
-        animation.fillMode = kCAFillModeForwards
+        animation.fillMode = CAMediaTimingFillMode.forwards
         //animation.isRemovedOnCompletion = false
         
         shapeLayer.add(animation, forKey: animation.keyPath)
@@ -291,7 +295,7 @@ import UIKit
         shadowInvertedPath.append(shadowPath)
         let shadowMaskLayer             = CAShapeLayer()
         shadowMaskLayer.path            = shadowInvertedPath.cgPath
-        shadowMaskLayer.fillRule        = kCAFillRuleEvenOdd
+        shadowMaskLayer.fillRule        = CAShapeLayerFillRule.evenOdd
         shadowView?.layer.shadowPath    = shadowPath.cgPath
         
         return shadowMaskLayer
@@ -320,7 +324,7 @@ import UIKit
         shapeLayer.lineWidth    = lineWidth
         shapeLayer.strokeColor  = color.cgColor
         shapeLayer.fillColor    = UIColor.clear.cgColor
-        shapeLayer.lineJoin     = kCALineJoinMiter
+        shapeLayer.lineJoin     = CAShapeLayerLineJoin.miter
         
         shapeView?.layer.addSublayer(shapeLayer)
     }
@@ -331,7 +335,7 @@ import UIKit
         
         let maskLayer               = CAShapeLayer()
         maskLayer.path              = self.path.cgPath  //  maskPath.cgPath
-        maskLayer.fillRule          = kCAFillRuleEvenOdd
+        maskLayer.fillRule          = CAShapeLayerFillRule.evenOdd
         
         // update the frame with the new path's bounds
         frame = path.cgPath.boundingBoxOfPath

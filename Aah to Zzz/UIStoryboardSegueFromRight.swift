@@ -25,7 +25,7 @@ class UIStoryboardSegueFromRight: UIStoryboardSegue {
         
         UIView.animate(withDuration: 0.5,
                                    delay: 0.0,
-                                   options: UIViewAnimationOptions(),
+                                   options: UIView.AnimationOptions(),
                                    animations: {
                                     // The new position of the destination view
                                     dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
@@ -56,7 +56,7 @@ class UIStoryboardSegueFromLeft: UIStoryboardSegue {
         
         UIView.animate(withDuration: 0.5,
                                    delay: 0.0,
-                                   options: UIViewAnimationOptions(),
+                                   options: UIView.AnimationOptions(),
                                    animations: {
                                     dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
                                     // slide the source view over as the destination slides in

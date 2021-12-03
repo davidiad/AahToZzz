@@ -140,7 +140,7 @@ class BlurViewController: UIViewController {
         shadowMask.addPath(innerPath.cgPath)
         
         shadowMaskLayer.path                    = shadowMask
-        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+        shadowMaskLayer.fillRule                = CAShapeLayerFillRule.evenOdd
         shadowView.layer.mask                   = shadowMaskLayer
     }
     
@@ -155,14 +155,14 @@ class BlurViewController: UIViewController {
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.alignment = .center
         
-        let multipleAttributes: [NSAttributedStringKey : Any] = [
-            NSAttributedStringKey.font: UIFont(name: "Noteworthy-Bold", size: 18.0)!,
-            NSAttributedStringKey.paragraphStyle: paraStyle,
-            NSAttributedStringKey.shadow: shadow,
-            NSAttributedStringKey.strokeColor: Colors.lighterDarkBrown,
-            NSAttributedStringKey.strokeWidth: -4.0,
-            NSAttributedStringKey.foregroundColor: Colors.darkBackground,
-            NSAttributedStringKey.underlineStyle: underline]
+        let multipleAttributes: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.font: UIFont(name: "Noteworthy-Bold", size: 18.0)!,
+            NSAttributedString.Key.paragraphStyle: paraStyle,
+            NSAttributedString.Key.shadow: shadow,
+            NSAttributedString.Key.strokeColor: Colors.lighterDarkBrown,
+            NSAttributedString.Key.strokeWidth: -4.0,
+            NSAttributedString.Key.foregroundColor: Colors.darkBackground,
+            NSAttributedString.Key.underlineStyle: underline]
         
         return NSAttributedString(string: textToFormat, attributes: multipleAttributes)
     }

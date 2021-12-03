@@ -156,7 +156,7 @@ class ArrowViewPrevious: UIView {
         shadowMask.addPath(innerPath.cgPath)
         
         shadowMaskLayer.path                    = shadowMask
-        shadowMaskLayer.fillRule                = kCAFillRuleEvenOdd
+        shadowMaskLayer.fillRule                = CAShapeLayerFillRule.evenOdd
         shadowView.layer.mask                   = shadowMaskLayer
         //shadowView.mask = UIView(frame: bounds.offsetBy(dx: 10, dy: 10))
         self.addSubview(shadowView)
@@ -331,11 +331,10 @@ class ArrowViewPrevious: UIView {
     func getQuadControl (startPt: CGPoint, endPt: CGPoint) -> CGPoint {
         let pointingRight: Bool = startPt.x < endPt.x ? true : false
         //let tanx = (endPt.x - startPt.x) / (startPt.y - endPt.y)
-        let midX = (startPt.x - endPt.x) * 0.5
-        let midY = (endPt.y - startPt.y) * 0.5
-        let cpX = startPt.x - midX
-        let cpY = endPt.y - midY
-        //let cp = CGPoint(x: cpX, y: cpY)
+//        let midX = (startPt.x - endPt.x) * 0.5
+//        let midY = (endPt.y - startPt.y) * 0.5
+//        let cpX = startPt.x - midX
+//        let cpY = endPt.y - midY
         var cp2X = startPt.x
         var cp2Y = endPt.y
         if pointingRight { cp2X = endPt.x + 30.0; cp2Y = startPt.y }
@@ -357,8 +356,8 @@ class ArrowViewPrevious: UIView {
         let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWTH,    y: endPoint.y    - ARROWHT           )
         //let startControlRight   = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                + 40.0    )
         //let insideControlRight  = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-        let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
-        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
+        //let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
+        //let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
         let quadControl = getQuadControl(startPt: startPointRight, endPt: insidePointRight)
         
         path.move           (to: startPoint)
@@ -447,7 +446,7 @@ class ArrowViewPrevious: UIView {
         shapeLayer.lineWidth    = lineWidth
         shapeLayer.strokeColor  = color.cgColor
         shapeLayer.fillColor    = UIColor.clear.cgColor
-        shapeLayer.lineJoin     = kCALineJoinRound
+        shapeLayer.lineJoin     = CAShapeLayerLineJoin.round
         
         self.layer.addSublayer(shapeLayer)
     }
@@ -524,7 +523,7 @@ class ArrowViewPrevious: UIView {
     
     func getShadowMask() -> UIView {
         // will return a UIView
-        var sView = getArrowMask()
+        let sView = getArrowMask()
         // invert the mask for use as a shadow mask
         return sView
     }
@@ -550,7 +549,7 @@ class ArrowViewPrevious: UIView {
         
         
         maskLayer.path              = self.path.cgPath  //  maskPath.cgPath
-        maskLayer.fillRule          = kCAFillRuleEvenOdd
+        maskLayer.fillRule          = CAShapeLayerFillRule.evenOdd
         //maskLayer.fillColor       = Colors.bluek.cgColor
         
         let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))

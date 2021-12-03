@@ -444,7 +444,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                         }
                     }
                     
-                    addChildViewController(levelTableController) // Was this line necessary?
+                    addChild(levelTableController) // Was this line necessary?
                     levelTableController.view.translatesAutoresizingMaskIntoConstraints = false
 //                    containerView.addSubview(controller.view)
                     barContainerView.addSubview(levelTableController.view)
@@ -457,7 +457,7 @@ class ProgressViewController: UIViewController, NSFetchedResultsControllerDelega
                         levelTableController.view.bottomAnchor.constraint(equalTo: barContainerView.bottomAnchor)
                         ])
                     
-                    levelTableController.didMove(toParentViewController: self)
+                    levelTableController.didMove(toParent: self)
                     
                     
                     // Create a text label for the number of words that floats above the container

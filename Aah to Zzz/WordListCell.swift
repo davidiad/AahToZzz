@@ -76,7 +76,7 @@ class WordListCell: UITableViewCell {
                 outlineView.image = outline
                 //TODO: Set this once, elsewhere?
                 if outlineView.image != nil {
-                    outlineView.image = outlineView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                    outlineView.image = outlineView.image!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
                     //TODO: SHOULD BE SET IN COLORCODE
                     outlineView.tintColor = colorCode?.tint
 //                    outlineShadowView.image = UIImage(named: "outline_shadow_unstretched")
@@ -95,7 +95,7 @@ class WordListCell: UITableViewCell {
                 
                 outlineTripleStripe.image = tripleStripe
                 if outlineTripleStripe.image != nil {
-                    outlineTripleStripe.image = outlineTripleStripe.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                    outlineTripleStripe.image = outlineTripleStripe.image!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
                     if colorCode?.colorCode == 10 { // yellow is already fully saturated, so the inner stripe is desaturated and darker
                         outlineTripleStripe.tintColor = Colors.desat_yellow
                     } else {

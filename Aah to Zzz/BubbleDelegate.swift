@@ -106,13 +106,13 @@ class BubbleDelegate: Bubble {
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.alignment = .center
         
-        let multipleAttributes: [NSAttributedStringKey : Any] = [
-            NSAttributedStringKey.font: UIFont(name: "Noteworthy-Bold", size: 18.0)!,
-            NSAttributedStringKey.paragraphStyle: paraStyle,
-            NSAttributedStringKey.shadow: shadow,
-            NSAttributedStringKey.strokeColor: Colors.lighterDarkBrown,
-            NSAttributedStringKey.strokeWidth: -4.0,
-            NSAttributedStringKey.foregroundColor: Colors.darkBackground]
+        let multipleAttributes: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.font: UIFont(name: "Noteworthy-Bold", size: 18.0)!,
+            NSAttributedString.Key.paragraphStyle: paraStyle,
+            NSAttributedString.Key.shadow: shadow,
+            NSAttributedString.Key.strokeColor: Colors.lighterDarkBrown,
+            NSAttributedString.Key.strokeWidth: -4.0,
+            NSAttributedString.Key.foregroundColor: Colors.darkBackground]
         
         return NSAttributedString(string: textToFormat, attributes: multipleAttributes)
     }
@@ -131,7 +131,7 @@ class BubbleDelegate: Bubble {
         
         // check if bubble is near or over the edge of the screen.
         // if so, shift the startPoint  and reset the corners
-        var shift: CGPoint? = shiftIfOutOfBounds(corners: [cornerLowerRight, cornerUpperLeft])
+        let shift: CGPoint? = shiftIfOutOfBounds(corners: [cornerLowerRight, cornerUpperLeft])
         if shift != nil {
             if let sx = shift?.x, let sy = shift?.y {
                 let shiftStart = CGPoint(x: startPoint.x + sx, y: startPoint.y + sy)

@@ -85,7 +85,7 @@ class ShapeViewPreProtocol: UIView {
         guard let shadowView = shadowView else {
             return
         }
-        bringSubview(toFront: shadowView)
+        bringSubviewToFront(shadowView)
         print("END of tile holder convenience init")
     }
     
@@ -120,7 +120,7 @@ class ShapeViewPreProtocol: UIView {
         shadowBounds.append(shadowPath)
         let shadowMaskLayer         = CAShapeLayer()
         shadowMaskLayer.path        = shadowBounds.cgPath
-        shadowMaskLayer.fillRule    = kCAFillRuleEvenOdd
+        shadowMaskLayer.fillRule    = CAShapeLayerFillRule.evenOdd
         shadowView.layer.shadowPath     = shadowPath.cgPath
         shadowView.layer.mask             = shadowMaskLayer
         addSubview(shadowView)
@@ -157,11 +157,11 @@ class ShapeViewPreProtocol: UIView {
     
     override func draw(_ rect: CGRect) {
         // create inner shadows if needed
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        print("DRAW RECT")
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+//        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+//        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+//        print("DRAW RECT")
+//        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+//        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
         if shapeType == .tileholder && shadowed == true {
             self.backgroundColor = UIColor.clear
             self.backgroundColor?.setFill()
@@ -376,7 +376,7 @@ class ShapeViewPreProtocol: UIView {
         //shadowView.mask                 = getShapeMask()
         
         addSubview(shadowView)
-        bringSubview(toFront: shadowView)
+        bringSubviewToFront(shadowView)
         
         //addInnerShadow()
     }
@@ -434,7 +434,7 @@ class ShapeViewPreProtocol: UIView {
         shadowInvertedPath.append(shadowPath)
         let shadowMaskLayer             = CAShapeLayer()
         shadowMaskLayer.path            = shadowInvertedPath.cgPath
-        shadowMaskLayer.fillRule        = kCAFillRuleEvenOdd
+        shadowMaskLayer.fillRule        = CAShapeLayerFillRule.evenOdd
         shadowView?.layer.shadowPath    = shadowPath.cgPath
         
         return shadowMaskLayer
@@ -610,9 +610,9 @@ class ShapeViewPreProtocol: UIView {
         let pointingRight: Bool = startPt.x < endPt.x ? true : false
         //let tanx = (endPt.x - startPt.x) / (startPt.y - endPt.y)
         let midX = (startPt.x - endPt.x) * 0.5
-        let midY = (endPt.y - startPt.y) * 0.5
-        let cpX = startPt.x - midX
-        let cpY = endPt.y - midY
+        //let midY = (endPt.y - startPt.y) * 0.5
+        _ = startPt.x - midX
+        //let cpY = endPt.y - midY
         //let cp = CGPoint(x: cpX, y: cpY)
         var cp2X = startPt.x
         var cp2Y = endPt.y
@@ -635,8 +635,8 @@ class ShapeViewPreProtocol: UIView {
         let outsidePointLeft    = CGPoint(x: endPoint.x   - ARROWWTH,    y: endPoint.y    - ARROWHT           )
         //let startControlRight   = CGPoint(x: startPoint.x + STARTWTH,    y: startPoint.y                + 40.0    )
         //let insideControlRight  = CGPoint(x: endPoint.x   + ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
-        let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
-        let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
+        //let startControlLeft    = CGPoint(x: startPoint.x - STARTWTH,    y: startPoint.y                + 40.0    )
+        //let insideControlLeft   = CGPoint(x: endPoint.x   - ENDWTH,      y: endPoint.y    - ARROWHT - 40.0    )
         let quadControl = getQuadControl(startPt: startPointRight, endPt: insidePointRight)
         
         path.move           (to: startPoint)
@@ -724,7 +724,7 @@ class ShapeViewPreProtocol: UIView {
         shapeLayer.lineWidth    = lineWidth
         shapeLayer.strokeColor  = color.cgColor
         shapeLayer.fillColor    = UIColor.clear.cgColor
-        shapeLayer.lineJoin     = kCALineJoinRound
+        shapeLayer.lineJoin     = CAShapeLayerLineJoin.round
         
         shapeView?.layer.addSublayer(shapeLayer)
     }
@@ -830,7 +830,7 @@ class ShapeViewPreProtocol: UIView {
         
         
         maskLayer.path              = self.path.cgPath  //  maskPath.cgPath
-        maskLayer.fillRule          = kCAFillRuleEvenOdd
+        maskLayer.fillRule          = CAShapeLayerFillRule.evenOdd
         //maskLayer.fillColor       = Colors.bluek.cgColor
         let mView = UIView(frame: CGRect(x:0,y:0,width: bounds.width, height: bounds.height))
         //        let mView = UIView(frame: CGRect(x:0,y:0,width: arrowBounds.width, height: arrowBounds.height))

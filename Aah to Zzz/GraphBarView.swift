@@ -112,7 +112,7 @@ class GraphBarView: UIView {
             }
         }
         outlineView.frame = frame
-        outlineView.image = outlineView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        outlineView.image = outlineView.image!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         
         // set the outlineView tintcolor per level
         guard let tintColor = colorCode?.tint else {
@@ -124,7 +124,7 @@ class GraphBarView: UIView {
         addSubview(outlineView)
         
         if let tripleImage = outlineTripleView.image {
-            outlineTripleView.image = tripleImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            outlineTripleView.image = tripleImage.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
             addSubview(outlineTripleView)
             var colorCodeTriple: ColorCode? = ColorCode(code: level - 1) // same color, more saturated. Except yellow which was already saturated.
             if level < 16 {
@@ -141,7 +141,7 @@ class GraphBarView: UIView {
                 
                 // Changes to shadow image, only for 11 to 15, the tripled outlines
                 // use shadow image to thicken inside line
-                outlineShadowView.image = outlineShadowView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                outlineShadowView.image = outlineShadowView.image!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
                 outlineShadowView.tintColor = tintColor
                 outlineShadowView.alpha = 1.0
                 // since the shadow image has been used to thicken the inside regular color,

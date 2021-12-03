@@ -51,7 +51,7 @@ class AtoZUIDynamicsDelegate: NSObject, UIDynamicAnimatorDelegate, Lettertiles {
         
         if checkX > tolerance || checkY > tolerance {
             
-            UIView.animate(withDuration: 0.15, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
+            UIView.animate(withDuration: 0.15, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: { () -> Void in
                 
                 //tile.transform = CGAffineTransformIdentity // this line is a safeguard in case tiles get rotated after a jumble. However, may not be needed, and was preventing enlarging the tiles during a pan (to make them appear raised above the others while panning)
                 

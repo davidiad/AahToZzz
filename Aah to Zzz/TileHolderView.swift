@@ -18,9 +18,10 @@ class TileHolderView: ShapeView {
     var borderWidth:       CGFloat      = 10.0
     var innerShadowPath:   UIBezierPath = UIBezierPath()
     var shadowImage:       UIImage? // rendered image of inner shadow of tile holder
+    var isTheTitleHolder:  Bool         = false // special case for the Title
     
     // init for tile holder (upper positions background)
-    convenience init(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat, blurriness: CGFloat, shadowWidth: CGFloat) {
+    convenience init(numTiles: Int, tileWidth: CGFloat, borderWidth: CGFloat, blurriness: CGFloat, shadowWidth: CGFloat, isTheTitleHolder: Bool) {
         
         let w: CGFloat   = CGFloat((numTiles)) * (tileWidth + borderWidth) + borderWidth
         let h: CGFloat   = tileWidth + 2 * borderWidth
@@ -32,6 +33,7 @@ class TileHolderView: ShapeView {
         self.borderWidth = borderWidth
         self.blurriness  = blurriness
         self.shadowWidth = shadowWidth
+        self.isTheTitleHolder = isTheTitleHolder
         //shapeType        = .tileholder
         //shadowed         = true // is this var even needed?
         
@@ -41,16 +43,16 @@ class TileHolderView: ShapeView {
         guard let shadowView = shadowView else {
             return
         }
-        bringSubview(toFront: shadowView)
+        bringSubviewToFront(shadowView)
     }
     
     override func draw(_ rect: CGRect) {
         // create inner shadows if needed
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        print("DRAW RECT")
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
-        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+//        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+//        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+//        print("DRAW RECT")
+//        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
+//        print("::::::*******^^^^^%%$$$$+++_@)$@::::::::::")
         if shadowWidth > 0.01 {
             self.backgroundColor = UIColor.clear
             self.backgroundColor?.setFill()
@@ -101,6 +103,7 @@ class TileHolderView: ShapeView {
     override func setShadowPath() {
         shadowPath.append(path) // starting point is the shape path. (Outermost part of shadow mask added later)
         for i in 0 ..< numTiles {
+            
             let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
             let inset: CGFloat = 1.25
             let iWidth = tileWidth - (2 * inset)
@@ -111,7 +114,15 @@ class TileHolderView: ShapeView {
             // additional shadow to add
             let addShadow = UIView(frame: innermostTileRect)
             addShadow.backgroundColor = Colors.additionalShadow
-            addSubview(addShadow)
+            
+            if (!isTheTitleHolder) {
+                addSubview(addShadow)
+            } else {
+                if (i != 2) {  // leaving a blank space between words in the title (special case)
+                    addSubview(addShadow)
+                }
+            }
+            
         }
     }
     
@@ -127,11 +138,21 @@ class TileHolderView: ShapeView {
         path.append(outerPath)
 
         for i in 0 ..< numTiles {
+            
+           // if (isTheTitleHolder && i == 2) {return} // leaving a blank space between words in the title (special case)
+            
             let xPos = CGFloat(i) * (borderWidth + tileWidth) + borderWidth
             let tileRect = CGRect(x: xPos, y: borderWidth, width: tileWidth, height: tileWidth)
             let innerPath = UIBezierPath(roundedRect: tileRect, cornerRadius: TILERADIUS)
 
-            path.append(innerPath)
+            if (!isTheTitleHolder) {
+                path.append(innerPath)
+            } else {
+                if (i != 2) {  // leaving a blank space between words in the title (special case)
+                    path.append(innerPath)
+                }
+            }
+
         }
     }
 }
