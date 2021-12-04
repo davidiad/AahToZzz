@@ -620,9 +620,9 @@
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2t6-bU-R4s" customClass="ShapeView" customModule="AahToZzz" customModuleProvider="target">
-                                <rect key="frame" x="124" y="296" width="192" height="56"/>
+                                <rect key="frame" x="124" y="266" width="192" height="86"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="Rcr-Cu-Ys3"/>
+                                    <constraint firstAttribute="height" constant="86" id="Rcr-Cu-Ys3"/>
                                     <constraint firstAttribute="width" constant="192" id="xSP-1s-Kas"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
